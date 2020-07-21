@@ -1,32 +1,7 @@
 <template>
   <q-layout class="flex column bgGlobal q-pt-md">
-    <div class="row window-width q-px-md">
-      <div class="col-1">
-        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
-      </div>
-    </div>
-    <p class="poppinsBold text-center window-width">My Settings</p>
-    <div class="window-width text-center justify-center q-pt-lg">
-      <q-avatar round size="11em">
-        <img src="https://cdn.quasar.dev/img/avatar.png"
-             style="border:0.1em solid white;"/>
-        <q-badge floating color="accent" class="q-mt-md">
-          <q-icon name="o_camera" color="white" style="height:1em;width:1em" size="md"/>
-        </q-badge>
-      </q-avatar>
-    </div>
-    <p class="poppinsRegular text-center window-width q-pt-xl"
-       style="font-size: 2em;line-height: 0.1em">
-      <a v-bind:class="{ 'underline': editName }" :contenteditable="editName">
-        Victor Nicolas</a>
-      <q-icon v-if="!editName" name="edit" @click="editName=!editName"/>
-      <q-icon v-if="editName" name="check"
-              @click="editName=!editName"/>
-    </p>
-    <p class="poppinsRegular text-center text-grey window-width" style="font-size: 1.3em">
-      UI/UX Designer · <a style="font-size: 0.7em" class="text-red poppinsBold">131 CP</a>
-      <q-icon name="edit"/>
-    </p>
+    <settings-header></settings-header>
+
 
     <q-card class="bg-transparent no-shadow q-pt-md">
       <q-tabs
@@ -77,29 +52,39 @@
 </template>
 
 <script>
-  import HomeHeader from '../components/home-header'
-  import HomeDisplayCards from '../components/home-display-card/home-display-cards'
   import ProjectCards from '../components/project-card/project-cards';
-  import ProjectShowcaseList from '../components/project-showcase/project-showcase-list';
-
+  import { mapActions, mapState } from 'vuex'
+  import SettingsHeader from '../components/settings/settings-header'
 
   export default {
     data() {
       return {
         tab: 'about',
         url: 'https://placeimg.com/500/300/nature',
+        name: '',
         editName: false
       }
     },
     methods: {
-      goToPage(route, tab) {
-        this.tab = tab;
-        this.$router.push(route).catch(error => {
-        });
-      }
+      ...mapActions('store', ['firebaseUpdateUser']),
+      updateUser() {
+        this.firebaseUpdateUser({ userId: this.userDetails.userId, updates: { name: this.name } });
+      },
+      onInput(e) {
+        if (this.editName) {
+          this.name = e.target.innerText;
+        }
+      },
     },
     components: {
+      SettingsHeader,
       ProjectCards
+    },
+    computed: {
+      ...mapState('store', ['userDetails']),
+    },
+    created() {
+      this.name = this.userDetails.name
     }
   };
 </script>

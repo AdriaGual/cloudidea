@@ -46,7 +46,7 @@ const actions = {
       const userId = firebaseAuth.currentUser.uid;
       firebaseDB
       .ref("users/" + userId)
-      .set({ name: payload.name, email: payload.email, online: true });
+      .set({ name: payload.name, email: payload.email, language: 'es', skills: '', online: true });
     })
     .catch(error => {
       console.log(error.message);
@@ -104,6 +104,19 @@ const actions = {
   firebaseUpdateUser({}, payload) {
     firebaseDB.ref("users/" + payload.userId).update(payload.updates);
   },
+  updateUserState({ commit }) {
+    const userId = firebaseAuth.currentUser.uid;
+    firebaseDB.ref("users/" + userId).once("value", snapshot => {
+      const userDetails = snapshot.val();
+      commit("setUserDetails", {
+        name: userDetails.name,
+        email: userDetails.email,
+        language: userDetails.language,
+        skills: userDetails.skills,
+        userId: userId
+      });
+    });
+  },
   firebaseGetUsers({ commit }) {
     firebaseDB.ref("users").on("child_added", snapshot => {
       const userDetails = snapshot.val();
@@ -152,7 +165,6 @@ const actions = {
       commit("clearMessages");
     }
   },
-  // eslint-disable-next-line no-empty-pattern
   firebaseSendMessage({ dispatch }, payload) {
     firebaseDB
     .ref("chats/" + state.userDetails.userId + "/" + payload.otherUserId)
@@ -174,13 +186,11 @@ const actions = {
       updates: { unreadMessages: false }
     });
   },
-  // eslint-disable-next-line no-empty-pattern
   firebaseUpdateUserMessageNotification({}, payload) {
     firebaseDB
     .ref("chats/" + payload.otherUserId + "/" + payload.userId)
     .update(payload.updates);
   },
-  // eslint-disable-next-line no-empty-pattern
   firebaseCreatePublish({ dispatch }, payload) {
     firebaseStorage
     .ref(payload.publish.category + "/" + payload.publish.filename)
@@ -195,7 +205,6 @@ const actions = {
       });
     });
   },
-  // eslint-disable-next-line no-empty-pattern
   firebaseUpdatePublish({}, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
   },
