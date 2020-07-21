@@ -6,11 +6,18 @@
     <p class="poppinsBold text-center window-width">My Settings</p>
 
     <div class="window-width text-center justify-center q-pt-lg">
+
       <q-avatar round size="11em">
-        <img src="https://cdn.quasar.dev/img/avatar.png"
+        <img :src="imageUrl"
              style="border:0.1em solid white;"/>
+
         <q-badge floating color="accent" class="q-mt-md">
-          <q-icon name="o_camera" color="white" style="height:1em;width:1em" size="md"/>
+          <q-file borderless v-model="imageFile" style="height:2.5em;width:1.7em">
+            <template v-slot:prepend>
+              <q-icon name="o_camera" class="text-white" @click.stop/>
+            </template>
+          </q-file>
+
         </q-badge>
       </q-avatar>
     </div>
@@ -18,7 +25,7 @@
       <div class="col-3"></div>
       <div class="col">
         <q-input dense :borderless="!editName" :disable="!editName" :outlined="editName"
-                 style="font-size: 2em" v-model="name"/>
+                 style="font-size: 2em;" v-model="name"/>
       </div>
       <div class="col-3">
         <q-icon v-if="!editName" name="edit" @click="editName=!editName" size="sm" class="q-pt-sm"/>
@@ -27,11 +34,11 @@
       </div>
     </div>
 
-    <div class="row poppinsRegular text-grey">
-      <div class="col-4"></div>
+    <div class="row poppinsRegular text-grey q-pt-sm">
+      <div class="col-3"></div>
       <div class="col">
         <q-input dense :borderless="!editSkills" :disable="!editSkills" :outlined="editSkills"
-                 style="font-size: 1.3em" v-model="skills"/>
+                 style="font-size: 1.2em" v-model="skills"/>
       </div>
       <div class="col-1">
         <q-icon v-if="!editSkills" name="edit" @click="editSkills=!editSkills" size="sm"
@@ -58,11 +65,14 @@
         name: '',
         editName: false,
         skills: '',
-        editSkills: false
+        editSkills: false,
+        imageUrl: 'https://cdn.quasar.dev/img/avatar.png',
+        imageFile: null
       }
     },
     methods: {
       ...mapActions('store', ['firebaseUpdateUser', 'updateUserState']),
+      ...mapActions("file_store", ["firebaseUploadFile"]),
       goToPage(route) {
         this.$router.push(route).catch(error => {
         });
@@ -78,21 +88,30 @@
             userId: this.userDetails.userId,
             updates: { skills: this.skills }
           });
+        } else if (type === 'imageUrl') {
+          this.firebaseUpdateUser({
+            userId: this.userDetails.userId,
+            updates: { imageUrl: this.imageUrl }
+          });
         }
-
         this.updateUserState();
-      }
+      },
+      uploadFile(file) {
+        this.firebaseUploadFile(file);
+      },
     },
     computed: {
       ...mapState('store', ['userDetails']),
     },
+    watch: {
+      imageFile: function (val) {
+        console.log(val);
+        this.uploadFile(val);
+      }
+    },
     created() {
       this.name = this.userDetails.name;
-      if (!this.userDetails.skills) {
-        this.skills = 'Write a skill'
-      } else {
-        this.skills = this.userDetails.skills
-      }
+      this.skills = this.userDetails.skills
     }
   }
 </script>

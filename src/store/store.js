@@ -76,6 +76,8 @@ const actions = {
             name: userDetails.name,
             email: userDetails.email,
             language: userDetails.language,
+            skills: userDetails.skills,
+            imageUrl: userDetails.imageUrl,
             userId: userId
           });
         });
@@ -113,6 +115,7 @@ const actions = {
         email: userDetails.email,
         language: userDetails.language,
         skills: userDetails.skills,
+        imageUrl: userDetails.imageUrl,
         userId: userId
       });
     });
