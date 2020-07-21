@@ -9,13 +9,14 @@
     <q-form
       @submit="onSubmit"
     >
-      <q-input filled class=" window-width q-px-lg" placeholder="Email Address" v-model="email"
+      <q-input filled class=" window-width q-px-lg" placeholder="Email Address"
+               v-model="userData.email"
                :rules="[ val => val && val.length > 0 || 'Please type something',isValidEmail]"/>
       <q-input filled class=" window-width q-px-lg q-pt-md" placeholder="Password"
-               v-model="password"
-               :rules="[ val => val && val.length > 0 || 'Please type something', val => val && val.length > 7 || 'Weak password, 7 characters required', val => val && val.length > 7]"/>
+               v-model="userData.password"
+               :rules="[ val => val && val.length > 0 || 'Please type something', val => val && val.length > 7 || 'Weak password, 7 characters required']"/>
       <q-btn flat class="text-center window-width" color="grey" label="FORGOT PASSWORD?"/>
-      <div class="row window-width  justify-center">
+      <div class="row window-width justify-center">
         <q-btn class="q-mt-xl"
                type="submit"
                style="height: 4em;border-radius: 1em;width:24em"
@@ -37,15 +38,20 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     data() {
       return {
-        email: '',
-        password: '',
+        userData: {
+          email: '',
+          password: '',
+        }
       }
     },
 
     methods: {
+      ...mapActions('store', ['loginUser']),
       isValidEmail(val) {
         const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
         return emailPattern.test(val) || 'Invalid email';
@@ -56,7 +62,9 @@
         });
       },
       onSubmit() {
-
+        var response = this.loginUser(this.userData)
+        console.log("---------")
+        console.log(response)
       },
     }
   };

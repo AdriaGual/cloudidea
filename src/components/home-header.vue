@@ -7,23 +7,36 @@
 
     <div class="col">
       <q-btn
+        v-if="!userDetails.userId"
         no-caps
         class="text-white bg-primary float-right button"
         @click="goToPage('/login')"
         label="Log in"
       />
+      <q-btn
+        v-if="userDetails.userId" round class="float-right">
+        <q-avatar size="3em">
+          <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+        </q-avatar>
+        
+      </q-btn>
     </div>
 
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
     methods: {
       goToPage(route) {
         this.$router.push(route).catch(error => {
         });
       }
+    },
+    computed: {
+      ...mapState('store', ['userDetails']),
     }
   }
 </script>

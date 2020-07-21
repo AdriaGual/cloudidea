@@ -37,6 +37,7 @@
   import ProjectCards from '../components/project-card/project-cards';
   import ProjectShowcaseList from '../components/project-showcase/project-showcase-list';
 
+
   export default {
     data() {
       return {
@@ -48,6 +49,6 @@
       HomeHeader,
       HomeDisplayCards,
       ProjectShowcaseList
-    }
+    },
   };
 </script>
