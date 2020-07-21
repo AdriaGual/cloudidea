@@ -1,0 +1,151 @@
+// app global css in SCSS form
+@font-face {
+  font-family: poppinsRegular;
+  src: url(./fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: poppinsLight;
+  src: url(./fonts/Poppins-Light.ttf);
+}
+
+@font-face {
+  font-family: poppinsThin;
+  src: url(./fonts/Poppins-Thin.ttf);
+}
+
+@font-face {
+  font-family: poppinsBold;
+  src: url(./fonts/Poppins-Bold.ttf);
+}
+
+.poppinsRegular {
+  font-family: poppinsRegular, serif;
+}
+
+.poppinsLight {
+  font-family: poppinsLight, serif;
+}
+
+.poppinsThin {
+  font-family: poppinsThin, serif;
+}
+
+.poppinsBold {
+  font-family: poppinsBold, serif;
+}
+
+.bgGlobal {
+  background-color: #F7F7F7;
+}
+
+.bgGrey {
+  background-color: #eeecfc;
+}
+
+.button {
+  border-radius: 0.4em;
+  width: 8em;
+  height: 3em;
+}
+
+.followButton {
+  border-radius: 1em;
+  width: 8em;
+  font-size: 0.9em;
+}
+
+.scrollAreaHorizontal {
+  height: 21em;
+  width: 100%;
+}
+
+.cardExterior {
+  border: 0.1em solid #A3CAF6;
+  border-radius: 1em;
+  width: 25em;
+  background-color: #F6FAFF;
+}
+
+.cardSectionInterior {
+  border: 0.1em solid #A3CAF6;
+  border-radius: 1em;
+  height: 14em;
+  background: linear-gradient(270deg, rgba(240, 50, 110, 1) 0%, rgba(109, 92, 230, 1) 100%);
+}
+
+.cardUserImage {
+  height: 3em;
+  max-width: 3em;
+  border-radius: 2em;
+  border: 2px solid #FAFAFA;
+}
+
+.cardCoverImage {
+  height: 10em;
+  max-width: 10em;
+  border-radius: 1em;
+  border: 0.1em solid #FAFAFA;
+}
+
+.cardUserCP {
+  color: red;
+  line-height: 0.5em;
+  font-size: 0.8em
+}
+
+.cardProjectNumber {
+  color: grey;
+  line-height: 0.5em;
+  font-size: 1em
+}
+
+.cardProjectExterior {
+  border: 0.1em solid #A3CAF6;
+  border-radius: 1em;
+  width: 10em;
+  background-color: #F6FAFF;
+}
+
+.cardProjectSectionInterior {
+  border: 0.1em solid #A3CAF6;
+  border-radius: 1em;
+  height: 12em;
+  background: linear-gradient(270deg, rgba(240, 50, 110, 1) 0%, rgba(109, 92, 230, 1) 100%);
+}
+
+.scrollProjectAreaHorizontal {
+  height: 18em;
+  width: 100%;
+}
+
+.scrollProjectCreatorsAreaHorizontal {
+  height: 18em;
+  width: 100%;
+}
+
+.showcaseImage {
+  height: 4em;
+  max-width: 4em;
+  border-radius: 0.5em;
+  border: 0.1em solid #FAFAFA;
+}
+
+.scrollTagsHorizontal {
+  height: 4em;
+  width: 100%;
+}
+
+.cardProfileImage {
+  height: 7.5em;
+  max-width: 7.5em;
+  border-radius: 5em;
+  border: 0.1em solid #FAFAFA;
+}
+
+.createButton {
+  border-radius: 0.4em;
+  width: 12em;
+  font-size: 0.9em;
+  height: 4em
+}
