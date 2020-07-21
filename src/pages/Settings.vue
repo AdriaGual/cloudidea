@@ -6,7 +6,7 @@
       </div>
     </div>
     <p class="poppinsBold text-center window-width">My Settings</p>
-    <div class="window-width text-center justify-center q-pt-xl">
+    <div class="window-width text-center justify-center q-pt-lg">
       <q-avatar round size="11em">
         <img src="https://cdn.quasar.dev/img/avatar.png"
              style="border:0.1em solid white;"/>
