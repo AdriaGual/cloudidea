@@ -43,6 +43,10 @@ const routes = [
     component: () => import('pages/Register.vue'),
   },
   {
+    path: '/settings',
+    component: () => import('pages/Settings.vue'),
+  },
+  {
     path: '*',
     component: () => import('pages/Error404.vue'),
   },

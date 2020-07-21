@@ -1,7 +1,7 @@
 <template>
   <q-layout class="flex column q-pt-lg bgGlobal">
     <div class="row window-width q-px-md">
-      <q-btn flat round color="primary" class="bgGrey" icon="arrow_back"
+      <q-btn flat round color="primary" icon="arrow_back"
              @click="goToPage('/login')"/>
     </div>
 

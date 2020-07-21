@@ -14,11 +14,12 @@
         label="Log in"
       />
       <q-btn
-        v-if="userDetails.userId" round class="float-right">
+        v-if="userDetails.userId" round class="float-right"
+        @click="goToPage('/settings')">
         <q-avatar size="3em">
           <img src="https://cdn.quasar.dev/img/avatar2.jpg">
         </q-avatar>
-        
+
       </q-btn>
     </div>
 
