@@ -42,7 +42,6 @@ const actions = {
     firebaseAuth
     .createUserWithEmailAndPassword(payload.email, payload.password)
     .then(response => {
-      console.log(response);
       const userId = firebaseAuth.currentUser.uid;
       firebaseDB
       .ref("users/" + userId)
@@ -197,17 +196,11 @@ const actions = {
     .update(payload.updates);
   },
   firebaseCreatePublish({ dispatch }, payload) {
-    firebaseStorage
-    .ref(payload.publish.category + "/" + payload.publish.filename)
-    .getDownloadURL()
-    .then(function (url) {
-      dispatch("firebaseUpdatePublish", {
-        publishId: firebaseDB
-        .ref("publishings")
-        .push(payload.publish)
-        .getKey(),
-        updates: { fileURL: url }
-      });
+    firebaseDB.ref("publishings/").push(payload).then(publishing => {
+      firebaseStorage.ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
+      .put(payload.file);
+      firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
+      .put(payload.coverImage)
     });
   },
   firebaseUpdatePublish({}, payload) {
@@ -258,7 +251,6 @@ const actions = {
     .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
     .put(file.imageFile, metadata)
     .then(function (snapshot) {
-
       firebaseStorage
       .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
       .getDownloadURL().then(function (url) {
