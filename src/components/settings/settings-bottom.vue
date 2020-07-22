@@ -23,12 +23,17 @@
           </div>
           <div class="col">
             <p class="text-grey poppinsRegular float-right">
-              <q-icon name="edit" size="sm"/>
+              <q-icon v-if="!editDescription" name="edit" @click="editDescription=!editDescription"
+                      size="sm"/>
+              <q-icon v-if="editDescription" name="check"
+                      @click="editDescription=!editDescription|| updateUser('description')"
+                      size="sm" class="q-pl-md"/>
             </p>
           </div>
         </div>
 
-        <a>Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
+        <q-input rows="17" dense :borderless="!editDescription" :disable="!editDescription"
+                 :outlined="editDescription" v-model="description" type="textarea" clearable/>
 
       </q-tab-panel>
 
@@ -38,8 +43,13 @@
       </q-tab-panel>
 
       <q-tab-panel name="settings">
-        <div class="text-h6">Settings</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+
+        <p class="text-grey poppinsRegular">Language</p>
+        <q-select dense outlined class="bg-white"
+                  v-model="lang" :options="selectLang"/>
+        <q-btn flat no-caps class="text-blue poppinsRegular fixed-bottom "
+               @click="logOut()">Log Out
+        </q-btn>
       </q-tab-panel>
     </q-tab-panels>
   </q-card>
@@ -47,16 +57,63 @@
 
 <script>
   import ProjectCards from '../project-card/project-cards'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     data() {
       return {
-        tab: 'about'
+        tab: 'about',
+        description: '',
+        editDescription: false,
+        selectLang: [
+          {
+            label: "Castellano",
+            value: "es"
+          },
+          {
+            label: "English",
+            value: "en-us"
+          }
+        ],
+        lang: this.$i18n.locale
+      }
+    },
+    methods: {
+      ...mapActions('store', ['firebaseUpdateUser', 'updateUserState', 'logoutUser']),
+      updateUser(type) {
+        if (type === 'description') {
+          this.firebaseUpdateUser({
+            userId: this.userDetails.userId,
+            updates: { description: this.description }
+          });
+        }
+        this.updateUserState();
+      },
+      logOut() {
+        this.logoutUser();
+      },
+      searchLang(actualLang) {
+        var i = 0;
+        var found = false;
+        while (i < this.selectLang.length && !found) {
+          if (this.selectLang[i].value === actualLang) {
+            found = true
+          } else {
+            i++
+          }
+        }
+        return this.selectLang[i].label;
       }
     },
     components: {
       ProjectCards
     },
+    computed: {
+      ...mapState('store', ['userDetails']),
+    },
+    created() {
+      this.description = this.userDetails.description;
+    }
   }
 </script>
 

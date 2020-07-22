@@ -64,7 +64,7 @@ const actions = {
   },
   logoutUser() {
     firebaseAuth.signOut();
-    // this.$router.replace("/");
+    this.$router.replace("/");
   },
   handleAuthStateChanged({ commit, dispatch, state }) {
     firebaseAuth.onAuthStateChanged(user => {
@@ -78,6 +78,7 @@ const actions = {
             language: userDetails.language,
             skills: userDetails.skills,
             imageUrl: userDetails.imageUrl,
+            description: userDetails.description,
             userId: userId
           });
         });
@@ -116,6 +117,7 @@ const actions = {
         language: userDetails.language,
         skills: userDetails.skills,
         imageUrl: userDetails.imageUrl,
+        description: userDetails.description,
         userId: userId
       });
     });

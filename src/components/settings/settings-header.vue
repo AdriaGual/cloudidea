@@ -56,9 +56,7 @@
         · <a style="font-size: 1em" class="text-red poppinsBold">131 CP</a>
       </div>
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -76,8 +74,7 @@
       }
     },
     methods: {
-      ...mapActions('store', ['firebaseUpdateUser', 'updateUserState']),
-      ...mapActions("store", ["firebaseUploadProfilePic"]),
+      ...mapActions('store', ['firebaseUpdateUser', 'updateUserState', 'firebaseUploadProfilePic']),
       goToPage(route) {
         this.$router.push(route);
       },

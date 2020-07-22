@@ -62,9 +62,7 @@
         });
       },
       onSubmit() {
-        var response = this.loginUser(this.userData)
-        console.log("---------")
-        console.log(response)
+        var response = this.loginUser(this.userData);
       },
     }
   };
