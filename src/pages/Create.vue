@@ -53,6 +53,53 @@
             <q-radio v-model="publishing.needHelp" val="true" label="Need help" color="teal"/>
           </div>
         </div>
+        <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
+          <div class="col">
+            <q-checkbox v-model="publishing.needWrittingHelp" val="true" color="teal">
+              <q-icon name="history_edu" size="sm"/>
+            </q-checkbox>
+          </div>
+          <div class="col">
+            <q-checkbox v-model="publishing.needVideoHelp" val="true" color="teal">
+              <q-icon name="o_videocam" size="sm"/>
+            </q-checkbox>
+          </div>
+
+          <div class="col">
+            <q-checkbox v-model="publishing.needAudioHelp" val="true" color="teal">
+              <q-icon name="o_audiotrack" size="sm"/>
+            </q-checkbox>
+          </div>
+          <div class="col">
+            <q-checkbox v-model="publishing.needCodeHelp" val="true" color="teal">
+              <q-icon name="code" size="sm"/>
+            </q-checkbox>
+          </div>
+        </div>
+        <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
+          <div class="col">
+            <q-checkbox v-model="publishing.needDesignHelp" val="true" color="teal">
+              <q-icon name="o_palette" size="sm"/>
+            </q-checkbox>
+          </div>
+          <div class="col">
+            <q-checkbox v-model="publishing.needIdeaHelp" val="true" color="teal">
+              <q-icon name="o_emoji_objects" size="sm"/>
+            </q-checkbox>
+          </div>
+          <div class="col">
+            <q-checkbox v-model="publishing.needSellHelp" :val="publishing.needSellHelp"
+                        color="teal">
+              <q-icon name="attach_money" size="sm"/>
+            </q-checkbox>
+          </div>
+          <div class="col">
+            <q-checkbox v-model="publishing.needPromotionHelp" color="teal">
+              <q-icon name="favorite_border" size="sm"/>
+            </q-checkbox>
+          </div>
+
+        </div>
         <div class="row q-pb-xl text-center">
           <div class="col">
             <q-btn
@@ -85,6 +132,14 @@
           coverImage: null,
           file: null,
           needHelp: 'false',
+          needWrittingHelp: false,
+          needVideoHelp: false,
+          needAudioHelp: false,
+          needCodeHelp: false,
+          needDesignHelp: false,
+          needIdeaHelp: false,
+          needSellHelp: false,
+          needPromotionHelp: false,
         },
         categoryOptions: [
           'Music', 'Video', 'Image', 'Writting', 'Code', 'DIY', 'Conference', 'None of this'
@@ -97,8 +152,44 @@
     methods: {
       ...mapActions('store', ['firebaseCreatePublish']),
       onSubmit() {
-        this.publishing.creatorId = this.userDetails.userId;
-        this.firebaseCreatePublish(this.publishing);
+        var n = 0;
+        if (this.publishing.needHelp === 'true') {
+          if (this.publishing.needWrittingHelp) {
+            n++
+          }
+          if (this.publishing.needVideoHelp) {
+            n++
+          }
+          if (this.publishing.needAudioHelp) {
+            n++
+          }
+          if (this.publishing.needCodeHelp) {
+            n++
+          }
+          if (this.publishing.needDesignHelp) {
+            n++
+          }
+          if (this.publishing.needIdeaHelp) {
+            n++
+          }
+          if (this.publishing.needSellHelp) {
+            n++
+          }
+          if (this.publishing.needPromotionHelp) {
+            n++
+          }
+        }
+        if (n === 0) {
+          this.$q.notify({
+            type: 'negative',
+            position: 'top',
+            message: `You must choose atleast one type of help`
+          });
+        } else {
+          this.publishing.creatorId = this.userDetails.userId;
+          this.firebaseCreatePublish(this.publishing);
+        }
+
       },
       isEmptyField(val) {
         if (!(val && val.length > 0)) {
