@@ -17,7 +17,7 @@
         v-if="userDetails.userId" round class="float-right"
         @click="goToPage('/settings')">
         <q-avatar size="3em">
-          <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+          <img :src="userDetails.imageUrl">
         </q-avatar>
 
       </q-btn>

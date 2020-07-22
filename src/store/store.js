@@ -232,6 +232,40 @@ const actions = {
         commit("removePublish", { publishId });
       }
     });
+  },
+  firebaseUploadProfilePic({ dispatch }, file) {
+    var metadata;
+    var category;
+    metadata = {
+      contentType: "image/png"
+    };
+    category = "profilePics";
+
+    firebaseStorage
+    .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
+    .getDownloadURL()
+    .then((response) => {
+      firebaseStorage
+      .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
+      .delete()
+    })
+    .catch((err) => {
+    });
+
+    firebaseStorage
+    .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
+    .put(file.imageFile, metadata)
+    .then(function (snapshot) {
+
+      firebaseStorage
+      .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
+      .getDownloadURL().then(function (url) {
+        firebaseDB.ref("users/" + file.userId).update({
+          imageUrl: url
+        });
+        dispatch("updateUserState");
+      });
+    });
   }
 };
 

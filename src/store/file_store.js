@@ -30,32 +30,7 @@ const actions = {
     .ref(category + "/" + file.name + "_" + file.lastModified)
     .put(file, metadata)
     .then(function (snapshot) {
-      console.log("Uploaded a blob or file!", snapshot);
     });
-  },
-  firebaseUploadProfilePic({}, file) {
-    var metadata;
-    var category;
-    metadata = {
-      contentType: "image/png"
-    };
-    category = "profilePics";
-
-    firebaseStorage
-    .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
-    .put(file.imageFile, metadata)
-    .then(function (snapshot) {
-      console.log("Uploaded a blob or file!", snapshot);
-    });
-    firebaseStorage
-    .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
-    .getDownloadURL().then(function (url) {
-      firebaseDB.ref("users/" + file.userId).update({
-        imageUrl: url
-      });
-    });
-
-
   }
 };
 

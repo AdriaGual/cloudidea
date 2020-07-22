@@ -9,53 +9,51 @@
       </div>
       <div class="col-4">
       </div>
-
     </div>
 
-
     <div class="window-width text-center justify-center q-pt-lg">
-
       <q-avatar round size="11em">
-        <img :src="imageUrl" style="border:0.1em solid white;"/>
+        <img :src="userDetails.imageUrl" style="border:0.1em solid white;"/>
 
-        <q-badge floating color="accent" class="q-mt-md">
-          <q-file borderless v-model="imageFile" style="height:2.5em;width:1.7em" use-chips>
+        <q-badge floating color="accent" class="q-mt-md" style="border-radius: 2em">
+          <q-file borderless v-model="imageFile" style="height:2.5rem;width:1.7rem;font-size: 0"
+                  :filter="checkFileType" @rejected="onRejected" class="poppinsRegular">
             <template v-slot:prepend>
-              <q-icon name="o_camera" class="text-white" @click.stop/>
+              <q-icon name="o_add_a_photo" class="text-white" @click.stop/>
             </template>
           </q-file>
 
         </q-badge>
       </q-avatar>
     </div>
+
     <div class="row poppinsRegular">
       <div class="col-3"></div>
       <div class="col">
         <q-input dense :borderless="!editName" :disable="!editName" :outlined="editName"
                  style="font-size: 2em;" v-model="name"/>
       </div>
-      <div class="col-3">
-        <q-icon v-if="!editName" name="edit" @click="editName=!editName" size="sm" class="q-pt-sm"/>
+      <div class="col-3 text-grey q-pt-sm">
+        <q-icon v-if="!editName" name="edit" @click="editName=!editName" size="sm"/>
         <q-icon v-if="editName" name="check" @click="editName=!editName || updateUser('name')"
-                size="sm" class="q-pt-sm"/>
+                size="sm" class="q-pl-md"/>
       </div>
     </div>
 
     <div class="row poppinsRegular text-grey q-pt-sm">
-      <div class="col-3"></div>
+      <div class="col-2"></div>
       <div class="col">
         <q-input dense :borderless="!editSkills" :disable="!editSkills" :outlined="editSkills"
                  style="font-size: 1.2em" v-model="skills"/>
       </div>
-      <div class="col-1">
-        <q-icon v-if="!editSkills" name="edit" @click="editSkills=!editSkills" size="sm"
-                class="q-pt-sm"/>
+      <div class="col-1 q-pt-sm text-left">
+        <q-icon v-if="!editSkills" name="edit" @click="editSkills=!editSkills" size="sm"/>
         <q-icon v-if="editSkills" name="check"
                 @click="editSkills=!editSkills || updateUser('skills')"
-                size="sm" class="q-pt-sm"/>
+                size="sm" class="q-pl-md"/>
       </div>
-      <div class="col-2 q-pt-md">
-        <a style="font-size: 0.9em" class="text-red poppinsBold">131 CP</a>
+      <div class="col-4 text-center q-pt-md">
+        · <a style="font-size: 1em" class="text-red poppinsBold">131 CP</a>
       </div>
     </div>
 
@@ -74,15 +72,14 @@
         skills: '',
         editSkills: false,
         imageUrl: '',
-        imageFile: null
+        imageFile: null,
       }
     },
     methods: {
       ...mapActions('store', ['firebaseUpdateUser', 'updateUserState']),
-      ...mapActions("file_store", ["firebaseUploadProfilePic"]),
+      ...mapActions("store", ["firebaseUploadProfilePic"]),
       goToPage(route) {
-        this.$router.push(route).catch(error => {
-        });
+        this.$router.push(route);
       },
       updateUser(type) {
         if (type === 'name') {
@@ -102,24 +99,39 @@
         this.firebaseUploadProfilePic({
           imageFile: file,
           userId: this.userDetails.userId
+        }).then(() => {
+
+          this.$q.notify({
+            type: 'positive',
+            position: 'top',
+            message: `Updated image successfully!`
+          });
+
         });
-        this.updateUserState();
-        this.imageUrl = this.userDetails.imageUrl
+        this.imageUrl = this.userDetails.imageUrl;
       },
+      checkFileType(files) {
+        return files.filter(file => file.type === 'image/png')
+      },
+      onRejected(rejectedEntries) {
+        this.$q.notify({
+          type: 'negative',
+          position: 'top',
+          message: `${rejectedEntries.length} file(s) must be .png`
+        })
+      }
     },
     computed: {
       ...mapState('store', ['userDetails']),
     },
     watch: {
       imageFile: function (val) {
-        console.log(val);
         this.uploadFile(val);
       }
     },
     created() {
       this.name = this.userDetails.name;
       this.skills = this.userDetails.skills
-      this.imageUrl = this.userDetails.imageUrl
     }
   }
 </script>
