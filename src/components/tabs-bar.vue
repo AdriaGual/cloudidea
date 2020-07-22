@@ -13,13 +13,15 @@
       <q-tab name="create" icon="o_note_add" @click="goToPage('/create','create')"/>
       <q-tab name="brotherhood" icon="far fa-handshake"
              @click="goToPage('/brotherhood','brotherhood')"/>
+      <q-tab v-if="userDetails.moderator" name="moderate" icon="o_gavel"
+             @click="goToPage('/moderate','moderate')"/>
     </q-tabs>
   </div>
 
 </template>
 
 <script>
-  import Home from '../pages/Home'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     data() {
@@ -33,7 +35,10 @@
         this.$router.push(route).catch(error => {
         });
       }
-    }
+    },
+    computed: {
+      ...mapState('store', ['userDetails']),
+    },
   }
 </script>
 

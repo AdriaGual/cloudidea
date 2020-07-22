@@ -179,13 +179,14 @@
             n++
           }
         }
-        if (n === 0) {
+        if (n === 0 && this.publishing.needHelp === 'true') {
           this.$q.notify({
             type: 'negative',
             position: 'top',
             message: `You must choose atleast one type of help`
           });
         } else {
+          this.publishing.approved = false
           this.publishing.creatorId = this.userDetails.userId;
           this.firebaseCreatePublish(this.publishing);
         }

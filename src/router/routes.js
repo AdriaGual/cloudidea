@@ -28,6 +28,20 @@ const routes = [
     ],
   },
   {
+    path: '/moderate',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Moderate.vue') },
+    ],
+  },
+  {
+    path: '/moderate/users',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/ModerateUsers.vue') },
+    ],
+  },
+  {
     path: '/projects/:category',
     component: () => import('layouts/MainLayout.vue'),
     children: [

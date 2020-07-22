@@ -45,7 +45,14 @@ const actions = {
       const userId = firebaseAuth.currentUser.uid;
       firebaseDB
       .ref("users/" + userId)
-      .set({ name: payload.name, email: payload.email, language: 'es', skills: '', online: true });
+      .set({
+        name: payload.name,
+        email: payload.email,
+        language: 'es',
+        skills: '',
+        online: true,
+        imageUrl: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/profilePics%2Fdefault%2FdefaultProfilePicture.jpg?alt=media&token=bad4228c-c26a-47f4-a254-4d9e4f5a8b49'
+      });
     })
     .catch(error => {
       console.log(error.message);
@@ -78,6 +85,7 @@ const actions = {
             skills: userDetails.skills,
             imageUrl: userDetails.imageUrl,
             description: userDetails.description,
+            moderator: userDetails.moderator,
             userId: userId
           });
         });
@@ -117,6 +125,7 @@ const actions = {
         skills: userDetails.skills,
         imageUrl: userDetails.imageUrl,
         description: userDetails.description,
+        moderator: userDetails.moderator,
         userId: userId
       });
     });
@@ -150,6 +159,10 @@ const actions = {
         commit("removeUser", { userId });
       }
     });
+  },
+  firebaseDeleteUser({ commit }, payload) {
+    firebaseDB.ref("users/" + payload).remove();
+    commit("removeUser", { payload });
   },
   firebaseGetMessages({ commit, state }, otherUserId) {
     const userId = state.userDetails.userId;
@@ -265,29 +278,23 @@ const actions = {
 
 const getters = {
   users: state => {
-    const usersFiltered = {};
+    let usersFiltered = {};
     Object.keys(state.users).forEach(key => {
       if (key !== state.userDetails.userId) {
-        usersFiltered[key] = state.users[key];
+        usersFiltered[key] = state.users[key]
       }
     });
-
-    Object.keys(usersFiltered).forEach(key => {
-      const userId = state.userDetails.userId;
-      messagesRef = firebaseDB.ref("chats/" + userId + "/" + key);
-      messagesRef.on("child_added", snapshot => {
-        const messageDetails = snapshot.val();
-        const messageId = snapshot.key;
-
-        usersFiltered[key].hasEmailNotification =
-          messageId === "unreadMessages" && messageDetails === true;
-      });
+    return usersFiltered
+  },
+  /*publishings: state => {
+    let publishingsFiltered = {};
+    Object.keys(state.publishings).forEach(key => {
+      if (state.publishings[key].) {
+        usersFiltered[key] = state.users[key]
+      }
     });
-
-    console.log(usersFiltered);
-
-    return usersFiltered;
-  }
+    return usersFiltered
+  }*/
 };
 
 export default {
