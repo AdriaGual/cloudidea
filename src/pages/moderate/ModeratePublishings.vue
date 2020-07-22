@@ -12,11 +12,9 @@
     </div>
 
     <div v-for="(publish, key) in publishings" :key="key">
-      <q-item clickable v-ripple style="height: 4.5em" @click="goToPublishDetails(publish)">
+      <q-item clickable v-ripple @click="goToPublishDetails(publish)">
         <q-item-section side v-if="publish.coverImage">
-          <q-avatar rounded size="3.5em">
-            <img :src="publish.coverImage" style="border-radius: 0.2em"/>
-          </q-avatar>
+          <q-img :src="publish.coverImage" style="border-radius: 0.5em;height:4em;width: 4em"/>
         </q-item-section>
         <q-item-section>
           <q-item-label>{{publish.projectTitle}}</q-item-label>
@@ -27,7 +25,7 @@
             <div class="col">
               <q-icon v-if="publish.needHelp==='true'" name="construction" size="sm"
                       class="q-pt-sm"/>
-              <q-icon v-else name="o_check_circle" size="sm"
+              <q-icon v-else name="o_check_circle" size="sm" color="green"
                       class="q-pt-sm"/>
 
             </div>

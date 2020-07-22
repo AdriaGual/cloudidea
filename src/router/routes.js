@@ -50,10 +50,7 @@ const routes = [
   },
   {
     path: '/moderate/publishings/publishDetails',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/moderate/ModeratePublishDetails.vue') },
-    ],
+    component: () => import('pages/moderate/ModeratePublishDetails.vue'),
   },
   {
     path: '/projects/:category',
