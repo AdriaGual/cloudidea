@@ -1,18 +1,25 @@
 <template>
   <div>
+    <div class="row window-width">
+      <div class="col-4">
+        <q-btn class="q-pl-md" flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
+      </div>
+      <div class="col">
+        <p class="poppinsRegular text-center q-pt-md">My Settings</p>
+      </div>
+      <div class="col-4">
+      </div>
 
-    <q-btn class="q-pl-md" flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
+    </div>
 
-    <p class="poppinsBold text-center window-width">My Settings</p>
 
     <div class="window-width text-center justify-center q-pt-lg">
 
       <q-avatar round size="11em">
-        <img :src="imageUrl"
-             style="border:0.1em solid white;"/>
+        <img :src="imageUrl" style="border:0.1em solid white;"/>
 
         <q-badge floating color="accent" class="q-mt-md">
-          <q-file borderless v-model="imageFile" style="height:2.5em;width:1.7em">
+          <q-file borderless v-model="imageFile" style="height:2.5em;width:1.7em" use-chips>
             <template v-slot:prepend>
               <q-icon name="o_camera" class="text-white" @click.stop/>
             </template>
@@ -66,13 +73,13 @@
         editName: false,
         skills: '',
         editSkills: false,
-        imageUrl: 'https://cdn.quasar.dev/img/avatar.png',
+        imageUrl: '',
         imageFile: null
       }
     },
     methods: {
       ...mapActions('store', ['firebaseUpdateUser', 'updateUserState']),
-      ...mapActions("file_store", ["firebaseUploadFile"]),
+      ...mapActions("file_store", ["firebaseUploadProfilePic"]),
       goToPage(route) {
         this.$router.push(route).catch(error => {
         });
@@ -88,16 +95,16 @@
             userId: this.userDetails.userId,
             updates: { skills: this.skills }
           });
-        } else if (type === 'imageUrl') {
-          this.firebaseUpdateUser({
-            userId: this.userDetails.userId,
-            updates: { imageUrl: this.imageUrl }
-          });
         }
         this.updateUserState();
       },
       uploadFile(file) {
-        this.firebaseUploadFile(file);
+        this.firebaseUploadProfilePic({
+          imageFile: file,
+          userId: this.userDetails.userId
+        });
+        this.updateUserState();
+        this.imageUrl = this.userDetails.imageUrl
       },
     },
     computed: {
@@ -112,6 +119,7 @@
     created() {
       this.name = this.userDetails.name;
       this.skills = this.userDetails.skills
+      this.imageUrl = this.userDetails.imageUrl
     }
   }
 </script>

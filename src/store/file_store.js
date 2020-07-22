@@ -1,8 +1,7 @@
-import { firebaseStorage } from "boot/firebase";
+import { firebaseAuth, firebaseDB, firebaseStorage } from "boot/firebase";
 
 const actions = {
   firebaseUploadFile({}, file) {
-    console.log(file)
     var metadata;
     var category;
     if (file.name.substr(-3) === "pdf") {
@@ -24,7 +23,7 @@ const actions = {
       metadata = {
         contentType: "video/mp4"
       };
-      category = "videos";
+      category = "videos ";
     }
 
     firebaseStorage
@@ -33,6 +32,30 @@ const actions = {
     .then(function (snapshot) {
       console.log("Uploaded a blob or file!", snapshot);
     });
+  },
+  firebaseUploadProfilePic({}, file) {
+    var metadata;
+    var category;
+    metadata = {
+      contentType: "image/png"
+    };
+    category = "profilePics";
+
+    firebaseStorage
+    .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
+    .put(file.imageFile, metadata)
+    .then(function (snapshot) {
+      console.log("Uploaded a blob or file!", snapshot);
+    });
+    firebaseStorage
+    .ref(category + "/" + file.userId + "/" + file.imageFile.name + "_" + file.imageFile.lastModified)
+    .getDownloadURL().then(function (url) {
+      firebaseDB.ref("users/" + file.userId).update({
+        imageUrl: url
+      });
+    });
+
+
   }
 };
 
