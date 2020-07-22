@@ -38,7 +38,21 @@ const routes = [
     path: '/moderate/users',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/ModerateUsers.vue') },
+      { path: '', component: () => import('pages/moderate/ModerateUsers.vue') },
+    ],
+  },
+  {
+    path: '/moderate/publishings',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/moderate/ModeratePublishings.vue') },
+    ],
+  },
+  {
+    path: '/moderate/publishings/publishDetails',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/moderate/ModeratePublishDetails.vue') },
     ],
   },
   {

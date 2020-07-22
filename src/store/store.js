@@ -7,7 +7,8 @@ const state = {
   userDetails: {},
   users: {},
   messages: {},
-  publishings: {}
+  publishings: {},
+  publishDetails: {}
 };
 
 const mutations = {
@@ -34,7 +35,10 @@ const mutations = {
   },
   removePublish(state, payload) {
     Vue.delete(state.publishings, payload.publishId);
-  }
+  },
+  setPublishDetails(state, payload) {
+    state.publishDetails = payload;
+  },
 };
 
 const actions = {
@@ -211,9 +215,25 @@ const actions = {
   firebaseCreatePublish({ dispatch }, payload) {
     firebaseDB.ref("publishings/").push(payload).then(publishing => {
       firebaseStorage.ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
-      .put(payload.file);
+      .put(payload.file).then(function (snapshot) {
+        firebaseStorage
+        .ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
+        .getDownloadURL().then(function (url) {
+          firebaseDB.ref("publishings/" + publishing.key).update({
+            fileUrl: url
+          });
+        });
+      });
       firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
-      .put(payload.coverImage)
+      .put(payload.coverImage).then(function (snapshot) {
+        firebaseStorage
+        .ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
+        .getDownloadURL().then(function (url) {
+          firebaseDB.ref("publishings/" + publishing.key).update({
+            coverImage: url
+          });
+        });
+      });
     });
   },
   firebaseUpdatePublish({}, payload) {
@@ -225,6 +245,16 @@ const actions = {
       const publishId = snapshot.key;
 
       commit("addPublish", { publishId, publishDetails });
+    });
+  },
+  firebaseGetNotApprovedPublishings({ commit }) {
+    firebaseDB.ref("publishings").on("child_added", snapshot => {
+      const publishDetails = snapshot.val();
+      const publishId = snapshot.key;
+      if (!publishDetails.approved) {
+        commit("addPublish", { publishId, publishDetails });
+      }
+
     });
   },
   firebaseGetPublishings({ commit, state }, payload) {
@@ -240,6 +270,32 @@ const actions = {
         commit("removePublish", { publishId });
       }
     });
+  },
+  updatePublishDetails({ commit }, payload) {
+    console.log(payload)
+    commit("setPublishDetails", {
+      approved: payload.approved,
+      categoryModel: payload.categoryModel,
+      coverImage: payload.coverImage,
+      creatorId: payload.creatorId,
+      description: payload.description,
+      fileUrl: payload.fileUrl,
+      licenseNumber: payload.licenseNumber,
+      needAudioHelp: payload.needAudioHelp,
+      needCodeHelp: payload.needCodeHelp,
+      needDesignHelp: payload.needDesignHelp,
+      needHelp: payload.needHelp,
+      needIdeaHelp: payload.needIdeaHelp,
+      needPromotionHelp: payload.needPromotionHelp,
+      needSellHelp: payload.needSellHelp,
+      needVideoHelp: payload.needVideoHelp,
+      needWrittingHelp: payload.needWrittingHelp,
+      otherCategory: payload.otherCategory,
+      projectTitle: payload.projectTitle,
+      projectUrl: payload.projectUrl,
+      registerLicenseModel: payload.registerLicenseModel,
+    });
+
   },
   firebaseUploadProfilePic({ dispatch }, file) {
     var metadata;

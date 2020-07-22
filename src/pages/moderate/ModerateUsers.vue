@@ -12,10 +12,10 @@
     </div>
 
     <div v-for="(user, key) in users" :key="key">
-      <q-item clickable v-ripple>
+      <q-item clickable v-ripple style="height: 4.5em">
         <q-item-section side>
           <q-avatar rounded size="3.5em">
-            <q-img :src="user.imageUrl" style="border-radius: 0.2em"/>
+            <img :src="user.imageUrl" style="border-radius: 0.2em"/>
             <q-badge v-if="user.online" floating color="green"
                      style="border-radius: 0.5em;height: 1em"></q-badge>
           </q-avatar>
