@@ -98,9 +98,6 @@ const actions = {
           updates: { online: true }
         });
         dispatch("firebaseGetUsers");
-        /*if (this.$router.url !== '/') {
-          this.$router.push("/");
-        }*/
       } else {
         if (state.userDetails.userId) {
           dispatch("firebaseUpdateUser", {
@@ -272,7 +269,6 @@ const actions = {
     });
   },
   updatePublishDetails({ commit }, payload) {
-    console.log(payload)
     commit("setPublishDetails", {
       approved: payload.approved,
       categoryModel: payload.categoryModel,
@@ -294,6 +290,8 @@ const actions = {
       projectTitle: payload.projectTitle,
       projectUrl: payload.projectUrl,
       registerLicenseModel: payload.registerLicenseModel,
+      creatorImageUrl: payload.creatorImageUrl,
+      creatorName: payload.creatorName
     });
 
   },

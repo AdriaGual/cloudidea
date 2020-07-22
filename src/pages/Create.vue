@@ -186,7 +186,9 @@
             message: `You must choose atleast one type of help`
           });
         } else {
-          this.publishing.approved = false
+          this.publishing.approved = false;
+          this.publishing.creatorImageUrl = this.userDetails.imageUrl;
+          this.publishing.creatorName = this.userDetails.name;
           this.publishing.creatorId = this.userDetails.userId;
           this.firebaseCreatePublish(this.publishing);
         }

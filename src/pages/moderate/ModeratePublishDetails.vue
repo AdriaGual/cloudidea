@@ -18,13 +18,13 @@
     <div class="full-width row q-pl-lg q-pt-sm publishCardDetailsBottom">
       <div class="col-2 q-pt-xs">
         <q-img
-          :src="url"
+          :src="publishDetails.creatorImageUrl"
           spinner-color="white"
           class="cardUserImage"
         />
       </div>
       <div class="col q-pt-md">
-        <p style="line-height: 0.1em">Jesse Showalter</p>
+        <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
         <p class="cardUserCP">131 CP</p>
       </div>
       <div class="col-2 q-pr-lg q-pt-sm">
