@@ -103,7 +103,7 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
-      <q-dialog v-model="confirm" persistent>
+      <q-dialog v-model="confirm">
         <q-card>
           <q-card-section class="row items-center">
             <span class="poppinsRegular q-ml-sm">Are you sure you wanna accept the project {{publishDetails.projectTitle}} from {{publishDetails.creatorName}}?</span>
@@ -117,7 +117,7 @@
         </q-card>
       </q-dialog>
 
-      <q-dialog v-model="reject" persistent>
+      <q-dialog v-model="reject">
         <q-card>
           <q-card-section class="row items-center">
             <span class="poppinsRegular q-ml-sm">Are you sure you wanna accept the project {{publishDetails.projectTitle}} from {{publishDetails.creatorName}}?</span>
