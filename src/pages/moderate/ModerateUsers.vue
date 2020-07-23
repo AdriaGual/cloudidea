@@ -27,12 +27,12 @@
         <q-item-section side>
           <div class="row q-gutter-sm" v-if="!user.moderator">
             <div class="col">
-              <q-btn color="green" size="md" @click="promoteToModerator(key)">
+              <q-btn color="green" outline size="md" @click="promoteToModerator(key)">
                 <q-icon name="fas fa-crown" size="xs"/>
               </q-btn>
             </div>
             <div class="col">
-              <q-btn color="red" size="md" @click="deleteUser(key)">
+              <q-btn color="red" size="md" outline @click="deleteUser(key)">
                 <q-icon name="delete"/>
               </q-btn>
             </div>
