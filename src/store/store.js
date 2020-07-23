@@ -5,6 +5,7 @@ let messagesRef;
 
 const state = {
   userDetails: {},
+  usersFollowing: {},
   users: {},
   messages: {},
   publishings: {},
@@ -45,6 +46,12 @@ const mutations = {
   setPublishings(state, payload) {
     state.publishings = payload;
   },
+  addFollowing(state, payload) {
+    Vue.set(state.usersFollowing, payload.otherUserId, payload.followingName);
+  },
+  removeFollowing(state, payload) {
+    Vue.delete(state.usersFollowing, payload.otherUserId);
+  }
 };
 
 const actions = {
@@ -103,6 +110,16 @@ const actions = {
             cp: userDetails.cp
           });
         });
+        firebaseDB.ref("users/" + userId + "/following").on("child_added", snapshot => {
+          const followingName = snapshot.val();
+          const otherUserId = snapshot.key;
+          commit("addFollowing", {
+            otherUserId,
+            followingName: { followingName }
+          });
+        });
+
+
         dispatch("firebaseUpdateUser", {
           userId: userId,
           updates: { online: true }
@@ -214,6 +231,26 @@ const actions = {
       otherUserId: state.userDetails.userId,
       updates: { unreadMessages: false }
     });
+  },
+  firebaseAddFollowing({ commit }, payload) {
+    firebaseDB
+    .ref("users/" + state.userDetails.userId + "/following/" + payload.otherUserId)
+    .set(payload.otherUserName);
+    firebaseDB.ref("users/" + state.userDetails.userId + '/following/').on("child_added",
+      snapshot => {
+        const followingName = snapshot.val();
+        const otherUserId = payload.otherUserId
+
+        commit("addFollowing", {
+          otherUserId,
+          followingName: { followingName }
+        });
+      });
+  },
+  firebaseRemoveFollowing({ commit }, payload) {
+    firebaseDB.ref("users/" + state.userDetails.userId + "/following/" + payload.otherUserId)
+    .remove();
+    commit("removeFollowing", { otherUserId: payload.otherUserId });
   },
   firebaseUpdateUserMessageNotification({}, payload) {
     firebaseDB

@@ -31,12 +31,21 @@
       </div>
       <div class="col-2 q-pr-lg q-pt-sm">
         <q-btn
-          v-if="userDetails.userId !== publishDetails.creatorId"
+          v-if="userDetails.userId !== publishDetails.creatorId && alreadyFollowsCreator()===false"
           no-caps
           class="bgGrey float-right"
           style="width:9em;font-size: 0.9em;border-radius: 2em"
           icon="add"
           label="Follow"
+          @click="follow()"
+        />
+        <q-btn
+          v-if="userDetails.userId !== publishDetails.creatorId && alreadyFollowsCreator()===true"
+          no-caps
+          class="bg-accent text-white float-right"
+          style="width:9em;font-size: 0.9em;border-radius: 2em"
+          label="Following"
+          @click="unfollow()"
         />
       </div>
     </div>
@@ -142,7 +151,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish']),
+        ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', 'firebaseAddFollowing', 'firebaseRemoveFollowing']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -161,10 +170,30 @@
           publishId: this.publishDetails.key
         });
         this.goToPage('/moderate/publishings')
+      },
+      follow() {
+        this.firebaseAddFollowing({
+          otherUserId: this.publishDetails.creatorId,
+          otherUserName: this.publishDetails.creatorName
+        });
+      },
+      unfollow() {
+        this.firebaseRemoveFollowing({
+          otherUserId: this.publishDetails.creatorId
+        });
+      },
+      alreadyFollowsCreator() {
+        var found = false;
+        for (let followingId in this.usersFollowing) {
+          if (followingId === this.publishDetails.creatorId) {
+            found = true;
+          }
+        }
+        return found
       }
     },
     computed: {
-      ...mapState('store', ['publishDetails', 'userDetails']),
+      ...mapState('store', ['publishDetails', 'userDetails', 'usersFollowing']),
       fileSize: function () {
         function formatBytes(a, b = 2) {
           if (0 === a) return "0 Bytes";
