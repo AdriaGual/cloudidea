@@ -386,7 +386,7 @@ const actions = {
     });
   },
   firebaseGetApprovedPublishings({ commit }) {
-    firebaseDB.ref("publishings").on("child_added", snapshot => {
+    firebaseDB.ref("publishings").orderByChild('timeStamp').on("child_added", snapshot => {
       const publishDetails = snapshot.val();
       const publishId = snapshot.key;
       if (publishDetails.approved) {

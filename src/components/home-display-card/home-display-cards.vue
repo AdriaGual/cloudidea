@@ -16,19 +16,20 @@
                 <div style="line-height: 0.5;">
                   <p style="font-size: 0.8em" class="text-grey">
                     {{releaseDate(publish.releaseDate)}}</p>
-                  <p style="font-size: 1em" class="text-white">{{publish.projectTitle}}</p>
+                  <p class="text-white" style="font-size: 1.2em">{{publish.projectTitle}}</p>
                 </div>
+                <p class="poppinsLight text-grey" style="font-size: 0.9em">
+                  {{publish.description.substring(0,80)+".."}}</p>
+
               </div>
 
-              <div class="col q-px-md q-pt-lg">
+              <div class="col q-pt-xl q-pr-md">
                 <q-img
                   v-if="publish.coverImage"
                   :src="publish.coverImage"
                   spinner-color="white"
                   class="cardCoverImage"
                 />
-                <p v-else class="poppinsLight text-grey" style="font-size: 0.9em">
-                  {{publish.description}}</p>
               </div>
             </div>
           </div>

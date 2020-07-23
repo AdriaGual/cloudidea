@@ -161,7 +161,7 @@
       approveProject() {
         this.firebaseUpdatePublish({
           publishId: this.publishDetails.key,
-          updates: { approved: true, releaseDate: Date.now() }
+          updates: { approved: true, releaseDate: Date.now(), timeStamp: -Date.now() }
         });
         this.goToPage('/moderate/publishings')
       },
