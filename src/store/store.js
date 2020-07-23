@@ -44,6 +44,9 @@ const mutations = {
   setPublishDetails(state, payload) {
     state.publishDetails = payload;
   },
+  updatePublishDetailsMutation(state, payload) {
+    Object.assign(state.publishDetails, payload.publishDetails);
+  },
   setPublishings(state, payload) {
     state.publishings = payload;
   },
@@ -294,6 +297,9 @@ const actions = {
         userId: payload.otherUserId,
         updates: { cp: likedCp }
       });
+      commit("updatePublishDetailsMutation", {
+        publishDetails: { creatorCP: likedCp }
+      })
     });
   },
   firebaseRemoveLike({ commit, dispatch }, payload) {
@@ -311,6 +317,9 @@ const actions = {
         userId: payload.otherUserId,
         updates: { cp: likedCp }
       });
+      commit("updatePublishDetailsMutation", {
+        publishDetails: { creatorCP: likedCp }
+      })
     });
   },
   firebaseGetLikes({ commit }) {

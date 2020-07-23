@@ -7,7 +7,6 @@
     <div class="row no-wrap" style="height:19em;">
       <q-card
         class="cardExterior q-mr-sm" v-for="(publish, key) in publishings" :key="key"
-
       >
         <q-card-section class="no-padding" @click="goToPublishDetails(publish, key)">
           <div

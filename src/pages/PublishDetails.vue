@@ -47,6 +47,31 @@
           @click="unfollow()"
         />
       </div>
+      <div class="col-2">
+        <q-btn
+          rounded
+          flat
+          v-if="userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===false"
+          no-caps
+          class="float-right"
+          icon="favorite_border"
+          color="accent"
+          size="lg"
+          :ripple="false"
+          @click="like(publishDetails,publishDetails.key)"
+        />
+        <q-btn
+          v-if="userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===true"
+          no-caps
+          flat
+          :ripple="false"
+          size="lg"
+          class=" float-right"
+          icon="favorite"
+          color="accent"
+          @click="dislike(publishDetails,publishDetails.key)"
+        />
+      </div>
     </div>
     <div class="window-width q-pt-lg q-px-lg">
       <q-card style="border-top-left-radius: 1em;border-top-right-radius: 1em">
@@ -153,8 +178,7 @@
     methods: {
       ...mapActions('store',
         ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', 'firebaseAddFollowing', 'firebaseRemoveFollowing', "firebaseGetMessages",
-          "firebaseStopGettingMessages",
-          "firebaseSendMessage"]),
+          "firebaseStopGettingMessages", "firebaseSendMessage", 'firebaseAddLike', 'firebaseRemoveLike']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -195,9 +219,27 @@
         this.newMessage = "";
         this.$refs.newMessage.focus();
       },
+      like(publish, key) {
+        this.firebaseAddLike({ otherUserId: publish.creatorId, otherPublishingId: key })
+
+      },
+      dislike(publish, key) {
+        this.firebaseRemoveLike({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      alreadyLikesPublish(publish, key) {
+        var found = false;
+
+        for (let likedId in this.userLikedPublishings) {
+          if (likedId === key) {
+            found = true;
+          }
+        }
+        return found
+      },
     },
     computed: {
-      ...mapState('store', ['publishDetails', 'userDetails', 'usersFollowing', "messages"]),
+      ...mapState('store',
+        ['publishDetails', 'userDetails', 'usersFollowing', 'messages', 'userLikedPublishings']),
       fileSize: function () {
         function formatBytes(a, b = 2) {
           if (0 === a) return "0 Bytes";
