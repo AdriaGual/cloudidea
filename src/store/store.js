@@ -36,6 +36,9 @@ const mutations = {
   removePublish(state, payload) {
     Vue.delete(state.publishings, payload.publishId);
   },
+  updatePublish(state, payload) {
+    Object.assign(state.publishings[payload.publishId], payload.publishDetails);
+  },
   setPublishDetails(state, payload) {
     state.publishDetails = payload;
   },
@@ -240,8 +243,14 @@ const actions = {
       });
     });
   },
-  firebaseUpdatePublish({}, payload) {
+  firebaseUpdatePublish({ commit }, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
+    var publishId = payload.publishId;
+    var publishDetails = payload.updates
+    commit("updatePublish", {
+      publishId,
+      publishDetails
+    });
   },
   firebaseDeletePublish({ commit }, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).remove();

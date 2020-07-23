@@ -12,7 +12,7 @@
     </div>
 
     <div v-for="(publish, key) in publishings" :key="key">
-      <q-item clickable v-ripple @click="goToPublishDetails(publish,key)">
+      <q-item clickable v-ripple @click="goToPublishDetails(publish,key)" v-if="!publish.approved">
         <q-item-section side v-if="publish.coverImage">
           <q-img :src="publish.coverImage" style="border-radius: 0.5em;height:4em;width: 4em"/>
         </q-item-section>
@@ -81,7 +81,6 @@
         this.$router.push(route)
       },
       goToPublishDetails(publish, key) {
-        console.log(key)
         publish.key = key;
         this.updatePublishDetails(publish);
         this.goToPage('/moderate/publishings/publishDetails')
