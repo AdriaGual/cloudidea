@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column q-pb-xl">
-    <div class="row" style="height: 4em">
+    <div class="row">
       <div class="col-1 q-pl-md">
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/moderate')"/>
       </div>
@@ -12,7 +12,8 @@
     </div>
 
     <div v-for="(publish, key) in publishings" :key="key">
-      <q-item clickable v-ripple @click="goToPublishDetails(publish,key)" v-if="!publish.approved">
+      <q-item clickable v-ripple @click="goToPublishDetails(publish,key)" v-if="!publish.approved"
+      >
         <q-item-section side v-if="publish.coverImage">
           <q-img :src="publish.coverImage" style="border-radius: 0.5em;height:4em;width: 4em"/>
         </q-item-section>
