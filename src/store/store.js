@@ -6,6 +6,7 @@ let messagesRef;
 const state = {
   userDetails: {},
   usersFollowing: {},
+  userLikedPublishings: {},
   users: {},
   messages: {},
   publishings: {},
@@ -51,6 +52,12 @@ const mutations = {
   },
   removeFollowing(state, payload) {
     Vue.delete(state.usersFollowing, payload.otherUserId);
+  },
+  addLike(state, payload) {
+    Vue.set(state.userLikedPublishings, payload.otherPublishingId, payload.otherUserId);
+  },
+  removeLike(state, payload) {
+    Vue.delete(state.userLikedPublishings, payload.otherPublishingId);
   }
 };
 
@@ -119,12 +126,23 @@ const actions = {
           });
         });
 
+        firebaseDB.ref("users/" + userId + '/likedPublishings').on("child_added",
+          snapshot => {
+            const otherPublishingId = snapshot.key;
+            const otherUserId = snapshot.val();
+            commit("addLike", {
+              otherPublishingId,
+              otherUserId: { otherUserId }
+            });
+          });
+
 
         dispatch("firebaseUpdateUser", {
           userId: userId,
           updates: { online: true }
         });
         dispatch("firebaseGetUsers");
+        dispatch("firebaseGetLikes")
       } else {
         if (state.userDetails.userId) {
           dispatch("firebaseUpdateUser", {
@@ -252,6 +270,60 @@ const actions = {
     .remove();
     commit("removeFollowing", { otherUserId: payload.otherUserId });
   },
+  firebaseAddLike({ commit, dispatch }, payload) {
+    firebaseDB
+    .ref("users/" + state.userDetails.userId + "/likedPublishings/" + payload.otherPublishingId)
+    .set(payload.otherUserId);
+    firebaseDB.ref("users/" + state.userDetails.userId + '/likedPublishings/').on("child_added",
+      snapshot => {
+        const otherPublishingId = snapshot.key;
+        const otherUserId = payload.otherUserId
+        commit("addLike", {
+          otherPublishingId,
+          otherUserId: { otherUserId }
+        });
+      });
+    firebaseDB.ref("users/" + payload.otherUserId + '/cp').once('value', function (snapshot) {
+      var likedCp = snapshot.val() + 1;
+      firebaseDB.ref("users/" + payload.otherUserId).update({ cp: likedCp });
+      dispatch("firebaseUpdatePublish", {
+        publishId: payload.otherPublishingId,
+        updates: { creatorCP: likedCp }
+      });
+      dispatch("firebaseUpdateUser", {
+        userId: payload.otherUserId,
+        updates: { cp: likedCp }
+      });
+    });
+  },
+  firebaseRemoveLike({ commit, dispatch }, payload) {
+    firebaseDB.ref("users/" + state.userDetails.userId + "/likedPublishings/" + payload.otherPublishingId)
+    .remove();
+    commit("removeLike", { otherPublishingId: payload.otherPublishingId });
+    firebaseDB.ref("users/" + payload.otherUserId + '/cp').once('value', function (snapshot) {
+      var likedCp = snapshot.val() - 1;
+      firebaseDB.ref("users/" + payload.otherUserId).update({ cp: likedCp });
+      dispatch("firebaseUpdatePublish", {
+        publishId: payload.otherPublishingId,
+        updates: { creatorCP: likedCp }
+      });
+      dispatch("firebaseUpdateUser", {
+        userId: payload.otherUserId,
+        updates: { cp: likedCp }
+      });
+    });
+  },
+  firebaseGetLikes({ commit }) {
+    firebaseDB.ref("users/" + state.userDetails.userId + '/likedPublishings').on("child_added",
+      snapshot => {
+        const otherPublishingId = snapshot.key;
+        const otherUserId = snapshot.val();
+        commit("addLike", {
+          otherPublishingId,
+          otherUserId: { otherUserId }
+        });
+      });
+  },
   firebaseUpdateUserMessageNotification({}, payload) {
     firebaseDB
     .ref("chats/" + payload.otherUserId + "/" + payload.userId)
@@ -286,7 +358,7 @@ const actions = {
   firebaseUpdatePublish({ commit }, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
     var publishId = payload.publishId;
-    var publishDetails = payload.updates
+    var publishDetails = payload.updates;
     commit("updatePublish", {
       publishId,
       publishDetails
@@ -319,20 +391,6 @@ const actions = {
       const publishId = snapshot.key;
       if (publishDetails.approved) {
         commit("addPublish", { publishId, publishDetails });
-      }
-    });
-  },
-  firebaseGetPublishings({ commit, state }, payload) {
-    firebaseDB.ref("publishings").on("child_added", snapshot => {
-      const publishDetails = snapshot.val();
-      const publishId = snapshot.key;
-
-      if (
-        publishDetails.title.toLowerCase().startsWith(payload.toLowerCase())
-      ) {
-        commit("addPublish", { publishId, publishDetails });
-      } else {
-        commit("removePublish", { publishId });
       }
     });
   },

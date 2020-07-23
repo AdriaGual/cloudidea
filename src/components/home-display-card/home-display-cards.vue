@@ -18,30 +18,6 @@
                     {{releaseDate(publish.releaseDate)}}</p>
                   <p style="font-size: 1em" class="text-white">{{publish.projectTitle}}</p>
                 </div>
-                <!--<div class="q-pt-xl">
-                  <q-img
-                    :src="url"
-                    spinner-color="white"
-                    class="cardUserImage"
-                    style="position: relative;"
-                  />
-                  <q-img
-                    :src="url"
-                    spinner-color="white"
-                    class="cardUserImage"
-                    style="position: absolute;left: 3.5em;"
-                  />
-                  <q-img
-                    :src="url"
-                    spinner-color="white"
-                    class="cardUserImage"
-                    style="position: absolute;left: 5.7em;"
-                  />
-                  <p style="font-size: 0.8em" class="text-white poppinsThin">Dave, Claire and 20
-                    more
-                    like
-                    this</p>
-                </div>-->
               </div>
 
               <div class="col q-px-md q-pt-lg">
@@ -72,11 +48,46 @@
             </div>
             <div class="col q-pt-sm q-pr-sm">
               <q-btn
-                v-if="publish.creatorId!==userDetails.userId && userDetails.userId"
+                v-if="userDetails.userId !== publish.creatorId && alreadyFollowsCreator(publish)===false"
                 no-caps
-                class="bgGrey float-right followButton"
+                class="bgGrey float-right"
+                style="width:9em;font-size: 0.9em;border-radius: 2em"
                 icon="add"
                 label="Follow"
+                @click="follow(publish)"
+              />
+              <q-btn
+                v-if="userDetails.userId !== publish.creatorId && alreadyFollowsCreator(publish)===true"
+                no-caps
+                class="bg-accent text-white float-right"
+                style="width:9em;font-size: 0.9em;border-radius: 2em"
+                label="Following"
+                @click="unfollow(publish)"
+              />
+            </div>
+            <div class="col-2">
+              <q-btn
+                rounded
+                flat
+                v-if="userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===false"
+                no-caps
+                class="float-right"
+                icon="favorite_border"
+                color="accent"
+                size="lg"
+                :ripple="false"
+                @click="like(publish,key)"
+              />
+              <q-btn
+                v-if="userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===true"
+                no-caps
+                flat
+                :ripple="false"
+                size="lg"
+                class=" float-right"
+                icon="favorite"
+                color="accent"
+                @click="dislike(publish,key)"
               />
             </div>
           </div>
@@ -93,7 +104,7 @@
   export default {
     methods: {
       ...mapActions('store',
-        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'clearPublishings']),
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'clearPublishings', 'firebaseAddFollowing', 'firebaseRemoveFollowing', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
       releaseDate: function (date) {
         var formattedDate = '';
         if (date) {
@@ -119,13 +130,50 @@
           }
         }
         return formattedDate;
-      }
+      },
+      follow(publish) {
+        this.firebaseAddFollowing({
+          otherUserId: publish.creatorId,
+          otherUserName: publish.creatorName
+        });
+      },
+      unfollow(publish) {
+        this.firebaseRemoveFollowing({
+          otherUserId: publish.creatorId
+        });
+      },
+      alreadyFollowsCreator(publish) {
+        var found = false;
+        for (let followingId in this.usersFollowing) {
+          if (followingId === publish.creatorId) {
+            found = true;
+          }
+        }
+        return found
+      },
+      like(publish, key) {
+        this.firebaseAddLike({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      dislike(publish, key) {
+        this.firebaseRemoveLike({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      alreadyLikesPublish(publish, key) {
+        var found = false;
+
+        for (let likedId in this.userLikedPublishings) {
+          if (likedId === key) {
+            found = true;
+          }
+        }
+        return found
+      },
     },
     computed: {
-      ...mapState('store', ['publishings', 'userDetails']),
+      ...mapState('store',
+        ['publishings', 'userDetails', 'usersFollowing', 'userLikedPublishings']),
     },
     created() {
-      this.clearPublishings()
+      this.clearPublishings();
       this.firebaseGetApprovedPublishings()
     }
   };
