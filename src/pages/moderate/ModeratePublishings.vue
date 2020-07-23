@@ -1,7 +1,7 @@
 <template>
-  <q-page class="flex column">
+  <q-page class="flex column q-pb-xl">
     <div class="row" style="height: 4em">
-      <div class="col-1">
+      <div class="col-1 q-pl-md">
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/moderate')"/>
       </div>
       <div class="col text-center">
@@ -12,7 +12,7 @@
     </div>
 
     <div v-for="(publish, key) in publishings" :key="key">
-      <q-item clickable v-ripple @click="goToPublishDetails(publish)">
+      <q-item clickable v-ripple @click="goToPublishDetails(publish,key)">
         <q-item-section side v-if="publish.coverImage">
           <q-img :src="publish.coverImage" style="border-radius: 0.5em;height:4em;width: 4em"/>
         </q-item-section>
@@ -67,7 +67,7 @@
       </q-item>
       <q-separator inset=""></q-separator>
     </div>
-
+    <div class=" q-pb-xl"></div>
   </q-page>
 </template>
 
@@ -80,16 +80,9 @@
       goToPage(route) {
         this.$router.push(route)
       },
-      promoteToModerator(key) {
-        this.firebaseUpdateUser({
-          userId: key,
-          updates: { moderator: true }
-        });
-      },
-      deleteUser(key) {
-        this.firebaseDeleteUser(key)
-      },
-      goToPublishDetails(publish) {
+      goToPublishDetails(publish, key) {
+        console.log(key)
+        publish.key = key;
         this.updatePublishDetails(publish);
         this.goToPage('/moderate/publishings/publishDetails')
       }

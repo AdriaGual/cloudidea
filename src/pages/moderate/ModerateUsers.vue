@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex column">
-    <div class="row ">
-      <div class="col-1">
+    <div class="row">
+      <div class="col-1 q-pl-md">
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/moderate')"/>
       </div>
       <div class="col text-center">

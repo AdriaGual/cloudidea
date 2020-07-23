@@ -47,9 +47,9 @@
         <p class="text-grey poppinsRegular">Language</p>
         <q-select dense outlined class="bg-white"
                   v-model="lang" :options="selectLang"/>
-        <q-btn flat no-caps class="text-blue poppinsRegular fixed-bottom "
-               @click="logOut()">Log Out
-        </q-btn>
+        <p class="text-blue poppinsRegular q-pt-md"
+           @click="logOut()">Log Out
+        </p>
       </q-tab-panel>
     </q-tab-panels>
   </q-card>

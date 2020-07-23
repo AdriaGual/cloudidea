@@ -55,6 +55,9 @@ const actions = {
         language: 'es',
         skills: '',
         online: true,
+        cp: 0,
+        moderator: false,
+        description: "",
         imageUrl: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/profilePics%2Fdefault%2FdefaultProfilePicture.jpg?alt=media&token=bad4228c-c26a-47f4-a254-4d9e4f5a8b49'
       });
     })
@@ -90,7 +93,8 @@ const actions = {
             imageUrl: userDetails.imageUrl,
             description: userDetails.description,
             moderator: userDetails.moderator,
-            userId: userId
+            userId: userId,
+            cp: userDetails.cp
           });
         });
         dispatch("firebaseUpdateUser", {
@@ -127,7 +131,8 @@ const actions = {
         imageUrl: userDetails.imageUrl,
         description: userDetails.description,
         moderator: userDetails.moderator,
-        userId: userId
+        userId: userId,
+        cp: userDetails.cp,
       });
     });
   },
@@ -217,6 +222,8 @@ const actions = {
         .ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
         .getDownloadURL().then(function (url) {
           firebaseDB.ref("publishings/" + publishing.key).update({
+            fileSize: payload.file.size,
+            fileName: payload.file.name,
             fileUrl: url
           });
         });
@@ -224,7 +231,7 @@ const actions = {
       firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
       .put(payload.coverImage).then(function (snapshot) {
         firebaseStorage
-        .ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
+        .ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
         .getDownloadURL().then(function (url) {
           firebaseDB.ref("publishings/" + publishing.key).update({
             coverImage: url
@@ -235,6 +242,10 @@ const actions = {
   },
   firebaseUpdatePublish({}, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
+  },
+  firebaseDeletePublish({ commit }, payload) {
+    firebaseDB.ref("publishings/" + payload.publishId).remove();
+    commit("removePublish", { publishId: payload.publishId });
   },
   firebaseGetAllPublishings({ commit }) {
     firebaseDB.ref("publishings").on("child_added", snapshot => {
@@ -251,7 +262,6 @@ const actions = {
       if (!publishDetails.approved) {
         commit("addPublish", { publishId, publishDetails });
       }
-
     });
   },
   firebaseGetPublishings({ commit, state }, payload) {
@@ -291,7 +301,11 @@ const actions = {
       projectUrl: payload.projectUrl,
       registerLicenseModel: payload.registerLicenseModel,
       creatorImageUrl: payload.creatorImageUrl,
-      creatorName: payload.creatorName
+      creatorName: payload.creatorName,
+      creatorCP: payload.creatorCP,
+      fileName: payload.fileName,
+      fileSize: payload.fileSize,
+      key: payload.key
     });
 
   },

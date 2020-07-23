@@ -58,12 +58,12 @@
         }
       },
       isShortField(val, n, item) {
-        if (!(val && val.length > n)) {
+        if (!(val && val.length >= n)) {
           return 'Short ' + item + ',' + n + ' characters required'
         }
       },
       isEmptyField(val) {
-        if (!(val && val.length > 0)) {
+        if (!(val && val.length >= 0)) {
           return 'Please type something'
         }
       },

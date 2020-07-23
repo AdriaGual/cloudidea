@@ -61,12 +61,12 @@
         }
       },
       isShortField(val, n, item) {
-        if (!(val && val.length > n)) {
+        if (!(val && val.length >= n)) {
           return 'Short ' + item + ',' + n + ' characters required'
         }
       },
       isEmptyField(val) {
-        if (!(val && val.length > 0)) {
+        if (!(val && val.length >= 0)) {
           return 'Please type something'
         }
       },
@@ -95,7 +95,7 @@
             textColor: 'white',
             icon: 'cloud_done',
             position: 'top',
-            message: 'Submitted'
+            message: "You've been registered correctly!"
           });
           this.goToPage('/');
         }
