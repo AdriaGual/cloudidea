@@ -76,7 +76,8 @@
 
   export default {
     methods: {
-      ...mapActions('store', ['firebaseGetNotApprovedPublishings', 'updatePublishDetails']),
+      ...mapActions('store',
+        ['firebaseGetNotApprovedPublishings', 'updatePublishDetails', 'clearPublishings']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -90,6 +91,7 @@
       ...mapState('store', ['publishings']),
     },
     created() {
+      this.clearPublishings()
       this.firebaseGetNotApprovedPublishings()
     }
   };

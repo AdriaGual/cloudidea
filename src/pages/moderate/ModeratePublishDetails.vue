@@ -130,6 +130,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { openURL } from 'quasar'
+  import { date } from 'quasar'
 
   export default {
     data() {
@@ -151,7 +152,7 @@
       approveProject() {
         this.firebaseUpdatePublish({
           publishId: this.publishDetails.key,
-          updates: { approved: true }
+          updates: { approved: true, releaseDate: Date.now() }
         });
         this.goToPage('/moderate/publishings')
       },

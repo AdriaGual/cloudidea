@@ -42,6 +42,9 @@ const mutations = {
   setPublishDetails(state, payload) {
     state.publishDetails = payload;
   },
+  setPublishings(state, payload) {
+    state.publishings = payload;
+  },
 };
 
 const actions = {
@@ -273,6 +276,15 @@ const actions = {
       }
     });
   },
+  firebaseGetApprovedPublishings({ commit }) {
+    firebaseDB.ref("publishings").on("child_added", snapshot => {
+      const publishDetails = snapshot.val();
+      const publishId = snapshot.key;
+      if (publishDetails.approved) {
+        commit("addPublish", { publishId, publishDetails });
+      }
+    });
+  },
   firebaseGetPublishings({ commit, state }, payload) {
     firebaseDB.ref("publishings").on("child_added", snapshot => {
       const publishDetails = snapshot.val();
@@ -286,6 +298,9 @@ const actions = {
         commit("removePublish", { publishId });
       }
     });
+  },
+  clearPublishings({ commit }) {
+    commit("setPublishings", {});
   },
   updatePublishDetails({ commit }, payload) {
     commit("setPublishDetails", {
