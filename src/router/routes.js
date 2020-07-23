@@ -60,6 +60,13 @@ const routes = [
     ],
   },
   {
+    path: '/publishDetails',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/PublishDetails.vue') },
+    ],
+  },
+  {
     path: '/login',
     component: () => import('pages/Login.vue'),
   },
