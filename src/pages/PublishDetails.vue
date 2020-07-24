@@ -28,23 +28,14 @@
         <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
         <p class="cardUserCP">{{publishDetails.creatorCP}} CP</p>
       </div>
-      <div class="col-2 q-pr-lg q-pt-sm">
+      <div class="col q-pr-sm  q-pt-sm">
         <q-btn
-          v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFollowsCreator()===false"
+          v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
           no-caps
           class="bgGrey float-right"
           style="width:9em;font-size: 0.9em;border-radius: 2em"
-          icon="add"
-          label="Follow"
-          @click="follow()"
-        />
-        <q-btn
-          v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFollowsCreator()===true"
-          no-caps
-          class="bg-accent text-white float-right"
-          style="width:9em;font-size: 0.9em;border-radius: 2em"
-          label="Following"
-          @click="unfollow()"
+          label="Chat"
+          @click="chat()"
         />
       </div>
       <div class="col-2">
@@ -56,21 +47,23 @@
           class="float-right"
           icon="favorite_border"
           color="accent"
-          size="lg"
+          size="md"
           :ripple="false"
           @click="like(publishDetails,publishDetails.key)"
         />
         <q-btn
           v-if="userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===true"
           no-caps
+          rounded
           flat
           :ripple="false"
-          size="lg"
-          class=" float-right"
+          size="md"
+          class="float-right"
           icon="favorite"
           color="accent"
           @click="dislike(publishDetails,publishDetails.key)"
         />
+        <p class="cardUserCP q-pl-md">{{publishDetails.creatorCP}} CP</p>
       </div>
     </div>
     <div class="window-width q-pt-lg q-px-lg">
@@ -177,7 +170,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', 'firebaseAddFollowing', 'firebaseRemoveFollowing', "firebaseGetMessages",
+        ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', "firebaseGetMessages",
           "firebaseStopGettingMessages", "firebaseSendMessage", 'firebaseAddLike', 'firebaseRemoveLike']),
       goToPage(route) {
         this.$router.push(route)
@@ -185,25 +178,7 @@
       downloadFile() {
         openURL(this.publishDetails.fileUrl)
       },
-      follow() {
-        this.firebaseAddFollowing({
-          otherUserId: this.publishDetails.creatorId,
-          otherUserName: this.publishDetails.creatorName
-        });
-      },
-      unfollow() {
-        this.firebaseRemoveFollowing({
-          otherUserId: this.publishDetails.creatorId
-        });
-      },
-      alreadyFollowsCreator() {
-        var found = false;
-        for (let followingId in this.usersFollowing) {
-          if (followingId === this.publishDetails.creatorId) {
-            found = true;
-          }
-        }
-        return found
+      chat() {
       },
       sendMessage() {
         if (this.newMessage !== '') {
@@ -239,7 +214,7 @@
     },
     computed: {
       ...mapState('store',
-        ['publishDetails', 'userDetails', 'usersFollowing', 'messages', 'userLikedPublishings']),
+        ['publishDetails', 'userDetails', 'messages', 'userLikedPublishings']),
       fileSize: function () {
         function formatBytes(a, b = 2) {
           if (0 === a) return "0 Bytes";

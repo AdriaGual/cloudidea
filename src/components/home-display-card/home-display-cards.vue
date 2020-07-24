@@ -49,21 +49,12 @@
             </div>
             <div class="col q-pt-sm q-pr-sm">
               <q-btn
-                v-if="userDetails.userId !== publish.creatorId && alreadyFollowsCreator(publish)===false"
+                v-if="userDetails.userId && userDetails.userId !== publish.creatorId"
                 no-caps
                 class="bgGrey float-right"
                 style="width:9em;font-size: 0.9em;border-radius: 2em"
-                icon="add"
-                label="Follow"
-                @click="follow(publish)"
-              />
-              <q-btn
-                v-if="userDetails.userId !== publish.creatorId && alreadyFollowsCreator(publish)===true"
-                no-caps
-                class="bg-accent text-white float-right"
-                style="width:9em;font-size: 0.9em;border-radius: 2em"
-                label="Following"
-                @click="unfollow(publish)"
+                label="Chat"
+                @click="chat()"
               />
             </div>
             <div class="col-2">
@@ -72,24 +63,26 @@
                 flat
                 v-if="userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===false"
                 no-caps
-                class="float-right"
+                class="float-right q-pr-xs"
                 icon="favorite_border"
                 color="accent"
-                size="lg"
+                size="md"
                 :ripple="false"
                 @click="like(publish,key)"
               />
               <q-btn
+                rounded
                 v-if="userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===true"
                 no-caps
                 flat
                 :ripple="false"
-                size="lg"
-                class=" float-right"
+                size="md"
+                class="float-right q-pr-xs"
                 icon="favorite"
                 color="accent"
                 @click="dislike(publish,key)"
               />
+              <p class="cardUserCP q-pl-md">{{publish.creatorCP}} CP</p>
             </div>
           </div>
         </q-card-actions>
@@ -105,7 +98,7 @@
   export default {
     methods: {
       ...mapActions('store',
-        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'clearPublishings', 'firebaseAddFollowing', 'firebaseRemoveFollowing', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
       releaseDate: function (date) {
         var formattedDate = '';
         if (date) {
@@ -132,25 +125,8 @@
         }
         return formattedDate;
       },
-      follow(publish) {
-        this.firebaseAddFollowing({
-          otherUserId: publish.creatorId,
-          otherUserName: publish.creatorName
-        });
-      },
-      unfollow(publish) {
-        this.firebaseRemoveFollowing({
-          otherUserId: publish.creatorId
-        });
-      },
-      alreadyFollowsCreator(publish) {
-        var found = false;
-        for (let followingId in this.usersFollowing) {
-          if (followingId === publish.creatorId) {
-            found = true;
-          }
-        }
-        return found
+      chat() {
+
       },
       like(publish, key) {
         this.firebaseAddLike({ otherUserId: publish.creatorId, otherPublishingId: key })
@@ -179,7 +155,7 @@
     },
     computed: {
       ...mapState('store',
-        ['publishings', 'userDetails', 'usersFollowing', 'userLikedPublishings']),
+        ['publishings', 'userDetails', 'userLikedPublishings']),
     },
     created() {
       this.clearPublishings();

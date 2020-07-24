@@ -5,7 +5,6 @@ let messagesRef;
 
 const state = {
   userDetails: {},
-  usersFollowing: {},
   userLikedPublishings: {},
   users: {},
   messages: {},
@@ -49,12 +48,6 @@ const mutations = {
   },
   setPublishings(state, payload) {
     state.publishings = payload;
-  },
-  addFollowing(state, payload) {
-    Vue.set(state.usersFollowing, payload.otherUserId, payload.followingName);
-  },
-  removeFollowing(state, payload) {
-    Vue.delete(state.usersFollowing, payload.otherUserId);
   },
   addLike(state, payload) {
     Vue.set(state.userLikedPublishings, payload.otherPublishingId, payload.otherUserId);
@@ -118,14 +111,6 @@ const actions = {
             moderator: userDetails.moderator,
             userId: userId,
             cp: userDetails.cp
-          });
-        });
-        firebaseDB.ref("users/" + userId + "/following").on("child_added", snapshot => {
-          const followingName = snapshot.val();
-          const otherUserId = snapshot.key;
-          commit("addFollowing", {
-            otherUserId,
-            followingName: { followingName }
           });
         });
 
@@ -253,26 +238,6 @@ const actions = {
       updates: { unreadMessages: false }
     });
   },
-  firebaseAddFollowing({ commit }, payload) {
-    firebaseDB
-    .ref("users/" + state.userDetails.userId + "/following/" + payload.otherUserId)
-    .set(payload.otherUserName);
-    firebaseDB.ref("users/" + state.userDetails.userId + '/following/').on("child_added",
-      snapshot => {
-        const followingName = snapshot.val();
-        const otherUserId = payload.otherUserId
-
-        commit("addFollowing", {
-          otherUserId,
-          followingName: { followingName }
-        });
-      });
-  },
-  firebaseRemoveFollowing({ commit }, payload) {
-    firebaseDB.ref("users/" + state.userDetails.userId + "/following/" + payload.otherUserId)
-    .remove();
-    commit("removeFollowing", { otherUserId: payload.otherUserId });
-  },
   firebaseAddLike({ commit, dispatch }, payload) {
     firebaseDB
     .ref("users/" + state.userDetails.userId + "/likedPublishings/" + payload.otherPublishingId)
@@ -368,6 +333,7 @@ const actions = {
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
     var publishId = payload.publishId;
     var publishDetails = payload.updates;
+    console.log(publishDetails)
     commit("updatePublish", {
       publishId,
       publishDetails
