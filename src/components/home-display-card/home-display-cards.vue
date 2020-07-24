@@ -1,12 +1,10 @@
 <template>
-  <q-scroll-area
-    horizontal
-    visbile="false"
-    class="scrollAreaHorizontal q-pt-lg"
-  >
-    <div class="row no-wrap" style="height:19em;">
+  <div class="q-pb-xl q-mb-lg row">
+    <div class="col" v-if="$q.platform.is.desktop">
+    </div>
+    <div class="col">
       <q-card
-        class="cardExterior q-mr-md" v-for="(publish, key) in publishings" :key="key"
+        class="cardExterior q-mb-lg q-mt-md" v-for="(publish, key) in publishings" :key="key"
       >
         <q-card-section class="no-padding" @click="goToPublishDetails(publish, key)">
           <div
@@ -16,11 +14,14 @@
                 <div style="line-height: 0.5;">
                   <p style="font-size: 0.8em" class="text-grey">
                     {{releaseDate(publish.releaseDate)}}</p>
-                  <p class="poppinsRegular" style="font-size: 1.2em"
-                     v-if="publish.projectTitle.length<2">
+                  <p class="poppinsRegular text-white" style="font-size: 1.2em"
+                     v-if="publish.projectTitle.length>15">
                     {{publish.projectTitle.substring(0,15)+".."}}</p>
+                  <p class="poppinsRegular text-white" style="font-size: 1.2em"
+                     v-else>
+                    {{publish.projectTitle}}</p>
                 </div>
-                <p class="poppinsLight text-justify q-pr-lg" style="font-size: 0.9em">
+                <p class="poppinsLight text-justify q-pr-lg text-grey" style="font-size: 0.9em">
                   {{publish.description.substring(0,110)+".."}}</p>
               </div>
               <div class="col">
@@ -40,6 +41,7 @@
                   v-if="publish.coverImage"
                   :src="publish.coverImage"
                   spinner-color="white"
+                  style="max-height: 9em"
                   class="cardCoverImage"
                 />
               </div>
@@ -55,16 +57,16 @@
                 class="cardUserImage"
               />
             </div>
-            <div class="col q-pt-md">
+            <div class="col-4 q-pt-md">
               <p style="line-height: 0.1em">{{publish.creatorName}}</p>
               <p class="cardUserCP">{{publish.creatorSkills}} </p>
             </div>
-            <div class="col q-pt-sm q-pr-sm">
+            <div class="col-4 q-pt-sm q-pr-md">
               <q-btn
                 v-if="userDetails.userId && userDetails.userId !== publish.creatorId"
                 no-caps
-                class="bgGrey float-right"
-                style="width:9em;font-size: 0.9em;border-radius: 2em"
+                class="bgGrey"
+                style="width:7em;font-size: 0.9em;border-radius: 2em"
                 label="Chat"
                 @click="chat(publish)"
               />
@@ -75,7 +77,6 @@
                 flat
                 v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===false"
                 no-caps
-                class="float-right q-pr-xs"
                 icon="favorite_border"
                 color="accent"
                 size="md"
@@ -89,20 +90,25 @@
                 flat
                 :ripple="false"
                 size="md"
-                class="float-right q-pr-xs"
                 icon="favorite"
                 color="accent"
                 @click="dislike(publish,key)"
               />
-              <p class="cardUserCP q-pl-md"
+              <p class="cardUserCP q-pl-sm"
                  v-if="userDetails.userId && userDetails.userId !== publish.creatorId">
                 {{publish.cp}} CP</p>
             </div>
           </div>
         </q-card-actions>
       </q-card>
+
     </div>
-  </q-scroll-area>
+    <div class="col" v-if="$q.platform.is.desktop">
+
+    </div>
+    <div class="q-pb-xl"></div>
+  </div>
+
 </template>
 
 <script>

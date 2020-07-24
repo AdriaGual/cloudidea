@@ -79,6 +79,10 @@ const routes = [
     component: () => import('pages/Login.vue'),
   },
   {
+    path: '/welcome',
+    component: () => import('pages/ChooseInterests.vue'),
+  },
+  {
     path: '/register',
     component: () => import('pages/Register.vue'),
   },

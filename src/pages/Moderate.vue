@@ -5,7 +5,6 @@
       <q-btn outline color="primary" icon-right="o_receipt_long"
              class="chooseModerateButton text-white bg-primary"
              no-caps
-
              label="Moderate publishings" @click="goToPage('/moderate/publishings')"/>
       <q-btn outline
              class="chooseModerateButton text-white bg-primary q-mt-lg"

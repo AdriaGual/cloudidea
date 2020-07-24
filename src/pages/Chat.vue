@@ -33,8 +33,8 @@
       <div class="q-pb-md">
       </div>
     </div>
-    <q-footer class="bg-secondary"
-              style="border-top-left-radius: 0.8em;border-top-right-radius: 0.8em">
+    <q-footer
+      style="border-top-left-radius: 0.8em;border-top-right-radius: 0.8em;background-color: #393e46">
       <q-toolbar style="height:4em;">
         <q-input
           outlined
