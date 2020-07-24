@@ -6,6 +6,7 @@ let messagesRef;
 const state = {
   userDetails: {},
   userLikedPublishings: {},
+  userChats: {},
   users: {},
   messages: {},
   publishings: {},
@@ -54,6 +55,9 @@ const mutations = {
   },
   removeLike(state, payload) {
     Vue.delete(state.userLikedPublishings, payload.otherPublishingId);
+  },
+  addChatUser(state, payload) {
+    Vue.set(state.userChats, payload.otherUserId, payload.otherUserDetails);
   }
 };
 
@@ -124,6 +128,17 @@ const actions = {
             });
           });
 
+        firebaseDB.ref("chats/" + userId).on("child_added",
+          snapshot => {
+            const otherUserId = snapshot.key;
+            firebaseDB.ref("users/" + otherUserId).once("value", snapshot => {
+              const otherUserDetails = snapshot.val();
+              commit("addChatUser", {
+                otherUserId,
+                otherUserDetails
+              });
+            });
+          });
 
         dispatch("firebaseUpdateUser", {
           userId: userId,

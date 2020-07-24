@@ -26,7 +26,7 @@
       </div>
       <div class="col q-pt-md">
         <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
-        <p class="cardUserCP">{{publishDetails.creatorCP}} CP</p>
+        <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
       </div>
       <div class="col q-pr-sm  q-pt-sm">
         <q-btn
@@ -42,7 +42,7 @@
         <q-btn
           rounded
           flat
-          v-if="userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===false"
+          v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===false"
           no-caps
           class="float-right"
           icon="favorite_border"
@@ -52,7 +52,7 @@
           @click="like(publishDetails,publishDetails.key)"
         />
         <q-btn
-          v-if="userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===true"
+          v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===true"
           no-caps
           rounded
           flat
@@ -63,7 +63,9 @@
           color="accent"
           @click="dislike(publishDetails,publishDetails.key)"
         />
-        <p class="cardUserCP q-pl-md">{{publishDetails.creatorCP}} CP</p>
+        <p class="cardUserCP q-pl-md"
+           v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
+          {{publishDetails.creatorCP}} CP</p>
       </div>
     </div>
     <div class="window-width q-pt-lg q-px-lg">

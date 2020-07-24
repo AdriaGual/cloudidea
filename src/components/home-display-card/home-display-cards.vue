@@ -45,7 +45,7 @@
             </div>
             <div class="col q-pt-md">
               <p style="line-height: 0.1em">{{publish.creatorName}}</p>
-              <p class="cardUserCP">{{publish.creatorCP}} CP</p>
+              <p class="cardUserCP">{{publish.categoryModel}} </p>
             </div>
             <div class="col q-pt-sm q-pr-sm">
               <q-btn
@@ -61,7 +61,7 @@
               <q-btn
                 rounded
                 flat
-                v-if="userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===false"
+                v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===false"
                 no-caps
                 class="float-right q-pr-xs"
                 icon="favorite_border"
@@ -72,7 +72,7 @@
               />
               <q-btn
                 rounded
-                v-if="userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===true"
+                v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,key)===true"
                 no-caps
                 flat
                 :ripple="false"
@@ -82,7 +82,9 @@
                 color="accent"
                 @click="dislike(publish,key)"
               />
-              <p class="cardUserCP q-pl-md">{{publish.creatorCP}} CP</p>
+              <p class="cardLikesCP q-pl-md"
+                 v-if="userDetails.userId !== publish.creatorId">
+                {{publish.creatorCP}} CP</p>
             </div>
           </div>
         </q-card-actions>
