@@ -439,7 +439,8 @@ const actions = {
       creatorCP: payload.creatorCP,
       fileName: payload.fileName,
       fileSize: payload.fileSize,
-      key: payload.key
+      key: payload.key,
+      cp: payload.cp
     });
 
   },
