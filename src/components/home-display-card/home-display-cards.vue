@@ -54,7 +54,7 @@
                 class="bgGrey float-right"
                 style="width:9em;font-size: 0.9em;border-radius: 2em"
                 label="Chat"
-                @click="chat()"
+                @click="chat(publish)"
               />
             </div>
             <div class="col-2">
@@ -125,8 +125,8 @@
         }
         return formattedDate;
       },
-      chat() {
-
+      chat(publish) {
+        this.$router.push("/chat/" + publish.creatorId)
       },
       like(publish, key) {
         this.firebaseAddLike({ otherUserId: publish.creatorId, otherPublishingId: key })

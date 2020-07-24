@@ -179,6 +179,7 @@
         openURL(this.publishDetails.fileUrl)
       },
       chat() {
+        this.$router.push("/chat/" + this.publishDetails.creatorId)
       },
       sendMessage() {
         if (this.newMessage !== '') {

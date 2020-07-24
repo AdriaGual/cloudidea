@@ -15,6 +15,7 @@
              @click="goToPage('/brotherhood','brotherhood')"/>
       <q-tab v-if="userDetails.moderator" name="moderate" icon="o_gavel"
              @click="goToPage('/moderate','moderate')"/>
+
     </q-tabs>
   </div>
 

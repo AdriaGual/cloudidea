@@ -67,6 +67,14 @@ const routes = [
     ],
   },
   {
+    path: "/chat/:otherUserId",
+    component: () => import("pages/Chat.vue")
+  },
+  {
+    path: "/myChats",
+    component: () => import("pages/MyChats.vue")
+  },
+  {
     path: '/login',
     component: () => import('pages/Login.vue'),
   },
