@@ -82,9 +82,9 @@
                 color="accent"
                 @click="dislike(publish,key)"
               />
-              <p class="cardLikesCP q-pl-md"
+              <p class="cardUserCP q-pl-md"
                  v-if="userDetails.userId !== publish.creatorId">
-                {{publish.creatorCP}} CP</p>
+                {{publish.cp}} CP</p>
             </div>
           </div>
         </q-card-actions>

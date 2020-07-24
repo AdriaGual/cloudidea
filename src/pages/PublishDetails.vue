@@ -65,7 +65,7 @@
         />
         <p class="cardUserCP q-pl-md"
            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
-          {{publishDetails.creatorCP}} CP</p>
+          {{publishDetails.cp}} CP</p>
       </div>
     </div>
     <div class="window-width q-pt-lg q-px-lg">

@@ -5,7 +5,7 @@
         <q-btn class="q-pl-md" flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
       </div>
       <div class="col">
-        <p class="poppinsRegular text-center q-pt-md">My Profile</p>
+        <p class="poppinsRegular text-center q-pt-md">Your Profile</p>
       </div>
       <div class="col-4">
         <q-btn round color="primary" icon="send" flat class="float-right q-pr-md"

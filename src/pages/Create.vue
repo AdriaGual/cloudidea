@@ -187,6 +187,7 @@
           });
         } else {
           this.publishing.approved = false;
+          this.publishing.cp = 0
           this.publishing.creatorImageUrl = this.userDetails.imageUrl;
           this.publishing.creatorName = this.userDetails.name;
           this.publishing.creatorId = this.userDetails.userId;

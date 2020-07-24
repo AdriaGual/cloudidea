@@ -281,6 +281,18 @@ const actions = {
         publishDetails: { creatorCP: likedCp }
       })
     });
+    firebaseDB.ref("publishings/" + payload.otherPublishingId + '/cp').once('value',
+      function (snapshot) {
+        var likedCp = snapshot.val() + 1;
+        firebaseDB.ref("publishings/" + payload.otherPublishingId).update({ cp: likedCp });
+        dispatch("firebaseUpdatePublish", {
+          publishId: payload.otherPublishingId,
+          updates: { cp: likedCp }
+        });
+        commit("updatePublishDetailsMutation", {
+          publishDetails: { cp: likedCp }
+        })
+      });
   },
   firebaseRemoveLike({ commit, dispatch }, payload) {
     firebaseDB.ref("users/" + state.userDetails.userId + "/likedPublishings/" + payload.otherPublishingId)
@@ -301,6 +313,18 @@ const actions = {
         publishDetails: { creatorCP: likedCp }
       })
     });
+    firebaseDB.ref("publishings/" + payload.otherPublishingId + '/cp').once('value',
+      function (snapshot) {
+        var likedCp = snapshot.val() - 1;
+        firebaseDB.ref("publishings/" + payload.otherPublishingId).update({ cp: likedCp });
+        dispatch("firebaseUpdatePublish", {
+          publishId: payload.otherPublishingId,
+          updates: { cp: likedCp }
+        });
+        commit("updatePublishDetailsMutation", {
+          publishDetails: { cp: likedCp }
+        })
+      });
   },
   firebaseGetLikes({ commit }) {
     firebaseDB.ref("users/" + state.userDetails.userId + '/likedPublishings').on("child_added",
