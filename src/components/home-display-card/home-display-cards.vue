@@ -6,24 +6,34 @@
   >
     <div class="row no-wrap" style="height:19em;">
       <q-card
-        class="cardExterior q-mr-sm" v-for="(publish, key) in publishings" :key="key"
+        class="cardExterior q-mr-md" v-for="(publish, key) in publishings" :key="key"
       >
         <q-card-section class="no-padding" @click="goToPublishDetails(publish, key)">
           <div
-            class="cardSectionInterior">
+            class="cardSectionInterior q-pa-md">
             <div class="row">
-              <div class="col q-pa-md">
+              <div class="col">
                 <div style="line-height: 0.5;">
                   <p style="font-size: 0.8em" class="text-grey">
                     {{releaseDate(publish.releaseDate)}}</p>
-                  <p class="text-white" style="font-size: 1.2em">{{publish.projectTitle}}</p>
+                  <p class="poppinsRegular" style="font-size: 1.2em">{{publish.projectTitle}}</p>
                 </div>
-                <p class="poppinsLight text-grey" style="font-size: 0.9em">
-                  {{publish.description.substring(0,80)+".."}}</p>
-
+                <p class="poppinsLight text-justify q-pr-lg" style="font-size: 0.9em">
+                  {{publish.description.substring(0,110)+".."}}</p>
               </div>
+              <div class="col">
+                <div class="full-width" align="right">
+                  <a style="font-size: 0.8em" class="text-grey">
+                    {{publish.categoryModel}}
+                  </a>
+                </div>
 
-              <div class="col q-pt-xl q-pr-md">
+                <div class="full-width" align="right">
+                  <a style="font-size: 0.8em" class="text-grey">
+                    {{publish.registerLicenseModel}}
+                  </a>
+                </div>
+
                 <q-img
                   v-if="publish.coverImage"
                   :src="publish.coverImage"
@@ -36,7 +46,7 @@
         </q-card-section>
         <q-card-actions>
           <div class="row full-width">
-            <div class="col-2 q-pt-xs">
+            <div class="col-2">
               <q-img
                 :src="publish.creatorImageUrl"
                 spinner-color="white"
@@ -83,7 +93,7 @@
                 @click="dislike(publish,key)"
               />
               <p class="cardUserCP q-pl-md"
-                 v-if="userDetails.userId !== publish.creatorId">
+                 v-if="userDetails.userId && userDetails.userId !== publish.creatorId">
                 {{publish.cp}} CP</p>
             </div>
           </div>
@@ -100,7 +110,7 @@
   export default {
     methods: {
       ...mapActions('store',
-        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
       releaseDate: function (date) {
         var formattedDate = '';
         if (date) {
@@ -149,6 +159,7 @@
       goToPublishDetails(publish, key) {
         publish.key = key;
         this.updatePublishDetails(publish);
+        this.updatePublishComments(publish)
         this.goToPage('/publishDetails')
       },
       goToPage(route) {

@@ -80,15 +80,19 @@
           align="justify"
         >
           <q-tab name="info" label="Info"/>
-          <q-tab v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
-                 name="chat" label="Chat"/>
+          <q-tab name="comments" label="Comments"/>
+
         </q-tabs>
         <q-separator/>
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="info">
             <p class="poppinsRegular text-grey">{{publishDetails.description}}</p>
-            <p class="  poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
+            <p class="poppinsBold" style="line-height: 0.1em">LICENSE TYPE</p>
+            <p class="poppinsRegular text-grey">{{publishDetails.registerLicenseModel}}</p>
+            <p class="poppinsBold" style="line-height: 0.1em">CATEGORY</p>
+            <p class="poppinsRegular text-grey">{{publishDetails.categoryModel}}</p>
+            <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
             <q-card>
               <q-item clickable v-ripple>
                 <q-item-section side>
@@ -107,48 +111,32 @@
               </q-item>
             </q-card>
           </q-tab-panel>
-          <q-tab-panel name="chat">
-            <div
-              class="q-pa-md column col justify-end"
-              style="height:14em;"
-            >
-              <q-scroll-area style="height: 13em;" class="q-pb-lg">
-                <q-chat-message
-                  v-for="(message, key) in messages"
-                  :key="key"
-                  :name="message.from === 'me' ? userDetails.name : publishDetails.creatorName"
-                  :text="[message.text]"
-                  :sent="message.from === 'me'"
-                  :bg-color="message.from === 'me' ? 'grey-4' : 'light-green'"
-                ></q-chat-message>
-              </q-scroll-area>
-            </div>
-            <q-footer class="bg-accent">
-              <q-toolbar style="height:4em;">
-                <q-input
-                  outlined
-                  class="full-width"
-                  v-model="newMessage"
-                  placeholder="Message"
-                  dense
-                  bg-color="white"
-                  rounded
-                  ref="newMessage"
-                >
-                  <template v-slot:after>
-                    <q-btn
-                      @click="sendMessage"
-                      round
-                      dense
-                      flat
-                      icon="send"
-                      type="submit"
-                      color="white"
-                    />
-                  </template>
-                </q-input>
-              </q-toolbar>
-            </q-footer>
+          <q-tab-panel name="comments">
+            <q-card class="q-mb-md">
+              <q-item>
+                <q-item-section>
+                  <q-input borderless dense v-model="commentText" placeholder="Add a comment">
+                    <template v-slot:after>
+                      <q-btn round dense flat icon="send" @click="addComment()"/>
+                    </template>
+                  </q-input>
+                </q-item-section>
+              </q-item>
+            </q-card>
+
+            <q-item clickable v-for="(comment, key) in publishComments" :key="key">
+              <q-item-section side>
+                <q-avatar rounded size="3em">
+                  <img :src="comment.creatorImageUrl"/>
+                </q-avatar>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{comment.message}}</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+
+              </q-item-section>
+            </q-item>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -167,13 +155,14 @@
       return {
         tab: 'info',
         newMessage: "",
-        showMessages: false
+        showMessages: false,
+        commentText: ''
       }
     },
     methods: {
       ...mapActions('store',
         ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', "firebaseGetMessages",
-          "firebaseStopGettingMessages", "firebaseSendMessage", 'firebaseAddLike', 'firebaseRemoveLike']),
+          "firebaseStopGettingMessages", "firebaseSendMessage", 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseAddComment']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -191,7 +180,6 @@
           });
           this.clearMessage();
         }
-
       },
       clearMessage() {
         this.newMessage = "";
@@ -199,10 +187,18 @@
       },
       like(publish, key) {
         this.firebaseAddLike({ otherUserId: publish.creatorId, otherPublishingId: key })
-
       },
       dislike(publish, key) {
         this.firebaseRemoveLike({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      addComment() {
+        this.firebaseAddComment({
+          publishId: this.publishDetails.key,
+          messageDetails: {
+            message: this.commentText,
+            creatorImageUrl: this.userDetails.imageUrl
+          }
+        })
       },
       alreadyLikesPublish(publish, key) {
         var found = false;
@@ -217,7 +213,7 @@
     },
     computed: {
       ...mapState('store',
-        ['publishDetails', 'userDetails', 'messages', 'userLikedPublishings']),
+        ['publishDetails', 'publishComments', 'userDetails', 'messages', 'userLikedPublishings']),
       fileSize: function () {
         function formatBytes(a, b = 2) {
           if (0 === a) return "0 Bytes";
