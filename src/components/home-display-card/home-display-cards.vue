@@ -16,7 +16,9 @@
                 <div style="line-height: 0.5;">
                   <p style="font-size: 0.8em" class="text-grey">
                     {{releaseDate(publish.releaseDate)}}</p>
-                  <p class="poppinsRegular" style="font-size: 1.2em">{{publish.projectTitle}}</p>
+                  <p class="poppinsRegular" style="font-size: 1.2em"
+                     v-if="publish.projectTitle.length<2">
+                    {{publish.projectTitle.substring(0,15)+".."}}</p>
                 </div>
                 <p class="poppinsLight text-justify q-pr-lg" style="font-size: 0.9em">
                   {{publish.description.substring(0,110)+".."}}</p>
@@ -55,7 +57,7 @@
             </div>
             <div class="col q-pt-md">
               <p style="line-height: 0.1em">{{publish.creatorName}}</p>
-              <p class="cardUserCP">{{publish.categoryModel}} </p>
+              <p class="cardUserCP">{{publish.creatorSkills}} </p>
             </div>
             <div class="col q-pt-sm q-pr-sm">
               <q-btn

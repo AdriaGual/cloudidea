@@ -113,7 +113,7 @@
           </q-tab-panel>
           <q-tab-panel name="comments">
             <q-card class="q-mb-md">
-              <q-item>
+              <q-item v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
                 <q-item-section>
                   <q-input borderless dense v-model="commentText" placeholder="Add a comment">
                     <template v-slot:after>

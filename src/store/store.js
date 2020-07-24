@@ -352,23 +352,25 @@ const actions = {
           });
         });
       });
-      firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
-      .put(payload.coverImage).then(function (snapshot) {
-        firebaseStorage
-        .ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
-        .getDownloadURL().then(function (url) {
-          firebaseDB.ref("publishings/" + publishing.key).update({
-            coverImage: url
+      if (payload.coverImage) {
+        firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
+        .put(payload.coverImage).then(function (snapshot) {
+          firebaseStorage
+          .ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
+          .getDownloadURL().then(function (url) {
+            firebaseDB.ref("publishings/" + publishing.key).update({
+              coverImage: url
+            });
           });
         });
-      });
+      }
+
     });
   },
   firebaseUpdatePublish({ commit }, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
     var publishId = payload.publishId;
     var publishDetails = payload.updates;
-    console.log(publishDetails)
     commit("updatePublish", {
       publishId,
       publishDetails
@@ -392,16 +394,24 @@ const actions = {
       snapshot => {
         const publishDetails = snapshot.val();
         const publishId = snapshot.key;
-        if (publishDetails.approved) {
-          commit("addPublish", { publishId, publishDetails });
-        }
+
+        firebaseDB.ref("users/" + publishDetails.creatorId).once("value", snapshot => {
+          const userDetails = snapshot.val();
+          publishDetails.creatorName = userDetails.name
+          publishDetails.creatorImageUrl = userDetails.imageUrl
+          publishDetails.creatorSkills = userDetails.skills
+          if (publishDetails.approved) {
+            commit("addPublish", { publishId, publishDetails });
+          }
+        });
+
+
       });
   },
   clearPublishings({ commit }) {
     commit("setPublishings", {});
   },
   updatePublishComments({ commit }, payload) {
-    console.log(payload)
     firebaseDB
     .ref("publishings/" + payload.key + "/comments").on(
       "child_added",
@@ -416,36 +426,39 @@ const actions = {
       });
   },
   updatePublishDetails({ commit }, payload) {
-    commit("setPublishDetails", {
-      approved: payload.approved,
-      categoryModel: payload.categoryModel,
-      coverImage: payload.coverImage,
-      creatorId: payload.creatorId,
-      description: payload.description,
-      fileUrl: payload.fileUrl,
-      licenseNumber: payload.licenseNumber,
-      needAudioHelp: payload.needAudioHelp,
-      needCodeHelp: payload.needCodeHelp,
-      needDesignHelp: payload.needDesignHelp,
-      needHelp: payload.needHelp,
-      needIdeaHelp: payload.needIdeaHelp,
-      needPromotionHelp: payload.needPromotionHelp,
-      needSellHelp: payload.needSellHelp,
-      needVideoHelp: payload.needVideoHelp,
-      needWrittingHelp: payload.needWrittingHelp,
-      otherCategory: payload.otherCategory,
-      projectTitle: payload.projectTitle,
-      projectUrl: payload.projectUrl,
-      registerLicenseModel: payload.registerLicenseModel,
-      creatorImageUrl: payload.creatorImageUrl,
-      creatorName: payload.creatorName,
-      creatorCP: payload.creatorCP,
-      fileName: payload.fileName,
-      fileSize: payload.fileSize,
-      key: payload.key,
-      cp: payload.cp
+    firebaseDB.ref("users/" + payload.creatorId).once("value", snapshot => {
+      const userDetails = snapshot.val();
+      commit("setPublishDetails", {
+        approved: payload.approved,
+        categoryModel: payload.categoryModel,
+        coverImage: payload.coverImage,
+        creatorId: payload.creatorId,
+        description: payload.description,
+        fileUrl: payload.fileUrl,
+        licenseNumber: payload.licenseNumber,
+        needAudioHelp: payload.needAudioHelp,
+        needCodeHelp: payload.needCodeHelp,
+        needDesignHelp: payload.needDesignHelp,
+        needHelp: payload.needHelp,
+        needIdeaHelp: payload.needIdeaHelp,
+        needPromotionHelp: payload.needPromotionHelp,
+        needSellHelp: payload.needSellHelp,
+        needVideoHelp: payload.needVideoHelp,
+        needWrittingHelp: payload.needWrittingHelp,
+        otherCategory: payload.otherCategory,
+        projectTitle: payload.projectTitle,
+        projectUrl: payload.projectUrl,
+        registerLicenseModel: payload.registerLicenseModel,
+        creatorImageUrl: userDetails.imageUrl,
+        creatorName: userDetails.name,
+        creatorSkills: userDetails.skills,
+        creatorCP: payload.creatorCP,
+        fileName: payload.fileName,
+        fileSize: payload.fileSize,
+        key: payload.key,
+        cp: payload.cp
+      });
     });
-
   },
   firebaseUploadProfilePic({ dispatch }, file) {
     var metadata;

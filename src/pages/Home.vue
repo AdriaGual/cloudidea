@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex column">
     <home-header></home-header>
     <home-display-cards></home-display-cards>
     <div class="row window-width q-pl-lg q-pr-md q-pt-xl">
@@ -12,22 +12,7 @@
           + more</p>
       </div>
     </div>
-
     <project-cards class="q-pt-sm"></project-cards>
-
-    <div class="row window-width q-pl-lg q-pr-md q-pt-lg">
-      <div class="col">
-        <p class="  poppinsBold" style="line-height: 0.1em">
-          NEW PROJECTS
-          <q-icon name="emoji_objects" style="font-size: 1.7em;"/>
-        </p>
-      </div>
-      <div class="col">
-        <p class="float-right text-secondary q-pt-sm" style="line-height: 0.1em">
-          + more</p>
-      </div>
-    </div>
-    <project-showcase-list class="q-pb-xl"></project-showcase-list>
   </q-page>
 </template>
 
@@ -48,7 +33,7 @@
       ProjectCards,
       HomeHeader,
       HomeDisplayCards,
-      ProjectShowcaseList
+
     },
   };
 </script>
