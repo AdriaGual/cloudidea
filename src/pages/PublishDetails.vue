@@ -1,68 +1,10 @@
 <template>
   <q-layout class="flex column">
     <publishdetails-header :project-title="publishDetails.projectTitle"></publishdetails-header>
-    <div class="row q-gutter-md justify-center q-pt-md">
-      <q-card style="width: 100%;max-width: 30em;" class="full-height">
-
-        <q-img :src="publishDetails.fileUrl"/>
-
-        <q-card-actions>
-          <div class="row full-width">
-            <div class="col-2 q-pl-sm">
-              <q-img
-                :src="publishDetails.creatorImageUrl"
-                spinner-color="white"
-                class="cardUserImage"
-              />
-            </div>
-            <div class="col-4 q-pt-md">
-              <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
-              <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
-            </div>
-            <div class="col-4 q-pt-sm q-pr-md">
-              <q-btn
-                v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
-                no-caps
-                class="bgGrey"
-                style="width:7em;font-size: 0.9em;border-radius: 2em"
-                label="Chat"
-                @click="chat()"
-              />
-            </div>
-            <div class="col-2">
-              <q-btn
-                rounded
-                flat
-                v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===false"
-                no-caps
-                class=""
-                icon="favorite_border"
-                color="accent"
-                size="md"
-                :ripple="false"
-                @click="like(publishDetails,publishDetails.key)"
-              />
-              <q-btn
-                v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===true"
-                no-caps
-                rounded
-                flat
-                :ripple="false"
-                size="md"
-                class=""
-                icon="favorite"
-                color="accent"
-                @click="dislike(publishDetails,publishDetails.key)"
-              />
-              <p class="cardUserCP q-pl-sm"
-                 v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
-                {{publishDetails.cp}} CP
-              </p>
-            </div>
-          </div>
-        </q-card-actions>
-      </q-card>
-      <div style="width: 30em">
+    <div class="row q-gutter-md justify-center items-center q-pt-md">
+      <publishdetails-card class="" style="width: 25em" :userDetails="userDetails"
+                           :publishDetails="publishDetails"></publishdetails-card>
+      <div style="width: 25em">
         <q-card style="border-top-left-radius: 1em;border-top-right-radius: 1em">
           <q-tabs
             v-model="tab"
@@ -75,7 +17,6 @@
           >
             <q-tab name="info" label="Info"/>
             <q-tab name="comments" label="Comments"/>
-
           </q-tabs>
           <q-separator/>
 
@@ -148,9 +89,10 @@
   import { openURL } from 'quasar'
   import { date } from 'quasar'
   import PublishdetailsHeader from '../components/publishdetails/publishdetails-header';
+  import PublishdetailsCard from '../components/publishdetails/publishdetails-card';
 
   export default {
-    components: { PublishdetailsHeader },
+    components: { PublishdetailsCard, PublishdetailsHeader },
     data() {
       return {
         tab: 'info',
@@ -169,9 +111,7 @@
       downloadFile() {
         openURL(this.publishDetails.fileUrl)
       },
-      chat() {
-        this.$router.push("/chat/" + this.publishDetails.creatorId)
-      },
+
       sendMessage() {
         if (this.newMessage !== '') {
           this.firebaseSendMessage({
@@ -185,12 +125,7 @@
         this.newMessage = "";
         this.$refs.newMessage.focus();
       },
-      like(publish, key) {
-        this.firebaseAddLike({ otherUserId: publish.creatorId, otherPublishingId: key })
-      },
-      dislike(publish, key) {
-        this.firebaseRemoveLike({ otherUserId: publish.creatorId, otherPublishingId: key })
-      },
+
       addComment() {
         this.firebaseAddComment({
           publishId: this.publishDetails.key,
@@ -200,16 +135,7 @@
           }
         })
       },
-      alreadyLikesPublish(publish, key) {
-        var found = false;
 
-        for (let likedId in this.userLikedPublishings) {
-          if (likedId === key) {
-            found = true;
-          }
-        }
-        return found
-      },
     },
     computed: {
       ...mapState('store',

@@ -6,8 +6,7 @@
     >
       <q-card-section class="no-padding" @click="goToPublishDetails(publish, key)"
                       style="cursor: pointer;">
-        <div
-          class="cardSectionInterior q-pa-md">
+        <div class="cardSectionInterior q-pa-md">
           <div class="row">
             <div class="col">
               <div style="line-height: 0.5;">
