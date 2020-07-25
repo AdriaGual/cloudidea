@@ -8,6 +8,7 @@
 <script>
   import HomeHeader from '../components/home-header'
   import HomeDisplayCards from '../components/home-display-card/home-display-cards'
+  import { Cookies } from 'quasar'
 
   export default {
     data() {
@@ -15,10 +16,19 @@
         url: 'https://placeimg.com/500/300/nature'
       }
     },
+    methods: {
+      goToPage(route) {
+        this.$router.push(route)
+      },
+    },
     components: {
       HomeHeader,
       HomeDisplayCards,
-
     },
+    created() {
+      if (!Cookies.has('categorySelection')) {
+        this.goToPage('welcome')
+      }
+    }
   };
 </script>

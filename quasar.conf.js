@@ -88,7 +88,7 @@ module.exports = function (/* ctx */) {
       importStrategy: "auto",
 
       // Quasar plugins
-      plugins: ['Notify', 'AppFullscreen']
+      plugins: ['Notify', 'AppFullscreen', 'Cookies']
     },
 
     // animations: 'all', // --- includes all animations
