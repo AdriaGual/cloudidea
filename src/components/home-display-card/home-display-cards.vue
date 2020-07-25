@@ -4,7 +4,8 @@
       class="cardExterior" v-for="(publish, key) in publishings" style="max-width: 30em"
       :key="key"
     >
-      <q-card-section class="no-padding" @click="goToPublishDetails(publish, key)">
+      <q-card-section class="no-padding" @click="goToPublishDetails(publish, key)"
+                      style="cursor: pointer;">
         <div
           class="cardSectionInterior q-pa-md">
           <div class="row">

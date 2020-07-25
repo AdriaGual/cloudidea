@@ -3,7 +3,6 @@
     <div class="col">
       <a class="text-grey poppinsLight">Cloudidea</a>
     </div>
-
     <div class="col">
       <q-btn
         v-if="!userDetails.userId"
@@ -19,9 +18,7 @@
           <img :src="userDetails.imageUrl">
         </q-avatar>
       </q-btn>
-
     </div>
-
   </div>
 </template>
 
