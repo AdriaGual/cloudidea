@@ -1,11 +1,8 @@
 <template>
   <q-card class="cardExterior">
-
     <q-img :src="publishDetails.fileUrl" spinner-color="white"/>
-
-
     <q-card-actions>
-      <div class="row" style="width: 30em;height:5em">
+      <div class="row" style="width: 30em;height:4em">
         <div class="col-2 q-pl-sm">
           <q-img
             :src="publishDetails.creatorImageUrl"
