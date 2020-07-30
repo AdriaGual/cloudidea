@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column">
-    <p class="poppinsRegular window-width text-center" style="font-size: 1.5em">Moderate</p>
+    <p class="poppinsRegular text-center" style="font-size: 1.5em">Moderate</p>
     <div class="text-center q-pt-lg">
       <q-btn outline color="primary" icon-right="o_receipt_long"
              class="chooseModerateButton text-white bg-primary"

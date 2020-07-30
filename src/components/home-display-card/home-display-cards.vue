@@ -1,7 +1,29 @@
 <template>
   <div>
+    <div class="q-pa-md" align="right">
+      <q-btn
+        flat
+        no-caps
+        icon="grid_on"
+        :color="!listMode?'accent':'grey'"
+        size="md"
+        :disable="!listMode"
+        :ripple="false"
+        @click="listMode=!listMode"
+      />
+      <q-btn
+        flat
+        no-caps
+        icon="format_list_bulleted"
+        :color="listMode?'accent':'grey'"
+        :disable="listMode"
+        size="md"
+        :ripple="false"
+        @click="listMode=!listMode"
+      />
+    </div>
 
-    <div class="row justify-center q-pt-sm q-pb-xl">
+    <div class="row justify-center q-pb-xl" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <q-card
           class="cardExterior q-ma-sm"
@@ -97,18 +119,81 @@
                 <q-icon v-if="!userDetails.userId || userDetails.userId === publish.creatorId"
                         name="favorite" color="grey" size="sm" class="q-pl-sm q-pt-sm q-pb-xs"/>
 
-                <p class="cardUserCP q-pl-sm"
-                >
-                  {{publish.cp}} CP</p>
+                <p class="cardUserCP q-pl-sm">
+                  {{publish.cp}} CP
+                </p>
               </div>
             </div>
           </q-card-actions>
         </q-card>
       </div>
+    </div>
 
+    <div v-else class="q-px-md q-pb-xl">
+      <div class="row q-pt-md">
+        <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
+        <div class="col" style="border-radius: 0.5em">
+          <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
+            <q-item clickable no-ripple
+                    v-if="$q.cookies.get('categorySelection').includes(filteredPublishing.categoryModel)">
+              <q-item-section side @click="goToPage('publishDetails/'+filteredPublishing.key)">
+                <q-avatar rounded size="4em">
+                  <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
+                </q-avatar>
+              </q-item-section>
+              <q-item-section @click="goToPage('publishDetails/'+filteredPublishing.key)">
+                <q-item-label>{{filteredPublishing.projectTitle}}</q-item-label>
+                <q-item-label caption>{{filteredPublishing.categoryModel}}</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <div class="row">
+                  <q-btn
+                    rounded
+                    flat
+                    v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===false"
+                    no-caps
+                    icon="favorite_border"
+                    color="accent"
+                    size="md"
+                    :ripple="false"
+                    @click="like(filteredPublishing,filteredPublishing.key)"
+                  />
+                  <q-btn
+                    rounded
+                    v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===true"
+                    no-caps
+                    flat
+                    :ripple="false"
+                    size="md"
+                    icon="favorite"
+                    color="accent"
+                    @click="dislike(filteredPublishing,filteredPublishing.key)"
+                  />
+                  <q-btn
+                    rounded
+                    v-if="!userDetails.userId || userDetails.userId === filteredPublishing.creatorId"
+                    no-caps
+                    flat
+                    :ripple="false"
+                    size="md"
+                    icon="favorite"
+                    color="grey"
+                    disable
+                  />
+
+                  <p class="q-pt-md">
+                    {{filteredPublishing.cp}} CP
+                  </p>
+                </div>
+              </q-item-section>
+            </q-item>
+          </div>
+
+        </div>
+        <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
+      </div>
     </div>
     <div class="q-pb-lg"></div>
-
   </div>
 </template>
 
@@ -118,7 +203,8 @@
   export default {
     data() {
       return {
-        orderedPublishings: []
+        orderedPublishings: [],
+        listMode: false
       }
     },
     methods: {

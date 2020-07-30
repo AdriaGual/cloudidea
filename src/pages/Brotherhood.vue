@@ -1,18 +1,18 @@
 <template>
   <q-layout class="flex column">
-    <div class="row window-width q-pt-md">
+    <div class="row">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col q-pa-lg" style="border-radius: 0.5em">
+      <div class="col" style="border-radius: 0.5em">
         <div class="row q-pl-lg q-pr-md">
           <div class="col-8">
-            <p class="  poppinsBold" style="line-height: 0.1em">
-              NEW HELP REQUESTS
+            <p class="poppinsBold" style="line-height: 0.1em">
               <q-icon name="construction" style="font-size: 1.7em;"/>
+              NEW HELP REQUESTS
             </p>
           </div>
         </div>
         <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)">
             <q-item-section side>
               <q-avatar rounded size="4em">
                 <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
@@ -33,10 +33,7 @@
                 <q-icon v-if="filteredPublishing.needSellHelp" name="attach_money" size="sm"/>
                 <q-icon v-if="filteredPublishing.needPromotionHelp" name="favorite_border"
                         size="sm"/>
-
               </div>
-
-
             </q-item-section>
           </q-item>
         </div>
@@ -58,6 +55,10 @@
     },
     methods: {
       ...mapActions("store", ["clearPublishings", "firebaseGetApprovedPublishings"]),
+      goToPage(route) {
+        this.$router.push(route)
+
+      },
     },
     computed: {
       ...mapState("store", ["publishings"])
