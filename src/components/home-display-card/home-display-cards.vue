@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-center">
+  <div class="row justify-center q-pt-sm">
     <div v-for="(publish, key) in orderedPublishings" :key="key">
       <q-card
         class="cardExterior q-ma-sm"
@@ -186,7 +186,6 @@
     watch: {
       publishings: function (val) {
         let keys = Object.keys(val);
-        console.log(val)
         keys.forEach(key => {
           let item = this.publishings[key];
           item.key = key

@@ -9,7 +9,7 @@
     <q-form
       @submit="onSubmit"
     >
-      <q-input filled class=" window-width q-px-lg" placeholder="Username" v-model="userData.name"
+      <q-input filled class="window-width q-px-lg" placeholder="Username" v-model="userData.name"
                :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
       <q-input filled class=" window-width q-px-lg q-pt-md" v-model="userData.email"
                placeholder="Email Address"
@@ -25,8 +25,8 @@
 
       <div class="row window-width  justify-center">
         <q-btn class="q-mt-xl"
-               style="height: 4em;border-radius: 1em;width:24em"
-               color="accent"
+               style="height: 4em;border-radius: 0.5em;width:24em"
+               color="primary"
                type="submit"
                label="Sign Up"/>
       </div>

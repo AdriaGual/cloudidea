@@ -1,6 +1,6 @@
 <template>
   <q-layout class="flex column q-pb-xl">
-    <p class="poppinsBold window-width text-center" style="font-size: 2em">Create Project</p>
+    <p class="poppinsBold text-center" style="font-size: 2em">Create Project</p>
     <q-form
       @submit="onSubmit"
     >
