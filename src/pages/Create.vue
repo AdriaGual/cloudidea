@@ -1,117 +1,124 @@
 <template>
   <q-layout class="flex column q-pb-xl">
     <p class="poppinsBold text-center" style="font-size: 2em">Create Project</p>
-    <q-form
-      @submit="onSubmit"
-    >
-      <div class="q-px-lg">
-        <q-input outlined placeholder="Project Title*" :rules="[isEmptyField]"
-                 v-model="publishing.projectTitle"/>
+    <div class="row q-pt-md">
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col">
+        <q-form
+          @submit="onSubmit"
+        >
+          <div class="q-px-lg">
+            <q-input outlined placeholder="Project Title*" :rules="[isEmptyField]"
+                     v-model="publishing.projectTitle"/>
 
-        <q-input outlined placeholder="Project URL" v-model="publishing.projectUrl"/>
-        <q-input
-          class="q-pt-md"
-          v-model="publishing.description"
-          outlined
-          placeholder="Description"
-          type="textarea"
-        />
-
-        <q-select outlined v-model="publishing.registerLicenseModel"
-                  :options="registerLicenseOptions"
-                  label="Register License*" class="q-pt-md" :rules="[isEmptyField]"/>
-
-        <q-input v-if="publishing.registerLicenseModel==='Copyright'" outlined
-                 placeholder="License Number*" v-model="publishing.licenseNumber"
-                 :rules="[isEmptyField]"/>
-
-        <q-select outlined v-model="publishing.categoryModel" :options="categoryOptions"
-                  label="Category*" :rules="[isEmptyField]"/>
-
-        <q-input v-if="publishing.categoryModel==='None of this'" outlined
-                 placeholder="Category" v-model="publishing.otherCategory" :rules="[isEmptyField]"/>
-
-        <q-file borderless v-model="publishing.coverImage" label="Upload Cover Image">
-          <template v-slot:prepend>
-            <q-icon name="o_insert_photo"/>
-          </template>
-        </q-file>
-
-        <q-file borderless style="outline:#fafafa 2px solid" v-model="publishing.file"
-                label="File Upload*" :rules="[noFileUploaded]" class="q-pt-md">
-          <template v-slot:prepend>
-            <q-icon name="attach_file"/>
-          </template>
-        </q-file>
-
-        <div class="row q-pb-md text-center">
-          <div class="col">
-            <q-radio v-model="publishing.needHelp" val="false" label="Finished project"
-                     color="teal"/>
-          </div>
-          <div class="col">
-            <q-radio v-model="publishing.needHelp" val="true" label="Need help" color="teal"/>
-          </div>
-        </div>
-        <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
-          <div class="col">
-            <q-checkbox v-model="publishing.needWrittingHelp" val="true" color="teal">
-              <q-icon name="history_edu" size="sm"/>
-            </q-checkbox>
-          </div>
-          <div class="col">
-            <q-checkbox v-model="publishing.needVideoHelp" val="true" color="teal">
-              <q-icon name="o_videocam" size="sm"/>
-            </q-checkbox>
-          </div>
-
-          <div class="col">
-            <q-checkbox v-model="publishing.needAudioHelp" val="true" color="teal">
-              <q-icon name="o_audiotrack" size="sm"/>
-            </q-checkbox>
-          </div>
-          <div class="col">
-            <q-checkbox v-model="publishing.needCodeHelp" val="true" color="teal">
-              <q-icon name="code" size="sm"/>
-            </q-checkbox>
-          </div>
-        </div>
-        <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
-          <div class="col">
-            <q-checkbox v-model="publishing.needDesignHelp" val="true" color="teal">
-              <q-icon name="o_palette" size="sm"/>
-            </q-checkbox>
-          </div>
-          <div class="col">
-            <q-checkbox v-model="publishing.needIdeaHelp" val="true" color="teal">
-              <q-icon name="o_emoji_objects" size="sm"/>
-            </q-checkbox>
-          </div>
-          <div class="col">
-            <q-checkbox v-model="publishing.needSellHelp" :val="publishing.needSellHelp"
-                        color="teal">
-              <q-icon name="attach_money" size="sm"/>
-            </q-checkbox>
-          </div>
-          <div class="col">
-            <q-checkbox v-model="publishing.needPromotionHelp" color="teal">
-              <q-icon name="favorite_border" size="sm"/>
-            </q-checkbox>
-          </div>
-
-        </div>
-        <div class="row q-pb-xl text-center">
-          <div class="col">
-            <q-btn
-              no-caps
-              type="submit"
-              class="text-white bg-primary createButton"
-              label="Create"
+            <q-input outlined placeholder="Project URL" v-model="publishing.projectUrl"/>
+            <q-input
+              class="q-pt-md"
+              v-model="publishing.description"
+              outlined
+              placeholder="Description"
+              type="textarea"
             />
+
+            <q-select outlined v-model="publishing.registerLicenseModel"
+                      :options="registerLicenseOptions"
+                      label="Register License*" class="q-pt-md" :rules="[isEmptyField]"/>
+
+            <q-input v-if="publishing.registerLicenseModel==='Copyright'" outlined
+                     placeholder="License Number*" v-model="publishing.licenseNumber"
+                     :rules="[isEmptyField]"/>
+
+            <q-select outlined v-model="publishing.categoryModel" :options="categoryOptions"
+                      label="Category*" :rules="[isEmptyField]"/>
+
+            <q-input v-if="publishing.categoryModel==='None of this'" outlined
+                     placeholder="Category" v-model="publishing.otherCategory"
+                     :rules="[isEmptyField]"/>
+
+            <q-file borderless v-model="publishing.coverImage" label="Upload Cover Image">
+              <template v-slot:prepend>
+                <q-icon name="o_insert_photo"/>
+              </template>
+            </q-file>
+
+            <q-file borderless style="outline:#fafafa 2px solid" v-model="publishing.file"
+                    label="File Upload*" :rules="[noFileUploaded]" class="q-pt-md">
+              <template v-slot:prepend>
+                <q-icon name="attach_file"/>
+              </template>
+            </q-file>
+
+            <div class="row q-pb-md text-center">
+              <div class="col">
+                <q-radio v-model="publishing.needHelp" val="false" label="Finished project"
+                         color="teal"/>
+              </div>
+              <div class="col">
+                <q-radio v-model="publishing.needHelp" val="true" label="Need help" color="teal"/>
+              </div>
+            </div>
+            <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
+              <div class="col">
+                <q-checkbox v-model="publishing.needWrittingHelp" val="true" color="teal">
+                  <q-icon name="history_edu" size="sm"/>
+                </q-checkbox>
+              </div>
+              <div class="col">
+                <q-checkbox v-model="publishing.needVideoHelp" val="true" color="teal">
+                  <q-icon name="o_videocam" size="sm"/>
+                </q-checkbox>
+              </div>
+
+              <div class="col">
+                <q-checkbox v-model="publishing.needAudioHelp" val="true" color="teal">
+                  <q-icon name="o_audiotrack" size="sm"/>
+                </q-checkbox>
+              </div>
+              <div class="col">
+                <q-checkbox v-model="publishing.needCodeHelp" val="true" color="teal">
+                  <q-icon name="code" size="sm"/>
+                </q-checkbox>
+              </div>
+            </div>
+            <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
+              <div class="col">
+                <q-checkbox v-model="publishing.needDesignHelp" val="true" color="teal">
+                  <q-icon name="o_palette" size="sm"/>
+                </q-checkbox>
+              </div>
+              <div class="col">
+                <q-checkbox v-model="publishing.needIdeaHelp" val="true" color="teal">
+                  <q-icon name="o_emoji_objects" size="sm"/>
+                </q-checkbox>
+              </div>
+              <div class="col">
+                <q-checkbox v-model="publishing.needSellHelp" :val="publishing.needSellHelp"
+                            color="teal">
+                  <q-icon name="attach_money" size="sm"/>
+                </q-checkbox>
+              </div>
+              <div class="col">
+                <q-checkbox v-model="publishing.needPromotionHelp" color="teal">
+                  <q-icon name="favorite_border" size="sm"/>
+                </q-checkbox>
+              </div>
+
+            </div>
+            <div class="row q-pb-xl text-center">
+              <div class="col">
+                <q-btn
+                  no-caps
+                  type="submit"
+                  class="text-white bg-primary createButton"
+                  label="Create"
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        </q-form>
       </div>
-    </q-form>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+    </div>
   </q-layout>
 </template>
 

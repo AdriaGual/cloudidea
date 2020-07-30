@@ -10,8 +10,9 @@
       <div class="col-1"></div>
     </div>
     <div class="row window-width q-pt-md">
-      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
-      <div class="col">
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col q-pa-lg" style="border-radius: 0.5em">
+
         <q-form
           @submit="onSubmit"
         >
@@ -41,18 +42,19 @@
                    label="LOGIN"/>
           </div>
         </q-form>
+        <div class="row full-width  justify-center">
+          <q-btn
+            no-caps
+            class="bgGrey q-mt-md"
+            style="border-radius: 0.5em;width:7em"
+            label="SIGN UP"
+            @click="goToPage('/register')"
+          />
+        </div>
       </div>
-      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
-    <div class="row window-width  justify-center">
-      <q-btn
-        no-caps
-        class="bgGrey q-mt-md"
-        style="border-radius: 0.5em;width:7em"
-        label="SIGN UP"
-        @click="goToPage('/register')"
-      />
-    </div>
+
   </q-layout>
 
 </template>

@@ -10,7 +10,7 @@
       <div class="col-1"></div>
     </div>
     <div class="row window-width q-pt-md">
-      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col">
         <q-form
           @submit="onSubmit"
@@ -39,7 +39,7 @@
           </div>
         </q-form>
       </div>
-      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
 
 
