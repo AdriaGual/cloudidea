@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="flex column q-pb-lg q-pt-lg q-pl-lg">
+  <q-layout class="flex column q-pb-xl q-pt-lg q-pl-lg">
     <q-input standout placeholder="Search" v-model="searchText" class="q-pr-lg">
       <template v-slot:append>
         <q-icon v-if="searchText === ''" name="search"/>
@@ -12,52 +12,160 @@
           <p class="poppinsBold" style="line-height: 0.1em">
             RECENT SEARCHES</p>
         </div>
-
       </div>
-      <search-tags></search-tags>
-      <div class="row q-pt-xl">
-        <div class="col">
-          <p class="  poppinsBold" style="line-height: 0.1em">
-            TOP PROJECTS</p>
+      <q-scroll-area
+        horizontal
+        visbile="false"
+        class="scrollTagsHorizontal"
+      >
+        <div class="row no-wrap" style="height:3em;">
+          <q-btn
+            v-for="(recentSearch, key) in recentSearches" :key="key"
+            no-caps
+            class="bgGrey q-mr-md"
+            style="border-radius: 0.5em;width:11em"
+            icon="launch"
+            :label="recentSearch.toUpperCase()"
+            @click="searchText=recentSearch"
+          />
         </div>
-        <div class="col">
-          <p class=" float-right text-secondary" style="line-height: 0.1em">
-            + more</p>
-        </div>
-      </div>
-
-      <project-cards class=""></project-cards>
+      </q-scroll-area>
       <div class="row q-pt-xl">
         <div class="col-10">
           <p class="  poppinsBold" style="line-height: 0.1em">
             TOP PROJECT CREATORS</p>
         </div>
-        <div class="col">
-          <p class=" float-right text-secondary" style="line-height: 0.1em">
-            + more</p>
-        </div>
       </div>
       <profile-cards></profile-cards>
     </div>
-    <div v-else>dsijkfg</div>
+    <div v-else class="q-pt-lg">
+      <div v-if="filteredPublishingsByTitle.length >0">
+        <p>
+          <q-icon name="receipt_long"/>
+          Projects
+        </p>
+        <q-separator></q-separator>
+        <div v-for="(filteredPublishing, key) in filteredPublishingsByTitle" :key="key"
+             class="q-pt-md">
+          <q-item clickable v-ripple>
+            <q-item-section side>
+              <q-avatar rounded size="4em">
+                <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{filteredPublishing.projectTitle}}</q-item-label>
+              <q-item-label caption>{{filteredPublishing.categoryModel}}</q-item-label>
+            </q-item-section>
+            <q-item-section side></q-item-section>
+          </q-item>
+        </div>
+      </div>
+
+      <div v-if="filteredUsers.length >0" class="q-pt-lg">
+        <p>
+          <q-icon name="people"/>
+          People
+        </p>
+        <q-separator></q-separator>
+        <div v-for="(filteredUser, key) in filteredUsers" :key="key" class="q-pt-md">
+          <q-item clickable v-ripple>
+            <q-item-section side>
+              <q-avatar rounded size="4em">
+                <img :src="filteredUser.imageUrl" style="border-radius: 0.2em"/>
+                <q-badge v-if="filteredUser.online" floating color="green"
+                         style="border-radius: 0.5em;height: 1em"></q-badge>
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{filteredUser.name}}</q-item-label>
+              <q-item-label caption>{{filteredUser.skills}}</q-item-label>
+            </q-item-section>
+            <q-item-section side></q-item-section>
+          </q-item>
+        </div>
+      </div>
+    </div>
+    <div v-if="filteredPublishingsByCategory.length >0">
+      <p>
+        <q-icon name="receipt_long"/>
+        Category
+      </p>
+      <q-separator></q-separator>
+      <div v-for="(filteredPublishing, key) in filteredPublishingsByCategory" :key="key"
+           class="q-pt-md">
+        <q-item clickable v-ripple>
+          <q-item-section side>
+            <q-avatar rounded size="4em">
+              <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{filteredPublishing.projectTitle}}</q-item-label>
+            <q-item-label caption>{{filteredPublishing.categoryModel}}</q-item-label>
+          </q-item-section>
+          <q-item-section side></q-item-section>
+        </q-item>
+      </div>
+    </div>
+    <div class="q-pb-lg"></div>
   </q-layout>
 </template>
 
 <script>
-  import SearchTags from '../components/search-tags'
   import ProfileCards from '../components/profile-card/profile-cards'
-  import ProjectCards from '../components/project-card/project-cards';
+  import { mapState, mapActions } from "vuex";
 
   export default {
     data() {
       return {
-        searchText: ''
+        searchText: '',
+        filteredUsers: [],
+        filteredPublishingsByTitle: [],
+        filteredPublishingsByCategory: [],
+        recentSearches: ["webpage", "edm", "painting", "code"]
       }
     },
+    methods: {
+      ...mapActions("store", [
+        "firebaseGetUsers", "clearUsers"
+      ]),
+    },
     components: {
-      SearchTags,
-      ProfileCards,
-      ProjectCards
+      ProfileCards
+    },
+    computed: {
+      ...mapState("store", ["users", "publishings"])
+    },
+    watch: {
+      searchText: function (val) {
+        this.filteredPublishingsByTitle = []
+        this.filteredPublishingsByCategory = []
+        this.filteredUsers = []
+        if (val !== '') {
+          for (let key of Object.keys(this.users)) {
+            if (this.users[key].name.toLowerCase().includes(val.toLowerCase())) {
+              this.users[key].key = key
+              this.filteredUsers.push(this.users[key])
+            }
+          }
+
+          for (let key of Object.keys(this.publishings)) {
+            if (this.publishings[key].projectTitle.toLowerCase().includes(val.toLowerCase())) {
+              this.publishings[key].key = key
+              this.filteredPublishingsByTitle.push(this.publishings[key])
+            }
+            if (this.publishings[key].categoryModel.toLowerCase().includes(val.toLowerCase())) {
+              this.publishings[key].key = key
+              this.filteredPublishingsByCategory.push(this.publishings[key])
+            }
+          }
+        }
+      }
+    },
+    created() {
+      this.clearUsers();
+      this.firebaseGetUsers()
     }
   };
 </script>

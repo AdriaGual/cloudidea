@@ -5,7 +5,7 @@
   >
     <q-card-section class="q-pt-md q-px-md">
       <q-img
-        :src="user.userPicUrl"
+        :src="user.imageUrl"
         spinner-color="white"
         class="cardProfileImage"
         style="position: relative;"
@@ -13,24 +13,33 @@
       <p class="q-pt-md text-center poppinsBold">{{user.name}}</p>
       <p class="text-center poppinsLight text-grey" style="font-size: 0.9em">{{user.cp}} CP</p>
       <q-btn
+        v-if="userDetails.userId && userDetails.userId !== user.key"
         no-caps
-        class="bgGrey"
-        style="border-radius: 0.5em;width:6.6rem;font-size: 0.7em"
-        icon="add"
-        label="FOLLOW"
+        class="bgGrey full-width"
+        align="center"
+        style="font-size: 0.9em;border-radius: 2em"
+        label="Chat"
+        @click="chat(user)"
       />
     </q-card-section>
   </q-card>
 </template>
 
 <script>
+  import { mapState, mapActions } from "vuex";
 
   export default {
     props: ["user"],
     data() {
-      return {
-        url: 'https://placeimg.com/500/300/nature'
-      }
+      return {}
+    },
+    methods: {
+      chat(user) {
+        this.$router.push("/chat/" + user.key)
+      },
+    },
+    computed: {
+      ...mapState("store", ["userDetails"])
     },
   }
 </script>

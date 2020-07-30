@@ -48,6 +48,9 @@ const mutations = {
   setPublishings(state, payload) {
     state.publishings = payload;
   },
+  setUsers(state, payload) {
+    state.users = payload;
+  },
   addLike(state, payload) {
     Vue.set(state.userLikedPublishings, payload.otherPublishingId, payload.otherUserId);
   },
@@ -408,6 +411,9 @@ const actions = {
   },
   clearPublishings({ commit }) {
     commit("setPublishings", {});
+  },
+  clearUsers({ commit }) {
+    commit("setUsers", {});
   },
   updatePublishComments({ commit }, payload) {
     firebaseDB
