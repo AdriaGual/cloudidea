@@ -12,17 +12,32 @@
           </div>
         </div>
         <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
-          <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)">
+          <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)"
+                  class="cardSectionInterior q-mb-md">
             <q-item-section side>
               <q-avatar rounded size="4em">
                 <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
               </q-avatar>
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{filteredPublishing.projectTitle}}</q-item-label>
-              <q-item-label caption>{{filteredPublishing.categoryModel}}</q-item-label>
+              <q-item-label class="poppinsRegular text-white"
+                            v-if="filteredPublishing.projectTitle.length>15">
+                {{filteredPublishing.projectTitle.substring(0,15)+".."}}
+              </q-item-label>
+
+              <q-item-label v-else class="poppinsRegular text-white">
+                {{filteredPublishing.projectTitle}}
+              </q-item-label>
+              <q-item-label caption class="text-grey">{{filteredPublishing.categoryModel}}
+              </q-item-label>
+              <q-item-label caption class="text-grey">{{filteredPublishing.registerLicenseModel}}
+              </q-item-label>
+
             </q-item-section>
             <q-item-section side>
+              <q-item-label caption class="text-grey">
+                {{releaseDate(filteredPublishing.releaseDate)}}
+              </q-item-label>
               <div class="row">
                 <q-icon v-if="filteredPublishing.needWrittingHelp" name="history_edu" size="sm">
                   <q-tooltip>
@@ -89,7 +104,32 @@
       ...mapActions("store", ["clearPublishings", "firebaseGetApprovedPublishings"]),
       goToPage(route) {
         this.$router.push(route)
-
+      },
+      releaseDate: function (date) {
+        var formattedDate = '';
+        if (date) {
+          formattedDate = (Date.now() - date) / (24 * 60 * 60 * 1000 * 2);
+          if (formattedDate < 1) {
+            formattedDate = formattedDate * 60;
+            if (formattedDate < 1) {
+              formattedDate = formattedDate * 60;
+              if (formattedDate < 1) {
+                formattedDate = "MOMENTS AGO"
+              } else if (Math.trunc(formattedDate) === 1) {
+                formattedDate = Math.trunc(formattedDate) + " MINUTE AGO"
+              } else {
+                formattedDate = Math.trunc(formattedDate) + " MINUTES AGO"
+              }
+            } else if (Math.trunc(formattedDate) === 1) {
+              formattedDate = Math.trunc(formattedDate) + " HOUR AGO"
+            } else {
+              formattedDate = Math.trunc(formattedDate) + " HOURS AGO"
+            }
+          } else {
+            formattedDate = Math.trunc(formattedDate) + " DAYS AGO"
+          }
+        }
+        return formattedDate;
       },
     },
     computed: {
@@ -111,8 +151,8 @@
         })
         this.orderedPublishings = this.orderedPublishings.filter((a, b) => this.orderedPublishings.indexOf(
           a) === b)
-        this.orderedPublishings.sort((a, b) => b.cp - a.cp);
-        console.log(this.orderedPublishings)
+        this.orderedPublishings.sort((a, b) => b.dateTime - a.dateTime);
+        this.orderedPublishings.reverse()
       }
     }
   };

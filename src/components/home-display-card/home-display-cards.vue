@@ -134,7 +134,7 @@
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
         <div class="col" style="border-radius: 0.5em">
           <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
-            <q-item clickable no-ripple
+            <q-item clickable no-ripple class="cardSectionInterior q-mb-md"
                     v-if="$q.cookies.get('categorySelection').includes(filteredPublishing.categoryModel)">
               <q-item-section side @click="goToPage('publishDetails/'+filteredPublishing.key)">
                 <q-avatar rounded size="4em">
@@ -142,17 +142,24 @@
                 </q-avatar>
               </q-item-section>
               <q-item-section @click="goToPage('publishDetails/'+filteredPublishing.key)">
-                <q-item-label class="poppinsRegular"
+                <q-item-label class="poppinsRegular text-white"
                               v-if="filteredPublishing.projectTitle.length>15">
                   {{filteredPublishing.projectTitle.substring(0,15)+".."}}
                 </q-item-label>
 
-                <q-item-label class="poppinsRegular" v-else>
+                <q-item-label v-else class="poppinsRegular text-white">
                   {{filteredPublishing.projectTitle}}
                 </q-item-label>
-                <q-item-label caption>{{filteredPublishing.categoryModel}}</q-item-label>
+                <q-item-label caption class="text-grey">{{filteredPublishing.categoryModel}}
+                </q-item-label>
+                <q-item-label caption class="text-grey">{{filteredPublishing.registerLicenseModel}}
+                </q-item-label>
+
               </q-item-section>
               <q-item-section side>
+                <q-item-label caption class="text-grey">
+                  {{releaseDate(filteredPublishing.releaseDate)}}
+                </q-item-label>
                 <div class="row">
                   <q-btn
                     rounded
@@ -187,7 +194,6 @@
                     color="grey"
                     disable
                   />
-
                   <p class="q-pt-md">
                     {{filteredPublishing.cp}} CP
                   </p>
