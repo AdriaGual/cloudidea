@@ -6,8 +6,7 @@
 </template>
 
 <script>
-  import ProjectCards from '../components/project-card/project-cards';
-  import { mapActions, mapState } from 'vuex'
+  import { mapState } from 'vuex'
   import SettingsHeader from '../components/settings/settings-header'
   import SettingsBottom from '../components/settings/settings-bottom'
 
