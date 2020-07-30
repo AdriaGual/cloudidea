@@ -2,7 +2,7 @@
   <q-scroll-area
     horizontal
     visbile="false"
-    class="scrollProjectAreaHorizontal q-pl-lg"
+    class="scrollProjectAreaHorizontal"
   >
     <div class="row no-wrap" style="height:17em;">
       <project-card></project-card>

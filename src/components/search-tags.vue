@@ -2,7 +2,7 @@
   <q-scroll-area
     horizontal
     visbile="false"
-    class="scrollTagsHorizontal q-pl-lg"
+    class="scrollTagsHorizontal"
   >
 
     <div class="row no-wrap" style="height:3em;">

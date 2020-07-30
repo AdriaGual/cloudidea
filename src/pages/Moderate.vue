@@ -12,7 +12,6 @@
              label="Moderate users" @click="goToPage('/moderate/users')"/>
 
     </div>
-
   </q-page>
 </template>
 

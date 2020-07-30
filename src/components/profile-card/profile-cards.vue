@@ -2,7 +2,7 @@
   <q-scroll-area
     horizontal
     visbile="false"
-    class="scrollProjectCreatorsAreaHorizontal q-pl-lg"
+    class="scrollProjectCreatorsAreaHorizontal"
   >
     <div class="row no-wrap" style="height:3em;">
       <ProfileCard v-for="user in users" :user="user" :key="user.id"></ProfileCard>
