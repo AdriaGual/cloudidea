@@ -3,18 +3,21 @@
     <publishdetails-header :project-title="publishDetails.projectTitle"></publishdetails-header>
 
     <div class="row q-pt-md">
-      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
-      <div class="col justify-center items-center q-gutter-y-md" align="center">
-        <publishdetails-card class="" style="width: 25em" :userDetails="userDetails"
-                             :publishDetails="publishDetails">
+      <div class="col q-gutter-y-md bgGlobal" align="center">
+        <publishdetails-card class=""
+                             :style="this.$q.platform.is.desktop?'width: 50em':'width: 25em'"
+                             :userDetails="userDetails"
+                             :publishDetails="publishDetails" align="left">
         </publishdetails-card>
 
-        <publishdetails-info style="width: 25em" :publishDetails="publishDetails"
-                             :publishComments="publishComments" :userDetails="userDetails">
+        <publishdetails-info :style="this.$q.platform.is.desktop?'width: 50em':'width: 25em'"
+                             :publishDetails="publishDetails"
+                             :publishComments="publishComments" :userDetails="userDetails"
+                             align="left">
         </publishdetails-info>
       </div>
 
-      <div class="col-3" v-if="this.$q.platform.is.desktop">
+      <div class="col-3 q-pr-xl bgGlobal" v-if="this.$q.platform.is.desktop && $q.screen.gt.md">
         <p class="poppinsBold" style="font-size: 1.2em">Other projects from
           {{publishDetails.creatorName}}</p>
         <div v-for="(publish, key) in publishings"
@@ -22,7 +25,7 @@
 
           <publishdetails-card
             v-if="publish.creatorId === publishDetails.creatorId && publish.key !== publishDetails.key"
-            style="width: 25em" :userDetails="userDetails"
+            :userDetails="userDetails"
             class="q-mt-lg"
             :publishDetails="publish">
           </publishdetails-card>
