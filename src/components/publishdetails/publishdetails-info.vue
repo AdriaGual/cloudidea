@@ -73,6 +73,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import { openURL } from 'quasar'
 
   export default {
     props: ['publishDetails', 'publishComments', 'userDetails'],

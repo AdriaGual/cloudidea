@@ -142,7 +142,14 @@
                 </q-avatar>
               </q-item-section>
               <q-item-section @click="goToPage('publishDetails/'+filteredPublishing.key)">
-                <q-item-label>{{filteredPublishing.projectTitle}}</q-item-label>
+                <q-item-label class="poppinsRegular"
+                              v-if="filteredPublishing.projectTitle.length>15">
+                  {{filteredPublishing.projectTitle.substring(0,15)+".."}}
+                </q-item-label>
+
+                <q-item-label class="poppinsRegular" v-else>
+                  {{filteredPublishing.projectTitle}}
+                </q-item-label>
                 <q-item-label caption>{{filteredPublishing.categoryModel}}</q-item-label>
               </q-item-section>
               <q-item-section side>

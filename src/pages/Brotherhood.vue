@@ -24,15 +24,47 @@
             </q-item-section>
             <q-item-section side>
               <div class="row">
-                <q-icon v-if="filteredPublishing.needWrittingHelp" name="history_edu" size="sm"/>
-                <q-icon v-if="filteredPublishing.needVideoHelp" name="o_videocam" size="sm"/>
-                <q-icon v-if="filteredPublishing.needAudioHelp" name="o_audiotrack" size="sm"/>
-                <q-icon v-if="filteredPublishing.needCodeHelp" name="code" size="sm"/>
-                <q-icon v-if="filteredPublishing.needDesignHelp" name="o_palette" size="sm"/>
-                <q-icon v-if="filteredPublishing.needIdeaHelp" name="o_emoji_objects" size="sm"/>
-                <q-icon v-if="filteredPublishing.needSellHelp" name="attach_money" size="sm"/>
+                <q-icon v-if="filteredPublishing.needWrittingHelp" name="history_edu" size="sm">
+                  <q-tooltip>
+                    Needs help with writting
+                  </q-tooltip>
+                </q-icon>
+                <q-icon v-if="filteredPublishing.needVideoHelp" name="o_videocam" size="sm">
+                  <q-tooltip>
+                    Needs help with video
+                  </q-tooltip>
+                </q-icon>
+                <q-icon v-if="filteredPublishing.needAudioHelp" name="o_audiotrack" size="sm">
+                  <q-tooltip>
+                    Needs help with audio
+                  </q-tooltip>
+                </q-icon>
+                <q-icon v-if="filteredPublishing.needCodeHelp" name="code" size="sm">
+                  <q-tooltip>
+                    Needs help with code
+                  </q-tooltip>
+                </q-icon>
+                <q-icon v-if="filteredPublishing.needDesignHelp" name="o_palette" size="sm">
+                  <q-tooltip>
+                    Needs help with design
+                  </q-tooltip>
+                </q-icon>
+                <q-icon v-if="filteredPublishing.needIdeaHelp" name="o_emoji_objects" size="sm">
+                  <q-tooltip>
+                    Needs help with idea
+                  </q-tooltip>
+                </q-icon>
+                <q-icon v-if="filteredPublishing.needSellHelp" name="attach_money" size="sm">
+                  <q-tooltip>
+                    Needs help with selling
+                  </q-tooltip>
+                </q-icon>
                 <q-icon v-if="filteredPublishing.needPromotionHelp" name="favorite_border"
-                        size="sm"/>
+                        size="sm">
+                  <q-tooltip>
+                    Needs help with promotion
+                  </q-tooltip>
+                </q-icon>
               </div>
             </q-item-section>
           </q-item>
