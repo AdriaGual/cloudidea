@@ -1,66 +1,52 @@
 <template>
-  <div class="row q-pt-md">
-    <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-    <div class="col q-pa-lg" style="border-radius: 0.5em">
-      <div class="row">
-        <div class="col-1 q-pl-md">
-          <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
-        </div>
-        <div class="col text-center">
-          <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Your Profile</p>
-        </div>
-        <div class="col-1">
-          <q-btn round color="primary" icon="send" flat class="float-right q-pr-md"
-                 @click="goToPage('/myChats')"/>
-        </div>
+  <div>
+    <div class="row q-px-md">
+      <div class="col-1">
+        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
       </div>
-
-      <div class="text-center justify-center q-pt-lg">
-        <q-avatar round size="11em">
-          <img :src="userDetails.imageUrl" style="border:0.1em solid white;"/>
-          <q-badge floating color="accent" class="q-mt-md" style="border-radius: 2em">
-            <q-file borderless v-model="imageFile" style="height:2.5rem;width:1.7rem;font-size: 0"
-                    :filter="checkFileType" @rejected="onRejected"
-                    class="poppinsRegular cursor-pointer">
-              <template v-slot:prepend>
-                <q-icon name="o_add_a_photo" class="text-white" @click.stop/>
-              </template>
-            </q-file>
-          </q-badge>
-        </q-avatar>
+      <div class="col text-center">
+        <p class="poppinsRegular" style="font-size: 1.5em">Your Profile</p>
       </div>
-
-      <div class="row poppinsRegular">
-        <div class="col-3"></div>
-        <div class="col">
-          <q-input dense :borderless="!editName" :disable="!editName" :outlined="editName"
-                   style="font-size: 2em;" v-model="name"/>
-        </div>
-        <div class="col-3 text-grey q-pt-sm">
-          <q-icon v-if="!editName" name="edit" @click="editName=!editName" size="sm"/>
-          <q-icon v-if="editName" name="check" @click="editName=!editName || updateUser('name')"
-                  size="sm" class="q-pl-md"/>
-        </div>
-      </div>
-
-      <div class="row poppinsRegular text-grey q-pt-sm">
-        <div class="col-2"></div>
-        <div class="col">
-          <q-input dense :borderless="!editSkills" :disable="!editSkills" :outlined="editSkills"
-                   style="font-size: 1.2em" v-model="skills"/>
-        </div>
-        <div class="col-1 q-pt-sm text-left">
-          <q-icon v-if="!editSkills" name="edit" @click="editSkills=!editSkills" size="sm"/>
-          <q-icon v-if="editSkills" name="check"
-                  @click="editSkills=!editSkills || updateUser('skills')"
-                  size="sm" class="q-pl-md"/>
-        </div>
-        <div class="col-4 text-center q-pt-md">
-          · <a style="font-size: 1em" class="text-red poppinsBold">131 CP</a>
-        </div>
+      <div class="col-1">
+        <q-btn round color="primary" icon="send" flat class="float-right"
+               @click="goToPage('/myChats')"/>
       </div>
     </div>
-    <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+    <div class="row">
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col" style="border-radius: 0.5em">
+        <div class="text-center justify-center q-pt-md">
+          <q-avatar round size="11em">
+            <img :src="userDetails.imageUrl" style="border:0.1em solid white"/>
+            <q-badge floating color="accent" class="q-mt-md" style="border-radius: 2em">
+              <q-file borderless v-model="imageFile" style="height:2.5rem;width:1.7rem;font-size: 0"
+                      :filter="checkFileType" @rejected="onRejected"
+                      class="poppinsRegular cursor-pointer">
+                <template v-slot:prepend>
+                  <q-icon name="o_add_a_photo" class="text-white" @click.stop/>
+                </template>
+              </q-file>
+            </q-badge>
+          </q-avatar>
+        </div>
+
+        <p class="poppinsRegular text-center q-pt-md" style="font-size: 2em;">
+          {{userDetails.name}}</p>
+        <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em">
+          {{userDetails.skills}} ·
+          <a class="text-red poppinsBold" style="font-size: 0.8em;">
+            {{userDetails.cp}} CP
+          </a>
+        </p>
+        <p class="poppinsLight text-center text-indigo-9"
+           style="font-size: 1em;">{{userDetails.email}}</p>
+        <div class="text-center q-px-lg q-pt-sm">
+          <q-btn style="width:20em" color="white" text-color="black" label="Edit Profile" no-caps/>
+        </div>
+
+      </div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+    </div>
   </div>
 </template>
 
@@ -70,10 +56,6 @@
   export default {
     data() {
       return {
-        name: '',
-        editName: false,
-        skills: '',
-        editSkills: false,
         imageUrl: '',
         imageFile: null,
       }
@@ -130,10 +112,6 @@
       imageFile: function (val) {
         this.uploadFile(val);
       }
-    },
-    created() {
-      this.name = this.userDetails.name;
-      this.skills = this.userDetails.skills
     }
   }
 </script>
