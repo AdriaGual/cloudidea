@@ -33,7 +33,6 @@
     },
     watch: {
       users: function (val) {
-        console.log("aaaa")
         let keys = Object.keys(val);
         keys.forEach(key => {
           let item = this.users[key];

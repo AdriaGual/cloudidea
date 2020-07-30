@@ -193,11 +193,12 @@
         keys.forEach(key => {
           let item = this.publishings[key];
           item.key = key
-          this.orderedPublishings.push(this.publishings[key])
+          if (this.publishings[key].needHelp !== 'true') {
+            this.orderedPublishings.push(this.publishings[key])
+          }
         })
         this.orderedPublishings = this.orderedPublishings.filter((a, b) => this.orderedPublishings.indexOf(
           a) === b)
-
         this.orderedPublishings.sort((a, b) => b.cp - a.cp);
       }
     }
