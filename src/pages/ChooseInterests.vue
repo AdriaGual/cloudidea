@@ -1,6 +1,5 @@
 <template>
   <q-layout class="flex flex-center bgGlobal">
-
     <div class="text-center">
       <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">Hey newcomer! </p>
       <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">What are you
@@ -32,17 +31,21 @@
           Code
         </q-chip>
       </div>
-      <div class="fixed-bottom">
-        <q-btn outline color="primary"
-               class="startAppButton text-white bg-primary q-mt-xl"
-               no-caps
-               label="Start sharing" @click="goToPage('/')"/>
-        <q-btn flat no-caps :ripple="false" class="text-grey poppinsRegular q-pt-lg q-pb-lg"
-               style="font-size: 0.9em">Skip for now
-        </q-btn>
+      <div class="row q-pt-md">
+        <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+        <div class="col">
+          <q-btn outline color="primary"
+                 class="startAppButton text-white bg-primary q-mt-xl"
+                 no-caps
+                 label="Start sharing" @click="goToPage('/')"/>
+          <q-btn flat no-caps :ripple="false" class="text-grey poppinsRegular full-width"
+                 style="font-size: 0.9em">Skip for now
+          </q-btn>
+        </div>
+        <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
       </div>
-
     </div>
+
 
   </q-layout>
 </template>
@@ -66,8 +69,22 @@
     },
     methods: {
       goToPage(route) {
-        Cookies.set('categorySelection', this.selection)
-        this.$router.push(route)
+        if (this.selection.includes(',')) {
+          this.$q.notify({
+            type: 'positive',
+            position: 'top',
+            message: `Enjoy your stay!`
+          });
+          Cookies.set('categorySelection', this.selection)
+          this.$router.push(route)
+        } else {
+          this.$q.notify({
+            type: 'negative',
+            position: 'top',
+            message: `You must choose at least two interests`
+          });
+        }
+
       },
     },
     computed: {

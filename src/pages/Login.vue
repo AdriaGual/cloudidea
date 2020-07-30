@@ -1,40 +1,49 @@
 <template>
-  <q-layout class="flex column q-pt-lg bgGlobal row">
-    <div class="row window-width q-px-md">
-      <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
-    </div>
-
-    <p class="poppinsBold text-center" style="font-size: 2em">Login</p>
-
-    <q-form
-      @submit="onSubmit"
-    >
-      <q-input filled class="window-width q-px-lg" placeholder="Email Address"
-               v-model="userData.email"
-               :rules="[isEmptyField,isValidEmail]"/>
-
-      <q-input filled class="window-width q-px-lg q-pt-md" placeholder="Password"
-               :type="isPwd ? 'password' : 'text'"
-               v-model="userData.password"
-               :rules="[isEmptyField,val => isShortField(val,7,'password')]">
-        <template v-slot:append>
-          <q-icon
-            :name="isPwd ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            @click="isPwd = !isPwd"
-          />
-        </template>
-      </q-input>
-      <q-btn flat class="text-center window-width" no-ripple color="grey"
-             label="FORGOT PASSWORD?"/>
-      <div class="row window-width justify-center">
-        <q-btn class="q-mt-xl"
-               type="submit"
-               style="height: 4em;border-radius: 0.5em;width:24em"
-               color="primary"
-               label="LOGIN"/>
+  <q-layout class="flex column q-pt-lg bgGlobal">
+    <div class="row">
+      <div class="col-1 q-pl-md">
+        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
       </div>
-    </q-form>
+      <div class="col text-center">
+        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Login</p>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <div class="row window-width q-pt-md">
+      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+      <div class="col">
+        <q-form
+          @submit="onSubmit"
+        >
+          <q-input filled class="q-px-lg" placeholder="Email Address"
+                   v-model="userData.email"
+                   :rules="[isEmptyField,isValidEmail]"/>
+
+          <q-input filled class="q-px-lg q-pt-md" placeholder="Password"
+                   :type="isPwd ? 'password' : 'text'"
+                   v-model="userData.password"
+                   :rules="[isEmptyField,val => isShortField(val,7,'password')]">
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
+          <q-btn flat class="text-center full-width" no-ripple color="grey"
+                 label="FORGOT PASSWORD?"/>
+          <div class="row justify-center">
+            <q-btn class="q-mt-xl"
+                   type="submit"
+                   style="height: 4em;border-radius: 0.5em;width:24em"
+                   color="primary"
+                   label="LOGIN"/>
+          </div>
+        </q-form>
+      </div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+    </div>
     <div class="row window-width  justify-center">
       <q-btn
         no-caps

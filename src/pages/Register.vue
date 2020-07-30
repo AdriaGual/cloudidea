@@ -1,36 +1,46 @@
 <template>
   <q-layout class="flex column q-pt-lg bgGlobal">
-    <div class="row window-width q-px-md">
-      <q-btn flat round color="primary" icon="arrow_back"
-             @click="goToPage('/login')"/>
-    </div>
-
-    <p class="poppinsBold text-center" style="font-size: 2em">Sign Up</p>
-    <q-form
-      @submit="onSubmit"
-    >
-      <q-input filled class="window-width q-px-lg" placeholder="Username" v-model="userData.name"
-               :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
-      <q-input filled class=" window-width q-px-lg q-pt-md" v-model="userData.email"
-               placeholder="Email Address"
-               :rules="[isEmptyField,isValidEmail]"/>
-      <q-input filled class=" window-width q-px-lg q-pt-md" v-model="userData.password"
-               placeholder="Password"
-               :rules="[isEmptyField,val => isShortField(val,7,'password')]"/>
-      <q-input filled class=" window-width q-px-lg q-pt-md" v-model="repeatPassword"
-               placeholder="Repeat password"
-               :rules="[isEmptyField,val => isShortField(val,7,'password'),doPasswordsMatch]"/>
-      <q-toggle v-model="licenseTerms" label="I accept the license and terms"
-                class="q-px-lg q-pt-sm"/>
-
-      <div class="row window-width  justify-center">
-        <q-btn class="q-mt-xl"
-               style="height: 4em;border-radius: 0.5em;width:24em"
-               color="primary"
-               type="submit"
-               label="Sign Up"/>
+    <div class="row">
+      <div class="col-1 q-pl-md">
+        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/login')"/>
       </div>
-    </q-form>
+      <div class="col text-center">
+        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Register</p>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <div class="row window-width q-pt-md">
+      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+      <div class="col">
+        <q-form
+          @submit="onSubmit"
+        >
+          <q-input filled class="q-px-lg" placeholder="Username"
+                   v-model="userData.name"
+                   :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
+          <q-input filled class="q-px-lg q-pt-md" v-model="userData.email"
+                   placeholder="Email Address"
+                   :rules="[isEmptyField,isValidEmail]"/>
+          <q-input filled class="q-px-lg q-pt-md" v-model="userData.password"
+                   placeholder="Password"
+                   :rules="[isEmptyField,val => isShortField(val,7,'password')]"/>
+          <q-input filled class="q-px-lg q-pt-md" v-model="repeatPassword"
+                   placeholder="Repeat password"
+                   :rules="[isEmptyField,val => isShortField(val,7,'password'),doPasswordsMatch]"/>
+          <q-toggle v-model="licenseTerms" label="I accept the license and terms"
+                    class="q-px-lg q-pt-sm"/>
+
+          <div class="row justify-center">
+            <q-btn class="q-mt-xl"
+                   style="height: 4em;border-radius: 0.5em;width:24em"
+                   color="primary"
+                   type="submit"
+                   label="Sign Up"/>
+          </div>
+        </q-form>
+      </div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop"></div>
+    </div>
 
 
   </q-layout>
