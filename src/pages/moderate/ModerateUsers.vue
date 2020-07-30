@@ -10,39 +10,45 @@
       </div>
       <div class="col-1"></div>
     </div>
+    <div class="row window-width q-pt-md">
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col" style="border-radius: 0.5em">
+        <div v-for="(user, key) in users" :key="key">
 
-    <div v-for="(user, key) in users" :key="key">
-      <q-item clickable v-ripple>
-        <q-item-section side>
-          <q-avatar rounded size="4em">
-            <img :src="user.imageUrl" style="border-radius: 0.2em"/>
-            <q-badge v-if="user.online" floating color="green"
-                     style="border-radius: 0.5em;height: 1em"></q-badge>
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{user.name}}</q-item-label>
-          <q-item-label caption>{{user.skills}}</q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <div class="row q-gutter-sm" v-if="!user.moderator">
-            <div class="col">
-              <q-btn color="green" outline size="md" @click="promoteToModerator(key)">
-                <q-icon name="fas fa-crown" size="xs"/>
-              </q-btn>
-            </div>
-            <div class="col">
-              <q-btn color="red" size="md" outline @click="deleteUser(key)">
-                <q-icon name="delete"/>
-              </q-btn>
-            </div>
-          </div>
-          <q-icon v-else name="fas fa-crown" size="xs"/>
-        </q-item-section>
-      </q-item>
-      <q-separator inset></q-separator>
+          <q-item clickable v-ripple>
+            <q-item-section side>
+              <q-avatar rounded size="4em">
+                <img :src="user.imageUrl" style="border-radius: 0.2em"/>
+                <q-badge v-if="user.online" floating color="green"
+                         style="border-radius: 0.5em;height: 1em"></q-badge>
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{user.name}}</q-item-label>
+              <q-item-label caption>{{user.skills}}</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <div class="row q-gutter-sm" v-if="!user.moderator">
+                <div class="col">
+                  <q-btn color="green" outline size="md" @click="promoteToModerator(key)">
+                    <q-icon name="fas fa-crown" size="xs"/>
+                  </q-btn>
+                </div>
+                <div class="col">
+                  <q-btn color="red" size="md" outline @click="deleteUser(key)">
+                    <q-icon name="delete"/>
+                  </q-btn>
+                </div>
+              </div>
+              <q-icon v-else name="fas fa-crown" size="xs"/>
+            </q-item-section>
+          </q-item>
+          <q-separator inset></q-separator>
+        </div>
+      </div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+
     </div>
-
 
   </q-page>
 </template>
