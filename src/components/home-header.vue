@@ -1,5 +1,5 @@
 <template>
-  <div class="row window-width q-px-lg">
+  <div class="row q-px-lg">
     <div class="col">
       <a class="text-grey poppinsLight">Cloudidea</a>
     </div>

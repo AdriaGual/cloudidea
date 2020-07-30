@@ -390,7 +390,7 @@ const actions = {
     });
   },
   firebaseGetApprovedPublishings({ commit }) {
-    firebaseDB.ref("publishings").orderByChild('timeStamp').limitToFirst(5).on("child_added",
+    firebaseDB.ref("publishings").on("child_added",
       snapshot => {
         const publishDetails = snapshot.val();
         const publishId = snapshot.key;
@@ -404,8 +404,6 @@ const actions = {
             commit("addPublish", { publishId, publishDetails });
           }
         });
-
-
       });
   },
   clearPublishings({ commit }) {
