@@ -5,7 +5,7 @@
            :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
     />
     <q-card-actions>
-      <div class="row" style="width: 30em;height:4em">
+      <div class="row full-width" style="height:4em">
         <div class="col-2 q-pl-sm">
           <q-img
             :src="publishDetails.creatorImageUrl"
@@ -13,11 +13,11 @@
             class="cardUserImage"
           />
         </div>
-        <div class="col-4 q-pt-md">
+        <div class="col-5 q-pt-md">
           <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
           <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
         </div>
-        <div class="col-4 q-pt-sm q-pr-md">
+        <div class="col-3 q-pt-sm q-pr-md">
           <q-btn
             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
             no-caps
@@ -31,7 +31,7 @@
           <q-btn
             rounded
             flat
-            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===false"
+            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishKey)===false"
             no-caps
             class=""
             icon="favorite_border"
@@ -41,7 +41,7 @@
             @click="like(publishDetails,publishKey)"
           />
           <q-btn
-            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===true"
+            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishKey)===true"
             no-caps
             rounded
             flat

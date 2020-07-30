@@ -50,7 +50,8 @@
             <q-separator></q-separator>
             <div v-for="(filteredPublishing, key) in filteredPublishingsByTitle" :key="key"
                  class="q-pt-md">
-              <q-item clickable v-ripple>
+              <q-item clickable v-ripple
+                      @click="goToPage('publishDetails/'+filteredPublishing.key)">
                 <q-item-section side>
                   <q-avatar rounded size="4em">
                     <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
@@ -97,7 +98,7 @@
           <q-separator></q-separator>
           <div v-for="(filteredPublishing, key) in filteredPublishingsByCategory" :key="key"
                class="q-pt-md">
-            <q-item clickable v-ripple>
+            <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)">
               <q-item-section side>
                 <q-avatar rounded size="4em">
                   <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
@@ -137,6 +138,9 @@
       ...mapActions("store", [
         "firebaseGetUsers", "clearUsers", "clearPublishings", "firebaseGetApprovedPublishings"
       ]),
+      goToPage(route) {
+        this.$router.push(route)
+      },
     },
     components: {
       ProfileCards
