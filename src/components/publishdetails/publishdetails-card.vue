@@ -1,6 +1,9 @@
 <template>
   <q-card class="cardExterior">
-    <q-img :src="publishDetails.fileUrl" spinner-color="white"/>
+    <q-img :src="publishDetails.fileUrl" spinner-color="white"
+           @click="goToPage(publishKey)"
+           :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
+    />
     <q-card-actions>
       <div class="row" style="width: 30em;height:4em">
         <div class="col-2 q-pl-sm">
@@ -35,7 +38,7 @@
             color="accent"
             size="md"
             :ripple="false"
-            @click="like(publishDetails,publishDetails.key)"
+            @click="like(publishDetails,publishKey)"
           />
           <q-btn
             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishDetails.key)===true"
@@ -47,7 +50,7 @@
             class=""
             icon="favorite"
             color="accent"
-            @click="dislike(publishDetails,publishDetails.key)"
+            @click="dislike(publishDetails,publishKey)"
           />
           <p class="cardUserCP q-pl-sm"
              v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
@@ -63,9 +66,14 @@
   import { mapActions, mapState } from 'vuex'
 
   export default {
-    props: ['userDetails', 'publishDetails'],
+    props: ['userDetails', 'publishDetails', 'publishKey'],
     methods: {
       ...mapActions('store', ['firebaseAddLike', 'firebaseRemoveLike']),
+      goToPage(route) {
+        if (this.publishKey !== this.$route.params.publishId) {
+          this.$router.push(route)
+        }
+      },
       chat() {
         this.$router.push("/chat/" + this.publishDetails.creatorId)
       },

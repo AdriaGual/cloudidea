@@ -173,7 +173,7 @@
         publish.key = key;
         this.updatePublishDetails(publish);
         this.updatePublishComments(publish)
-        this.goToPage('/publishDetails')
+        this.goToPage('/publishDetails/' + publish.key)
       },
       goToPage(route) {
         this.$router.push(route)

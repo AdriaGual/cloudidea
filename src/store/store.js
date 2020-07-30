@@ -66,6 +66,9 @@ const mutations = {
   removeComment(state, payload) {
     Vue.delete(state.publishComments, payload.commentId);
   },
+  clearComments(state) {
+    state.publishComments = {};
+  },
 };
 
 const actions = {
@@ -263,6 +266,9 @@ const actions = {
           });
         });
     });
+  },
+  firebaseClearComments({ commit }) {
+    commit("clearComments");
   },
   firebaseAddLike({ commit, dispatch }, payload) {
     firebaseDB
