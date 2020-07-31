@@ -10,7 +10,7 @@ const routes = [
     path: '/search',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Search.vue') },
+      { path: '', component: () => import('pages/Profile.vue') },
     ],
   },
   {
@@ -87,8 +87,8 @@ const routes = [
     component: () => import('pages/Register.vue'),
   },
   {
-    path: '/settings',
-    component: () => import('pages/Settings.vue'),
+    path: '/profile/:otherUserId',
+    component: () => import('pages/Profile.vue'),
   },
   {
     path: '*',

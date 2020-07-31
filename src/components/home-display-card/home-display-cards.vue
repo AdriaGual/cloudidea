@@ -83,14 +83,16 @@
           </q-card-section>
           <q-card-actions>
             <div class="row full-width q-pt-xs">
-              <div class="col-2 q-pl-sm">
+              <div class="col-2 q-pl-sm cursor-pointer"
+                   @click="goToPage('/profile/'+publish.creatorId)">
                 <q-img
                   :src="publish.creatorImageUrl"
                   spinner-color="white"
                   class="cardUserImage"
                 />
               </div>
-              <div class="col-4 q-pt-md">
+              <div class="col-4 q-pt-md cursor-pointer"
+                   @click="goToPage('/profile/'+publish.creatorId)">
                 <p style="line-height: 0.1em">{{publish.creatorName}}</p>
                 <p class="cardUserCP">{{publish.creatorSkills}} </p>
               </div>

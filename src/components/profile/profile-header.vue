@@ -5,10 +5,12 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular" style="font-size: 1.5em">Your Profile</p>
+        <p v-if="$route.params.otherUserId===userDetails.userId" class="poppinsRegular"
+           style="font-size: 1.5em">Your Profile</p>
       </div>
       <div class="col-1">
-        <q-btn round color="primary" icon="send" flat class="float-right"
+        <q-btn v-if="$route.params.otherUserId===userDetails.userId" round color="primary"
+               icon="send" flat class="float-right"
                @click="goToPage('/myChats')"/>
       </div>
     </div>
@@ -17,8 +19,9 @@
       <div class="col" style="border-radius: 0.5em">
         <div class="text-center justify-center q-pt-md">
           <q-avatar round size="11em">
-            <img :src="userDetails.imageUrl" style="border:0.1em solid white"/>
-            <q-badge floating color="accent" class="q-mt-md" style="border-radius: 2em">
+            <img :src="otherUserDetails.imageUrl" style="border:0.1em solid white"/>
+            <q-badge floating color="accent" class="q-mt-md" style="border-radius: 2em"
+                     v-if="$route.params.otherUserId===userDetails.userId">
               <q-file borderless v-model="imageFile" style="height:2.5rem;width:1.7rem;font-size: 0"
                       :filter="checkFileType" @rejected="onRejected"
                       class="poppinsRegular cursor-pointer">
@@ -31,18 +34,18 @@
         </div>
 
         <p class="poppinsRegular text-center q-pt-md" style="font-size: 2em;">
-          {{userDetails.name}}</p>
+          {{otherUserDetails.name}}</p>
         <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em">
-          {{userDetails.skills}} ·
+          {{otherUserDetails.skills}} ·
           <a class="text-red poppinsBold" style="font-size: 0.8em;">
-            {{userDetails.cp}} CP
+            {{otherUserDetails.cp}} CP
           </a>
         </p>
         <p class="poppinsLight text-center text-indigo-9"
-           style="font-size: 1em;">{{userDetails.email}}</p>
+           style="font-size: 1em;">{{otherUserDetails.email}}</p>
         <div class="text-center q-px-lg q-pt-sm">
           <q-btn style="width:20em" color="white" text-color="black" label="Edit Profile" no-caps
-                 @click="editProfile = true"/>
+                 v-if="$route.params.otherUserId===userDetails.userId" @click="editProfile = true"/>
         </div>
 
       </div>
@@ -88,6 +91,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import mixinOtherUserDetails from "src/mixins/mixin_other_user_details";
 
   export default {
     data() {
@@ -172,10 +176,11 @@
         this.email = val.email
       }
     },
+    mixins: [mixinOtherUserDetails],
     created() {
-      this.name = this.userDetails.name
-      this.skills = this.userDetails.skills
-      this.email = this.userDetails.email
+      this.name = this.otherUserDetails.name
+      this.skills = this.otherUserDetails.skills
+      this.email = this.otherUserDetails.email
     }
   }
 </script>

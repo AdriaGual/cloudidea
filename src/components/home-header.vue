@@ -13,7 +13,7 @@
       />
       <q-btn
         v-if="userDetails.userId" round class="float-right"
-        @click="goToPage('/settings')">
+        @click="goToPage('/profile/'+userDetails.userId)">
         <q-avatar size="3em">
           <img :src="userDetails.imageUrl">
         </q-avatar>

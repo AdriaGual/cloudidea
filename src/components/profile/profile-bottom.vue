@@ -13,7 +13,8 @@
         >
           <q-tab name="about" label="About"/>
           <q-tab name="projects" label="Projects"/>
-          <q-tab name="settings" label="Settings"/>
+          <q-tab v-if="$route.params.otherUserId===userDetails.userId" name="settings"
+                 label="Settings"/>
         </q-tabs>
 
         <q-separator/>
@@ -22,9 +23,11 @@
           <q-tab-panel name="about">
             <div class="row">
               <div class="col">
-                <p class="text-grey poppinsRegular">Edit description</p>
+                <p class="text-grey poppinsRegular"
+                   v-if="$route.params.otherUserId===userDetails.userId">Edit description</p>
+                <p v-else class="text-grey poppinsRegular">Description</p>
               </div>
-              <div class="col">
+              <div class="col" v-if="$route.params.otherUserId===userDetails.userId">
                 <p class="text-grey poppinsRegular float-right">
                   <q-icon v-if="!editDescription" name="edit"
                           @click="editDescription=!editDescription"
@@ -66,6 +69,7 @@
 <script>
   import ProjectCards from '../project-card/project-cards'
   import { mapActions, mapState } from 'vuex'
+  import mixinOtherUserDetails from "src/mixins/mixin_other_user_details";
 
   export default {
     data() {
@@ -119,8 +123,9 @@
     computed: {
       ...mapState('store', ['userDetails']),
     },
+    mixins: [mixinOtherUserDetails],
     created() {
-      this.description = this.userDetails.description;
+      this.description = this.otherUserDetails.description;
     }
   }
 </script>

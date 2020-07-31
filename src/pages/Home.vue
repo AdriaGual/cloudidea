@@ -11,11 +11,6 @@
   import { Cookies } from 'quasar'
 
   export default {
-    data() {
-      return {
-        url: 'https://placeimg.com/500/300/nature'
-      }
-    },
     methods: {
       goToPage(route) {
         this.$router.push(route)
