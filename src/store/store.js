@@ -86,6 +86,7 @@ const actions = {
         skills: '',
         online: true,
         cp: 0,
+        privateProfile: false,
         moderator: false,
         description: "",
         imageUrl: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/profilePics%2Fdefault%2FdefaultProfilePicture.jpg?alt=media&token=bad4228c-c26a-47f4-a254-4d9e4f5a8b49'
@@ -124,6 +125,7 @@ const actions = {
             description: userDetails.description,
             moderator: userDetails.moderator,
             userId: userId,
+            privateProfile: userDetails.privateProfile,
             cp: userDetails.cp
           });
         });
@@ -185,6 +187,7 @@ const actions = {
         imageUrl: userDetails.imageUrl,
         description: userDetails.description,
         moderator: userDetails.moderator,
+        privateProfile: userDetails.privateProfile,
         userId: userId,
         cp: userDetails.cp,
       });

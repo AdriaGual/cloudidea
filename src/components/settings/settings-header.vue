@@ -41,12 +41,48 @@
         <p class="poppinsLight text-center text-indigo-9"
            style="font-size: 1em;">{{userDetails.email}}</p>
         <div class="text-center q-px-lg q-pt-sm">
-          <q-btn style="width:20em" color="white" text-color="black" label="Edit Profile" no-caps/>
+          <q-btn style="width:20em" color="white" text-color="black" label="Edit Profile" no-caps
+                 @click="editProfile = true"/>
         </div>
 
       </div>
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
+    <q-dialog v-model="editProfile">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6 q-px-lg">Edit Profile</div>
+          <q-space/>
+          <q-btn icon="close" flat round dense v-close-popup/>
+        </q-card-section>
+
+        <q-card-section>
+          <q-form
+            @submit="onSubmit"
+            class="q-px-lg"
+          >
+            <q-input outlined placeholder="Username" label="Username"
+                     v-model="name"
+                     :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
+            <q-input outlined placeholder="Skills"
+                     v-model="skills" label="Skills"
+                     :rules="[isEmptyField,val => isShortField(val,5,'skills')]"/>
+            <q-input outlined v-model="email"
+                     placeholder="Email Address" label="Email"
+                     :rules="[isEmptyField,isValidEmail]"/>
+            <q-toggle v-model="privateProfile" label="Private profile"/>
+            <div class="row justify-center">
+              <q-btn class=""
+                     style="height: 4em;border-radius: 0.5em;width:24em"
+                     color="primary"
+                     icon="o_save"
+                     type="submit"
+                     label="Save Profile"/>
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -58,26 +94,44 @@
       return {
         imageUrl: '',
         imageFile: null,
+        editProfile: false,
+        name: '',
+        skills: '',
+        email: '',
+        privateProfile: false
       }
     },
     methods: {
       ...mapActions('store', ['firebaseUpdateUser', 'updateUserState', 'firebaseUploadProfilePic']),
+      isShortField(val, n, item) {
+        if (!(val && val.length >= n)) {
+          return 'Short ' + item + ',' + n + ' characters required'
+        }
+      },
+      isEmptyField(val) {
+        if (!(val && val.length >= 0)) {
+          return 'Please type something'
+        }
+      },
+      isValidEmail(val) {
+        const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+        return emailPattern.test(val) || 'Invalid email';
+      },
       goToPage(route) {
         this.$router.push(route);
       },
-      updateUser(type) {
-        if (type === 'name') {
-          this.firebaseUpdateUser({
-            userId: this.userDetails.userId,
-            updates: { name: this.name }
-          });
-        } else if (type === 'skills') {
-          this.firebaseUpdateUser({
-            userId: this.userDetails.userId,
-            updates: { skills: this.skills }
-          });
-        }
+      onSubmit({ commit }, payload) {
+        this.firebaseUpdateUser({
+          userId: this.userDetails.userId,
+          updates: {
+            name: this.name,
+            skills: this.skills,
+            email: this.email,
+            privateProfile: this.privateProfile
+          }
+        });
         this.updateUserState();
+        this.editProfile = false
       },
       uploadFile(file) {
         this.firebaseUploadProfilePic({
@@ -111,7 +165,17 @@
     watch: {
       imageFile: function (val) {
         this.uploadFile(val);
+      },
+      userDetails: function (val) {
+        this.name = val.name
+        this.skills = val.skills
+        this.email = val.email
       }
+    },
+    created() {
+      this.name = this.userDetails.name
+      this.skills = this.userDetails.skills
+      this.email = this.userDetails.email
     }
   }
 </script>
