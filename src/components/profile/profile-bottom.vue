@@ -13,7 +13,7 @@
         >
           <q-tab name="about" label="About"/>
           <q-tab name="projects" label="Projects"/>
-          <q-tab v-if="$route.params.otherUserId===userDetails.userId" name="settings"
+          <q-tab v-if="$route.params.otherUserId===otherUserDetails.userId" name="settings"
                  label="Settings"/>
         </q-tabs>
 
@@ -24,10 +24,10 @@
             <div class="row">
               <div class="col">
                 <p class="text-grey poppinsRegular"
-                   v-if="$route.params.otherUserId===userDetails.userId">Edit description</p>
+                   v-if="$route.params.otherUserId===otherUserDetails.userId">Edit description</p>
                 <p v-else class="text-grey poppinsRegular">Description</p>
               </div>
-              <div class="col" v-if="$route.params.otherUserId===userDetails.userId">
+              <div class="col" v-if="$route.params.otherUserId===otherUserDetails.userId">
                 <p class="text-grey poppinsRegular float-right">
                   <q-icon v-if="!editDescription" name="edit"
                           @click="editDescription=!editDescription"
@@ -46,7 +46,38 @@
 
           <q-tab-panel name="projects">
             <p class="text-grey poppinsRegular">Your Projects</p>
-            <project-cards class="q-pt-sm"></project-cards>
+            <q-scroll-area
+              horizontal
+              visbile="false"
+              class="scrollProjectAreaHorizontal"
+            >
+              <div class="row no-wrap" style="height:17em;">
+                <div v-for="(publish, key) in publishings" :key="key">
+                  <q-card
+                    style="line-height: 0.1em"
+                    class="cardProjectExterior q-mr-sm"
+                    v-if="publish.creatorId === $route.params.otherUserId"
+                    @click="goToPage('/publishDetails/'+key)"
+                  >
+                    <img :src="publish.coverImage" style="border:0.1em solid white;height:12em"/>
+                    <q-card-actions>
+                      <div class="col q-pt-md">
+                        <p style="line-height: 0.1em" class="poppinsBold"
+                           v-if="publish.projectTitle.length>12">
+                          {{publish.projectTitle.substring(0,12)+".."}}
+                        </p>
+                        <p style="line-height: 0.1em" class="poppinsBold"
+                           v-else>
+                          {{publish.projectTitle}}
+                        </p>
+                        <p class="cardProjectNumber">{{publish.categoryModel}}</p>
+                      </div>
+                    </q-card-actions>
+                  </q-card>
+                </div>
+
+              </div>
+            </q-scroll-area>
           </q-tab-panel>
 
           <q-tab-panel name="settings">
@@ -67,7 +98,7 @@
 </template>
 
 <script>
-  import ProjectCards from '../project-card/project-cards'
+  import ProjectCard from '../project-card/project-card'
   import { mapActions, mapState } from 'vuex'
   import mixinOtherUserDetails from "src/mixins/mixin_other_user_details";
 
@@ -91,7 +122,8 @@
       }
     },
     methods: {
-      ...mapActions('store', ['firebaseUpdateUser', 'updateUserState', 'logoutUser']),
+      ...mapActions('store',
+        ['firebaseUpdateUser', 'updateUserState', 'logoutUser', 'clearPublishings', 'firebaseGetApprovedPublishings']),
       updateUser(type) {
         if (type === 'description') {
           this.firebaseUpdateUser({
@@ -115,16 +147,19 @@
           }
         }
         return this.selectLang[i].label;
-      }
-    },
-    components: {
-      ProjectCards
+      },
+      goToPage(route) {
+        this.$router.push(route)
+      },
     },
     computed: {
-      ...mapState('store', ['userDetails']),
+      ...mapState('store', ['userDetails', 'publishings']),
     },
     mixins: [mixinOtherUserDetails],
     created() {
+      this.clearPublishings();
+      this.firebaseGetApprovedPublishings()
+      console.log(this.otherUserDetails.description)
       this.description = this.otherUserDetails.description;
     }
   }

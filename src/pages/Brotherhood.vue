@@ -1,6 +1,6 @@
 <template>
   <q-layout class="flex column">
-    <div class="row">
+    <div class="row q-px-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
         <div class="row q-pl-lg q-pr-md">

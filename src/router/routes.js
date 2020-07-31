@@ -10,7 +10,7 @@ const routes = [
     path: '/search',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Profile.vue') },
+      { path: '', component: () => import('pages/Search.vue') },
     ],
   },
   {

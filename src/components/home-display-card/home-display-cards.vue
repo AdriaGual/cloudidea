@@ -1,8 +1,7 @@
 <template>
-  <div>
-
-    <div class="row q-pt-lg q-pl-lg q-pb-md q-pr-sm">
-      <div class="col">
+  <div class="q-pa-lg">
+    <div class="row">
+      <div class="col q-pl-sm">
         <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
            style="font-size: 0.9em;line-height: 0.1em">
           Hello,
@@ -31,14 +30,13 @@
           @click="listMode=!listMode"
         />
       </div>
-
     </div>
 
     <div class="row justify-center q-pb-xl" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <q-card
           class="cardExterior q-ma-sm"
-          style="max-width: 30em;"
+          style="max-width: 35em;"
           v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"
         >
           <q-card-section class="no-padding" @click="goToPublishDetails(publish, publish.key)"
