@@ -16,21 +16,21 @@
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="info">
-        <p class="poppinsRegular text-grey">{{publishDetails.description}}</p>
+        <p class="poppinsRegular text-grey">{{newPublishDetails.description}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">LICENSE TYPE</p>
-        <p class="poppinsRegular text-grey">{{publishDetails.registerLicenseModel}}</p>
+        <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">CATEGORY</p>
-        <p class="poppinsRegular text-grey">{{publishDetails.categoryModel}}</p>
+        <p class="poppinsRegular text-grey">{{newPublishDetails.categoryModel}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
         <q-card>
           <q-item clickable v-ripple>
             <q-item-section side>
               <q-avatar rounded size="4em">
-                <img :src="publishDetails.coverImage"/>
+                <img :src="newPublishDetails.coverImage"/>
               </q-avatar>
             </q-item-section>
             <q-item-section>
-              <q-item-label class="poppinsBold q-pb-xs">{{publishDetails.fileName}}
+              <q-item-label class="poppinsBold q-pb-xs">{{newPublishDetails.fileName}}
               </q-item-label>
               <q-item-label caption>{{fileSize}}</q-item-label>
             </q-item-section>
@@ -43,7 +43,7 @@
       <q-tab-panel name="comments">
         <q-card class="q-mb-md">
           <q-item
-            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
+            v-if="userDetails.userId && userDetails.userId !== newPublishDetails.creatorId">
             <q-item-section>
               <q-input borderless dense v-model="commentText" placeholder="Add a comment">
                 <template v-slot:after>
@@ -56,11 +56,12 @@
 
         <q-item clickable v-for="(comment, key) in publishComments" :key="key">
           <q-item-section side>
-            <q-avatar rounded size="3em">
+            <q-avatar rounded size="3em" @click="goToPage('/profile/'+comment.userId)">
               <img :src="comment.creatorImageUrl"/>
             </q-avatar>
           </q-item-section>
           <q-item-section>
+            <q-item-label caption>{{comment.name}}</q-item-label>
             <q-item-label>{{comment.message}}</q-item-label>
           </q-item-section>
           <q-item-section side>
@@ -74,6 +75,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { openURL } from 'quasar'
+  import mixinPublishDetails from '../../mixins/mixin_publish_details';
 
   export default {
     props: ['publishDetails', 'publishComments', 'userDetails'],
@@ -109,17 +111,17 @@
         this.newMessage = "";
         this.$refs.newMessage.focus();
       },
-
       addComment() {
         this.firebaseAddComment({
-          publishId: this.publishDetails.key,
+          publishId: this.$route.params.publishId,
           messageDetails: {
             message: this.commentText,
-            creatorImageUrl: this.userDetails.imageUrl
+            creatorImageUrl: this.userDetails.imageUrl,
+            name: this.userDetails.name,
+            userId: this.userDetails.userId
           }
         })
       }
-
     },
     computed: {
       fileSize: function () {
@@ -133,6 +135,7 @@
         return formatBytes(this.publishDetails.fileSize)
       }
     },
+    mixins: [mixinPublishDetails],
   }
 </script>
 
