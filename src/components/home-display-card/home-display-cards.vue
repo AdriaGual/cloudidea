@@ -1,26 +1,37 @@
 <template>
   <div>
-    <div class="q-pa-md" align="right">
-      <q-btn
-        flat
-        no-caps
-        icon="grid_on"
-        :color="!listMode?'accent':'grey'"
-        size="md"
-        :disable="!listMode"
-        :ripple="false"
-        @click="listMode=!listMode"
-      />
-      <q-btn
-        flat
-        no-caps
-        icon="format_list_bulleted"
-        :color="listMode?'accent':'grey'"
-        :disable="listMode"
-        size="md"
-        :ripple="false"
-        @click="listMode=!listMode"
-      />
+
+    <div class="row q-pt-lg q-pl-lg q-pb-md q-pr-sm">
+      <div class="col">
+        <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
+           style="font-size: 0.9em;line-height: 0.1em">
+          Hello,
+          {{capitalize(userDetails.name)}}</p>
+        <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">Explore Projects</p>
+      </div>
+      <div class="col q-pt-sm" align="right">
+        <q-btn
+          flat
+          no-caps
+          icon="grid_on"
+          :color="!listMode?'accent':'grey'"
+          size="md"
+          :disable="!listMode"
+          :ripple="false"
+          @click="listMode=!listMode"
+        />
+        <q-btn
+          flat
+          no-caps
+          icon="format_list_bulleted"
+          :color="listMode?'accent':'grey'"
+          :disable="listMode"
+          size="md"
+          :ripple="false"
+          @click="listMode=!listMode"
+        />
+      </div>
+
     </div>
 
     <div class="row justify-center q-pb-xl" v-if="!listMode">
@@ -277,6 +288,11 @@
       goToPage(route) {
         this.$router.push(route)
       },
+      capitalize(s) {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      }
+
     },
     computed: {
       ...mapState('store',
