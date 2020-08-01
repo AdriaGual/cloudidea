@@ -8,10 +8,12 @@
       style="height:5em;border-top-left-radius: 1.5em;border-top-right-radius:1.5em;"
       indicator-color="transparent"
     >
-      <q-tab name="home" icon="o_home" @click="goToPage('/','home')"/>
-      <q-tab name="search" icon="search" @click="goToPage('/search','search')"/>
-      <q-tab name="create" icon="o_note_add" @click="goToPage('/create','create')"/>
-      <q-tab name="brotherhood" icon="far fa-handshake"
+      <q-tab name="home" :icon="tab==='home'?'home':'o_home'" @click="goToPage('/','home')"/>
+      <q-tab name="search" icon="search"
+             @click="goToPage('/search','search')"/>
+      <q-tab name="create" :icon="tab==='create'?'note_add':'o_note_add'"
+             @click="goToPage('/create','create')"/>
+      <q-tab name="brotherhood" :icon="tab==='brotherhood'?'fas fa-handshake':'far fa-handshake'"
              @click="goToPage('/brotherhood','brotherhood')"/>
       <q-tab v-if="userDetails.moderator" name="moderate" icon="o_gavel"
              @click="goToPage('/moderate','moderate')"/>

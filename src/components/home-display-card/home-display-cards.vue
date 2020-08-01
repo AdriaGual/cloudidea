@@ -55,7 +55,7 @@
                       {{publish.projectTitle}}</p>
                   </div>
                   <p class="poppinsLight text-justify q-pr-lg text-grey" style="font-size: 0.9em">
-                    {{publish.description.substring(0,110)+".."}}</p>
+                    {{publish.description.substring(0,100)+".."}}</p>
                 </div>
                 <div class="col">
                   <div class="full-width" align="right">

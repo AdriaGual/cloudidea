@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+
     <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     <div class="col" style="border-radius: 0.5em">
       <q-card class="bg-transparent no-shadow q-pt-md">
@@ -13,7 +14,7 @@
         >
           <q-tab name="about" label="About"/>
           <q-tab name="projects" label="Projects"/>
-          <q-tab v-if="$route.params.otherUserId===otherUserDetails.userId" name="settings"
+          <q-tab v-if="$route.params.otherUserId===userDetails.userId" name="settings"
                  label="Settings"/>
         </q-tabs>
 
@@ -24,10 +25,10 @@
             <div class="row">
               <div class="col">
                 <p class="text-grey poppinsRegular"
-                   v-if="$route.params.otherUserId===otherUserDetails.userId">Edit description</p>
+                   v-if="$route.params.otherUserId===userDetails.userId">Edit description</p>
                 <p v-else class="text-grey poppinsRegular">Description</p>
               </div>
-              <div class="col" v-if="$route.params.otherUserId===otherUserDetails.userId">
+              <div class="col" v-if="$route.params.otherUserId===userDetails.userId">
                 <p class="text-grey poppinsRegular float-right">
                   <q-icon v-if="!editDescription" name="edit"
                           @click="editDescription=!editDescription"
@@ -98,7 +99,6 @@
 </template>
 
 <script>
-  import ProjectCard from '../project-card/project-card'
   import { mapActions, mapState } from 'vuex'
   import mixinOtherUserDetails from "src/mixins/mixin_other_user_details";
 
@@ -123,7 +123,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseUpdateUser', 'updateUserState', 'logoutUser', 'clearPublishings', 'firebaseGetApprovedPublishings']),
+        ['firebaseUpdateUser', 'updateUserState', 'logoutUser', 'clearPublishings', 'firebaseGetApprovedPublishings', 'clearUsers', 'firebaseGetUsers']),
       updateUser(type) {
         if (type === 'description') {
           this.firebaseUpdateUser({
@@ -157,9 +157,10 @@
     },
     mixins: [mixinOtherUserDetails],
     created() {
+      this.clearUsers();
+      this.firebaseGetUsers()
       this.clearPublishings();
       this.firebaseGetApprovedPublishings()
-      console.log(this.otherUserDetails.description)
       this.description = this.otherUserDetails.description;
     }
   }

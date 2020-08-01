@@ -1,5 +1,8 @@
 <template>
-  <div class="row q-pr-lg">
+  <div class="row q-px-lg">
+    <div class="col q-pl-sm">
+      <a class="text-grey poppinsLight">Cloudidea</a>
+    </div>
     <div class="col">
       <q-btn
         v-if="!userDetails.userId"
