@@ -1,7 +1,7 @@
 <template>
   <q-layout class="flex column bgGlobal q-pt-md">
 
-    <div class="row">
+    <div class="row q-pb-md">
       <div class="col-1 q-pl-md">
         <q-btn flat round color="primary" icon="arrow_back"
                @click="goToPage('/moderate/publishings')"/>
@@ -20,7 +20,8 @@
         <div class="row ">
           <div class="col q-gutter-y-md bgGlobal" align="center">
             <q-card class="cardExterior">
-              <q-card-section :style="this.$q.platform.is.desktop?'height: 50em;':'height:30em'"
+              <q-card-section v-if="publishDetails.fileType==='application/pdf'"
+                              :style="this.$q.platform.is.desktop?'height: 50em;':'height:30em'"
                               class="q-mr-md">
                 <q-pdfviewer
                   v-model="showPDF"
@@ -31,7 +32,11 @@
                 />
               </q-card-section>
 
-              <q-img :src="publishDetails.fileUrl" spinner-color="white"/>
+              <q-img
+                v-if="publishDetails.fileType.includes('image/')"
+                :src="publishDetails.fileUrl" spinner-color="white" style="max-height: 30em"/>
+
+
               <q-card-actions>
                 <div class="row full-width" style="height:4em">
                   <div class="col-2 q-pl-sm">
@@ -41,7 +46,7 @@
                       class="cardUserImage"
                     />
                   </div>
-                  <div class="col-5 q-pt-md">
+                  <div align="left" class="col q-pt-md">
                     <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
                     <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
                   </div>
@@ -94,7 +99,9 @@
                     <q-item clickable v-ripple>
                       <q-item-section side>
                         <q-avatar rounded size="4em">
-                          <img :src="publishDetails.coverImage"/>
+                          <img
+                            v-if="publishDetails.coverImage || publishDetails.fileType.includes('image/')"
+                            :src="publishDetails.coverImage?publishDetails.coverImage:publishDetails.fileUrl"/>
                         </q-avatar>
                       </q-item-section>
                       <q-item-section>
@@ -128,13 +135,15 @@
             <q-dialog v-model="confirm">
               <q-card>
                 <q-card-section class="row items-center">
-                  <span class="poppinsRegular q-ml-sm">Are you sure you wanna accept the project {{publishDetails.projectTitle}} from {{publishDetails.creatorName}}?</span>
+                  <span class="poppinsRegular q-ml-sm">Are you sure you wanna accept the project  <a
+                    class="poppinsBold">{{publishDetails.projectTitle}}</a> from
+                   <a class="poppinsBold">{{publishDetails.creatorName}}</a>?</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn v-if="confirm" flat label="Accept" color="accent" v-close-popup
+                  <q-btn v-if="confirm" flat label="Confirm" color="green" v-close-popup
                          @click="approveProject()"/>
-                  <q-btn flat label="Cancel" color="accent" v-close-popup/>
+                  <q-btn flat label="Cancel" color="green" v-close-popup/>
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -142,13 +151,16 @@
             <q-dialog v-model="reject">
               <q-card>
                 <q-card-section class="row items-center">
-                  <span class="poppinsRegular q-ml-sm">Are you sure you wanna accept the project {{publishDetails.projectTitle}} from {{publishDetails.creatorName}}?</span>
+                  <span
+                    class="poppinsRegular q-ml-sm">Are you sure you wanna reject the project
+                  <a class="poppinsBold">{{publishDetails.projectTitle}}</a> from
+                   <a class="poppinsBold">{{publishDetails.creatorName}}</a>?</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn v-if="reject" flat label="Reject" color="accent" v-close-popup
+                  <q-btn v-if="reject" flat label="Delete" color="red" v-close-popup
                          @click="rejectProject()"/>
-                  <q-btn flat label="Cancel" color="accent" v-close-popup/>
+                  <q-btn flat label="Cancel" color="red" v-close-popup/>
                 </q-card-actions>
               </q-card>
             </q-dialog>

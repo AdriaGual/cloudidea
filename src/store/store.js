@@ -385,7 +385,7 @@ const actions = {
           firebaseDB.ref("publishings/" + publishing.key).update({
             fileSize: payload.file.size,
             fileName: payload.file.name,
-            fileExtension: payload.file.type,
+            fileType: payload.file.type,
             fileUrl: url
           });
         });
@@ -494,6 +494,7 @@ const actions = {
         creatorCP: payload.creatorCP,
         fileName: payload.fileName,
         fileSize: payload.fileSize,
+        fileType: payload.fileType,
         key: payload.key,
         cp: payload.cp
       });
