@@ -63,49 +63,81 @@
                 <q-radio v-model="publishing.needHelp" val="true" label="Need help" color="teal"/>
               </div>
             </div>
-            <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
+            <div class="row q-pb-md text-center" v-if="publishing.needHelp === 'true'">
               <div class="col">
                 <q-checkbox v-model="publishing.needWrittingHelp" val="true" color="teal">
-                  <q-icon name="history_edu" size="sm"/>
+                  <q-icon name="history_edu" size="sm">
+                    <q-tooltip>
+                      Need help with writting
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
               <div class="col">
                 <q-checkbox v-model="publishing.needVideoHelp" val="true" color="teal">
-                  <q-icon name="o_videocam" size="sm"/>
+                  <q-icon name="o_videocam" size="sm">
+                    <q-tooltip>
+                      Need help with video
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
 
               <div class="col">
                 <q-checkbox v-model="publishing.needAudioHelp" val="true" color="teal">
-                  <q-icon name="o_audiotrack" size="sm"/>
+                  <q-icon name="o_audiotrack" size="sm">
+                    <q-tooltip>
+                      Need help with audio
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
               <div class="col">
                 <q-checkbox v-model="publishing.needCodeHelp" val="true" color="teal">
-                  <q-icon name="code" size="sm"/>
+                  <q-icon name="code" size="sm">
+                    <q-tooltip>
+                      Need help with code
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
             </div>
-            <div class="row q-pb-md" v-if="publishing.needHelp === 'true'">
+            <div class="row q-pb-md text-center" v-if="publishing.needHelp === 'true'">
               <div class="col">
                 <q-checkbox v-model="publishing.needDesignHelp" val="true" color="teal">
-                  <q-icon name="o_palette" size="sm"/>
+                  <q-icon name="o_palette" size="sm">
+                    <q-tooltip>
+                      Need help with design
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
               <div class="col">
                 <q-checkbox v-model="publishing.needIdeaHelp" val="true" color="teal">
-                  <q-icon name="o_emoji_objects" size="sm"/>
+                  <q-icon name="o_emoji_objects" size="sm">
+                    <q-tooltip>
+                      Need help with ideas
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
               <div class="col">
                 <q-checkbox v-model="publishing.needSellHelp" :val="publishing.needSellHelp"
                             color="teal">
-                  <q-icon name="attach_money" size="sm"/>
+                  <q-icon name="attach_money" size="sm">
+                    <q-tooltip>
+                      Need help with selling
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
               <div class="col">
                 <q-checkbox v-model="publishing.needPromotionHelp" color="teal">
-                  <q-icon name="favorite_border" size="sm"/>
+                  <q-icon name="favorite_border" size="sm">
+                    <q-tooltip>
+                      Need help with promotion
+                    </q-tooltip>
+                  </q-icon>
                 </q-checkbox>
               </div>
 

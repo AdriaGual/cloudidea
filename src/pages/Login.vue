@@ -9,17 +9,20 @@
       </div>
       <div class="col-1"></div>
     </div>
-    <div class="row window-width q-pt-md">
+    <div class="row window-width">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col q-pa-lg" style="border-radius: 0.5em">
+      <div class="col" style="border-radius: 0.5em">
+        <img style="max-height:13em;"
+             src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpassword.svg?alt=media&token=f1f330fa-2735-41c5-aa6f-7d21db963655"/>
         <q-form
+          class="q-pt-md"
           @submit="onSubmit"
         >
-          <q-input filled class="q-px-lg" placeholder="Email Address"
+          <q-input outlined bg-color="white" class="q-px-lg" placeholder="Email Address"
                    v-model="userData.email"
                    :rules="[isEmptyField,isValidEmail]"/>
 
-          <q-input filled class="q-px-lg q-pt-md" placeholder="Password"
+          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" placeholder="Password"
                    :type="isPwd ? 'password' : 'text'"
                    v-model="userData.password"
                    :rules="[isEmptyField,val => isShortField(val,7,'password')]">

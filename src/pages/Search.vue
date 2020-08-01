@@ -36,6 +36,27 @@
           <div class="row q-pt-xl">
             <div class="col-10">
               <p class="  poppinsBold" style="line-height: 0.1em">
+                CATEGORIES</p>
+            </div>
+          </div>
+          <q-scroll-area
+            horizontal
+            visbile="false"
+            style="height: 10em;width: 100%;"
+          >
+            <div class="row no-wrap q-gutter-md" style="height:3em;">
+              <div v-for="(category, key) in categories" :key="key">
+                <div style="height:9em;width:9em;background-color: #F6FAFF;border-radius: 0.4em"
+                     class="q-pt-md shadow-1 cursor-pointer"
+                     @click="searchText=category.searchText">
+                  <q-img :src="category.url"/>
+                </div>
+              </div>
+            </div>
+          </q-scroll-area>
+          <div class="row q-pt-lg">
+            <div class="col-10">
+              <p class="  poppinsBold" style="line-height: 0.1em">
                 TOP PROJECT CREATORS</p>
             </div>
           </div>
@@ -131,7 +152,32 @@
         filteredUsers: [],
         filteredPublishingsByTitle: [],
         filteredPublishingsByCategory: [],
-        recentSearches: ["webpage", "edm", "painting", "code"]
+        recentSearches: ["webpage", "edm", "painting", "code"],
+        categories: [{
+          searchText: 'writting',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f'
+        }, {
+          searchText: 'design',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdesign.svg?alt=media&token=2cc162de-294b-4250-bf2b-556d025042d8'
+        }, {
+          searchText: 'music',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmusic.svg?alt=media&token=f0dd839f-788b-4326-8e15-76b08ad17059'
+        }, {
+          searchText: 'video',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fvideo.svg?alt=media&token=449ae459-3d2a-4cba-b431-f5059b359f09'
+        }, {
+          searchText: 'code',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcode.svg?alt=media&token=d81e76b9-f092-4603-84b3-761dcf2de6c1'
+        }, {
+          searchText: 'idea',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fidea.svg?alt=media&token=cd1bdf45-3d60-4c3a-ae6f-ea8c65e2dd14'
+        }, {
+          searchText: 'revenue',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmoney.svg?alt=media&token=5bb1196c-981d-4ead-8054-1fc0d42f8d32'
+        }, {
+          searchText: 'marketing',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
+        }]
       }
     },
     methods: {

@@ -9,24 +9,45 @@
       </div>
       <div class="col-1"></div>
     </div>
-    <div class="row window-width q-pt-md">
+    <div class="row window-width">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col">
+        <img style="max-height:13em;"
+             src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fauthentication.svg?alt=media&token=27a94adb-401c-473e-889d-407f7bf93156"/>
         <q-form
+          class="q-pt-md"
           @submit="onSubmit"
         >
-          <q-input filled class="q-px-lg" placeholder="Username"
+          <q-input outlined bg-color="white" class="q-px-lg" placeholder="Username"
                    v-model="userData.name"
                    :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
-          <q-input filled class="q-px-lg q-pt-md" v-model="userData.email"
+          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" v-model="userData.email"
                    placeholder="Email Address"
                    :rules="[isEmptyField,isValidEmail]"/>
-          <q-input filled class="q-px-lg q-pt-md" v-model="userData.password"
+          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" v-model="userData.password"
                    placeholder="Password"
-                   :rules="[isEmptyField,val => isShortField(val,7,'password')]"/>
-          <q-input filled class="q-px-lg q-pt-md" v-model="repeatPassword"
+                   :type="isPwd ? 'password' : 'text'"
+                   :rules="[isEmptyField,val => isShortField(val,7,'password')]">
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
+          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" v-model="repeatPassword"
                    placeholder="Repeat password"
-                   :rules="[isEmptyField,val => isShortField(val,7,'password'),doPasswordsMatch]"/>
+                   :type="isPwd ? 'password' : 'text'"
+                   :rules="[isEmptyField,val => isShortField(val,7,'password'),doPasswordsMatch]">
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
           <q-toggle v-model="licenseTerms" label="I accept the license and terms"
                     class="q-px-lg q-pt-sm"/>
 
@@ -58,6 +79,7 @@
           email: '',
           password: ''
         },
+        isPwd: true,
         repeatPassword: '',
         licenseTerms: false,
       }

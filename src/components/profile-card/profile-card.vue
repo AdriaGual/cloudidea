@@ -2,6 +2,7 @@
   <q-card
     style="line-height: 0.1em;height:15em"
     class="cardProjectExterior q-mr-md"
+    @click="goToPage('/profile/'+user.key)"
   >
     <q-card-section class="q-pt-md q-px-md">
       <q-img
@@ -36,6 +37,9 @@
     methods: {
       chat(user) {
         this.$router.push("/chat/" + user.key)
+      },
+      goToPage(route) {
+        this.$router.push(route)
       },
     },
     computed: {
