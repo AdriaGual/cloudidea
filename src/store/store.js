@@ -75,7 +75,17 @@ const actions = {
   registerUser({ commit }, payload) {
     firebaseAuth
     .createUserWithEmailAndPassword(payload.email, payload.password)
-    .then(response => {
+    .then(function (user) {
+      var user = firebaseAuth.currentUser;
+      user.updateEmail(payload.email).then(function () {
+        user.sendEmailVerification().then(function () {
+          // Email sent.
+        }).catch(function (error) {
+          // An error happened.
+        });
+      }).catch(function (error) {
+        // An error happened.
+      });
       const userId = firebaseAuth.currentUser.uid;
       firebaseDB
       .ref("users/" + userId)
@@ -91,9 +101,21 @@ const actions = {
         description: "",
         imageUrl: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/profilePics%2Fdefault%2FdefaultProfilePicture.jpg?alt=media&token=bad4228c-c26a-47f4-a254-4d9e4f5a8b49'
       });
+      commit("setUserDetails", {
+        name: payload.name,
+        email: payload.email,
+        language: 'es',
+        skills: '',
+        imageUrl: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/profilePics%2Fdefault%2FdefaultProfilePicture.jpg?alt=media&token=bad4228c-c26a-47f4-a254-4d9e4f5a8b49',
+        description: '',
+        moderator: false,
+        privateProfile: false,
+        userId: userId,
+        cp: 0,
+      });
     })
     .catch(error => {
-      console.log(error.message);
+      console.log(error)
     });
   },
   loginUser({ commit }, payload) {

@@ -70,9 +70,6 @@
             <q-input outlined placeholder="Skills"
                      v-model="skills" label="Skills"
                      :rules="[isEmptyField,val => isShortField(val,5,'skills')]"/>
-            <q-input outlined v-model="email"
-                     placeholder="Email Address" label="Email"
-                     :rules="[isEmptyField,isValidEmail]"/>
             <q-toggle v-model="privateProfile" label="Private profile"/>
             <div class="row justify-center">
               <q-btn class=""
@@ -101,7 +98,6 @@
         editProfile: false,
         name: '',
         skills: '',
-        email: '',
         privateProfile: false
       }
     },
@@ -130,7 +126,6 @@
           updates: {
             name: this.name,
             skills: this.skills,
-            email: this.email,
             privateProfile: this.privateProfile
           }
         });
@@ -173,7 +168,6 @@
       userDetails: function (val) {
         this.name = val.name
         this.skills = val.skills
-        this.email = val.email
       }
     },
     mixins: [mixinOtherUserDetails],
@@ -181,7 +175,6 @@
       otherUserDetails: function (val) {
         this.name = val.name
         this.skills = val.skills
-        this.email = val.email
         this.privateProfile = val.privateProfile
       }
     },

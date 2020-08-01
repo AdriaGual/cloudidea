@@ -9,7 +9,7 @@
       </div>
       <div class="col-1"></div>
     </div>
-    <div class="row window-width">
+    <div class="row">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
         <img style="max-height:13em;"
