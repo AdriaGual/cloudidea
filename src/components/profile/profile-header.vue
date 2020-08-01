@@ -177,11 +177,15 @@
       }
     },
     mixins: [mixinOtherUserDetails],
-    created() {
-      this.name = this.otherUserDetails.name
-      this.skills = this.otherUserDetails.skills
-      this.email = this.otherUserDetails.email
-    }
+    watch: {
+      otherUserDetails: function (val) {
+        this.name = val.name
+        this.skills = val.skills
+        this.email = val.email
+        this.privateProfile = val.privateProfile
+      }
+    },
+
   }
 </script>
 

@@ -273,6 +273,9 @@ const actions = {
   firebaseClearComments({ commit }) {
     commit("clearComments");
   },
+  firebaseClearMessages({ commit }) {
+    commit("clearMessages");
+  },
   firebaseAddLike({ commit, dispatch }, payload) {
     firebaseDB
     .ref("users/" + state.userDetails.userId + "/likedPublishings/" + payload.otherPublishingId)

@@ -2,39 +2,52 @@
   <q-layout class="flex column q-pt-md bgGlobal">
     <div class="row">
       <div class="col-1 q-pl-md">
-        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage()"/>
+        <q-btn flat round color="primary" icon="arrow_back"
+               @click="goToPage('/profile/'+userDetails.userId)"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">My Chats</p>
+        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Chats</p>
       </div>
       <div class="col-1">
       </div>
     </div>
-    <q-list class="full-width" separator>
-      <q-item
-        v-for="(user, key) in userChats"
-        :key="key"
-        clickable
-        v-ripple
-        :to="'/chat/' + key"
-      >
-        <q-item-section avatar>
-          <q-avatar size="3em">
-            <img :src="user.imageUrl">
-          </q-avatar>
-        </q-item-section>
+    <div class="row q-pt-md">
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col" style="border-radius: 0.5em">
+        <div v-for="(user, key) in userChats" :key="key">
+          <q-item clickable no-ripple class="cardSectionInterior q-mb-md" :to="'/chat/' + key">
+            <q-item-section side>
+              <q-avatar rounded size="4em">
+                <img :src="user.imageUrl" style="border-radius: 0.2em"/>
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="poppinsRegular text-white"
+                            v-if="user.name.length>15">
+                {{user.name.substring(0,15)+".."}}
+              </q-item-label>
+              <q-item-label v-else class="poppinsRegular text-white">
+                {{user.name}}
+              </q-item-label>
+              <q-item-label class="poppinsRegular text-white"
+                            v-if="user.skills.length>15">
+                {{user.skills.substring(0,15)+".."}}
+              </q-item-label>
+              <q-item-label v-else class="poppinsRegular text-grey" caption>
+                {{user.skills}}
+              </q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label class="poppinsRegular text-red">
+                {{user.cp}} CP
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
+      </div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+    </div>
 
-        <q-item-section>
-          <q-item-label>{{ user.name }}</q-item-label>
-        </q-item-section>
-
-        <q-item-section side>
-
-        </q-item-section>
-        <q-item-section avatar>
-        </q-item-section>
-      </q-item>
-    </q-list>
   </q-layout>
 </template>
 
@@ -44,11 +57,11 @@
   export default {
     methods: {
       goToPage(route) {
-        window.history.back()
+        this.$router.push(route);
       },
     },
     computed: {
-      ...mapState("store", ["userChats"])
+      ...mapState("store", ["userChats", "userDetails"])
     },
   };
 </script>
