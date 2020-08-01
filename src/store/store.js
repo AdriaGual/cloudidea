@@ -385,6 +385,7 @@ const actions = {
           firebaseDB.ref("publishings/" + publishing.key).update({
             fileSize: payload.file.size,
             fileName: payload.file.name,
+            fileExtension: payload.file.type,
             fileUrl: url
           });
         });
