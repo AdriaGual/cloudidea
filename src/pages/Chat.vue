@@ -20,7 +20,41 @@
       <div class="col-1"></div>
     </div>
     <div class="row window-width q-pt-md">
-      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm">
+        <p class="poppinsRegular text-center">Chats</p>
+        <div v-for="(user, key) in userChats" :key="key" class="q-px-md">
+          <q-item clickable no-ripple class="cardSectionInterior q-mb-md"
+                  @click="goToAnotherChat('/chat/' + key)"
+                  v-if="key!==$route.params.otherUserId">
+            <q-item-section side>
+              <q-avatar rounded size="4em">
+                <img :src="user.imageUrl" style="border-radius: 0.2em"/>
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="poppinsRegular text-white"
+                            v-if="user.name.length>15">
+                {{user.name.substring(0,15)+".."}}
+              </q-item-label>
+              <q-item-label v-else class="poppinsRegular text-white">
+                {{user.name}}
+              </q-item-label>
+              <q-item-label class="poppinsRegular text-white"
+                            v-if="user.skills.length>15">
+                {{user.skills.substring(0,15)+".."}}
+              </q-item-label>
+              <q-item-label v-else class="poppinsRegular text-grey" caption>
+                {{user.skills}}
+              </q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label class="poppinsRegular text-red">
+                {{user.cp}} CP
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
+      </div>
       <div
         :class="this.$q.platform.is.desktop?'col q-pa-lg bg-white shadow-1 no-padding':'col q-pa-lg no-padding fixed-bottom'"
         style="border-radius: 0.5em;">
@@ -88,7 +122,7 @@
       };
     },
     computed: {
-      ...mapState("store", ["messages", "userDetails"])
+      ...mapState("store", ["messages", "userDetails", "userChats"])
     },
     methods: {
       ...mapActions("store", [
@@ -96,6 +130,12 @@
         "firebaseStopGettingMessages",
         "firebaseSendMessage", "firebaseClearMessages"
       ]),
+      goToAnotherChat(route) {
+        this.$router.push(route)
+        this.firebaseClearMessages()
+        this.firebaseGetMessages(this.$route.params.otherUserId);
+
+      },
       goToPage(route) {
         this.$router.push(route)
       },
@@ -129,7 +169,7 @@
       }
     },
     mixins: [mixinOtherUserDetails],
-    created() {
+    mounted() {
       this.firebaseClearMessages()
       this.firebaseGetMessages(this.$route.params.otherUserId);
     },
