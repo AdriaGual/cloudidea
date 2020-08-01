@@ -4,11 +4,11 @@
 
     <div class="row q-pt-md">
       <div class="col q-gutter-y-md bgGlobal" align="center">
-        <publishdetails-card class=""
-                             :style="this.$q.platform.is.desktop?'width: 50em':'width: 25em'"
-                             :userDetails="userDetails"
-                             :publishDetails="newPublishDetails" align="left"
-                             :publishKey="$route.params.publishId">
+        <publishdetails-card
+          :style="this.$q.platform.is.desktop?'width: 70em':'width: 25em'"
+          :userDetails="userDetails"
+          :publishDetails="newPublishDetails" align="left"
+          :publishKey="$route.params.publishId">
         </publishdetails-card>
 
         <publishdetails-info :style="this.$q.platform.is.desktop?'width: 50em':'width: 25em'"

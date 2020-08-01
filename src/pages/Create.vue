@@ -38,7 +38,7 @@
                      placeholder="Category" v-model="publishing.otherCategory"
                      :rules="[isEmptyField]" bg-color="white"/>
 
-            <q-file v-if="publishing.categoryModel!=='Writting'" outlined
+            <q-file v-if="publishing.categoryModel!=='Image'" outlined
                     v-model="publishing.coverImage" label="Upload Cover Image"
                     bg-color="white">
               <template v-slot:prepend>

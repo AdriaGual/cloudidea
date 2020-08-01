@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column">
+  <q-page class="flex column q-pb-xl">
     <div class="row">
       <div class="col-1 q-pl-md">
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/moderate')"/>
@@ -10,7 +10,7 @@
       </div>
       <div class="col-1"></div>
     </div>
-    <div class="row window-width q-pt-md">
+    <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
         <div v-for="(user, key) in users" :key="key">
@@ -50,7 +50,7 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
 
     </div>
-
+    <div class="q-pb-xl"></div>
   </q-page>
 </template>
 

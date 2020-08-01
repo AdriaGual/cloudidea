@@ -1,5 +1,4 @@
 <template>
-
   <div class="row">
     <div class="col-1 q-pl-md">
       <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
@@ -11,8 +10,6 @@
     </div>
     <div class="col-4"></div>
   </div>
-
-
 </template>
 
 <script>

@@ -10,63 +10,72 @@
       </div>
       <div class="col-1"></div>
     </div>
+    <div class="row">
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col" style="border-radius: 0.5em">
+        <div v-for="(publish, key) in publishings" :key="key">
+          <q-item clickable v-ripple @click="goToPublishDetails(publish,key)"
+                  v-if="!publish.approved"
+          >
+            <q-item-section side v-if="publish.coverImage">
+              <q-img :src="publish.coverImage" style="border-radius: 0.5em;height:4em;width: 4em"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{publish.projectTitle}}</q-item-label>
+              <q-item-label caption>{{publish.categoryModel}}</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <div class="row q-gutter-sm">
+                <div class="col">
+                  <q-icon v-if="publish.needHelp==='true'" name="construction" size="sm"
+                          class="q-pt-sm"/>
+                  <q-icon v-else name="o_check_circle" size="sm" color="green"
+                          class="q-pt-sm"/>
 
-    <div v-for="(publish, key) in publishings" :key="key">
-      <q-item clickable v-ripple @click="goToPublishDetails(publish,key)" v-if="!publish.approved"
-      >
-        <q-item-section side v-if="publish.coverImage">
-          <q-img :src="publish.coverImage" style="border-radius: 0.5em;height:4em;width: 4em"/>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{publish.projectTitle}}</q-item-label>
-          <q-item-label caption>{{publish.categoryModel}}</q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <div class="row q-gutter-sm">
-            <div class="col">
-              <q-icon v-if="publish.needHelp==='true'" name="construction" size="sm"
-                      class="q-pt-sm"/>
-              <q-icon v-else name="o_check_circle" size="sm" color="green"
-                      class="q-pt-sm"/>
+                </div>
+                <div class="col" v-if="publish.needHelp==='true' && publish.needAudioHelp===true">
+                  <q-icon name="o_audiotrack" size="sm"
+                          class="q-pt-sm"/>
+                </div>
+                <div class="col" v-if="publish.needHelp==='true' && publish.needCodeHelp===true">
+                  <q-icon name="code" size="sm"
+                          class="q-pt-sm"/>
+                </div>
+                <div class="col" v-if="publish.needHelp==='true' && publish.needDesignHelp===true">
+                  <q-icon name="o_palette" size="sm"
+                          class="q-pt-sm"/>
+                </div>
+                <div class="col" v-if="publish.needHelp==='true' && publish.needIdeaHelp===true">
+                  <q-icon name="o_emoji_objects" size="sm"
+                          class="q-pt-sm"/>
+                </div>
+                <div class="col"
+                     v-if="publish.needHelp==='true' && publish.needPromotionHelp===true">
+                  <q-icon name="favorite_border" size="sm"
+                          class="q-pt-sm"/>
+                </div>
+                <div class="col" v-if="publish.needHelp==='true' && publish.needSellHelp===true">
+                  <q-icon name="attach_money" size="sm"
+                          class="q-pt-sm"/>
+                </div>
+                <div class="col" v-if="publish.needHelp==='true' && publish.needVideoHelp===true">
+                  <q-icon name="o_videocam" size="sm"
+                          class="q-pt-sm"/>
+                </div>
+                <div class="col"
+                     v-if="publish.needHelp==='true' && publish.needWrittingHelp===true">
+                  <q-icon name="history_edu" size="sm"
+                          class="q-pt-sm"/>
+                </div>
 
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needAudioHelp===true">
-              <q-icon name="o_audiotrack" size="sm"
-                      class="q-pt-sm"/>
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needCodeHelp===true">
-              <q-icon name="code" size="sm"
-                      class="q-pt-sm"/>
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needDesignHelp===true">
-              <q-icon name="o_palette" size="sm"
-                      class="q-pt-sm"/>
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needIdeaHelp===true">
-              <q-icon name="o_emoji_objects" size="sm"
-                      class="q-pt-sm"/>
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needPromotionHelp===true">
-              <q-icon name="favorite_border" size="sm"
-                      class="q-pt-sm"/>
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needSellHelp===true">
-              <q-icon name="attach_money" size="sm"
-                      class="q-pt-sm"/>
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needVideoHelp===true">
-              <q-icon name="o_videocam" size="sm"
-                      class="q-pt-sm"/>
-            </div>
-            <div class="col" v-if="publish.needHelp==='true' && publish.needWrittingHelp===true">
-              <q-icon name="history_edu" size="sm"
-                      class="q-pt-sm"/>
-            </div>
+              </div>
+            </q-item-section>
+          </q-item>
+          <q-separator inset=""></q-separator>
+        </div>
 
-          </div>
-        </q-item-section>
-      </q-item>
-      <q-separator inset=""></q-separator>
+      </div>
+      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
     <div class=" q-pb-xl"></div>
   </q-page>
