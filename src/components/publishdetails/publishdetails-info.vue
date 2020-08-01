@@ -21,6 +21,11 @@
         <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">CATEGORY</p>
         <p class="poppinsRegular text-grey">{{newPublishDetails.categoryModel}}</p>
+        <p class="poppinsBold" style="line-height: 0.1em" v-if="newPublishDetails.projectUrl!==''">
+          URL</p>
+        <p class="poppinsRegular text-blue cursor-pointer" @click="openProjectURL()"
+           v-if="newPublishDetails.projectUrl!==''">
+          {{newPublishDetails.projectUrl}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
         <q-card>
           <q-item clickable v-ripple>
@@ -95,9 +100,11 @@
         this.$router.push(route)
       },
       downloadFile() {
-        openURL(this.publishDetails.fileUrl)
+        openURL(this.newPublishDetails.fileUrl)
       },
-
+      openProjectURL() {
+        openURL(this.newPublishDetails.projectUrl)
+      },
       sendMessage() {
         if (this.newMessage !== '') {
           this.firebaseSendMessage({

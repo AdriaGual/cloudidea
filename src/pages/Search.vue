@@ -3,7 +3,7 @@
     <div class="row full-width q-pr-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       <div class="col " style="border-radius: 0.5em">
-        <q-input standout placeholder="Search" v-model="searchText" class="">
+        <q-input outlined bg-color="white" placeholder="Search" v-model="searchText" class="">
           <template v-slot:append>
             <q-icon v-if="searchText === ''" name="search"/>
             <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''"/>

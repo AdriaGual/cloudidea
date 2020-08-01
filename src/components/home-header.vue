@@ -1,6 +1,6 @@
 <template>
   <div class="row q-px-lg">
-    <div class="col q-pl-sm">
+    <div class="col q-pl-sm q-pt-sm">
       <a class="text-grey poppinsLight">Cloudidea</a>
     </div>
     <div class="col">

@@ -1,14 +1,18 @@
 <template>
-  <div class="row q-pl-md">
-    <div class="col-1">
-      <q-btn flat round icon="arrow_back" @click="goToPage('/')"/>
+
+  <div class="row">
+    <div class="col-1 q-pl-md">
+      <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
     </div>
-    <div class="col">
+    <div class="col text-center">
       <p class="poppinsRegular text-grey">4 days ago</p>
       <p class="poppinsBold" style="line-height: 0.1em;font-size: 1.2em">
         {{projectTitle}}</p>
     </div>
+    <div class="col-4"></div>
   </div>
+
+
 </template>
 
 <script>

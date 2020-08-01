@@ -3,10 +3,9 @@
 
     <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     <div class="col" style="border-radius: 0.5em">
-      <q-card class="bg-transparent no-shadow q-pt-md">
+      <q-card class="bg-white shadow-1">
         <q-tabs
           v-model="tab"
-          dense
           class="text-grey poppinsRegular"
           active-color="primary"
           indicator-color="accent"
@@ -40,8 +39,9 @@
               </div>
             </div>
 
-            <q-input rows="17" dense :borderless="!editDescription" :disable="!editDescription"
-                     :outlined="editDescription" v-model="description" type="textarea" clearable/>
+            <q-input dense :borderless="!editDescription" :disable="!editDescription"
+                     :outlined="editDescription" v-model="description" type="textarea" clearable
+                     autogrow/>
 
           </q-tab-panel>
 
@@ -56,7 +56,7 @@
                 <div v-for="(publish, key) in publishings" :key="key">
                   <q-card
                     style="line-height: 0.1em"
-                    class="cardProjectExterior q-mr-sm"
+                    class="cardProjectExterior q-mr-md"
                     v-if="publish.creatorId === $route.params.otherUserId"
                     @click="goToPage('/publishDetails/'+key)"
                   >
@@ -84,9 +84,17 @@
           <q-tab-panel name="settings">
 
             <p class="text-grey poppinsRegular">Language</p>
-            <q-select dense outlined class="bg-white"
-                      v-model="lang" :options="selectLang"/>
-            <p class="text-blue poppinsRegular q-pt-md"
+            <q-select
+              dense
+              map-options
+              outlined
+              bg-color="white"
+              v-model="lang"
+              :options="selectLang"
+              style="width:12em"
+            />
+
+            <p class=" text-blue poppinsRegular q-pt-md cursor-pointer"
                @click="logOut()">Log Out
             </p>
           </q-tab-panel>
@@ -161,8 +169,13 @@
       this.firebaseGetUsers()
       this.clearPublishings();
       this.firebaseGetApprovedPublishings()
-      this.description = this.otherUserDetails.description;
-    }
+
+    },
+    watch: {
+      otherUserDetails: function (val) {
+        this.description = this.otherUserDetails.description;
+      }
+    },
   }
 </script>
 

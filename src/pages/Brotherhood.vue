@@ -106,30 +106,29 @@
         this.$router.push(route)
       },
       releaseDate: function (date) {
-        var formattedDate = '';
-        if (date) {
-          formattedDate = (Date.now() - date) / (24 * 60 * 60 * 1000 * 2);
-          if (formattedDate < 1) {
-            formattedDate = formattedDate * 60;
-            if (formattedDate < 1) {
-              formattedDate = formattedDate * 60;
-              if (formattedDate < 1) {
-                formattedDate = "MOMENTS AGO"
-              } else if (Math.trunc(formattedDate) === 1) {
-                formattedDate = Math.trunc(formattedDate) + " MINUTE AGO"
-              } else {
-                formattedDate = Math.trunc(formattedDate) + " MINUTES AGO"
-              }
-            } else if (Math.trunc(formattedDate) === 1) {
-              formattedDate = Math.trunc(formattedDate) + " HOUR AGO"
-            } else {
-              formattedDate = Math.trunc(formattedDate) + " HOURS AGO"
-            }
-          } else {
-            formattedDate = Math.trunc(formattedDate) + " DAYS AGO"
-          }
+        var seconds = Math.floor((new Date() - date) / 1000);
+        var interval = Math.floor(seconds / 31536000);
+
+        if (interval > 1) {
+          return interval + " years ago";
         }
-        return formattedDate;
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) {
+          return interval + " months ago";
+        }
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) {
+          return interval + " days ago";
+        }
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) {
+          return interval + " hours ago";
+        }
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) {
+          return interval + " minutes ago";
+        }
+        return Math.floor(seconds) + " seconds ago";
       },
     },
     computed: {

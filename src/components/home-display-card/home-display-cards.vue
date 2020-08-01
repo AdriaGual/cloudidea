@@ -8,7 +8,7 @@
           {{capitalize(userDetails.name)}}</p>
         <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">Explore Projects</p>
       </div>
-      <div class="col q-pt-sm" align="right">
+      <div class="col" align="right">
         <q-btn
           flat
           no-caps
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="row justify-center q-pb-xl" v-if="!listMode">
+    <div class="row justify-center q-pb-xl q-pt-md" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <q-card
           class="cardExterior q-ma-sm"
@@ -68,20 +68,30 @@
                       {{publish.categoryModel}}
                     </a>
                   </div>
-                  <q-img
-                    v-if="publish.coverImage"
-                    :src="publish.coverImage"
-                    spinner-color="white"
-                    style="max-height: 9em"
-                    class="cardCoverImage"
-                  />
+                  <div>
+                    <q-img
+                      v-if="publish.coverImage!==''"
+                      :src="publish.coverImage"
+                      spinner-color="white"
+                      style="max-height: 9em;"
+                      class="cardCoverImage q-mt-xs q-ml-md full-width"
+                    />
+                    <q-img
+                      v-else
+                      :src="publish.fileUrl"
+                      spinner-color="white"
+                      style="max-height: 9em;"
+                      class="cardCoverImage q-mt-xs q-ml-md full-width"
+                    />
+                  </div>
+
                 </div>
               </div>
             </div>
           </q-card-section>
           <q-card-actions>
             <div class="row full-width q-pt-xs">
-              <div class="col-2 q-pl-sm cursor-pointer"
+              <div class="col-2 q-pl-sm cursor-pointer q-pt-xs"
                    @click="goToPage('/profile/'+publish.creatorId)">
                 <q-img
                   :src="publish.creatorImageUrl"
@@ -89,10 +99,15 @@
                   class="cardUserImage"
                 />
               </div>
-              <div class="col-4 q-pt-md cursor-pointer"
+              <div class="col-4 q-pt-md q-pl-xs cursor-pointer"
                    @click="goToPage('/profile/'+publish.creatorId)">
-                <p style="line-height: 0.1em">{{publish.creatorName}}</p>
-                <p class="cardUserCP">{{publish.creatorSkills}} </p>
+                <p style="line-height: 0.1em" v-if="publish.creatorName.length>10">
+                  {{publish.creatorName.substring(0,10)+".."}}</p>
+                <p style="line-height: 0.1em" v-else>
+                  {{publish.creatorName}}</p>
+                <p class="cardUserCP" v-if="publish.creatorSkills.length>10">
+                  {{publish.creatorSkills.substring(0,10)+".."}} </p>
+                <p class="cardUserCP" v-else>{{publish.creatorSkills}} </p>
               </div>
               <div class="col-4 q-pt-sm q-pr-md">
                 <q-btn
@@ -235,31 +250,31 @@
       ...mapActions('store',
         ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
       releaseDate: function (date) {
-        var formattedDate = '';
-        if (date) {
-          formattedDate = (Date.now() - date) / (24 * 60 * 60 * 1000 * 2);
-          if (formattedDate < 1) {
-            formattedDate = formattedDate * 60;
-            if (formattedDate < 1) {
-              formattedDate = formattedDate * 60;
-              if (formattedDate < 1) {
-                formattedDate = "MOMENTS AGO"
-              } else if (Math.trunc(formattedDate) === 1) {
-                formattedDate = Math.trunc(formattedDate) + " MINUTE AGO"
-              } else {
-                formattedDate = Math.trunc(formattedDate) + " MINUTES AGO"
-              }
-            } else if (Math.trunc(formattedDate) === 1) {
-              formattedDate = Math.trunc(formattedDate) + " HOUR AGO"
-            } else {
-              formattedDate = Math.trunc(formattedDate) + " HOURS AGO"
-            }
-          } else {
-            formattedDate = Math.trunc(formattedDate) + " DAYS AGO"
-          }
+        var seconds = Math.floor((new Date() - date) / 1000);
+        var interval = Math.floor(seconds / 31536000);
+
+        if (interval > 1) {
+          return interval + " years ago";
         }
-        return formattedDate;
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) {
+          return interval + " months ago";
+        }
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) {
+          return interval + " days ago";
+        }
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) {
+          return interval + " hours ago";
+        }
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) {
+          return interval + " minutes ago";
+        }
+        return Math.floor(seconds) + " seconds ago";
       },
+
       chat(publish) {
         this.$router.push("/chat/" + publish.creatorId)
       },

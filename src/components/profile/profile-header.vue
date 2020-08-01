@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col" style="border-radius: 0.5em">
+      <div class="col q-pb-md" style="border-radius: 0.5em">
         <div class="text-center justify-center q-pt-md">
           <q-avatar round size="11em">
             <img :src="otherUserDetails.imageUrl" style="border:0.1em solid white"/>

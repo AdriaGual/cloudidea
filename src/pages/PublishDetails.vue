@@ -18,7 +18,7 @@
         </publishdetails-info>
       </div>
 
-      <div class="col-3 q-pr-xl q-pb-xl bgGlobal"
+      <div class="col-3 q-pr-xl bgGlobal"
            v-if="this.$q.platform.is.desktop && $q.screen.gt.md">
         <p class="poppinsBold" style="font-size: 1.2em">Other projects from
           {{newPublishDetails.creatorName}}</p>
@@ -31,9 +31,9 @@
             :publishKey="key">
           </publishdetails-card>
         </div>
-        <div class="q-pb-xl"></div>
       </div>
     </div>
+    <div class="q-pb-xl"></div>
   </q-layout>
 </template>
 

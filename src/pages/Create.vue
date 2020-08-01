@@ -8,11 +8,13 @@
           @submit="onSubmit"
         >
           <div class="q-px-lg">
-            <q-input outlined placeholder="Project Title*" :rules="[isEmptyField]"
+            <q-input outlined placeholder="Project Title*" :rules="[isEmptyField]" bg-color="white"
                      v-model="publishing.projectTitle"/>
 
-            <q-input outlined placeholder="Project URL" v-model="publishing.projectUrl"/>
+            <q-input outlined placeholder="Project URL" v-model="publishing.projectUrl"
+                     bg-color="white"/>
             <q-input
+              bg-color="white"
               class="q-pt-md"
               v-model="publishing.description"
               outlined
@@ -22,26 +24,30 @@
 
             <q-select outlined v-model="publishing.registerLicenseModel"
                       :options="registerLicenseOptions"
+                      bg-color="white"
                       label="Register License*" class="q-pt-md" :rules="[isEmptyField]"/>
 
             <q-input v-if="publishing.registerLicenseModel==='Copyright'" outlined
                      placeholder="License Number*" v-model="publishing.licenseNumber"
-                     :rules="[isEmptyField]"/>
+                     :rules="[isEmptyField]" bg-color="white"/>
 
             <q-select outlined v-model="publishing.categoryModel" :options="categoryOptions"
-                      label="Category*" :rules="[isEmptyField]"/>
+                      label="Category*" :rules="[isEmptyField]" bg-color="white"/>
 
             <q-input v-if="publishing.categoryModel==='None of this'" outlined
                      placeholder="Category" v-model="publishing.otherCategory"
-                     :rules="[isEmptyField]"/>
+                     :rules="[isEmptyField]" bg-color="white"/>
 
-            <q-file borderless v-model="publishing.coverImage" label="Upload Cover Image">
+            <q-file v-if="publishing.categoryModel!=='Writting'" outlined
+                    v-model="publishing.coverImage" label="Upload Cover Image"
+                    bg-color="white">
               <template v-slot:prepend>
                 <q-icon name="o_insert_photo"/>
               </template>
             </q-file>
 
-            <q-file borderless style="outline:#fafafa 2px solid" v-model="publishing.file"
+            <q-file outlined style="outline:#fafafa 2px solid" v-model="publishing.file"
+                    bg-color="white"
                     label="File Upload*" :rules="[noFileUploaded]" class="q-pt-md">
               <template v-slot:prepend>
                 <q-icon name="attach_file"/>
