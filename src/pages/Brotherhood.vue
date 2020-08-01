@@ -3,7 +3,7 @@
     <div class="row q-px-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
-        <div class="row q-pl-lg q-pr-md">
+        <div class="row">
           <div class="col-8">
             <p class="poppinsBold" style="line-height: 0.1em">
               <q-icon name="construction" style="font-size: 1.7em;"/>

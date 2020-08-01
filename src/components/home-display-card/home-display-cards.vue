@@ -6,7 +6,8 @@
            style="font-size: 0.9em;line-height: 0.1em">
           Hello,
           {{capitalize(userDetails.name)}}</p>
-        <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">Explore Projects</p>
+        <p :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-md'"
+           style="font-size: 1.3em;line-height: 0.1em">Explore Projects</p>
       </div>
       <div class="col" align="right">
         <q-btn

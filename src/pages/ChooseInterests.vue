@@ -1,7 +1,9 @@
 <template>
   <q-layout class="flex flex-center bgGlobal">
     <div class="text-center">
-      <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">Hey newcomer! </p>
+      <img style="max-height:15em;"
+           src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fadventure.svg?alt=media&token=d165277c-e345-4196-a493-90c23816c957"/>
+      <p class="poppinsBold q-pt-lg" style="font-size: 1.3em;line-height: 0.1em">Hey newcomer! </p>
       <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">What are you
         interested
         in?</p>
