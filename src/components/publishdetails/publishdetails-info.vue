@@ -5,8 +5,8 @@
       dense
       class="text-grey"
       style="height:4em;"
-      active-color="secondary"
-      indicator-color="secondary"
+      active-color="primary"
+      indicator-color="primary"
       align="justify"
     >
       <q-tab name="info" label="Info"/>

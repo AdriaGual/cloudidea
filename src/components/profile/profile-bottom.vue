@@ -8,7 +8,7 @@
           v-model="tab"
           class="text-grey poppinsRegular"
           active-color="primary"
-          indicator-color="accent"
+          indicator-color="secondary"
           align="justify"
         >
           <q-tab name="about" label="About"/>

@@ -20,7 +20,8 @@
         <div class="text-center justify-center q-pt-md">
           <q-avatar round size="11em">
             <img :src="otherUserDetails.imageUrl" style="border:0.1em solid white"/>
-            <q-badge floating color="accent" class="q-mt-md" style="border-radius: 2em"
+
+            <q-badge floating color="teal" class="q-mt-md" style="border-radius: 2em"
                      v-if="$route.params.otherUserId===userDetails.userId">
               <q-file borderless v-model="imageFile" style="height:2.5rem;width:1.7rem;font-size: 0"
                       :filter="checkFileType" @rejected="onRejected"
@@ -37,7 +38,7 @@
           {{otherUserDetails.name}}</p>
         <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em">
           {{otherUserDetails.skills}} ·
-          <a class="text-red poppinsBold" style="font-size: 0.8em;">
+          <a class="text-accent poppinsBold" style="font-size: 0.8em;">
             {{otherUserDetails.cp}} CP
           </a>
         </p>
@@ -163,6 +164,7 @@
     },
     watch: {
       imageFile: function (val) {
+        console.log(val)
         this.uploadFile(val);
       },
       userDetails: function (val) {

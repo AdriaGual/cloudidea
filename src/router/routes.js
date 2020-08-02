@@ -49,7 +49,7 @@ const routes = [
     ],
   },
   {
-    path: '/moderate/publishings/publishDetails',
+    path: '/moderate/publishings/publishDetails/:publishId',
     component: () => import('pages/moderate/ModeratePublishDetails.vue'),
   },
   {

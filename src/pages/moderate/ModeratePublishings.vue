@@ -83,6 +83,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import mixinPublishDetails from '../../mixins/mixin_publish_details';
 
   export default {
     methods: {
@@ -94,7 +95,7 @@
       goToPublishDetails(publish, key) {
         publish.key = key;
         this.updatePublishDetails(publish);
-        this.goToPage('/moderate/publishings/publishDetails')
+        this.goToPage('/moderate/publishings/publishDetails/' + key)
       }
     },
     computed: {

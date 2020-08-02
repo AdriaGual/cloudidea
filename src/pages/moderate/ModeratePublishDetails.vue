@@ -9,7 +9,7 @@
       <div class="col text-center">
         <p class="poppinsRegular text-grey">4 days ago</p>
         <p class="poppinsBold" style="line-height: 0.1em;font-size: 1.2em">
-          {{publishDetails.projectTitle}}</p>
+          {{newPublishDetails.projectTitle}}</p>
       </div>
       <div class="col-4"></div>
     </div>
@@ -20,39 +20,38 @@
         <div class="row ">
           <div class="col q-gutter-y-md bgGlobal" align="center">
             <q-card class="cardExterior">
-              <q-card-section v-if="publishDetails.fileType==='application/pdf'"
+              <q-card-section v-if="newPublishDetails.fileType==='application/pdf'"
                               :style="this.$q.platform.is.desktop?'height: 50em;':'height:30em'"
                               class="q-mr-md">
                 <q-pdfviewer
                   v-model="showPDF"
-                  :src="publishDetails.fileUrl"
+                  :src="newPublishDetails.fileUrl"
                   type="html5"
                   content-class="absolute"
-                  :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''"
-                />
+                  :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''"></q-pdfviewer>
               </q-card-section>
 
               <q-img
-                v-if="publishDetails.fileType.includes('image/')"
-                :src="publishDetails.fileUrl" spinner-color="white" style="max-height: 30em"/>
+                v-if="newPublishDetails.fileType.includes('image/')"
+                :src="newPublishDetails.fileUrl" spinner-color="white" style="max-height: 30em"/>
 
 
               <q-card-actions>
                 <div class="row full-width" style="height:4em">
                   <div class="col-2 q-pl-sm">
                     <q-img
-                      :src="publishDetails.creatorImageUrl"
+                      :src="newPublishDetails.creatorImageUrl"
                       spinner-color="white"
                       class="cardUserImage"
                     />
                   </div>
                   <div align="left" class="col q-pt-md">
-                    <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
-                    <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
+                    <p style="line-height: 0.1em">{{newPublishDetails.creatorName}}</p>
+                    <p class="cardUserCP">{{newPublishDetails.categoryModel}}</p>
                   </div>
                   <div class="col-3 q-pt-sm q-pr-md">
                     <q-btn
-                      v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
+                      v-if="userDetails.userId && userDetails.userId !== newPublishDetails.creatorId"
                       no-caps
                       class="bgGrey"
                       style="width:7em;font-size: 0.9em;border-radius: 2em"
@@ -73,8 +72,8 @@
                 dense
                 class="text-grey"
                 style="height:4em;"
-                active-color="secondary"
-                indicator-color="secondary"
+                active-color="primary"
+                indicator-color="primary"
                 align="justify"
               >
                 <q-tab name="info" label="Info"/>
@@ -83,47 +82,47 @@
 
               <q-tab-panels v-model="tab" animated class="bg-transparent">
                 <q-tab-panel name="info">
-                  <p class="poppinsRegular text-grey">{{publishDetails.description}}</p>
+                  <p class="poppinsRegular text-grey">{{newPublishDetails.description}}</p>
                   <p class="poppinsBold" style="line-height: 0.1em">LICENSE TYPE</p>
-                  <p class="poppinsRegular text-grey">{{publishDetails.registerLicenseModel}}</p>
+                  <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
                   <p class="poppinsBold" style="line-height: 0.1em">CATEGORY</p>
-                  <p class="poppinsRegular text-grey">{{publishDetails.categoryModel}}</p>
+                  <p class="poppinsRegular text-grey">{{newPublishDetails.categoryModel}}</p>
                   <p class="poppinsBold" style="line-height: 0.1em"
-                     v-if="publishDetails.projectUrl!==''">
+                     v-if="newPublishDetails.projectUrl!==''">
                     URL</p>
                   <p class="poppinsRegular text-blue cursor-pointer" @click="openProjectURL()"
-                     v-if="publishDetails.projectUrl!==''">
-                    {{publishDetails.projectUrl}}</p>
+                     v-if="newPublishDetails.projectUrl!==''">
+                    {{newPublishDetails.projectUrl}}</p>
                   <p class="  poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
                   <q-card>
                     <q-item clickable v-ripple>
                       <q-item-section side>
                         <q-avatar rounded size="4em">
                           <img
-                            v-if="publishDetails.coverImage || publishDetails.fileType.includes('image/')"
-                            :src="publishDetails.coverImage?publishDetails.coverImage:publishDetails.fileUrl"/>
+                            v-if="newPublishDetails.coverImage || newPublishDetails.fileType.includes('image/')"
+                            :src="newPublishDetails.coverImage?newPublishDetails.coverImage:newPublishDetails.fileUrl"/>
                         </q-avatar>
                       </q-item-section>
                       <q-item-section>
-                        <q-item-label class="poppinsBold q-pb-xs">{{publishDetails.fileName}}
+                        <q-item-label class="poppinsBold q-pb-xs">{{newPublishDetails.fileName}}
                         </q-item-label>
                         <q-item-label caption>{{fileSize}}</q-item-label>
                       </q-item-section>
                       <q-item-section side>
-                        <q-btn round color="accent" icon="get_app" @click="downloadFile()"/>
+                        <q-btn round color="teal" icon="get_app" @click="downloadFile()"/>
                       </q-item-section>
                     </q-item>
                   </q-card>
                   <div class="row text-center">
                     <div class="col">
                       <q-btn outline
-                             class="acceptModerateButton text-white bg-green q-mt-lg"
+                             class="acceptModerateButton text-white bg-green-8 q-mt-lg"
                              icon-right="check" no-caps
                              label="Accept" @click="confirm=true"/>
                     </div>
                     <div class="col">
                       <q-btn outline
-                             class="acceptModerateButton text-white bg-red q-mt-lg"
+                             class="acceptModerateButton text-white bg-red-10 q-mt-lg"
                              icon-right="close" no-caps
                              label="Reject" @click="reject=true"/>
                     </div>
@@ -136,14 +135,14 @@
               <q-card>
                 <q-card-section class="row items-center">
                   <span class="poppinsRegular q-ml-sm">Are you sure you wanna accept the project  <a
-                    class="poppinsBold">{{publishDetails.projectTitle}}</a> from
-                   <a class="poppinsBold">{{publishDetails.creatorName}}</a>?</span>
+                    class="poppinsBold">{{newPublishDetails.projectTitle}}</a> from
+                   <a class="poppinsBold">{{newPublishDetails.creatorName}}</a>?</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn v-if="confirm" flat label="Confirm" color="green" v-close-popup
+                  <q-btn v-if="confirm" flat label="Confirm" color="green-8" v-close-popup
                          @click="approveProject()"/>
-                  <q-btn flat label="Cancel" color="green" v-close-popup/>
+                  <q-btn flat label="Cancel" color="green-8" v-close-popup/>
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -153,14 +152,14 @@
                 <q-card-section class="row items-center">
                   <span
                     class="poppinsRegular q-ml-sm">Are you sure you wanna reject the project
-                  <a class="poppinsBold">{{publishDetails.projectTitle}}</a> from
-                   <a class="poppinsBold">{{publishDetails.creatorName}}</a>?</span>
+                  <a class="poppinsBold">{{newPublishDetails.projectTitle}}</a> from
+                   <a class="poppinsBold">{{newPublishDetails.creatorName}}</a>?</span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn v-if="reject" flat label="Delete" color="red" v-close-popup
+                  <q-btn v-if="reject" flat label="Delete" color="red-10" v-close-popup
                          @click="rejectProject()"/>
-                  <q-btn flat label="Cancel" color="red" v-close-popup/>
+                  <q-btn flat label="Cancel" color="red-10" v-close-popup/>
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -170,7 +169,6 @@
         </div>
       </div>
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-
     </div>
   </q-layout>
 </template>
@@ -178,7 +176,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { openURL } from 'quasar'
-  import { date } from 'quasar'
+  import mixinPublishDetails from '../../mixins/mixin_publish_details';
 
   export default {
     data() {
@@ -191,7 +189,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', 'firebaseAddFollowing', 'firebaseRemoveFollowing']),
+        ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', 'clearPublishings', 'firebaseGetNotApprovedPublishings']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -214,29 +212,10 @@
         });
         this.goToPage('/moderate/publishings')
       },
-      follow() {
-        this.firebaseAddFollowing({
-          otherUserId: this.publishDetails.creatorId,
-          otherUserName: this.publishDetails.creatorName
-        });
-      },
-      unfollow() {
-        this.firebaseRemoveFollowing({
-          otherUserId: this.publishDetails.creatorId
-        });
-      },
-      alreadyFollowsCreator() {
-        var found = false;
-        for (let followingId in this.usersFollowing) {
-          if (followingId === this.publishDetails.creatorId) {
-            found = true;
-          }
-        }
-        return found
-      }
     },
     computed: {
-      ...mapState('store', ['publishDetails', 'userDetails', 'usersFollowing']),
+      ...mapState('store',
+        ['publishDetails', 'userDetails']),
       fileSize: function () {
         function formatBytes(a, b = 2) {
           if (0 === a) return "0 Bytes";
@@ -245,8 +224,14 @@
             d)).toFixed(c)) + " " + ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"][d]
         }
 
-        return formatBytes(this.publishDetails.fileSize)
+        return formatBytes(this.newPublishDetails.fileSize)
       }
     },
+    mixins: [mixinPublishDetails],
+    created() {
+      this.clearPublishings()
+      this.firebaseGetNotApprovedPublishings()
+    }
+
   };
 </script>

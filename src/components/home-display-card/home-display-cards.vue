@@ -14,7 +14,7 @@
           flat
           no-caps
           icon="grid_on"
-          :color="!listMode?'accent':'grey'"
+          :color="!listMode?'primary':'grey'"
           size="md"
           :disable="!listMode"
           :ripple="false"
@@ -24,7 +24,7 @@
           flat
           no-caps
           icon="format_list_bulleted"
-          :color="listMode?'accent':'grey'"
+          :color="listMode?'primary':'grey'"
           :disable="listMode"
           size="md"
           :ripple="false"
@@ -71,7 +71,7 @@
                   </div>
                   <div>
                     <q-img
-                      v-if="publish.coverImage!==''"
+                      v-if="publish.coverImage"
                       :src="publish.coverImage"
                       spinner-color="white"
                       style="max-height: 9em;"
