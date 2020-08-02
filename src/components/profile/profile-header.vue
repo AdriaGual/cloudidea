@@ -20,7 +20,6 @@
         <div class="text-center justify-center q-pt-md">
           <q-avatar round size="11em">
             <img :src="otherUserDetails.imageUrl" style="border:0.1em solid white"/>
-
             <q-badge floating color="teal" class="q-mt-md" style="border-radius: 2em"
                      v-if="$route.params.otherUserId===userDetails.userId">
               <q-file borderless v-model="imageFile" style="height:2.5rem;width:1.7rem;font-size: 0"
@@ -134,9 +133,10 @@
         this.editProfile = false
       },
       uploadFile(file) {
+
         this.firebaseUploadProfilePic({
           imageFile: file,
-          userId: this.userDetails.userId
+          userId: this.$route.params.otherUserId
         }).then(() => {
 
           this.$q.notify({
@@ -144,9 +144,9 @@
             position: 'top',
             message: `Updated image successfully!`
           });
-
+          this.imageUrl = this.otherUserDetails.imageUrl;
         });
-        this.imageUrl = this.userDetails.imageUrl;
+
       },
       checkFileType(files) {
         return files.filter(file => file.type === 'image/png')
@@ -162,22 +162,20 @@
     computed: {
       ...mapState('store', ['userDetails']),
     },
+
+    mixins: [mixinOtherUserDetails],
     watch: {
       imageFile: function (val) {
-        console.log(val)
         this.uploadFile(val);
       },
       userDetails: function (val) {
-        this.name = val.name
-        this.skills = val.skills
-      }
-    },
-    mixins: [mixinOtherUserDetails],
-    watch: {
+        this.name = val.name;
+        this.skills = val.skills;
+      },
       otherUserDetails: function (val) {
-        this.name = val.name
-        this.skills = val.skills
-        this.privateProfile = val.privateProfile
+        this.name = val.name;
+        this.skills = val.skills;
+        this.privateProfile = val.privateProfile;
       }
     },
 

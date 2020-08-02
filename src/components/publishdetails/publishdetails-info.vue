@@ -6,7 +6,7 @@
       class="text-grey"
       style="height:4em;"
       active-color="primary"
-      indicator-color="primary"
+      indicator-color="secondary"
       align="justify"
     >
       <q-tab name="info" label="Info"/>
@@ -40,7 +40,7 @@
               <q-item-label caption>{{fileSize}}</q-item-label>
             </q-item-section>
             <q-item-section side>
-              <q-btn round color="accent" icon="get_app" @click="downloadFile()"/>
+              <q-btn round color="teal" icon="get_app" @click="downloadFile()"/>
             </q-item-section>
           </q-item>
         </q-card>

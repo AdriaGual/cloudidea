@@ -16,7 +16,12 @@
                   class="cardSectionInterior q-mb-md">
             <q-item-section side>
               <q-avatar rounded size="4em">
-                <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
+                <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
+                     style="border-radius: 0.2em"/>
+                <img
+                  v-if="filteredPublishing.fileUrl && filteredPublishing.fileType && filteredPublishing.fileType.includes('image/')"
+                  :src="filteredPublishing.fileUrl"
+                  style="border-radius: 0.2em"/>
               </q-avatar>
             </q-item-section>
             <q-item-section>
