@@ -2,7 +2,7 @@
   <q-layout class="flex column q-pt-md bgGlobal" ref="pageChat">
     <div class="row">
       <div class="col-1 q-pl-md">
-        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/myChats')"/>
+        <q-btn flat round color="primary" icon="arrow_back" @click="goToLastPage('')"/>
       </div>
       <div class="col absolute-right q-pt-sm">
         <q-item clickable v-ripple @click="goToPage('/profile/'+$route.params.otherUserId)">
@@ -21,7 +21,6 @@
     </div>
     <div class="row window-width q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm">
-        <p class="poppinsRegular text-center">Chats</p>
         <div v-for="(user, key) in userChats" :key="key" class="q-px-md">
           <q-item clickable no-ripple class="cardSectionInterior q-mb-md"
                   @click="goToAnotherChat('/chat/' + key)"
@@ -118,7 +117,8 @@
     data() {
       return {
         newMessage: "",
-        showMessages: false
+        showMessages: false,
+        openChats: 0
       };
     },
     computed: {
@@ -138,6 +138,9 @@
       },
       goToPage(route) {
         this.$router.push(route)
+      },
+      goToLastPage() {
+        window.history.back();
       },
       sendMessage() {
         this.firebaseSendMessage({
@@ -159,14 +162,13 @@
     },
     watch: {
       messages: function (val) {
-        console.log(val)
         if (Object.keys(val).length) {
           this.scrollToBottom();
           setTimeout(() => {
             this.showMessages = true;
           }, 200);
         }
-      }
+      },
     },
     mixins: [mixinOtherUserDetails],
     mounted() {

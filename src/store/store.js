@@ -73,7 +73,6 @@ const mutations = {
 
 const actions = {
   registerUser({ commit }, payload) {
-    console.log(payload)
     firebaseAuth
     .createUserWithEmailAndPassword(payload.email, payload.password)
     .then(function (user) {
@@ -236,13 +235,12 @@ const actions = {
   firebaseGetMessages({ commit, state }, otherUserId) {
     const userId = state.userDetails.userId;
     messagesRef = firebaseDB.ref("chats/" + userId + "/" + otherUserId);
+
     messagesRef.on("child_added", snapshot => {
       const messageDetails = snapshot.val();
       const messageId = snapshot.key;
+      commit("addMessage", { messageId, messageDetails });
 
-      if (snapshot.key !== "unreadMessages") {
-        commit("addMessage", { messageId, messageDetails });
-      }
     });
   },
   firebaseStopGettingMessages({ commit }) {
