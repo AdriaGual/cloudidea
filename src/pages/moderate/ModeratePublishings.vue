@@ -17,8 +17,12 @@
           <q-item clickable v-ripple @click="goToPublishDetails(publish,key)"
                   v-if="!publish.approved"
           >
-            <q-item-section side v-if="publish.coverImage">
-              <q-img :src="publish.coverImage" style="border-radius: 0.5em;height:4em;width: 4em"/>
+            <q-item-section side>
+              <q-img v-if="publish.coverImage" :src="publish.coverImage"
+                     style="border-radius: 0.5em;height:4em;width: 4em"/>
+              <q-img
+                v-if="publish.fileUrl && publish.fileType && publish.fileType.includes('image/')"
+                :src="publish.fileUrl" style="border-radius: 0.5em;height:4em;width: 4em"/>
             </q-item-section>
             <q-item-section>
               <q-item-label>{{publish.projectTitle}}</q-item-label>

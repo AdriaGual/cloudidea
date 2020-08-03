@@ -33,7 +33,7 @@
               <q-avatar rounded size="4em">
                 <img v-if="newPublishDetails.coverImage" :src="newPublishDetails.coverImage"/>
                 <img
-                  v-if="!newPublishDetails.coverImage && newPublishDetails.fileType.includes('image/')"
+                  v-if="!newPublishDetails.coverImage && newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')"
                   :src="newPublishDetails.fileUrl"/>
               </q-avatar>
             </q-item-section>

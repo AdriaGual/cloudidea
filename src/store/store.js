@@ -107,6 +107,7 @@ const actions = {
         privateProfile: false,
         userId: userId,
         cp: 0,
+        emailVerified: firebaseAuth.currentUser.emailVerified
       });
     })
     .catch(error => {
@@ -143,7 +144,8 @@ const actions = {
             moderator: userDetails.moderator,
             userId: userId,
             privateProfile: userDetails.privateProfile,
-            cp: userDetails.cp
+            cp: userDetails.cp,
+            emailVerified: firebaseAuth.currentUser.emailVerified
           });
         });
 
@@ -207,6 +209,7 @@ const actions = {
         privateProfile: userDetails.privateProfile,
         userId: userId,
         cp: userDetails.cp,
+        emailVerified: firebaseAuth.currentUser.emailVerified
       });
     });
   },
@@ -439,6 +442,7 @@ const actions = {
       });
   },
   clearPublishings({ commit }) {
+    //console.log(firebaseAuth.currentUser.emailVerified)
     commit("setPublishings", {});
   },
   clearUsers({ commit }) {
@@ -482,6 +486,7 @@ const actions = {
         projectTitle: payload.projectTitle,
         projectUrl: payload.projectUrl,
         registerLicenseModel: payload.registerLicenseModel,
+        creatorEmail: userDetails.email,
         creatorImageUrl: userDetails.imageUrl,
         creatorName: userDetails.name,
         creatorSkills: userDetails.skills,

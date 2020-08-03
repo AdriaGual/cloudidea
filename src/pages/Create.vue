@@ -162,6 +162,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import axios from 'axios'
 
   export default {
     data() {
@@ -234,11 +235,15 @@
           this.publishing.approved = false;
           this.publishing.cp = 0
           this.publishing.creatorImageUrl = this.userDetails.imageUrl;
+          this.publishing.creatorEmail = this.userDetails.email;
           this.publishing.creatorName = this.userDetails.name;
           this.publishing.creatorSkills = this.userDetails.skills;
           this.publishing.creatorId = this.userDetails.userId;
           this.publishing.creatorCP = this.userDetails.cp;
+          console.log(this.publishing)
           this.firebaseCreatePublish(this.publishing);
+          axios.get('https://cloudidea.es/api/index.php?action=moderatePublish&param1=' + this.publishing.creatorEmail + '&param2=' + this.publishing.creatorName + '&param3=' + this.publishing.projectTitle)
+
           this.goToPage('/')
         }
       },

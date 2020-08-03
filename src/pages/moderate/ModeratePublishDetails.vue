@@ -176,6 +176,7 @@
   import { mapActions, mapState } from 'vuex'
   import { openURL } from 'quasar'
   import mixinPublishDetails from '../../mixins/mixin_publish_details';
+  import axios from 'axios'
 
   export default {
     data() {
@@ -199,6 +200,7 @@
         openURL(this.publishDetails.projectUrl)
       },
       approveProject() {
+        axios.get('https://cloudidea.es/api/index.php?action=acceptedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle)
         this.firebaseUpdatePublish({
           publishId: this.publishDetails.key,
           updates: { approved: true, releaseDate: Date.now(), timeStamp: -Date.now() }
@@ -206,6 +208,7 @@
         this.goToPage('/moderate/publishings')
       },
       rejectProject() {
+        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle)
         this.firebaseDeletePublish({
           publishId: this.publishDetails.key
         });

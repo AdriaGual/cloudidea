@@ -10,6 +10,7 @@
   import HomeDisplayCards from '../components/home-display-card/home-display-cards'
   import { Cookies } from 'quasar'
 
+
   export default {
     methods: {
       goToPage(route) {
@@ -24,6 +25,8 @@
       if (!Cookies.has('categorySelection')) {
         this.goToPage('welcome')
       }
+      /*axios
+      .get('https://cloudidea.es/api/index.php?action=acceptedPublish')*/
     }
   };
 </script>
