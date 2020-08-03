@@ -65,9 +65,9 @@
     mixins: [mixinPublishDetails],
     created() {
       this.clearPublishings();
-      this.firebaseGetApprovedPublishings()
-      this.firebaseClearComments()
-      this.updatePublishComments({ key: this.$route.params.publishId })
+      this.firebaseGetApprovedPublishings();
+      this.firebaseClearComments();
+      this.updatePublishComments({ key: this.$route.params.publishId });
       this.publishKey = this.$route.params.publishId
     },
   };

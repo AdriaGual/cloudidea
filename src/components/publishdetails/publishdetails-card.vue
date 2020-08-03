@@ -14,7 +14,7 @@
         :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''">
       </q-pdfviewer>
       <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
-        <q-img v-if="sidePublish" :src="publishDetails.coverImage">
+        <q-img v-if="sidePublish" :src="publishDetails.coverImage" style="max-height:18em">
           <div class="text-subtitle2 absolute-top text-center">
             {{publishDetails.projectTitle}}
           </div>
@@ -83,14 +83,16 @@
 
     <q-card-actions>
       <div class="row full-width" style="height:4em">
-        <div class="col-2 q-pl-sm">
+        <div class="col-2 q-pl-sm cursor-pointer"
+             @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <q-img
             :src="publishDetails.creatorImageUrl"
             spinner-color="white"
             class="cardUserImage q-mt-xs"
           />
         </div>
-        <div class="col-5 q-pt-md">
+        <div class="col-5 q-pt-md cursor-pointer"
+             @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
           <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
         </div>
@@ -180,6 +182,9 @@
         if (this.publishKey !== this.$route.params.publishId) {
           this.$router.push(route)
         }
+      },
+      goToProfilePage(route) {
+        this.$router.push(route)
       },
       chat() {
         this.$router.push("/chat/" + this.publishDetails.creatorId)

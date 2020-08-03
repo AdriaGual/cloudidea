@@ -34,132 +34,8 @@
 
     <div class="row justify-center q-pb-xl q-pt-md" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
-        <q-card
-          class="cardExterior q-ma-sm"
-          style="max-width: 35em;"
-          v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"
-        >
-          <q-card-section class="no-padding" @click="goToPublishDetails(publish, publish.key)"
-                          style="cursor: pointer;">
-            <div class="cardSectionInterior q-pa-md">
-              <div class="row" style="height:12em">
-                <div class="col">
-                  <div style="line-height: 0.5;">
-                    <p style="font-size: 0.8em" class="text-grey">
-                      {{releaseDate(publish.releaseDate)}}</p>
-                    <p class="poppinsRegular text-white" style="font-size: 1.2em"
-                       v-if="publish.projectTitle.length>15">
-                      {{publish.projectTitle.substring(0,15)+".."}}</p>
-                    <p class="poppinsRegular text-white" style="font-size: 1.2em"
-                       v-else>
-                      {{publish.projectTitle}}</p>
-                  </div>
-                  <p class="poppinsLight text-justify q-pr-lg text-grey" style="font-size: 0.9em">
-                    {{publish.description.substring(0,100)+".."}}</p>
-                </div>
-                <div class="col">
-                  <div class="full-width" align="right">
-                    <a style="font-size: 0.8em" class="text-grey">
-                      {{publish.registerLicenseModel}}
-                    </a>
-                  </div>
-                  <div class="full-width" align="right">
-                    <a style="font-size: 0.8em" class="text-grey">
-                      {{publish.categoryModel}}
-                    </a>
-                  </div>
-                  <div>
-                    <q-img
-                      v-if="publish.coverImage"
-                      :src="publish.coverImage"
-                      spinner-color="white"
-                      style="max-height: 9em;"
-                      class="cardCoverImage q-mt-xs q-ml-md full-width"
-                    />
-                    <q-img
-                      v-if="publish.fileUrl && publish.fileType && publish.fileType.includes('image/') && !publish.coverImage"
-                      :src="publish.fileUrl"
-                      spinner-color="white"
-                      style="max-height: 9em;"
-                      class="cardCoverImage q-mt-xs q-ml-md full-width"
-                    />
-                    <div v-for="(category, key) in categories" :key="key">
-                      <img
-                        class="q-px-xl"
-                        v-if="!publish.coverImage && publish.fileType && !publish.fileType.includes('image/') && category.categoryName ===publish.categoryModel && !publish.coverImage"
-                        :style="$q.platform.is.desktop?'height:9em':''"
-                        :src="category.url"/>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-actions>
-            <div class="row full-width q-pt-xs">
-              <div class="col-2 q-pl-sm cursor-pointer q-pt-xs"
-                   @click="goToPage('/profile/'+publish.creatorId)">
-                <q-img
-                  :src="publish.creatorImageUrl"
-                  spinner-color="white"
-                  class="cardUserImage"
-                />
-              </div>
-              <div class="col-4 q-pt-md q-pl-xs cursor-pointer"
-                   @click="goToPage('/profile/'+publish.creatorId)">
-                <p style="line-height: 0.1em" v-if="publish.creatorName.length>10">
-                  {{publish.creatorName.substring(0,10)+".."}}</p>
-                <p style="line-height: 0.1em" v-else>
-                  {{publish.creatorName}}</p>
-                <p class="cardUserCP" v-if="publish.creatorSkills.length>10">
-                  {{publish.creatorSkills.substring(0,10)+".."}} </p>
-                <p class="cardUserCP" v-else>{{publish.creatorSkills}} </p>
-              </div>
-              <div class="col-4 q-pt-sm q-pr-md">
-                <q-btn
-                  v-if="userDetails.userId && userDetails.userId !== publish.creatorId"
-                  no-caps
-                  class="bgGrey"
-                  style="width:7em;font-size: 0.9em;border-radius: 2em"
-                  label="Chat"
-                  @click="chat(publish)"
-                />
-              </div>
-              <div class="col-2">
-                <q-btn
-                  rounded
-                  flat
-                  v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,publish.key)===false"
-                  no-caps
-                  icon="favorite_border"
-                  color="accent"
-                  size="md"
-                  :ripple="false"
-                  @click="like(publish,publish.key)"
-                />
-                <q-btn
-                  rounded
-                  v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,publish.key)===true"
-                  no-caps
-                  flat
-                  :ripple="false"
-                  size="md"
-                  icon="favorite"
-                  color="accent"
-                  @click="dislike(publish,publish.key)"
-                />
-                <q-icon v-if="!userDetails.userId || userDetails.userId === publish.creatorId"
-                        name="favorite" color="grey" size="sm" class="q-pl-sm q-pt-sm q-pb-xs"/>
-
-                <p class="cardUserCP q-pl-sm">
-                  {{publish.cp}} CP
-                </p>
-              </div>
-            </div>
-          </q-card-actions>
-        </q-card>
+        <home-display-card :publish="publish" :categories="categories"
+                           :userDetails="userDetails"></home-display-card>
       </div>
     </div>
 
@@ -167,90 +43,8 @@
       <div class="row q-pt-md">
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
         <div class="col" style="border-radius: 0.5em">
-          <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
-            <q-item clickable no-ripple class="cardSectionInterior q-mb-md"
-                    v-if="$q.cookies.get('categorySelection').includes(filteredPublishing.categoryModel)">
-              <q-item-section side @click="goToPage('publishDetails/'+filteredPublishing.key)">
-                <q-avatar rounded size="4em"
-                          v-if="filteredPublishing.fileType!=='application/pdf'">
-                  <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
-                       style="border-radius: 0.2em"/>
-                  <img
-                    v-if="filteredPublishing.fileUrl && filteredPublishing.fileType && filteredPublishing.fileType.includes('image/')"
-                    :src="filteredPublishing.fileUrl" style="border-radius: 0.2em"
-                  />
-                </q-avatar>
-
-                <div v-for="(category, key) in categories" :key="key">
-                  <img
-                    style="height: 4em"
-                    v-if="filteredPublishing.fileType && filteredPublishing.fileType==='application/pdf' && category.categoryName ===filteredPublishing.categoryModel"
-                    :src="category.url"/>
-                </div>
-
-
-              </q-item-section>
-              <q-item-section @click="goToPage('publishDetails/'+filteredPublishing.key)">
-                <q-item-label class="poppinsRegular text-white"
-                              v-if="filteredPublishing.projectTitle.length>15">
-                  {{filteredPublishing.projectTitle.substring(0,15)+".."}}
-                </q-item-label>
-
-                <q-item-label v-else class="poppinsRegular text-white">
-                  {{filteredPublishing.projectTitle}}
-                </q-item-label>
-                <q-item-label caption class="text-grey">{{filteredPublishing.categoryModel}}
-                </q-item-label>
-                <q-item-label caption class="text-grey">{{filteredPublishing.registerLicenseModel}}
-                </q-item-label>
-
-              </q-item-section>
-              <q-item-section side>
-                <q-item-label caption class="text-grey">
-                  {{releaseDate(filteredPublishing.releaseDate)}}
-                </q-item-label>
-                <div class="row">
-                  <q-btn
-                    rounded
-                    flat
-                    v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===false"
-                    no-caps
-                    icon="favorite_border"
-                    color="accent"
-                    size="md"
-                    :ripple="false"
-                    @click="like(filteredPublishing,filteredPublishing.key)"
-                  />
-                  <q-btn
-                    rounded
-                    v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===true"
-                    no-caps
-                    flat
-                    :ripple="false"
-                    size="md"
-                    icon="favorite"
-                    color="accent"
-                    @click="dislike(filteredPublishing,filteredPublishing.key)"
-                  />
-                  <q-btn
-                    rounded
-                    v-if="!userDetails.userId || userDetails.userId === filteredPublishing.creatorId"
-                    no-caps
-                    flat
-                    :ripple="false"
-                    size="md"
-                    icon="favorite"
-                    color="grey"
-                    disable
-                  />
-                  <p class="q-pt-md">
-                    {{filteredPublishing.cp}} CP
-                  </p>
-                </div>
-              </q-item-section>
-            </q-item>
-          </div>
-
+          <home-display-card-list :orderedPublishings="orderedPublishings" :categories="categories"
+                                  :userDetails="userDetails"></home-display-card-list>
         </div>
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       </div>
@@ -296,8 +90,11 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import HomeDisplayCardList from './home-display-card-list';
+  import HomeDisplayCard from './home-display-card';
 
   export default {
+    components: { HomeDisplayCard, HomeDisplayCardList },
     data() {
       return {
         orderedPublishings: [],
