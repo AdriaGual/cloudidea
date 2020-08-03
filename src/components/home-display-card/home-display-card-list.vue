@@ -86,9 +86,13 @@
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex'
+
   export default {
     props: ['orderedPublishings', 'categories', 'userDetails'],
     methods: {
+      ...mapActions('store',
+        ['updatePublishDetails', 'updatePublishComments', 'firebaseAddLike', 'firebaseRemoveLike']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -133,6 +137,10 @@
         }
         return Math.floor(seconds) + " seconds ago";
       },
+    },
+    computed: {
+      ...mapState('store',
+        ['userLikedPublishings']),
     },
   }
 </script>

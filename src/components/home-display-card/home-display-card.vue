@@ -130,9 +130,13 @@
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex'
+
   export default {
     props: ['publish', 'categories', 'userDetails'],
     methods: {
+      ...mapActions('store',
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -187,6 +191,14 @@
         return Math.floor(seconds) + " seconds ago";
       },
     },
+    computed: {
+      ...mapState('store',
+        ['userLikedPublishings']),
+    },
+    created() {
+      this.firebaseGetLikes();
+    }
+
   }
 </script>
 

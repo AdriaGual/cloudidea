@@ -149,15 +149,7 @@ const actions = {
           });
         });
 
-        firebaseDB.ref("users/" + userId + '/likedPublishings').on("child_added",
-          snapshot => {
-            const otherPublishingId = snapshot.key;
-            const otherUserId = snapshot.val();
-            commit("addLike", {
-              otherPublishingId,
-              otherUserId: { otherUserId }
-            });
-          });
+        dispatch("firebaseGetLikes");
 
         firebaseDB.ref("chats/" + userId).on("child_added",
           snapshot => {

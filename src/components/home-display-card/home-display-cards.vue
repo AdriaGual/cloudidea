@@ -212,7 +212,7 @@
     },
     created() {
       this.clearPublishings();
-      this.firebaseGetApprovedPublishings()
+      this.firebaseGetApprovedPublishings();
     },
     watch: {
       publishings: function (val) {
