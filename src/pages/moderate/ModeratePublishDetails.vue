@@ -15,26 +15,36 @@
     </div>
 
     <div class="row">
-      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col-3" v-if="$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
-        <div class="row ">
+        <div class="row">
           <div class="col q-gutter-y-md bgGlobal" align="center">
             <q-card class="cardExterior">
               <q-card-section v-if="newPublishDetails.fileType==='application/pdf'"
-                              :style="this.$q.platform.is.desktop?'height: 50em;':'height:30em'"
+                              :style="$q.platform.is.desktop?'height: 50em;':'height:30em'"
                               class="q-mr-md q-mb-md">
                 <q-pdfviewer
                   v-model="showPDF"
                   :src="newPublishDetails.fileUrl"
                   type="html5"
                   content-class="absolute"
-                  :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''">
+                  :style="!$q.platform.is.desktop?'max-width: 24.5em;':''">
                 </q-pdfviewer>
               </q-card-section>
+              <q-img
+                v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('audio/') && newPublishDetails.coverImage"
+                :src="newPublishDetails.coverImage" spinner-color="white" style="max-height: 30em"/>
+              <audio controls
+                     class="q-mt-md"
+                     v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('audio/')">
+                <source :src="newPublishDetails.fileUrl" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
 
               <q-img
                 v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')"
                 :src="newPublishDetails.fileUrl" spinner-color="white" style="max-height: 30em"/>
+
               <q-card-actions>
                 <div class="row full-width" style="height:4em">
                   <div class="col-2 q-pl-sm q-pt-xs">
@@ -64,7 +74,7 @@
           </div>
 
 
-          <div class="q-pt-lg q-px-lg">
+          <div class="q-pt-lg">
             <q-card style="border-top-left-radius: 1em;border-top-right-radius: 1em">
               <q-tabs
                 v-model="tab"
@@ -77,7 +87,6 @@
               >
                 <q-tab name="info" label="Info"/>
               </q-tabs>
-              <q-separator/>
 
               <q-tab-panels v-model="tab" animated class="bg-transparent">
                 <q-tab-panel name="info">
@@ -92,18 +101,29 @@
                   <p class="poppinsRegular text-blue cursor-pointer" @click="openProjectURL()"
                      v-if="newPublishDetails.projectUrl!==''">
                     {{newPublishDetails.projectUrl}}</p>
-                  <p class="  poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
+                  <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
                   <q-card>
                     <q-item :ripple="false">
                       <q-item-section side>
-                        <q-avatar rounded size="4em">
+                        <q-avatar rounded size="4em"
+                                  v-if="newPublishDetails.coverImage || newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')">
                           <img
-                            v-if="newPublishDetails.coverImage || newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')"
                             :src="newPublishDetails.coverImage?newPublishDetails.coverImage:newPublishDetails.fileUrl"/>
                         </q-avatar>
+                        <div v-for="(category, key) in categories" :key="key">
+                          <img
+                            style="height: 4em"
+                            v-if="newPublishDetails.fileType && category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
+                            :src="category.url"/>
+                        </div>
                       </q-item-section>
                       <q-item-section>
-                        <q-item-label class="poppinsBold q-pb-xs">{{newPublishDetails.fileName}}
+                        <q-item-label class="poppinsBold q-pb-xs"
+                                      v-if="newPublishDetails.fileName.length>15">
+                          {{newPublishDetails.fileName.substring(0,15)+".."}}
+                        </q-item-label>
+                        <q-item-label class="poppinsBold q-pb-xs" v-else>
+                          {{newPublishDetails.fileName}}
                         </q-item-label>
                         <q-item-label caption>{{fileSize}}</q-item-label>
                       </q-item-section>
@@ -125,7 +145,6 @@
                              icon-right="close" no-caps
                              label="Reject" @click="reject=true"/>
                     </div>
-
                   </div>
                 </q-tab-panel>
               </q-tab-panels>
@@ -163,11 +182,10 @@
               </q-card>
             </q-dialog>
 
-
           </div>
         </div>
       </div>
-      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
+      <div class="col-3" v-if="$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
   </q-layout>
 </template>
@@ -184,7 +202,32 @@
         tab: 'info',
         confirm: false,
         reject: false,
-        showPDF: true
+        showPDF: true,
+        categories: [{
+          categoryName: 'Writting',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f'
+        }, {
+          categoryName: 'Design',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdesign.svg?alt=media&token=2cc162de-294b-4250-bf2b-556d025042d8'
+        }, {
+          categoryName: 'Music',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmusic.svg?alt=media&token=f0dd839f-788b-4326-8e15-76b08ad17059'
+        }, {
+          categoryName: 'Video',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fvideo.svg?alt=media&token=449ae459-3d2a-4cba-b431-f5059b359f09'
+        }, {
+          categoryName: 'Code',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcode.svg?alt=media&token=d81e76b9-f092-4603-84b3-761dcf2de6c1'
+        }, {
+          categoryName: 'Idea',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fidea.svg?alt=media&token=cd1bdf45-3d60-4c3a-ae6f-ea8c65e2dd14'
+        }, {
+          categoryName: 'Revenue',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmoney.svg?alt=media&token=5bb1196c-981d-4ead-8054-1fc0d42f8d32'
+        }, {
+          categoryName: 'Marketing',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
+        }]
       }
     },
     methods: {

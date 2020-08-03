@@ -13,8 +13,16 @@
         inner-content-class="fit container"
         :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''">
       </q-pdfviewer>
+      <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
+        <q-img v-if="sidePublish" :src="publishDetails.coverImage">
+          <div class="text-subtitle2 absolute-top text-center">
+            {{publishDetails.projectTitle}}
+          </div>
+        </q-img>
+      </div>
       <div v-for="(category, key) in categories" :key="key">
-        <div class="q-pa-lg" v-if="category.categoryName ===publishDetails.categoryModel">
+        <div :class="sidePublish?'q-pa-lg':''"
+             v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
           <q-img v-if="sidePublish" :src="category.url">
             <div class="text-subtitle2 absolute-top text-center">
               {{publishDetails.projectTitle}}
@@ -23,12 +31,49 @@
         </div>
       </div>
     </div>
-    <div :class="sidePublish?'q-pa-lg':''">
-      <q-img v-if="publishDetails.fileType && publishDetails.fileType.includes('image/')"
-             :src="publishDetails.fileUrl" spinner-color="white"
-             :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
-             @click="goToPage(publishKey)"
-             :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
+
+    <div class="cursor-pointer text-center"
+         v-if="publishDetails.fileType==='audio/mpeg'"
+         @click="goToPage(publishKey)">
+      <q-img
+        v-if="publishDetails.coverImage && !sidePublish"
+        :src="publishDetails.coverImage" spinner-color="white"
+        :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
+        @click="goToPage(publishKey)"
+        :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
+      />
+      <audio controls
+             class="q-mt-md"
+             v-if="!sidePublish">
+        <source :src="publishDetails.fileUrl" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
+        <q-img v-if="sidePublish" :src="publishDetails.coverImage">
+          <div class="text-subtitle2 absolute-top text-center">
+            {{publishDetails.projectTitle}}
+          </div>
+        </q-img>
+      </div>
+      <div v-for="(category, key) in categories" :key="key">
+        <div :class="sidePublish?'q-pa-lg':''"
+             v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+          <q-img v-if="sidePublish" :src="category.url">
+            <div class="text-subtitle2 absolute-top text-center">
+              {{publishDetails.projectTitle}}
+            </div>
+          </q-img>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="publishDetails.fileType && publishDetails.fileType.includes('image/')"
+         :class="sidePublish?'q-pa-lg':''">
+      <q-img
+        :src="publishDetails.fileUrl" spinner-color="white"
+        :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
+        @click="goToPage(publishKey)"
+        :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
       >
         <div v-if="sidePublish" class="text-subtitle2 absolute-top text-center q-pa-lg">
           {{publishDetails.projectTitle}}

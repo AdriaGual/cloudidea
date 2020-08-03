@@ -86,7 +86,7 @@
                     <div v-for="(category, key) in categories" :key="key">
                       <img
                         class="q-px-xl"
-                        v-if="publish.fileType && publish.fileType==='application/pdf' && category.categoryName ===publish.categoryModel && !publish.coverImage"
+                        v-if="!publish.coverImage && publish.fileType && !publish.fileType.includes('image/') && category.categoryName ===publish.categoryModel && !publish.coverImage"
                         :style="$q.platform.is.desktop?'height:9em':''"
                         :src="category.url"/>
                     </div>

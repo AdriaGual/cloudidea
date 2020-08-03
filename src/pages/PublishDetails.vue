@@ -7,7 +7,8 @@
         <publishdetails-card
           :style="this.$q.platform.is.desktop?'width: 70em':'width: 25em'"
           :userDetails="userDetails"
-          :publishDetails="newPublishDetails" align="left"
+          :publishDetails="newPublishDetails"
+          align="left"
           :publishKey="$route.params.publishId"
           :sidePublish="false">
         </publishdetails-card>
@@ -19,7 +20,7 @@
         </publishdetails-info>
       </div>
 
-      <div class="col-3 q-pr-xl bgGlobal"
+      <div class="col-3 q-pr-xl bgGlobal q-pb-xl"
            v-if="this.$q.platform.is.desktop && $q.screen.gt.md">
         <p class="poppinsBold" style="font-size: 1.2em">Other projects from
           {{newPublishDetails.creatorName}}</p>
@@ -33,6 +34,7 @@
             :sidePublish="true">
           </publishdetails-card>
         </div>
+        <div class="q-pb-xl"></div>
       </div>
     </div>
     <div class="q-pb-xl"></div>

@@ -9,14 +9,34 @@ const actions = {
         contentType: "application/pdf"
       };
       category = "writtings";
+    } else if (file.name.substr(-3) === "doc") {
+      metadata = {
+        contentType: "application/doc"
+      };
+      category = "writtings";
+    } else if (file.name.substr(-4) === "docx") {
+      metadata = {
+        contentType: "application/docx"
+      };
+      category = "writtings";
     } else if (file.name.substr(-3) === "png") {
       metadata = {
         contentType: "image/png"
       };
       category = "images";
+    } else if (file.name.substr(-3) === "jpg") {
+      metadata = {
+        contentType: "image/jpg"
+      };
+      category = "images";
+    } else if (file.name.substr(-4) === "jpeg") {
+      metadata = {
+        contentType: "image/jpeg"
+      };
+      category = "images";
     } else if (file.name.substr(-3) === "mp3") {
       metadata = {
-        contentType: "music/mp3"
+        contentType: "audio/mpeg"
       };
       category = "musics";
     } else if (file.name.substr(-3) === "mp4") {
