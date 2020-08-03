@@ -8,7 +8,8 @@
           :style="this.$q.platform.is.desktop?'width: 70em':'width: 25em'"
           :userDetails="userDetails"
           :publishDetails="newPublishDetails" align="left"
-          :publishKey="$route.params.publishId">
+          :publishKey="$route.params.publishId"
+          :sidePublish="false">
         </publishdetails-card>
 
         <publishdetails-info :style="this.$q.platform.is.desktop?'width: 50em':'width: 25em'"
@@ -28,7 +29,8 @@
             :userDetails="userDetails"
             class="q-mt-lg"
             :publishDetails="publish"
-            :publishKey="key">
+            :publishKey="key"
+            :sidePublish="true">
           </publishdetails-card>
         </div>
       </div>

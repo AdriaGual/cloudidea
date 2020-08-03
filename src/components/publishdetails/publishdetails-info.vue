@@ -28,10 +28,13 @@
           {{newPublishDetails.projectUrl}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
         <q-card>
-          <q-item clickable v-ripple>
+          <q-item :ripple="false">
             <q-item-section side>
               <q-avatar rounded size="4em">
-                <img :src="newPublishDetails.coverImage"/>
+                <img v-if="newPublishDetails.coverImage" :src="newPublishDetails.coverImage"/>
+                <img
+                  v-if="!newPublishDetails.coverImage && newPublishDetails.fileType.includes('image/')"
+                  :src="newPublishDetails.fileUrl"/>
               </q-avatar>
             </q-item-section>
             <q-item-section>

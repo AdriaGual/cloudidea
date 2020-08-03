@@ -1,7 +1,7 @@
 <template>
-  <q-layout class="flex column bgGlobal q-pt-md">
+  <q-layout class="flex column bgGlobal q-pt-lg">
 
-    <div class="row q-pb-md">
+    <div class="row">
       <div class="col-1 q-pl-md">
         <q-btn flat round color="primary" icon="arrow_back"
                @click="goToPage('/moderate/publishings')"/>
@@ -22,23 +22,22 @@
             <q-card class="cardExterior">
               <q-card-section v-if="newPublishDetails.fileType==='application/pdf'"
                               :style="this.$q.platform.is.desktop?'height: 50em;':'height:30em'"
-                              class="q-mr-md">
+                              class="q-mr-md q-mb-md">
                 <q-pdfviewer
                   v-model="showPDF"
                   :src="newPublishDetails.fileUrl"
                   type="html5"
                   content-class="absolute"
-                  :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''"></q-pdfviewer>
+                  :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''">
+                </q-pdfviewer>
               </q-card-section>
 
               <q-img
-                v-if="newPublishDetails.fileType.includes('image/')"
+                v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')"
                 :src="newPublishDetails.fileUrl" spinner-color="white" style="max-height: 30em"/>
-
-
               <q-card-actions>
                 <div class="row full-width" style="height:4em">
-                  <div class="col-2 q-pl-sm">
+                  <div class="col-2 q-pl-sm q-pt-xs">
                     <q-img
                       :src="newPublishDetails.creatorImageUrl"
                       spinner-color="white"
@@ -95,11 +94,11 @@
                     {{newPublishDetails.projectUrl}}</p>
                   <p class="  poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
                   <q-card>
-                    <q-item clickable v-ripple>
+                    <q-item :ripple="false">
                       <q-item-section side>
                         <q-avatar rounded size="4em">
                           <img
-                            v-if="newPublishDetails.coverImage || newPublishDetails.fileType.includes('image/')"
+                            v-if="newPublishDetails.coverImage || newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')"
                             :src="newPublishDetails.coverImage?newPublishDetails.coverImage:newPublishDetails.fileUrl"/>
                         </q-avatar>
                       </q-item-section>
@@ -194,7 +193,7 @@
         this.$router.push(route)
       },
       downloadFile() {
-        openURL(this.publishDetails.fileUrl)
+        openURL(this.newPublishDetails.fileUrl)
       },
       openProjectURL() {
         openURL(this.publishDetails.projectUrl)

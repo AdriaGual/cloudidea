@@ -9,26 +9,25 @@
         <p :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-md'"
            style="font-size: 1.3em;line-height: 0.1em">Explore Projects</p>
       </div>
+
       <div class="col" align="right">
         <q-btn
           flat
           no-caps
-          icon="grid_on"
-          :color="!listMode?'primary':'grey'"
+          :icon="!listMode?'grid_on':'format_list_bulleted'"
+          color="primary"
           size="md"
-          :disable="!listMode"
           :ripple="false"
           @click="listMode=!listMode"
         />
         <q-btn
           flat
           no-caps
-          icon="format_list_bulleted"
-          :color="listMode?'primary':'grey'"
-          :disable="listMode"
+          icon="sort"
+          color="primary"
           size="md"
           :ripple="false"
-          @click="listMode=!listMode"
+          @click="openFilterDialog=true"
         />
       </div>
     </div>
@@ -234,6 +233,41 @@
       </div>
     </div>
     <div class="q-pb-lg"></div>
+    <q-dialog v-model="openFilterDialog">
+      <q-card class="q-px-lg q-pb-sm" style="width:50em">
+        <q-card-section>
+          <div class="poppinsRegular text-h6">Sort by</div>
+        </q-card-section>
+        <q-separator></q-separator>
+        <q-card-section class="no-padding">
+          <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('cp')">
+            <q-item-section side>
+              <q-icon name="whatshot"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Most popular</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('date')">
+            <q-item-section side>
+              <q-icon name="fiber_new"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Most recent</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('category')">
+            <q-item-section side>
+              <q-icon name="construction"/>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Categories</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-card-section>
+
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -244,7 +278,8 @@
     data() {
       return {
         orderedPublishings: [],
-        listMode: false
+        listMode: false,
+        openFilterDialog: false
       }
     },
     methods: {
@@ -275,7 +310,6 @@
         }
         return Math.floor(seconds) + " seconds ago";
       },
-
       chat(publish) {
         this.$router.push("/chat/" + publish.creatorId)
       },
@@ -307,8 +341,25 @@
       capitalize(s) {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
+      },
+      orderPublishingsBy(publishType) {
+        console.log(this.orderedPublishings)
+        if (publishType === 'cp') {
+          this.orderedPublishings.sort((a, b) => b.cp - a.cp);
+        } else if (publishType === 'date') {
+          this.orderedPublishings.sort((a, b) => b.releaseDate - a.releaseDate);
+        } else if (publishType === 'category') {
+          this.orderedPublishings.sort(function (a, b) {
+            if (a.categoryModel < b.categoryModel) {
+              return -1;
+            }
+            if (b.categoryModel < a.categoryModel) {
+              return 1;
+            }
+            return 0;
+          });
+        }
       }
-
     },
     computed: {
       ...mapState('store',

@@ -236,7 +236,7 @@
               message: "The username is already in use by another account."
             });
           } else {
-            this.registerUser(this.userData, payload);
+            this.registerUser(this.userData);
             this.createProfile = true
             this.$q.notify({
               color: 'green-4',

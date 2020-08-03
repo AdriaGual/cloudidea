@@ -73,18 +73,14 @@ const mutations = {
 
 const actions = {
   registerUser({ commit }, payload) {
+    console.log(payload)
     firebaseAuth
     .createUserWithEmailAndPassword(payload.email, payload.password)
     .then(function (user) {
       var user = firebaseAuth.currentUser;
       user.updateEmail(payload.email).then(function () {
         user.sendEmailVerification().then(function () {
-          // Email sent.
-        }).catch(function (error) {
-          // An error happened.
-        });
-      }).catch(function (error) {
-        // An error happened.
+        })
       });
       const userId = firebaseAuth.currentUser.uid;
       firebaseDB
