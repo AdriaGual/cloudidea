@@ -38,7 +38,7 @@
               <div v-for="(category, key) in categories" :key="key">
                 <img
                   style="height: 4em"
-                  v-if="newPublishDetails.fileType && category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
+                  v-if="category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
                   :src="category.url"/>
               </div>
             </q-item-section>
