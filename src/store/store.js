@@ -365,34 +365,68 @@ const actions = {
     .update(payload.updates);
   },
   firebaseCreatePublish({ dispatch }, payload) {
-    firebaseDB.ref("publishings/").push(payload).then(publishing => {
-      firebaseStorage.ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
-      .put(payload.file).then(function (snapshot) {
-        firebaseStorage
-        .ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
-        .getDownloadURL().then(function (url) {
-          firebaseDB.ref("publishings/" + publishing.key).update({
-            fileSize: payload.file.size,
-            fileName: payload.file.name,
-            fileType: payload.file.type,
-            fileUrl: url
-          });
-        });
-      });
-      if (payload.coverImage) {
-        firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
-        .put(payload.coverImage).then(function (snapshot) {
-          firebaseStorage
-          .ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
-          .getDownloadURL().then(function (url) {
+    if (payload.file.type === '') {
+      firebaseDB.ref("publishings/").push(payload).then(publishing => {
+        firebaseStorage.ref(payload.file.lastModified + "_" + payload.file.name)
+        .put(payload.file)
+        .then(function (snapshot) {
+          firebaseStorage.ref(payload.file.lastModified + "_" + payload.file.name).getDownloadURL()
+          .then(function (url) {
             firebaseDB.ref("publishings/" + publishing.key).update({
-              coverImage: url
+              fileSize: payload.file.size,
+              fileName: payload.file.name,
+              fileType: payload.file.type,
+              fileUrl: url
             });
           });
         });
-      }
+        if (payload.coverImage) {
+          firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
+          .put(payload.coverImage).then(function (snapshot) {
+            firebaseStorage
+            .ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
+            .getDownloadURL().then(function (url) {
+              firebaseDB.ref("publishings/" + publishing.key).update({
+                coverImage: url
+              });
+            });
+          });
+        }
+      });
+    } else {
 
-    });
+
+      firebaseDB.ref("publishings/").push(payload).then(publishing => {
+        firebaseStorage.ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
+        .put(payload.file).then(function (snapshot) {
+          firebaseStorage
+          .ref("publishings/" + publishing.key + "/file/" + payload.file.name + "_" + payload.file.lastModified)
+          .getDownloadURL().then(function (url) {
+            firebaseDB.ref("publishings/" + publishing.key).update({
+              fileSize: payload.file.size,
+              fileName: payload.file.name,
+              fileType: payload.file.type,
+              fileUrl: url
+            });
+          });
+        });
+        if (payload.coverImage) {
+          firebaseStorage.ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
+          .put(payload.coverImage).then(function (snapshot) {
+            firebaseStorage
+            .ref("publishings/" + publishing.key + "/coverImage/" + payload.coverImage.name + "_" + payload.coverImage.lastModified)
+            .getDownloadURL().then(function (url) {
+              firebaseDB.ref("publishings/" + publishing.key).update({
+                coverImage: url
+              });
+            });
+          });
+        }
+
+      });
+    }
+
+
   },
   firebaseUpdatePublish({ commit }, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);

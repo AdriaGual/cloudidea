@@ -52,7 +52,7 @@
               <div v-for="(category, key) in categories" :key="key">
                 <img
                   :class="$q.platform.is.desktop?'q-px-xl':''"
-                  v-if="!publish.coverImage && publish.fileType && !publish.fileType.includes('image/') && category.categoryName ===publish.categoryModel && !publish.coverImage"
+                  v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
                   :style="$q.platform.is.desktop?'height:9em':''"
                   :src="category.url" alt=""/>
               </div>

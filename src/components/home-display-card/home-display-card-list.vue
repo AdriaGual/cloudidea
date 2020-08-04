@@ -17,7 +17,7 @@
           <div v-for="(category, key) in categories" :key="key">
             <img
               style="height: 3em"
-              v-if="filteredPublishing.fileType && category.categoryName ===filteredPublishing.categoryModel"
+              v-if="category.categoryName ===filteredPublishing.categoryModel"
               :src="category.url"/>
           </div>
 

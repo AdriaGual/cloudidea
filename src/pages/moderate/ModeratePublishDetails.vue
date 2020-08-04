@@ -20,6 +20,7 @@
         <div class="row">
           <div class="col q-gutter-y-md bgGlobal" align="center">
             <q-card class="cardExterior">
+
               <q-card-section v-if="newPublishDetails.fileType==='application/pdf'"
                               :style="$q.platform.is.desktop?'height: 50em;':'height:30em'"
                               class="q-mr-md q-mb-md">
@@ -47,6 +48,23 @@
                 <source :src="newPublishDetails.fileUrl" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
+
+              <iframe
+                v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('text/')"
+                :src="newPublishDetails.fileUrl" class="full-width" style="height: 40em"
+                frameborder='0'></iframe>
+
+              <q-card-section
+                :style="$q.platform.is.desktop?'height: 50em;':'height:30em'"
+                v-if="!newPublishDetails.fileType"
+                class="q-mr-md q-mb-md">
+                <iframe
+                  :src="'https://view.officeapps.live.com/op/embed.aspx?src='+newPublishDetails.fileUrl"
+                  class="full-width full-height" frameborder='0'>This is an embedded <a
+                  target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by
+                  <a target='_blank' href='http://office.com/webapps'>Office Online</a>.
+                </iframe>
+              </q-card-section>
 
               <q-img
                 v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')"
@@ -121,7 +139,7 @@
                         <div v-for="(category, key) in categories" :key="key">
                           <img
                             style="height: 4em"
-                            v-if="newPublishDetails.fileType && category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
+                            v-if="category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
                             :src="category.url"/>
                         </div>
                       </q-item-section>
@@ -280,6 +298,7 @@
         return formatBytes(this.newPublishDetails.fileSize)
       }
     },
+    components: {},
     mixins: [mixinPublishDetails],
     created() {
       this.clearPublishings()
