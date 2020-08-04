@@ -83,7 +83,7 @@
     <q-card-actions>
       <div class="row full-width " style="height:4em">
         <div
-          :class="$q.platform.is.desktop?'col-1 q-pl-sm cursor-pointer':'col-2 q-pl-sm cursor-pointer'"
+          :class="$q.platform.is.desktop && !sidePublish?'col-1 q-pl-sm cursor-pointer':'col-2 q-pl-sm cursor-pointer'"
           @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <q-img
             :src="publishDetails.creatorImageUrl"
@@ -108,7 +108,7 @@
           />
 
           <q-btn
-            v-else-if="!sidePublish"
+            v-else-if="publishDetails.needHelp==='true' && !sidePublish"
             type="submit"
             style="width:9em;font-size: 0.9em;border-radius: 0.4em"
             class="q-mt-xs bg-red-10"

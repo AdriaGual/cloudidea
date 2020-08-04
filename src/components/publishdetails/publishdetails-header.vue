@@ -5,10 +5,18 @@
     </div>
     <div class="col text-center">
       <p class="poppinsRegular text-grey">4 days ago</p>
-      <p class="poppinsBold" style="line-height: 0.1em;font-size: 1.2em">
+      <p v-if="!$q.platform.is.desktop && projectTitle && projectTitle.length<22"
+         class="poppinsBold"
+         style="line-height: 0.1em;font-size: 1.2em">
+        {{projectTitle}}</p>
+      <p v-else-if="!$q.platform.is.desktop" class="poppinsBold"
+         style="line-height: 0.1em;font-size: 1.2em">
+        {{projectTitle.substring(0,22)+".."}}</p>
+      <p v-else class="poppinsBold"
+         style="line-height: 0.1em;font-size: 1.2em">
         {{projectTitle}}</p>
     </div>
-    <div class="col-4"></div>
+    <div v-if="$q.platform.is.desktop" class="col-4"></div>
   </div>
 </template>
 

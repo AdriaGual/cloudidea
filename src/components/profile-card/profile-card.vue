@@ -2,17 +2,21 @@
   <q-card
     style="line-height: 0.1em;height:15em"
     class="cardProjectExterior q-mr-md"
-    @click="goToPage('/profile/'+user.key)"
   >
     <q-card-section class="q-pt-md q-px-md">
       <q-img
+        @click="goToPage('/profile/'+user.key)"
         :src="user.imageUrl"
         spinner-color="white"
-        class="cardProfileImage"
+        class="cardProfileImage cursor-pointer"
         style="position: relative;"
       />
-      <p class="q-pt-md text-center poppinsBold">{{user.name}}</p>
-      <p class="text-center poppinsLight text-grey" style="font-size: 0.9em">{{user.cp}} CP</p>
+      <p class="q-pt-md text-center poppinsBold cursor-pointer"
+         @click="goToPage('/profile/'+user.key)"
+      >{{user.name}}</p>
+      <p class="text-center poppinsLight text-grey cursor-pointer" style="font-size: 0.9em"
+         @click="goToPage('/profile/'+user.key)"
+      >{{user.cp}} CP</p>
       <q-btn
         v-if="userDetails.userId && userDetails.userId !== user.key"
         no-caps
