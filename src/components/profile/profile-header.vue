@@ -46,6 +46,14 @@
         <div class="text-center q-px-lg q-pt-sm">
           <q-btn style="width:20em" color="white" text-color="black" label="Edit Profile" no-caps
                  v-if="$route.params.otherUserId===userDetails.userId" @click="editProfile = true"/>
+          <q-btn
+            v-else
+            no-caps
+            class="bgGrey"
+            style="width:7em;font-size: 0.9em;border-radius: 2em"
+            label="Chat"
+            @click="chat()"
+          />
         </div>
 
       </div>
@@ -157,7 +165,10 @@
           position: 'top',
           message: `${rejectedEntries.length} file(s) must be .png`
         })
-      }
+      },
+      chat() {
+        this.$router.push("/chat/" + this.$route.params.otherUserId)
+      },
     },
     computed: {
       ...mapState('store', ['userDetails']),

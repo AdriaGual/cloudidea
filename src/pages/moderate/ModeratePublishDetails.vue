@@ -14,7 +14,7 @@
       <div class="col-4"></div>
     </div>
 
-    <div class="row">
+    <div class="row q-pt-md">
       <div class="col-3" v-if="$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
         <div class="row">
@@ -47,7 +47,8 @@
 
               <q-card-actions>
                 <div class="row full-width" style="height:4em">
-                  <div class="col-2 q-pl-sm q-pt-xs">
+                  <div
+                    :class="$q.platform.is.desktop?'col-1 q-pl-sm q-pt-xs':'col-2 q-pl-sm q-pt-xs'">
                     <q-img
                       :src="newPublishDetails.creatorImageUrl"
                       spinner-color="white"
@@ -119,7 +120,7 @@
                       </q-item-section>
                       <q-item-section>
                         <q-item-label class="poppinsBold q-pb-xs"
-                                      v-if="newPublishDetails.fileName.length>15">
+                                      v-if="newPublishDetails.fileName && newPublishDetails.fileName.length>15">
                           {{newPublishDetails.fileName.substring(0,15)+".."}}
                         </q-item-label>
                         <q-item-label class="poppinsBold q-pb-xs" v-else>

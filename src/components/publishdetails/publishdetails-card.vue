@@ -1,6 +1,5 @@
 <template>
   <q-card class="cardExterior">
-
     <div class="cursor-pointer" v-if="publishDetails.fileType==='application/pdf'"
          @click="goToPage(publishKey)"
          :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'">
@@ -82,9 +81,10 @@
     </div>
 
     <q-card-actions>
-      <div class="row full-width" style="height:4em">
-        <div class="col-2 q-pl-sm cursor-pointer"
-             @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
+      <div class="row full-width " style="height:4em">
+        <div
+          :class="$q.platform.is.desktop?'col-1 q-pl-sm cursor-pointer':'col-2 q-pl-sm cursor-pointer'"
+          @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <q-img
             :src="publishDetails.creatorImageUrl"
             spinner-color="white"
@@ -92,11 +92,12 @@
           />
         </div>
         <div class="col-5 q-pt-md cursor-pointer"
+
              @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
           <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
         </div>
-        <div class="col-3 q-pt-sm q-pr-md">
+        <div class="col q-pt-sm q-pr-md" align="right">
           <q-btn
             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
             no-caps
@@ -105,12 +106,23 @@
             label="Chat"
             @click="chat()"
           />
+
+          <q-btn
+            v-else-if="!sidePublish"
+            type="submit"
+            style="width:9em;font-size: 0.9em;border-radius: 0.4em"
+            class="q-mt-xs bg-red-10"
+            text-color="white"
+            no-caps
+            label="Close project"
+            @click="sureCloseProject=true"/>
         </div>
-        <div class="col-2">
+        <div class="col-2"
+             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
           <q-btn
             rounded
             flat
-            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishKey)===false"
+            v-if="alreadyLikesPublish(publishDetails,publishKey)===false"
             no-caps
             class=""
             icon="favorite_border"
@@ -120,7 +132,7 @@
             @click="like(publishDetails,publishKey)"
           />
           <q-btn
-            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyLikesPublish(publishDetails,publishKey)===true"
+            v-if="alreadyLikesPublish(publishDetails,publishKey)===true"
             no-caps
             rounded
             flat
@@ -131,18 +143,38 @@
             color="accent"
             @click="dislike(publishDetails,publishKey)"
           />
-          <p class="cardUserCP q-pl-sm"
-             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
+          <p class="cardUserCP q-pl-sm">
             {{publishDetails.cp}} CP
           </p>
         </div>
       </div>
     </q-card-actions>
+
+    <q-dialog v-model="sureCloseProject">
+      <q-card class="q-pa-lg">
+        <q-card-section>
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fteam_work.svg?alt=media&token=c68fab03-61e0-4d20-bcb6-166faa2724ef"/>
+        </q-card-section>
+
+        <q-card-section>
+          You've found help from other people and finished your project?<br> That's great, now it's
+          time
+          to close this help request and send your finished project to moderation!
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup @click="closeHelpRequest"/>
+          <q-btn flat label="CANCEL" color="primary" v-close-popup/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import axios from 'axios'
 
   export default {
     props: ['userDetails', 'publishDetails', 'publishKey', 'sidePublish'],
@@ -173,15 +205,19 @@
         }, {
           categoryName: 'Marketing',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
-        }]
+        }],
+        sureCloseProject: false,
       }
     },
     methods: {
-      ...mapActions('store', ['firebaseAddLike', 'firebaseRemoveLike']),
+      ...mapActions('store', ['firebaseAddLike', 'firebaseRemoveLike', 'firebaseDeletePublish']),
       goToPage(route) {
         if (this.publishKey !== this.$route.params.publishId) {
           this.$router.push(route)
         }
+      },
+      goToMainPage(route) {
+        this.$router.push(route)
       },
       goToProfilePage(route) {
         this.$router.push(route)
@@ -204,6 +240,13 @@
           }
         }
         return found
+      },
+      closeHelpRequest() {
+        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle)
+        this.firebaseDeletePublish({
+          publishId: this.$route.params.publishId
+        });
+        this.goToMainPage('/')
       },
     },
     computed: {
