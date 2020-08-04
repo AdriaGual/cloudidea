@@ -82,7 +82,7 @@
                       <q-img
                         class=""
                         style="height: 12em;width:10em"
-                        v-if="!publish.coverImage && publish.fileType && category.categoryName ===publish.categoryModel"
+                        v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
                         :src="category.url">
                         <q-icon v-if="publish.needHelp==='true'" name="construction" size="md"
                                 class="absolute-right text-grey"/>

@@ -123,41 +123,39 @@
       </div>
     </div>
 
-    <div v-if="!publishDetails.fileType">
-      <q-card-section
-        class="q-mr-md q-mb-md"
-        :style="$q.platform.is.desktop && !sidePublish?'height: 50em;':''"
-      >
-        <iframe
-          v-if="!sidePublish"
-          :src="'https://view.officeapps.live.com/op/embed.aspx?src='+publishDetails.fileUrl"
-          :class="sidePublish?'full-width q-pa-lg':'full-width full-height'"
+    <div v-if="!publishDetails.fileType"
+         :style="$q.platform.is.desktop && !sidePublish?'height: 50em;':''">
 
-          frameborder='0'>This is an embedded <a
-          target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by
-          <a target='_blank' href='http://office.com/webapps'>Office Online</a>.
-        </iframe>
-        <div v-else>
-          <div v-if="publishDetails.coverImage" class="q-pa-lg">
-            <q-img :src="publishDetails.coverImage">
+      <iframe
+        v-if="!sidePublish"
+        :src="'https://view.officeapps.live.com/op/embed.aspx?src='+publishDetails.fileUrl"
+        :class="sidePublish?'full-width q-pa-lg':'full-width full-height'"
+
+        frameborder='0'>This is an embedded <a
+        target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by
+        <a target='_blank' href='http://office.com/webapps'>Office Online</a>.
+      </iframe>
+      <div v-else>
+        <div v-if="publishDetails.coverImage" class="q-pa-lg">
+          <q-img :src="publishDetails.coverImage">
+            <div class="text-subtitle2 absolute-top text-center">
+              {{publishDetails.projectTitle}}
+            </div>
+          </q-img>
+        </div>
+        <div v-for="(category, key) in categories" :key="key">
+          <div :class="sidePublish?'q-pa-lg':''"
+               v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+            <q-img :src="category.url" class="cursor-pointer"
+                   @click="goToPage(publishKey)">
               <div class="text-subtitle2 absolute-top text-center">
                 {{publishDetails.projectTitle}}
               </div>
             </q-img>
           </div>
-          <div v-for="(category, key) in categories" :key="key">
-            <div :class="sidePublish?'q-pa-lg':''"
-                 v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
-              <q-img :src="category.url" class="cursor-pointer"
-                     @click="goToPage(publishKey)">
-                <div class="text-subtitle2 absolute-top text-center">
-                  {{publishDetails.projectTitle}}
-                </div>
-              </q-img>
-            </div>
-          </div>
         </div>
-      </q-card-section>
+      </div>
+
     </div>
     <div v-if="publishDetails.fileType && publishDetails.fileType.includes('image/')"
          :class="sidePublish?'q-pa-lg':''">

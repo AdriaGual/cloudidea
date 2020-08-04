@@ -186,7 +186,7 @@
                 <q-card-actions align="right">
                   <q-btn v-if="confirm" flat label="Confirm" color="green-8" v-close-popup
                          @click="approveProject()"/>
-                  <q-btn flat label="Cancel" color="green-8" v-close-popup/>
+                  <q-btn flat label="Cancel" color="red-10" v-close-popup/>
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -203,7 +203,7 @@
                 <q-card-actions align="right">
                   <q-btn v-if="reject" flat label="Delete" color="red-10" v-close-popup
                          @click="rejectProject()"/>
-                  <q-btn flat label="Cancel" color="red-10" v-close-popup/>
+                  <q-btn flat label="Cancel" color="primary" v-close-popup/>
                 </q-card-actions>
               </q-card>
             </q-dialog>
