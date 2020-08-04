@@ -1,7 +1,21 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
-}
+  failed: "Action failed",
+  success: "Action was successful",
+  language: "Language:",
+  login: "Login",
+  logout: "Logout",
+  choose: "Choose",
+  title: "Title:",
+  description: "Description:",
+  category: "Category:",
+  rights: "Rights:",
+  publish: "Publish",
+  required_field: "Required field",
+  writting: "Writting",
+  music: "Music",
+  image: "Image",
+  video: "Video",
+  copyright: "Copyright",
+  copyleft: "Copyleft",
+  creative_commons: "Creative Commons"
+};

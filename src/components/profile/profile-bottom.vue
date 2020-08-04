@@ -113,7 +113,7 @@
 
           <q-tab-panel name="settings">
 
-            <p class="text-grey poppinsRegular">Language</p>
+            <p class="text-grey poppinsRegular"> {{ $t("language") }}</p>
             <q-select
               dense
               map-options
@@ -164,6 +164,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import mixinOtherUserDetails from "src/mixins/mixin_other_user_details";
+  import { Cookies } from "quasar";
 
   export default {
     data() {
@@ -261,14 +262,17 @@
     mixins: [mixinOtherUserDetails],
     created() {
       this.clearUsers();
-      this.firebaseGetUsers()
+      this.firebaseGetUsers();
       this.clearPublishings();
-      this.firebaseGetApprovedPublishings()
-
+      this.firebaseGetApprovedPublishings();
     },
     watch: {
       otherUserDetails: function (val) {
         this.description = this.otherUserDetails.description;
+      },
+      lang(lang) {
+        this.$i18n.locale = lang.value;
+        Cookies.set("language", this.$i18n.locale);
       }
     },
   }

@@ -33,11 +33,13 @@
           </q-avatar>
         </div>
 
-        <p class="poppinsRegular text-center q-pt-md" style="font-size: 2em;">
+        <p class="poppinsRegular text-center q-pt-md" style="font-size: 2em;"
+           v-if="otherUserDetails.name">
           {{otherUserDetails.name}}</p>
-        <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em">
+        <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em"
+           v-if="otherUserDetails.skills">
           {{otherUserDetails.skills}} ·
-          <a class="text-accent poppinsBold" style="font-size: 0.8em;">
+          <a class="text-accent poppinsBold" style="font-size: 0.8em;" v-if="otherUserDetails.cp">
             {{otherUserDetails.cp}} CP
           </a>
         </p>
@@ -141,7 +143,6 @@
         this.editProfile = false
       },
       uploadFile(file) {
-
         this.firebaseUploadProfilePic({
           imageFile: file,
           userId: this.$route.params.otherUserId
