@@ -41,6 +41,13 @@
                 Your browser does not support the audio element.
               </audio>
 
+              <video class="full-width"
+                     v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('video/')"
+                     controls>
+                <source :src="newPublishDetails.fileUrl" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+
               <q-img
                 v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')"
                 :src="newPublishDetails.fileUrl" spinner-color="white" style="max-height: 30em"/>
@@ -83,7 +90,7 @@
                 class="text-grey"
                 style="height:4em;"
                 active-color="primary"
-                indicator-color="primary"
+                indicator-color="secondary"
                 align="justify"
               >
                 <q-tab name="info" label="Info"/>

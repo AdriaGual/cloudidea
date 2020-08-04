@@ -157,13 +157,13 @@
 
       },
       checkFileType(files) {
-        return files.filter(file => file.type === 'image/png')
+        return files.filter(file => file.type.includes('image/'))
       },
       onRejected(rejectedEntries) {
         this.$q.notify({
           type: 'negative',
           position: 'top',
-          message: `${rejectedEntries.length} file(s) must be .png`
+          message: `${rejectedEntries.length} file(s) must be an image`
         })
       },
       chat() {

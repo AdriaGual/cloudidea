@@ -65,6 +65,34 @@
         </div>
       </div>
     </div>
+    <div v-if="publishDetails.fileType && publishDetails.fileType.includes('video/')">
+      <video class="full-width"
+             v-if="!sidePublish"
+             controls>
+        <source :src="publishDetails.fileUrl" type="video/mp4">
+
+        Your browser does not support the video tag.
+      </video>
+      <div v-else @click="goToPage(publishKey)" class="cursor-pointer">
+        <div v-if="publishDetails.coverImage" class="q-pa-lg">
+          <q-img :src="publishDetails.coverImage">
+            <div class="text-subtitle2 absolute-top text-center">
+              {{publishDetails.projectTitle}}
+            </div>
+          </q-img>
+        </div>
+        <div v-for="(category, key) in categories" :key="key">
+          <div :class="sidePublish?'q-pa-lg':''"
+               v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+            <q-img :src="category.url">
+              <div class="text-subtitle2 absolute-top text-center">
+                {{publishDetails.projectTitle}}
+              </div>
+            </q-img>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div v-if="publishDetails.fileType && publishDetails.fileType.includes('image/')"
          :class="sidePublish?'q-pa-lg':''">

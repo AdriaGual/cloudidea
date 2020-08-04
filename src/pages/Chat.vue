@@ -57,20 +57,23 @@
       <div
         :class="this.$q.platform.is.desktop?'col q-pa-lg bg-white shadow-1 no-padding':'col q-pa-lg no-padding fixed-bottom'"
         style="border-radius: 0.5em;">
-        <div class="q-pa-md column col justify-end" :class="{ invisible: !showMessages }"
+        <div class="q-pa-md column col justify-end" :class="{ 'invisible' : !showMessages }"
              style="height: 80vh">
-          <q-chat-message
-            class="poppinsRegular"
-            style="font-size: 0.9em"
-            v-for="(message, key) in messages"
-            :key="key"
-            text-color="white"
-            :avatar="message.from === 'me' ? userDetails.imageUrl : otherUserDetails.imageUrl"
-            :name="message.from === 'me' ? 'me' : otherUserDetails.name"
-            :text="[message.text]"
-            :sent="message.from === 'me'"
-            :bg-color="message.from === 'me' ? 'light-blue' : 'light-green'"
-          />
+          <div v-for="(message, key) in messages"
+               :key="key">
+            <q-chat-message
+              class="poppinsRegular"
+              style="font-size: 0.9em"
+              v-if="message && message.text!==''"
+              text-color="white"
+              :avatar="message.from === 'me' ? userDetails.imageUrl : otherUserDetails.imageUrl"
+              :name="message.from === 'me' ? 'me' : otherUserDetails.name"
+              :text="[message.text]"
+              :sent="message.from === 'me'"
+              :bg-color="message.from === 'me' ? 'light-blue' : 'light-green'"
+            />
+          </div>
+
           <div class="q-pb-md">
           </div>
         </div>
