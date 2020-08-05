@@ -437,9 +437,33 @@ const actions = {
       publishDetails
     });
   },
-  firebaseDeletePublish({ commit }, payload) {
+  firebaseDeletePublish({ commit, dispatch }, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).remove();
     commit("removePublish", { publishId: payload.publishId });
+    //firebaseStorage.ref("publishings/").child(payload.publishId).delete();
+    dispatch("deleteFolderContents", { pathToDirectory: "publishings/" + payload.publishId });
+
+  },
+  deleteFolderContents({ dispatch }, path) {
+    console.log(path.pathToDirectory)
+    const ref = firebaseStorage.ref(path.pathToDirectory);
+    ref.listAll()
+    .then(dir => {
+      dir.items.forEach(fileRef => {
+        dispatch("deleteFile", { pathToFile: ref.fullPath, fileName: fileRef.name });
+      });
+      dir.prefixes.forEach(folderRef => {
+        dispatch("deleteFolderContents", { pathToDirectory: folderRef.fullPath });
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  },
+  deleteFile({ dispatch }, payload) {
+    const ref = firebaseStorage.ref(payload.pathToFile);
+    const childRef = ref.child(payload.fileName);
+    childRef.delete()
   },
   firebaseGetNotApprovedPublishings({ commit }) {
     firebaseDB.ref("publishings").on("child_added", snapshot => {
@@ -457,10 +481,6 @@ const actions = {
         const publishId = snapshot.key;
 
         firebaseDB.ref("users/" + publishDetails.creatorId).once("value", snapshot => {
-          const userDetails = snapshot.val();
-          publishDetails.creatorName = userDetails.name
-          publishDetails.creatorImageUrl = userDetails.imageUrl
-          publishDetails.creatorSkills = userDetails.skills
           if (publishDetails.approved) {
             commit("addPublish", { publishId, publishDetails });
           }
