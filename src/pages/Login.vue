@@ -5,7 +5,7 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Login</p>
+        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">{{$t('login')}}</p>
       </div>
       <div class="col-1"></div>
     </div>
@@ -18,11 +18,11 @@
           class="q-pt-md"
           @submit="onSubmit"
         >
-          <q-input outlined bg-color="white" class="q-px-lg" placeholder="Email Address"
+          <q-input outlined bg-color="white" class="q-px-lg" :placeholder="$t('email_address')"
                    v-model="userData.email"
                    :rules="[isEmptyField,isValidEmail]"/>
 
-          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" placeholder="Password"
+          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" :placeholder="$t('password')"
                    :type="isPwd ? 'password' : 'text'"
                    v-model="userData.password"
                    :rules="[isEmptyField,val => isShortField(val,7,'password')]">
@@ -34,22 +34,23 @@
               />
             </template>
           </q-input>
-          <q-btn flat class="text-center full-width" no-ripple color="grey"
-                 label="FORGOT PASSWORD?"/>
+          <p class="text-grey text-center poppinsRegular cursor-pointer" style="line-height: 0.1em"
+          >{{$t('forgot_password').toUpperCase()}}
+          </p>
           <div class="row justify-center">
-            <q-btn class="q-mt-xl"
+            <q-btn class="q-mt-lg"
                    type="submit"
                    style="height: 4em;border-radius: 0.5em;width:24em"
                    color="primary"
-                   label="LOGIN"/>
+                   :label="$t('login')"/>
           </div>
         </q-form>
-        <div class="row full-width  justify-center">
+        <div class="row full-width justify-center">
           <q-btn
             no-caps
-            class="bgGrey q-mt-md"
-            style="border-radius: 0.5em;width:7em"
-            label="SIGN UP"
+            class="bgGrey q-mt-lg"
+            style="border-radius: 0.5em;width:8em"
+            :label="$t('sign_up').toUpperCase()"
             @click="goToPage('/register')"
           />
         </div>

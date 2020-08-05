@@ -1,6 +1,6 @@
 <template>
   <q-layout class="flex column q-pb-xl">
-    <p class="poppinsBold text-center" style="font-size: 1.5em">Create Project</p>
+    <p class="poppinsBold text-center" style="font-size: 1.5em">{{$t('create_project')}}</p>
     <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col">
@@ -8,38 +8,40 @@
           @submit="onSubmit"
         >
           <div class="q-px-lg">
-            <q-input outlined placeholder="Project Title*" :rules="[isEmptyField]" bg-color="white"
+            <q-input outlined :placeholder="$t('project_title')+'*'" :rules="[isEmptyField]"
+                     bg-color="white"
                      v-model="publishing.projectTitle"/>
 
-            <q-input outlined placeholder="Project URL" v-model="publishing.projectUrl"
+            <q-input outlined :placeholder="$t('project_url')" v-model="publishing.projectUrl"
                      bg-color="white"/>
             <q-input
               bg-color="white"
               class="q-pt-md"
               v-model="publishing.description"
               outlined
-              placeholder="Description"
+              :placeholder="$t('description')"
               type="textarea"
             />
 
             <q-select outlined v-model="publishing.registerLicenseModel"
                       :options="registerLicenseOptions"
                       bg-color="white"
-                      label="Register License*" class="q-pt-md" :rules="[isEmptyField]"/>
+                      :label="$t('register_license')+'*'" class="q-pt-md" :rules="[isEmptyField]"/>
 
             <q-input v-if="publishing.registerLicenseModel==='Copyright'" outlined
-                     placeholder="License Number*" v-model="publishing.licenseNumber"
+                     :placeholder="$t('license_number')+'*'" v-model="publishing.licenseNumber"
                      :rules="[isEmptyField]" bg-color="white"/>
 
-            <q-select outlined v-model="publishing.categoryModel" :options="categoryOptions"
-                      label="Category*" :rules="[isEmptyField]" bg-color="white"/>
+            <q-select outlined v-model="publishing.categoryModel"
+                      :options="categoryOptions"
+                      :label="$t('category')+'*'" :rules="[isEmptyField]" bg-color="white"/>
 
             <q-input v-if="publishing.categoryModel==='None of this'" outlined
-                     placeholder="Category" v-model="publishing.otherCategory"
+                     :placeholder="$t('category')" v-model="publishing.otherCategory"
                      :rules="[isEmptyField]" bg-color="white"/>
 
             <q-file v-if="publishing.categoryModel!=='Image'" outlined
-                    v-model="publishing.coverImage" label="Upload Cover Image"
+                    v-model="publishing.coverImage" :label="$t('upload_cover_image')"
                     bg-color="white">
               <template v-slot:prepend>
                 <q-icon name="o_insert_photo"/>
@@ -48,7 +50,7 @@
 
             <q-file outlined style="outline:#fafafa 2px solid" v-model="publishing.file"
                     bg-color="white"
-                    label="File Upload*" :rules="[noFileUploaded]" class="q-pt-md">
+                    :label="$t('file_upload')+'*'" :rules="[noFileUploaded]" class="q-pt-md">
               <template v-slot:prepend>
                 <q-icon name="attach_file"/>
               </template>
@@ -56,11 +58,12 @@
 
             <div class="row q-pb-md text-center">
               <div class="col">
-                <q-radio v-model="publishing.needHelp" val="false" label="Finished project"
+                <q-radio v-model="publishing.needHelp" val="false" :label="$t('finished_project')"
                          color="teal"/>
               </div>
               <div class="col">
-                <q-radio v-model="publishing.needHelp" val="true" label="Need help" color="teal"/>
+                <q-radio v-model="publishing.needHelp" val="true" :label="$t('need_help')"
+                         color="teal"/>
               </div>
             </div>
             <div class="row q-pb-md text-center" v-if="publishing.needHelp === 'true'">
@@ -68,7 +71,7 @@
                 <q-checkbox v-model="publishing.needWrittingHelp" val="true" color="teal">
                   <q-icon name="history_edu" size="sm">
                     <q-tooltip>
-                      Need help with writting
+                      {{$t('need_help_with')}} {{$t('la')}} {{$t('writting').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -77,7 +80,7 @@
                 <q-checkbox v-model="publishing.needVideoHelp" val="true" color="teal">
                   <q-icon name="o_videocam" size="sm">
                     <q-tooltip>
-                      Need help with video
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('video').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -87,7 +90,7 @@
                 <q-checkbox v-model="publishing.needAudioHelp" val="true" color="teal">
                   <q-icon name="o_audiotrack" size="sm">
                     <q-tooltip>
-                      Need help with audio
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('audio').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -96,7 +99,7 @@
                 <q-checkbox v-model="publishing.needCodeHelp" val="true" color="teal">
                   <q-icon name="code" size="sm">
                     <q-tooltip>
-                      Need help with code
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('code').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -107,7 +110,7 @@
                 <q-checkbox v-model="publishing.needDesignHelp" val="true" color="teal">
                   <q-icon name="o_palette" size="sm">
                     <q-tooltip>
-                      Need help with design
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('design').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -116,7 +119,7 @@
                 <q-checkbox v-model="publishing.needIdeaHelp" val="true" color="teal">
                   <q-icon name="o_emoji_objects" size="sm">
                     <q-tooltip>
-                      Need help with ideas
+                      {{$t('need_help_with')}} {{$t('la')}} idea
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -126,7 +129,7 @@
                             color="teal">
                   <q-icon name="attach_money" size="sm">
                     <q-tooltip>
-                      Need help with selling
+                      {{$t('need_help_with')}} {{$t('la')}} {{$t('selling').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -135,7 +138,7 @@
                 <q-checkbox v-model="publishing.needPromotionHelp" color="teal">
                   <q-icon name="favorite_border" size="sm">
                     <q-tooltip>
-                      Need help with promotion
+                      {{$t('need_help_with')}} {{$t('la')}} {{$t('selling').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>
@@ -148,7 +151,7 @@
                   no-caps
                   type="submit"
                   class="text-white bg-primary createButton"
-                  label="Create"
+                  :label="$t('create')"
                 />
               </div>
             </div>
@@ -192,7 +195,7 @@
         ],
         registerLicenseOptions: [
           'Copyright', 'Creative Commons', 'LGPL', 'Copyleft'
-        ]
+        ],
       }
     },
     methods: {
@@ -240,7 +243,6 @@
           this.publishing.creatorSkills = this.userDetails.skills;
           this.publishing.creatorId = this.userDetails.userId;
           this.publishing.creatorCP = this.userDetails.cp;
-          console.log(this.publishing)
           this.firebaseCreatePublish(this.publishing);
           axios.get('https://cloudidea.es/api/index.php?action=moderatePublish&param1=' + this.publishing.creatorEmail + '&param2=' + this.publishing.creatorName + '&param3=' + this.publishing.projectTitle)
 

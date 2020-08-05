@@ -9,24 +9,24 @@
       indicator-color="secondary"
       align="justify"
     >
-      <q-tab name="info" label="Info"/>
-      <q-tab name="comments" label="Comments"/>
+      <q-tab name="info" :label="$t('info')"/>
+      <q-tab name="comments" :label="$t('comments')"/>
     </q-tabs>
     <q-separator/>
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="info">
         <p class="poppinsRegular text-grey">{{newPublishDetails.description}}</p>
-        <p class="poppinsBold" style="line-height: 0.1em">LICENSE TYPE</p>
+        <p class="poppinsBold" style="line-height: 0.1em">{{$t('license_type').toUpperCase()}}</p>
         <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
-        <p class="poppinsBold" style="line-height: 0.1em">CATEGORY</p>
+        <p class="poppinsBold" style="line-height: 0.1em">{{$t('category').toUpperCase()}}</p>
         <p class="poppinsRegular text-grey">{{newPublishDetails.categoryModel}}</p>
         <p class="poppinsBold" style="line-height: 0.1em" v-if="newPublishDetails.projectUrl!==''">
           URL</p>
         <p class="poppinsRegular text-blue cursor-pointer" @click="openProjectURL()"
            v-if="newPublishDetails.projectUrl!==''">
           {{newPublishDetails.projectUrl}}</p>
-        <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
+        <p class="poppinsBold" style="line-height: 0.1em">{{$t('source_files').toUpperCase()}}</p>
         <q-card>
           <q-item :ripple="false">
             <q-item-section side>

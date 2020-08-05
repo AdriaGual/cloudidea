@@ -131,6 +131,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import { Cookies } from 'quasar'
 
   export default {
     props: ['publish', 'categories', 'userDetails'],
@@ -168,27 +169,30 @@
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
-
+        var releaseFormattedDate = ''
+        if (Cookies.get("language") === 'es') {
+          releaseFormattedDate = "hace "
+        }
         if (interval > 1) {
-          return interval + " years ago";
+          return releaseFormattedDate + interval + " " + this.$t("years_ago");
         }
         interval = Math.floor(seconds / 2592000);
         if (interval > 1) {
-          return interval + " months ago";
+          return releaseFormattedDate + interval + " " + this.$t("months_ago");
         }
         interval = Math.floor(seconds / 86400);
         if (interval > 1) {
-          return interval + " days ago";
+          return releaseFormattedDate + interval + " " + this.$t("days_ago");
         }
         interval = Math.floor(seconds / 3600);
         if (interval > 1) {
-          return interval + " hours ago";
+          return releaseFormattedDate + interval + " " + this.$t("hours_ago");
         }
         interval = Math.floor(seconds / 60);
         if (interval > 1) {
-          return interval + " minutes ago";
+          return releaseFormattedDate + interval + " " + this.$t("minutes_ago");
         }
-        return Math.floor(seconds) + " seconds ago";
+        return releaseFormattedDate + Math.floor(seconds) + " " + this.$t("seconds_ago");
       },
     },
     computed: {

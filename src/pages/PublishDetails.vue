@@ -1,6 +1,7 @@
 <template>
   <q-layout class="flex column q-pb-xl">
-    <publishdetails-header :project-title="newPublishDetails.projectTitle"></publishdetails-header>
+    <publishdetails-header :project-title="newPublishDetails.projectTitle"
+                           :projectReleaseDate="newPublishDetails.releaseDate"></publishdetails-header>
 
     <div class="row q-pt-md">
       <div class="col q-gutter-y-md bgGlobal" align="center">

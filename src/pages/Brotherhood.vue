@@ -3,14 +3,10 @@
     <div class="row q-px-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
-        <div class="row">
-          <div class="col-8">
-            <p class="poppinsBold" style="line-height: 0.1em">
-              <q-icon name="construction" style="font-size: 1.7em;"/>
-              NEW HELP REQUESTS
-            </p>
-          </div>
-        </div>
+        <p class="poppinsBold" style="line-height: 0.1em">
+          <q-icon name="construction" style="font-size: 1.7em;"/>
+          {{$t('new_help_requests').toUpperCase()}}
+        </p>
         <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
           <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)"
                   class="cardSectionInterior q-mb-md">
@@ -54,43 +50,43 @@
               <div class="row">
                 <q-icon v-if="filteredPublishing.needWrittingHelp" name="history_edu" size="sm">
                   <q-tooltip>
-                    Needs help with writting
+                    {{$t('need_help_with')}} {{$t('la')}} {{$t('writting').toLowerCase()}}
                   </q-tooltip>
                 </q-icon>
                 <q-icon v-if="filteredPublishing.needVideoHelp" name="o_videocam" size="sm">
                   <q-tooltip>
-                    Needs help with video
+                    {{$t('need_help_with')}} {{$t('el')}} {{$t('video').toLowerCase()}}
                   </q-tooltip>
                 </q-icon>
                 <q-icon v-if="filteredPublishing.needAudioHelp" name="o_audiotrack" size="sm">
                   <q-tooltip>
-                    Needs help with audio
+                    {{$t('need_help_with')}} {{$t('el')}} {{$t('audio').toLowerCase()}}
                   </q-tooltip>
                 </q-icon>
                 <q-icon v-if="filteredPublishing.needCodeHelp" name="code" size="sm">
                   <q-tooltip>
-                    Needs help with code
+                    {{$t('need_help_with')}} {{$t('el')}} {{$t('code').toLowerCase()}}
                   </q-tooltip>
                 </q-icon>
                 <q-icon v-if="filteredPublishing.needDesignHelp" name="o_palette" size="sm">
                   <q-tooltip>
-                    Needs help with design
+                    {{$t('need_help_with')}} {{$t('el')}} {{$t('design').toLowerCase()}}
                   </q-tooltip>
                 </q-icon>
                 <q-icon v-if="filteredPublishing.needIdeaHelp" name="o_emoji_objects" size="sm">
                   <q-tooltip>
-                    Needs help with idea
+                    {{$t('need_help_with')}} {{$t('la')}} idea
                   </q-tooltip>
                 </q-icon>
                 <q-icon v-if="filteredPublishing.needSellHelp" name="attach_money" size="sm">
                   <q-tooltip>
-                    Needs help with selling
+                    {{$t('need_help_with')}} {{$t('la')}} {{$t('selling').toLowerCase()}}
                   </q-tooltip>
                 </q-icon>
                 <q-icon v-if="filteredPublishing.needPromotionHelp" name="favorite_border"
                         size="sm">
                   <q-tooltip>
-                    Needs help with promotion
+                    {{$t('need_help_with')}} {{$t('la')}} {{$t('promotion').toLowerCase()}}
                   </q-tooltip>
                 </q-icon>
               </div>
@@ -106,6 +102,7 @@
 
 <script>
   import { mapState, mapActions } from "vuex";
+  import { Cookies } from 'quasar'
 
   export default {
     data() {
@@ -146,27 +143,30 @@
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
-
+        var releaseFormattedDate = ''
+        if (Cookies.get("language") === 'es') {
+          releaseFormattedDate = "hace "
+        }
         if (interval > 1) {
-          return interval + " years ago";
+          return releaseFormattedDate + interval + " " + this.$t("years_ago");
         }
         interval = Math.floor(seconds / 2592000);
         if (interval > 1) {
-          return interval + " months ago";
+          return releaseFormattedDate + interval + " " + this.$t("months_ago");
         }
         interval = Math.floor(seconds / 86400);
         if (interval > 1) {
-          return interval + " days ago";
+          return releaseFormattedDate + interval + " " + this.$t("days_ago");
         }
         interval = Math.floor(seconds / 3600);
         if (interval > 1) {
-          return interval + " hours ago";
+          return releaseFormattedDate + interval + " " + this.$t("hours_ago");
         }
         interval = Math.floor(seconds / 60);
         if (interval > 1) {
-          return interval + " minutes ago";
+          return releaseFormattedDate + interval + " " + this.$t("minutes_ago");
         }
-        return Math.floor(seconds) + " seconds ago";
+        return releaseFormattedDate + Math.floor(seconds) + " " + this.$t("seconds_ago");
       },
     },
     computed: {

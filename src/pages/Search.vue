@@ -2,18 +2,19 @@
   <q-layout class="flex column q-pb-xl q-pl-lg">
     <div class="row full-width q-pr-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
-      <div class="col " style="border-radius: 0.5em">
-        <q-input outlined bg-color="white" placeholder="Search" v-model="searchText" class="">
+      <div class="col" style="border-radius: 0.5em">
+        <q-input outlined bg-color="white" :placeholder="$t('search')" v-model="searchText"
+                 class="">
           <template v-slot:append>
             <q-icon v-if="searchText === ''" name="search"/>
             <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''"/>
           </template>
         </q-input>
         <div class="no-padding" v-if="searchText===''">
-          <div class="row q-pt-xl">
+          <div class="row q-pt-xl q-pl-xs">
             <div class="col">
               <p class="poppinsBold" style="line-height: 0.1em">
-                RECENT SEARCHES</p>
+                {{$t('recent_searches').toUpperCase()}}</p>
             </div>
           </div>
           <q-scroll-area
@@ -21,7 +22,7 @@
             visbile="false"
             class="scrollTagsHorizontal"
           >
-            <div class="row no-wrap" style="height:3em;">
+            <div class="row no-wrap q-pl-xs" style="height:3em;">
               <q-btn
                 v-for="(recentSearch, key) in recentSearches" :key="key"
                 no-caps
@@ -33,10 +34,10 @@
               />
             </div>
           </q-scroll-area>
-          <div class="row q-pt-lg">
+          <div class="row q-pt-lg q-pl-xs">
             <div class="col-10">
               <p class="  poppinsBold" style="line-height: 0.1em">
-                CATEGORIES</p>
+                {{$t('categories').toUpperCase()}}</p>
             </div>
           </div>
           <q-scroll-area
@@ -44,7 +45,7 @@
             visbile="false"
             style="height: 10em;width: 100%;"
           >
-            <div class="row no-wrap q-gutter-md" style="height:3em;">
+            <div class="row no-wrap q-gutter-md q-pl-xs" style="height:3em;">
               <div v-for="(category, key) in categories" :key="key">
                 <div style="height:9em;width:9em;background-color: #F6FAFF;border-radius: 0.4em"
                      class="q-pt-md shadow-1 cursor-pointer"
@@ -54,12 +55,10 @@
               </div>
             </div>
           </q-scroll-area>
-          <div class="row q-pt-lg">
-            <div class="col-10">
-              <p class="  poppinsBold" style="line-height: 0.1em">
-                TOP PROJECT CREATORS</p>
-            </div>
-          </div>
+
+          <p class="poppinsBold q-pt-lg q-pl-xs" style="line-height: 0.1em">
+            {{$t('top_project_creators').toUpperCase()}}</p>
+
           <profile-cards></profile-cards>
         </div>
         <div v-else class="q-pt-lg">
@@ -74,9 +73,24 @@
               <q-item clickable v-ripple
                       @click="goToPage('publishDetails/'+filteredPublishing.key)">
                 <q-item-section side>
-                  <q-avatar rounded size="4em">
-                    <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
+                  <q-avatar rounded size="4em"
+                            v-if="filteredPublishing.fileType.includes('image/')">
+                    <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
+                         style="border-radius: 0.2em" alt=""/>
+                    <img
+                      v-if="filteredPublishing.fileUrl && filteredPublishing.fileType"
+                      :src="filteredPublishing.fileUrl" style="border-radius: 0.2em"
+                      alt=""/>
                   </q-avatar>
+                  <div v-else>
+                    <div v-for="(category, key) in categories" :key="key">
+                      <img
+                        style="height: 3em"
+                        v-if="category.searchText ===filteredPublishing.categoryModel"
+                        :src="category.url"/>
+                    </div>
+                  </div>
+
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>{{filteredPublishing.projectTitle}}</q-item-label>
@@ -121,9 +135,22 @@
                class="q-pt-md">
             <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)">
               <q-item-section side>
-                <q-avatar rounded size="4em">
-                  <img :src="filteredPublishing.coverImage" style="border-radius: 0.2em"/>
+                <q-avatar rounded size="4em"
+                          v-if="filteredPublishing.fileType.includes('image/')">
+                  <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
+                       style="border-radius: 0.2em" alt=""/>
+                  <img
+                    v-if="filteredPublishing.fileUrl && filteredPublishing.fileType"
+                    :src="filteredPublishing.fileUrl" style="border-radius: 0.2em"
+                    alt=""/>
                 </q-avatar>
+
+                <div v-for="(category, key) in categories" :key="key">
+                  <img
+                    style="height: 3em"
+                    v-if="category.categoryName ===filteredPublishing.categoryModel"
+                    :src="category.url"/>
+                </div>
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{filteredPublishing.projectTitle}}</q-item-label>
@@ -154,28 +181,31 @@
         filteredPublishingsByCategory: [],
         recentSearches: ["webpage", "edm", "painting", "code"],
         categories: [{
-          searchText: 'writting',
+          searchText: 'Writting',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f'
         }, {
-          searchText: 'design',
+          searchText: 'Design',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdesign.svg?alt=media&token=2cc162de-294b-4250-bf2b-556d025042d8'
         }, {
-          searchText: 'music',
+          searchText: 'Music',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmusic.svg?alt=media&token=f0dd839f-788b-4326-8e15-76b08ad17059'
         }, {
-          searchText: 'video',
+          searchText: 'Image',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcamera.svg?alt=media&token=468fcd6c-7e0d-4979-a074-0ca3fb42c0a2'
+        }, {
+          searchText: 'Video',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fvideo.svg?alt=media&token=449ae459-3d2a-4cba-b431-f5059b359f09'
         }, {
-          searchText: 'code',
+          searchText: 'Code',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcode.svg?alt=media&token=d81e76b9-f092-4603-84b3-761dcf2de6c1'
         }, {
-          searchText: 'idea',
+          searchText: 'Idea',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fidea.svg?alt=media&token=cd1bdf45-3d60-4c3a-ae6f-ea8c65e2dd14'
         }, {
-          searchText: 'revenue',
+          searchText: 'Selling',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmoney.svg?alt=media&token=5bb1196c-981d-4ead-8054-1fc0d42f8d32'
         }, {
-          searchText: 'marketing',
+          searchText: 'Promotion',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
         }]
       }

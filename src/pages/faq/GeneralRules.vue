@@ -5,7 +5,7 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/faq')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsBold q-pt-sm">General Rules
+        <p class="poppinsBold q-pt-sm">{{$t('general_rules')}}
           <q-icon name="rule" class="q-pl-sm" size="sm"/>
         </p>
       </div>
@@ -46,7 +46,7 @@
     data() {
       return {
         generalRulesItems: [{
-          titleText: '1. Cuenta y contraseña',
+          titleText: this.$t('account_and_password'),
           icon: 'o_account_circle',
           generalText: 'Si quieres abrir una cuenta, solicitamos que nos proporciones cierta información: tu nombre y una contraseña.\n Aceptas ser el único responsable del mantenimiento de tu cuenta.De permitir a otras personas usar tu cuenta, se consciente que deberás ser responable de todas las actividades que se produzcan con tu nombre y contraseña.\n Para tu seguridad, te aconsejamos que actualizes tu contraseña con cierta frecuéncia. Ten en cuenta que el contenido de este portal no puede ser vendido ni alquilado a nadie. Cloudidea se reserva todos los derechos y medidas legales para evitar el uso no autorizado de sus servicios.'
         }, {

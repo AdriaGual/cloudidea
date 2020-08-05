@@ -7,8 +7,9 @@
       </div>
       <div class="col text-center">
         <p v-if="!createProfile" class="poppinsRegular q-pt-sm" style="font-size: 1.5em">
-          Register</p>
-        <p v-else class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Create Profile</p>
+          {{$t('register')}}</p>
+        <p v-else class="poppinsRegular q-pt-sm" style="font-size: 1.5em">
+          {{$t('create_profile')}}</p>
       </div>
       <div class="col-1"></div>
     </div>
@@ -21,14 +22,14 @@
           class="q-pt-md"
           @submit="onSubmit"
         >
-          <q-input outlined bg-color="white" class="q-px-lg" placeholder="Username"
+          <q-input outlined bg-color="white" class="q-px-lg" :placeholder="$t('username')"
                    v-model="userData.name"
                    :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
-          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" v-model="userData.email"
-                   placeholder="Email Address"
+          <q-input outlined bg-color="white" class="q-px-lg" v-model="userData.email"
+                   :placeholder="$t('email_address')"
                    :rules="[isEmptyField,isValidEmail]"/>
-          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" v-model="userData.password"
-                   placeholder="Password"
+          <q-input outlined bg-color="white" class="q-px-lg" v-model="userData.password"
+                   :placeholder="$t('password')"
                    :type="isPwd ? 'password' : 'text'"
                    :rules="[isEmptyField,val => isShortField(val,7,'password')]">
             <template v-slot:append>
@@ -39,8 +40,8 @@
               />
             </template>
           </q-input>
-          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" v-model="repeatPassword"
-                   placeholder="Repeat password"
+          <q-input outlined bg-color="white" class="q-px-lg" v-model="repeatPassword"
+                   :placeholder="$t('repeat_password')"
                    :type="isPwd ? 'password' : 'text'"
                    :rules="[isEmptyField,val => isShortField(val,7,'password'),doPasswordsMatch]">
             <template v-slot:append>
@@ -51,54 +52,54 @@
               />
             </template>
           </q-input>
-          <q-toggle v-model="licenseTerms" label="I accept the license and terms"
-                    class="q-px-lg q-pt-sm"/>
+          <q-toggle v-model="licenseTerms" :label="$t('i_accept_the_license_and_terms')"
+                    class="q-px-lg"/>
 
           <div class="row justify-center">
-            <q-btn class="q-mt-xl"
+            <q-btn class="q-mt-lg"
                    style="height: 4em;border-radius: 0.5em;width:24em"
                    color="primary"
                    type="submit"
-                   label="Sign Up"/>
+                   :label="$t('sign_up')"/>
           </div>
         </q-form>
       </div>
-      <div class="col q-px-lg" v-else>
+      <div class="col" v-else>
         <img style="max-height:13em;"
              src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fprofile.svg?alt=media&token=d6aa5fce-3669-4fc7-a80c-13b04cb206ac"/>
         <q-form
           class="q-pt-md"
           @submit="onCreate"
         >
-          <div class="text-center justify-center q-pt-md q-gutter-y-md">
+          <div class="text-center justify-center q-pa-md q-gutter-y-md">
 
             <q-file outlined style="outline:#fafafa 2px solid" v-model="imageFile"
                     bg-color="white"
-                    label="Profile Image" class="q-pt-md">
+                    :label="$t('profile_image')" class="q-pt-md">
               <template v-slot:prepend>
                 <q-icon name="face">
                   <q-tooltip>
-                    Upload your best picture!
+                    {{$t('upload_your_best_picture')}}
                   </q-tooltip>
                 </q-icon>
               </template>
             </q-file>
-            <q-input bg-color="white" outlined label="Skills"
+            <q-input bg-color="white" outlined :label="$t('skills')"
                      v-model="skills">
               <template v-slot:prepend>
                 <q-icon name="build">
                   <q-tooltip>
-                    Write some skills you have
+                    {{$t('write_some_skills_you_have')}}
                   </q-tooltip>
                 </q-icon>
               </template>
             </q-input>
             <q-input outlined bg-color="white" v-model="description" type="textarea" clearable
-                     autogrow label="Description">
+                     autogrow :label="$t('description')">
               <template v-slot:prepend>
                 <q-icon name="description">
                   <q-tooltip>
-                    Write a short description of you
+                    {{$t('write_short_description_of_you')}}
                   </q-tooltip>
                 </q-icon>
               </template>
@@ -107,7 +108,7 @@
                    style="height: 4em;border-radius: 0.5em;width:24em"
                    color="primary"
                    type="submit"
-                   label="Create"/>
+                   :label="$t('create')"/>
           </div>
         </q-form>
       </div>

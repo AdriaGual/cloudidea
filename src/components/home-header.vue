@@ -9,7 +9,7 @@
         no-caps
         class="text-white bg-primary float-right button"
         @click="goToPage('/login')"
-        label="Log in"
+        :label="$t('login')"
       />
       <q-btn
         v-if="userDetails.userId" round class="float-right"

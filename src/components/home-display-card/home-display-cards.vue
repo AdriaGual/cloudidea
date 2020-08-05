@@ -4,10 +4,10 @@
       <div class="col q-pl-sm">
         <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
            style="font-size: 0.9em;line-height: 0.1em">
-          Hello,
+          {{$t('hello')}}
           {{capitalize(userDetails.name)}}</p>
-        <p :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-md'"
-           style="font-size: 1.3em;line-height: 0.1em">Explore Projects</p>
+        <p :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
+           style="font-size: 1.1em;line-height: 0.1em">{{$t('explore_projects')}}</p>
       </div>
 
       <div class="col" align="right">
@@ -130,56 +130,6 @@
     methods: {
       ...mapActions('store',
         ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
-      releaseDate: function (date) {
-        var seconds = Math.floor((new Date() - date) / 1000);
-        var interval = Math.floor(seconds / 31536000);
-
-        if (interval > 1) {
-          return interval + " years ago";
-        }
-        interval = Math.floor(seconds / 2592000);
-        if (interval > 1) {
-          return interval + " months ago";
-        }
-        interval = Math.floor(seconds / 86400);
-        if (interval > 1) {
-          return interval + " days ago";
-        }
-        interval = Math.floor(seconds / 3600);
-        if (interval > 1) {
-          return interval + " hours ago";
-        }
-        interval = Math.floor(seconds / 60);
-        if (interval > 1) {
-          return interval + " minutes ago";
-        }
-        return Math.floor(seconds) + " seconds ago";
-      },
-      chat(publish) {
-        this.$router.push("/chat/" + publish.creatorId)
-      },
-      like(publish, key) {
-        this.firebaseAddLike({ otherUserId: publish.creatorId, otherPublishingId: key })
-      },
-      dislike(publish, key) {
-        this.firebaseRemoveLike({ otherUserId: publish.creatorId, otherPublishingId: key })
-      },
-      alreadyLikesPublish(publish, key) {
-        var found = false;
-
-        for (let likedId in this.userLikedPublishings) {
-          if (likedId === key) {
-            found = true;
-          }
-        }
-        return found
-      },
-      goToPublishDetails(publish, key) {
-        publish.key = key;
-        this.updatePublishDetails(publish);
-        this.updatePublishComments(publish)
-        this.goToPage('/publishDetails/' + publish.key)
-      },
       goToPage(route) {
         this.$router.push(route)
       },
@@ -188,7 +138,6 @@
         return s.charAt(0).toUpperCase() + s.slice(1)
       },
       orderPublishingsBy(publishType) {
-        console.log(this.orderedPublishings)
         if (publishType === 'cp') {
           this.orderedPublishings.sort((a, b) => b.cp - a.cp);
         } else if (publishType === 'date') {

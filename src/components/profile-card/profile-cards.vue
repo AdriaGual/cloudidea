@@ -4,7 +4,7 @@
     visbile="false"
     class="scrollProjectCreatorsAreaHorizontal"
   >
-    <div class="row no-wrap" style="height:3em;">
+    <div class="row no-wrap q-pl-xs" style="height:3em;">
       <ProfileCard v-for="user in orderedUsers" :user="user" :key="user.key"></ProfileCard>
     </div>
   </q-scroll-area>

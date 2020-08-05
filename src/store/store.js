@@ -456,7 +456,6 @@ const actions = {
     dispatch("deleteFolderContents", { pathToDirectory: "publishings/" + payload.publishId });
   },
   deleteFolderContents({ dispatch }, path) {
-    console.log(path.pathToDirectory)
     const ref = firebaseStorage.ref(path.pathToDirectory);
     ref.listAll()
     .then(dir => {

@@ -1,6 +1,6 @@
 <template>
   <q-card
-    style="line-height: 0.1em;height:15em"
+    style=""
     class="cardProjectExterior q-mr-md"
   >
     <q-card-section class="q-pt-md q-px-md">
@@ -9,7 +9,6 @@
         :src="user.imageUrl"
         spinner-color="white"
         class="cardProfileImage cursor-pointer"
-        style="position: relative;"
       />
       <p class="q-pt-md text-center poppinsBold cursor-pointer"
          @click="goToPage('/profile/'+user.key)"
@@ -17,6 +16,7 @@
       <p class="text-center poppinsLight text-grey cursor-pointer" style="font-size: 0.9em"
          @click="goToPage('/profile/'+user.key)"
       >{{user.cp}} CP</p>
+
       <q-btn
         v-if="userDetails.userId && userDetails.userId !== user.key"
         no-caps

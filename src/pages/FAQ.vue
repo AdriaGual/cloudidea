@@ -6,7 +6,7 @@
       </div>
       <div class="col text-center">
         <p class="poppinsBold q-pt-sm">
-          Frequently Asked Questions</p>
+          {{$t('frequently_asked_questions')}}</p>
       </div>
       <div class="col-1"></div>
     </div>
@@ -20,7 +20,7 @@
               <q-icon name="rule" size="lg"/>
             </q-card-section>
             <q-card-section>
-              General Rules
+              {{$t('general_rules')}}
             </q-card-section>
           </q-card>
           <!--<q-card class="text-center bg-white cursor-pointer poppinsRegular" style="max-width: 20em"
@@ -38,7 +38,7 @@
               <q-icon name="o_assistant" size="lg"/>
             </q-card-section>
             <q-card-section>
-              Popular questions
+              {{$t('popular_questions')}}
             </q-card-section>
           </q-card>
           <!--<q-card class="text-center bg-white cursor-pointer poppinsRegular" style="max-width: 20em"
@@ -51,8 +51,8 @@
             </q-card-section>
           </q-card>-->
         </div>
-        <p class="poppinsBold q-pt-lg text-center">Can't find an answer?</p>
-        <p class="poppinsRegular text-center" style="line-height: 0.1em">Email us at: <a
+        <p class="poppinsBold q-pt-lg text-center">{{$t('cant_find_an_answer')}}</p>
+        <p class="poppinsRegular text-center" style="line-height: 0.1em">{{$t('email_us_at')}} <a
           class="text-blue">noreply@cloudidea.es</a>
         </p>
         <div class="absolute-bottom q-pl-lg q-pb-lg">
