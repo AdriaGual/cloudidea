@@ -1,7 +1,7 @@
 <template>
   <div class="row q-px-lg">
     <div class="col q-pl-sm q-pt-sm">
-      <a class="text-grey poppinsLight">Cloudidea</a>
+      <a class="text-grey poppinsLight cursor-pointer" @click="goToPage('/faq')">Cloudidea</a>
     </div>
     <div class="col">
       <q-btn

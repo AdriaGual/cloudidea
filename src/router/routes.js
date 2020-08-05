@@ -75,6 +75,26 @@ const routes = [
     component: () => import("pages/MyChats.vue")
   },
   {
+    path: "/faq",
+    component: () => import("pages/FAQ.vue")
+  },
+  {
+    path: "/faq/generalRules",
+    component: () => import("pages/faq/GeneralRules.vue")
+  },
+  {
+    path: "/faq/technicalIssues",
+    component: () => import("pages/faq/TechnicalIssues.vue")
+  },
+  {
+    path: "/faq/popularQuestions",
+    component: () => import("pages/faq/PopularQuestions.vue")
+  },
+  {
+    path: "/faq/whoWeAre",
+    component: () => import("pages/faq/WhoWeAre.vue")
+  },
+  {
     path: '/login',
     component: () => import('pages/Login.vue'),
   },
