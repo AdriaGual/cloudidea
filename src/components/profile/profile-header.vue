@@ -35,21 +35,26 @@
 
         <p class="poppinsRegular text-center q-pt-md" style="font-size: 2em;"
            v-if="otherUserDetails.name">
-          {{otherUserDetails.name}}</p>
+          {{otherUserDetails.name}}
+          <q-icon v-if="otherUserDetails.privateProfile" name="o_lock"/>
+          <q-icon v-else name="lock_open"/>
+        </p>
         <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em"
-           v-if="otherUserDetails.skills">
+           v-if="otherUserDetails.skills && ($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
           {{otherUserDetails.skills}} ·
           <a class="text-accent poppinsBold" style="font-size: 0.8em;" v-if="otherUserDetails.cp">
             {{otherUserDetails.cp}} CP
           </a>
         </p>
         <p class="poppinsLight text-center text-indigo-9"
-           style="font-size: 1em;">{{otherUserDetails.email}}</p>
+           style="font-size: 1em;"
+           v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
+          {{otherUserDetails.email}}</p>
         <div class="text-center q-px-lg q-pt-sm">
           <q-btn style="width:20em" color="white" text-color="black" label="Edit Profile" no-caps
                  v-if="$route.params.otherUserId===userDetails.userId" @click="editProfile = true"/>
           <q-btn
-            v-else
+            v-else-if="!otherUserDetails.privateProfile"
             no-caps
             class="bgGrey"
             style="width:7em;font-size: 0.9em;border-radius: 2em"

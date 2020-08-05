@@ -3,7 +3,8 @@
 
     <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     <div class="col" style="border-radius: 0.5em">
-      <q-card class="bg-white shadow-1">
+      <q-card class="bg-white shadow-1"
+              v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
         <q-tabs
           v-model="tab"
           class="text-grey poppinsRegular"

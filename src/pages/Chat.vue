@@ -64,7 +64,7 @@
             <q-chat-message
               class="poppinsRegular"
               style="font-size: 0.9em"
-              v-if="message && message.text!==''"
+              v-if="message.text && message.text!==''"
               text-color="white"
               :avatar="message.from === 'me' ? userDetails.imageUrl : otherUserDetails.imageUrl"
               :name="message.from === 'me' ? 'me' : otherUserDetails.name"
