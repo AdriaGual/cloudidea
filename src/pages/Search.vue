@@ -33,7 +33,7 @@
               />
             </div>
           </q-scroll-area>
-          <div class="row q-pt-xl">
+          <div class="row q-pt-lg">
             <div class="col-10">
               <p class="  poppinsBold" style="line-height: 0.1em">
                 CATEGORIES</p>

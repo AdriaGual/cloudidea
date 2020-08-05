@@ -113,7 +113,7 @@
 
           <q-tab-panel name="settings">
 
-            <p class="text-grey poppinsRegular"> {{ $t("language") }}</p>
+            <a class="text-grey poppinsRegular"> {{ $t("language") }}</a>
             <q-select
               dense
               map-options
@@ -123,10 +123,23 @@
               :options="selectLang"
               style="width:12em"
             />
-
             <p class=" text-blue poppinsRegular q-pt-md cursor-pointer"
+               @click="changePassword()">
+              <q-icon name="vpn_key"/>
+              Change Password
+            </p>
+
+            <p class=" text-blue poppinsRegular cursor-pointer"
                @click="logOut()">Log Out
             </p>
+            <q-btn
+              style="width:14em;font-size: 0.9em;border-radius: 0.5em;height:3.5em"
+              class="bg-red-10"
+              icon="close"
+              text-color="white"
+              outline
+              label="Delete account"
+              @click="sureCloseAccount = true"/>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -153,7 +166,20 @@
 
         <q-card-actions align="right">
           <q-btn flat label="YES, DELETE IT" color="red-10" v-close-popup
-                 @click="deleteProject(key)"/>
+                 @click="deleteProject(selectedPublish,key)"/>
+          <q-btn flat label="CANCEL" color="primary" v-close-popup/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="sureCloseAccount">
+      <q-card class="q-pa-lg">
+        <q-card-section>
+          Are your sure you wanna delete your account?
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="YES, DELETE IT" color="red-10" v-close-popup
+                 @click="deleteAccount()"/>
           <q-btn flat label="CANCEL" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
@@ -165,6 +191,7 @@
   import { mapActions, mapState } from 'vuex'
   import mixinOtherUserDetails from "src/mixins/mixin_other_user_details";
   import { Cookies } from "quasar";
+  import axios from 'axios'
 
   export default {
     data() {
@@ -209,13 +236,14 @@
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
         }],
         sureDeletePublish: false,
+        sureCloseAccount: false,
         publishKey: '',
         selectedPublish: null
       }
     },
     methods: {
       ...mapActions('store',
-        ['firebaseUpdateUser', 'updateUserState', 'logoutUser', 'clearPublishings', 'firebaseGetApprovedPublishings', 'clearUsers', 'firebaseGetUsers']),
+        ['firebaseDeleteMyUser', 'firebaseUpdateUser', 'updateUserState', 'logoutUser', 'clearPublishings', 'firebaseGetApprovedPublishings', 'clearUsers', 'firebaseGetUsers', 'changeUserPassword', 'firebaseDeletePublish']),
       updateUser(type) {
         if (type === 'description') {
           this.firebaseUpdateUser({
@@ -225,8 +253,15 @@
         }
         this.updateUserState();
       },
+      changePassword() {
+        this.changeUserPassword()
+      },
       logOut() {
         this.logoutUser();
+      },
+      deleteAccount() {
+        this.firebaseDeleteMyUser(this.$route.params.otherUserId);
+        this.$router.replace("/");
       },
       searchLang(actualLang) {
         var i = 0;
@@ -248,12 +283,12 @@
         this.selectedPublish = publish
         this.sureDeletePublish = true;
       },
-      deleteProject(publishId) {
-        /*axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle)
+      deleteProject(selectedPublish, publishId) {
+        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + selectedPublish.creatorEmail + '&param2=' + selectedPublish.creatorName + '&param3=' + selectedPublish.projectTitle)
         this.firebaseDeletePublish({
-          publishId: this.$route.params.publishId
+          publishId: publishId
         });
-        this.goToPage('/')*/
+        this.goToPage('/')
       }
     },
     computed: {

@@ -128,6 +128,11 @@ const actions = {
     firebaseAuth.signOut();
     this.$router.replace("/");
   },
+  changeUserPassword() {
+    firebaseAuth.sendPasswordResetEmail(state.userDetails.email).then(function () {
+    }).catch(function (error) {
+    });
+  },
   handleAuthStateChanged({ commit, dispatch, state }) {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
@@ -223,9 +228,17 @@ const actions = {
       });
     });
   },
-  firebaseDeleteUser({ commit }, payload) {
+  firebaseDeleteUser({ commit, dispatch }, payload) {
     firebaseDB.ref("users/" + payload).remove();
     commit("removeUser", { payload });
+  },
+  firebaseDeleteMyUser({ commit, dispatch }, payload) {
+    commit("removeUser", { payload });
+    commit("setUserDetails", {});
+    firebaseAuth.currentUser.delete()
+    firebaseAuth.signOut();
+    firebaseDB.ref("users/" + payload).remove();
+
   },
   firebaseGetMessages({ commit, state }, otherUserId) {
     const userId = state.userDetails.userId;
@@ -440,9 +453,7 @@ const actions = {
   firebaseDeletePublish({ commit, dispatch }, payload) {
     firebaseDB.ref("publishings/" + payload.publishId).remove();
     commit("removePublish", { publishId: payload.publishId });
-    //firebaseStorage.ref("publishings/").child(payload.publishId).delete();
     dispatch("deleteFolderContents", { pathToDirectory: "publishings/" + payload.publishId });
-
   },
   deleteFolderContents({ dispatch }, path) {
     console.log(path.pathToDirectory)

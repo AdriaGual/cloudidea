@@ -5,7 +5,9 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/faq')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsBold q-pt-sm" style="font-size: 1.5em">General Rules</p>
+        <p class="poppinsBold q-pt-sm">General Rules
+          <q-icon name="rule" class="q-pl-sm" size="sm"/>
+        </p>
       </div>
       <div v-if="$q.platform.is.desktop" class="col-1"></div>
     </div>
@@ -14,7 +16,7 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col q-mt-sm"
            style="border-radius: 0.5em">
-        <q-list bordered class="rounded-borders q-mb-sm bg-white"
+        <q-list bordered class="rounded-borders q-mb-sm q-mx-lg bg-white"
                 v-for="(generalRule, key) in generalRulesItems"
                 :key="key">
 
@@ -46,7 +48,7 @@
         generalRulesItems: [{
           titleText: '1. Cuenta y contraseña',
           icon: 'o_account_circle',
-          generalText: 'Si quieres abrir una cuenta, solicitamos que nos proporciones cierta información: tu nombre y una contraseña.\n Aceptas ser el único responsable del mantenimiento de tu cuenta.De permitir a otras personas usar tu cuenta, se consciente que deberás ser responable de todas las actividades que se produzcan con tu nombre y contraseña.\n\n Para tu seguridad, te aconsejamos que actualizes tu contraseña con cierta frecuéncia. Ten en cuenta que el contenido de este portal no puede ser vendido ni alquilado a nadie. Cloudidea se reserva todos los derechos y medidas legales para evitar el uso no autorizado de sus servicios.'
+          generalText: 'Si quieres abrir una cuenta, solicitamos que nos proporciones cierta información: tu nombre y una contraseña.\n Aceptas ser el único responsable del mantenimiento de tu cuenta.De permitir a otras personas usar tu cuenta, se consciente que deberás ser responable de todas las actividades que se produzcan con tu nombre y contraseña.\n Para tu seguridad, te aconsejamos que actualizes tu contraseña con cierta frecuéncia. Ten en cuenta que el contenido de este portal no puede ser vendido ni alquilado a nadie. Cloudidea se reserva todos los derechos y medidas legales para evitar el uso no autorizado de sus servicios.'
         }, {
           titleText: '2. Usuarios',
           icon: 'o_people',

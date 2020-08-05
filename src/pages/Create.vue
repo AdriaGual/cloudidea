@@ -1,6 +1,6 @@
 <template>
   <q-layout class="flex column q-pb-xl">
-    <p class="poppinsBold text-center" style="font-size: 2em">Create Project</p>
+    <p class="poppinsBold text-center" style="font-size: 1.5em">Create Project</p>
     <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col">
