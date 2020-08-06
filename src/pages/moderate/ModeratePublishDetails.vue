@@ -7,9 +7,8 @@
                @click="goToPage('/moderate/publishings')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular text-grey">4 days ago</p>
-        <p class="poppinsBold" style="line-height: 0.1em;font-size: 1.2em">
-          {{newPublishDetails.projectTitle}}</p>
+        <a class="poppinsBold" style="line-height: 0.1em;font-size: 1.2em">
+          {{newPublishDetails.projectTitle}}</a>
       </div>
       <div class="col-4"></div>
     </div>

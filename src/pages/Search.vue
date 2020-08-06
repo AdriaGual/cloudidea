@@ -4,7 +4,7 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       <div class="col" style="border-radius: 0.5em">
         <q-input outlined bg-color="white" :placeholder="$t('search')" v-model="searchText"
-                 class="">
+                 rounded>
           <template v-slot:append>
             <q-icon v-if="searchText === ''" name="search"/>
             <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''"/>
@@ -19,13 +19,13 @@
           <div class="row q-pt-xl q-pl-xs">
             <div class="col">
               <p class="poppinsBold" style="line-height: 0.1em">
-                {{$t('recent_searches').toUpperCase()}}</p>
+                {{$t('recent_searches')}}</p>
             </div>
           </div>
           <q-scroll-area
             horizontal
             visbile="false"
-            class="scrollTagsHorizontal"
+            class="scrollTagsHorizontal q-pt-sm"
           >
             <div class="row no-wrap q-pl-xs" style="height:3em;">
               <q-btn
@@ -39,16 +39,17 @@
               />
             </div>
           </q-scroll-area>
-          <div class="row q-pt-lg q-pl-xs">
+          <div class="row q-pt-xl q-pl-xs">
             <div class="col-10">
               <p class="  poppinsBold" style="line-height: 0.1em">
-                {{$t('categories').toUpperCase()}}</p>
+                {{$t('categories')}}</p>
             </div>
           </div>
           <q-scroll-area
             horizontal
             visbile="false"
             style="height: 10em;width: 100%;"
+            class="q-pt-sm"
           >
             <div class="row no-wrap q-gutter-md q-pl-xs" style="height:3em;">
               <div v-for="(category, key) in categories" :key="key">
@@ -61,8 +62,8 @@
             </div>
           </q-scroll-area>
 
-          <p class="poppinsBold q-pt-lg q-pl-xs" style="line-height: 0.1em">
-            {{$t('top_project_creators').toUpperCase()}}</p>
+          <p class="poppinsBold q-pt-xl q-pl-xs q-pb-sm" style="line-height: 0.1em">
+            {{$t('top_project_creators')}}</p>
 
           <profile-cards></profile-cards>
         </div>
@@ -134,7 +135,6 @@
           <p>
             <q-icon name="list_alt" size="md"/>
             {{$t('category')}}
-
           </p>
           <q-separator></q-separator>
           <div v-for="(filteredPublishing, key) in filteredPublishingsByCategory" :key="key"
