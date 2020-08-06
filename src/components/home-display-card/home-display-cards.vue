@@ -6,8 +6,8 @@
            style="font-size: 0.9em;line-height: 0.1em">
           {{$t('hello')}}
           {{capitalize(userDetails.name)}}</p>
-        <p :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
-           style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</p>
+        <a :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
+           style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</a>
       </div>
 
       <div class="col" align="right">
