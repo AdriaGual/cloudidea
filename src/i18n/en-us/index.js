@@ -130,6 +130,14 @@ export default {
   people: "People",
   most_popular: "Most popular",
   most_recent: "Most recent",
+  choose_two_interests: "You should, at least, choose two interests",
+  welcome: "Welcome to Cloudidea, enjoy your stay",
+  email_in_use_by_another_account: "The email address is already in use by another account",
+  username_in_use_by_another_account: "The username is already in use by another account",
+  need_to_accept_license_and_terms: "You need to accept the license and terms first",
+  correct_register: "You've been registered correctly",
+  choose_one_help: "You must choose atleast one type of help",
+  updated_image_correctly: "Updated image successfully",
   la: "",
   el: ""
 };

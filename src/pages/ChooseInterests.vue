@@ -91,18 +91,24 @@
       goToPage(route) {
         if (this.selection.includes(',')) {
           this.$q.notify({
-            type: 'positive',
-            position: 'top',
-            message: `Enjoy your stay!`
-          });
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('welcome'),
+            icon: 'priority_high',
+            position: 'top-right',
+            timeout: 1000
+          })
           Cookies.set('categorySelection', this.selection)
           this.$router.push(route)
         } else {
           this.$q.notify({
-            type: 'negative',
-            position: 'top',
-            message: `You must choose at least two interests`
-          });
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('choose_two_interests'),
+            icon: 'priority_high',
+            position: 'top-right',
+            timeout: 1000
+          })
         }
 
       },

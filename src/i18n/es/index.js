@@ -133,6 +133,14 @@ export default {
   people: "Personas",
   most_popular: "Más popular",
   most_recent: "Más reciente",
+  choose_two_interests: "Deberías, al menos, elegir dos intereses",
+  welcome: "Bienvenido a Cloudidea, disfruta tu visita",
+  need_to_accept_license_and_terms: "Debe aceptar la licencia y los términos",
+  email_in_use_by_another_account: "La dirección de correo electrónico ya está siendo utilizada por otra cuenta",
+  username_in_use_by_another_account: "El nombre de usuario ya está en uso por otra cuenta",
+  correct_register: "Te has registrado correctamente",
+  choose_one_help: "Debe elegir al menos un tipo de ayuda",
+  updated_image_correctly: "Imagen actualizada correctamente",
   la: "la",
   el: "el"
 };

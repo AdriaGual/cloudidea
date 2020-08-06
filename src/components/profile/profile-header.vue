@@ -153,12 +153,15 @@
           imageFile: file,
           userId: this.$route.params.otherUserId
         }).then(() => {
-
           this.$q.notify({
-            type: 'positive',
-            position: 'top',
-            message: `Updated image successfully!`
-          });
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('updated_image_correctly'),
+            icon: 'check',
+            position: 'top-right',
+            timeout: 1000
+          })
+
           this.imageUrl = this.otherUserDetails.imageUrl;
         });
 

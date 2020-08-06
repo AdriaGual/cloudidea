@@ -34,7 +34,7 @@
               />
             </template>
           </q-input>
-          <p class="text-grey text-center poppinsRegular cursor-pointer" style="line-height: 0.1em"
+          <p class="text-grey text-center poppinsRegular cursor-pointer" style="line-height: 1em"
           >{{$t('forgot_password').toUpperCase()}}
           </p>
           <div class="row justify-center">
@@ -101,7 +101,7 @@
         this.$router.push(route);
       },
       onSubmit() {
-        var response = this.loginUser(this.userData);
+        this.loginUser(this.userData);
       },
     }
   };

@@ -230,10 +230,13 @@
         }
         if (n === 0 && this.publishing.needHelp === 'true') {
           this.$q.notify({
-            type: 'negative',
-            position: 'top',
-            message: `You must choose atleast one type of help`
-          });
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('choose_one_help'),
+            icon: 'priority_high',
+            position: 'top-right',
+            timeout: 1000
+          })
         } else {
           this.publishing.approved = false;
           this.publishing.cp = 0

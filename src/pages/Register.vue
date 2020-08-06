@@ -169,13 +169,6 @@
           imageFile: file,
           userId: this.userDetails.userId
         }).then(() => {
-
-          this.$q.notify({
-            type: 'positive',
-            position: 'top',
-            message: `Updated image successfully!`
-          });
-
         });
         this.imageUrl = this.userDetails.imageUrl;
       },
@@ -197,11 +190,12 @@
       onSubmit({ commit }, payload) {
         if (this.licenseTerms !== true) {
           this.$q.notify({
-            color: 'red-5',
+            color: 'dark',
             textColor: 'white',
-            position: 'top',
-            icon: 'warning',
-            message: 'You need to accept the license and terms first'
+            icon: 'priority_high',
+            message: this.$t('need_to_accept_license_and_terms'),
+            position: 'top-right',
+            timeout: 1000
           })
         } else {
           var usedEmail = false;
@@ -222,42 +216,38 @@
           }
           if (usedEmail) {
             this.$q.notify({
-              color: 'red-4',
+              color: 'dark',
               textColor: 'white',
-              icon: 'close',
-              position: 'top',
-              message: "The email address is already in use by another account."
-            });
+              icon: 'priority_high',
+              message: this.$t('email_in_use_by_another_account'),
+              position: 'top-right',
+              timeout: 1000
+            })
           } else if (usedName) {
             this.$q.notify({
-              color: 'red-4',
+              color: 'dark',
               textColor: 'white',
-              icon: 'close',
-              position: 'top',
-              message: "The username is already in use by another account."
-            });
+              icon: 'priority_high',
+              message: this.$t('username_in_use_by_another_account'),
+              position: 'top-right',
+              timeout: 1000
+            })
           } else {
             this.registerUser(this.userData);
             this.createProfile = true
-            this.$q.notify({
-              color: 'green-4',
-              textColor: 'white',
-              icon: 'cloud_done',
-              position: 'top',
-              message: "You've been registered correctly!"
-            });
           }
 
         }
       },
       onCreate({ commit }, payload) {
         this.$q.notify({
-          color: 'green-4',
+          color: 'dark',
           textColor: 'white',
-          icon: 'cloud_done',
-          position: 'top',
-          message: "You've been registered correctly!"
-        });
+          icon: 'check',
+          message: this.$t('correct_register'),
+          position: 'top-right',
+          timeout: 1000
+        })
         this.firebaseUpdateUser({
           userId: this.userDetails.userId,
           updates: { skills: this.skills, description: this.description }
