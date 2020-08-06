@@ -5,15 +5,16 @@
               v-if="$q.cookies.get('categorySelection').includes(filteredPublishing.categoryModel)">
         <q-item-section side @click="goToPage('publishDetails/'+filteredPublishing.key)">
           <q-avatar rounded size="4em"
-                    v-if="filteredPublishing.fileType.includes('image/')">
+                    v-if="filteredPublishing.coverImage || filteredPublishing.fileType.includes('image/')">
             <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
                  style="border-radius: 0.2em" alt=""/>
             <img
-              v-if="filteredPublishing.fileUrl && filteredPublishing.fileType"
+              v-if="filteredPublishing.fileUrl && filteredPublishing.fileType.includes('image/')"
               :src="filteredPublishing.fileUrl" style="border-radius: 0.2em"
               alt=""/>
           </q-avatar>
-          <div v-else>
+          <div
+            v-if="!filteredPublishing.fileType.includes('image/') && !filteredPublishing.coverImage">
             <div v-for="(category, key) in categories" :key="key">
               <img
                 style="height: 3em"
