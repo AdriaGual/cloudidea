@@ -10,6 +10,11 @@
             <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''"/>
           </template>
         </q-input>
+        <p class="poppinsRegular text-grey q-pt-md"
+           v-if="searchText !== '' && filteredUsers.length===0 && filteredPublishingsByTitle.length===0 && filteredPublishingsByCategory.length===0">
+          <q-icon name="error_outline" size="sm"/>
+          {{$t('seems_like_no_results_found')}}
+        </p>
         <div class="no-padding" v-if="searchText===''">
           <div class="row q-pt-xl q-pl-xs">
             <div class="col">
@@ -65,7 +70,7 @@
           <div v-if="filteredPublishingsByTitle.length >0" class="q-pt-md">
             <p>
               <q-icon name="receipt_long" size="md"/>
-              Projects
+              {{$t('projects')}}
             </p>
             <q-separator></q-separator>
             <div v-for="(filteredPublishing, key) in filteredPublishingsByTitle" :key="key"
@@ -104,7 +109,7 @@
           <div v-if="filteredUsers.length >0" class="q-pt-lg">
             <p>
               <q-icon name="people" size="md"/>
-              People
+              {{$t('people')}}
             </p>
             <q-separator></q-separator>
             <div v-for="(filteredUser, key) in filteredUsers" :key="key" class="q-pt-md">
@@ -128,7 +133,8 @@
         <div v-if="filteredPublishingsByCategory.length >0" class="q-pt-md">
           <p>
             <q-icon name="list_alt" size="md"/>
-            Category
+            {{$t('category')}}
+
           </p>
           <q-separator></q-separator>
           <div v-for="(filteredPublishing, key) in filteredPublishingsByCategory" :key="key"

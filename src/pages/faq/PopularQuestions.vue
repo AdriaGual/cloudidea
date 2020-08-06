@@ -5,7 +5,7 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/faq')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsBold q-pt-sm">Popular questions
+        <p class="poppinsBold q-pt-sm">{{$t('popular_questions')}}
           <q-icon name="o_assistant" class="q-pl-sm" size="sm"/>
         </p>
       </div>
@@ -36,24 +36,24 @@
     data() {
       return {
         questions: [{
-          questionText: '¿Cuánto cuesta publicar en Cloudidea?',
-          answerText: 'Hoy por hoy, publicar en Cloudidea es completamente GRATIS.'
+          questionText: this.$t('popular_question_1'),
+          answerText: this.$t('popular_question_1_answer')
         },
           {
-            questionText: '¿Puedo utilizar el link de mi página de Cloudidea para incluir en mi portafolio personal?',
-            answerText: 'Por supuesto, no solo lo puedes utilizar sino que los que formamos el equipo de esta plataforma estaremos muy agradecidos de que lo hagas.'
+            questionText: this.$t('popular_question_2'),
+            answerText: this.$t('popular_question_2_answer')
           },
           {
-            questionText: '¿Debo estar registrado para ver los contenidos?',
-            answerText: 'No, Clouidea nace con el firme propósito de concebir la promoción y colaboración como valores creativos.'
+            questionText: this.$t('popular_question_3'),
+            answerText: this.$t('popular_question_3_answer')
           },
           {
-            questionText: '¿Puedo tener mail de Cloudidea?',
-            answerText: 'Nuestra idea es crecer peró, ahora mismo, NO facilitamos ningún tipo de email a los usuarios.'
+            questionText: this.$t('popular_question_4'),
+            answerText: this.$t('popular_question_4_answer')
           },
           {
-            questionText: '¿Qué tipo de contenido puedo subir?',
-            answerText: 'Para responderte correctamentem, recomendamos que leas detenidamente las normas generales de Cloudidea.'
+            questionText: this.$t('popular_question_5'),
+            answerText: this.$t('popular_question_5_answer')
           }]
       };
     },

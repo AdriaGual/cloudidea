@@ -35,12 +35,15 @@
                 <img
                   :src="newPublishDetails.coverImage?newPublishDetails.coverImage:newPublishDetails.fileUrl"/>
               </q-avatar>
-              <div v-for="(category, key) in categories" :key="key">
-                <img
-                  style="height: 4em"
-                  v-if="category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
-                  :src="category.url"/>
+              <div v-else>
+                <div v-for="(category, key) in categories" :key="key">
+                  <img
+                    style="height: 4em"
+                    v-if="category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
+                    :src="category.url"/>
+                </div>
               </div>
+
             </q-item-section>
             <q-item-section>
               <q-item-label class="poppinsBold q-pb-xs"
@@ -71,7 +74,10 @@
             </q-item-section>
           </q-item>
         </q-card>
-
+        <p class="poppinsRegular text-grey q-pt-md" v-if="publishComments">
+          <q-icon name="error_outline" size="sm"/>
+          {{$t('seems_like_no_comments_found')}}
+        </p>
         <q-item clickable v-for="(comment, key) in publishComments" :key="key">
           <q-item-section side>
             <q-avatar rounded size="3em" @click="goToPage('/profile/'+comment.userId)">

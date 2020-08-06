@@ -12,10 +12,10 @@
           indicator-color="secondary"
           align="justify"
         >
-          <q-tab name="about" label="About"/>
-          <q-tab name="projects" label="Projects"/>
+          <q-tab name="about" :label="$t('about')"/>
+          <q-tab name="projects" :label="$t('projects')"/>
           <q-tab v-if="$route.params.otherUserId===userDetails.userId" name="settings"
-                 label="Settings"/>
+                 :label="$t('settings')"/>
         </q-tabs>
 
         <q-separator/>
@@ -25,8 +25,9 @@
             <div class="row">
               <div class="col">
                 <p class="text-grey poppinsRegular"
-                   v-if="$route.params.otherUserId===userDetails.userId">Edit description</p>
-                <p v-else class="text-grey poppinsRegular">Description</p>
+                   v-if="$route.params.otherUserId===userDetails.userId">
+                  {{$t('edit_description')}}</p>
+                <p v-else class="text-grey poppinsRegular">{{$t('description')}}</p>
               </div>
               <div class="col" v-if="$route.params.otherUserId===userDetails.userId">
                 <p class="text-grey poppinsRegular float-right">
@@ -47,19 +48,21 @@
           </q-tab-panel>
 
           <q-tab-panel name="projects">
-            <p class="text-grey poppinsRegular">Your Projects</p>
+            <p class="text-grey poppinsRegular q-pl-xs"
+               v-if="$route.params.otherUserId===userDetails.userId">{{$t('your_projects')}}</p>
+            <p class="text-grey poppinsRegular q-pl-xs" v-else>{{$t('projects')}}</p>
             <q-scroll-area
               horizontal
               visbile="false"
               class="scrollProjectAreaHorizontal"
             >
-              <div class="row no-wrap" style="height:17em;">
-                <div v-for="(publish, key) in publishings" :key="key">
+              <div class="row no-wrap q-pl-xs" style="height:17em;">
+                <div v-for="(publish, key) in userPublishings" :key="key">
                   <q-card
                     style="line-height: 0.1em;height:17em"
                     class="cardProjectExterior q-mr-md cursor-pointer"
                     v-if="publish.creatorId === $route.params.otherUserId"
-                    @click="openDialog(publish,key)"
+                    @click="$route.params.otherUserId===userDetails.userId?openDialog(publish,publish.key):goToPage('/publishDetails/'+publish.key)"
                   >
                     <q-img v-if="publish.coverImage" :src="publish.coverImage"
                            style="border-radius: 0.2em;height:12em" alt="">
@@ -78,19 +81,21 @@
                       <q-icon v-else name="check_circle_outline" size="md"
                               class="absolute-right text-green-6"/>
                     </q-img>
-
-                    <div v-for="(category, key) in categories" :key="key">
-                      <q-img
-                        class=""
-                        style="height: 12em;width:10em"
-                        v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
-                        :src="category.url">
-                        <q-icon v-if="publish.needHelp==='true'" name="construction" size="md"
-                                class="absolute-right text-grey"/>
-                        <q-icon v-else name="check_circle_outline" size="md"
-                                class="absolute-right text-green-6"/>
-                      </q-img>
+                    <div v-else>
+                      <div v-for="(category, key) in categories" :key="key">
+                        <q-img
+                          class=""
+                          style="height: 12em;width:10em"
+                          v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
+                          :src="category.url">
+                          <q-icon v-if="publish.needHelp==='true'" name="construction" size="md"
+                                  class="absolute-right text-grey"/>
+                          <q-icon v-else name="check_circle_outline" size="md"
+                                  class="absolute-right text-green-6"/>
+                        </q-img>
+                      </div>
                     </div>
+
                     <q-separator></q-separator>
                     <q-card-actions>
                       <div class="col q-pt-md">
@@ -107,7 +112,10 @@
                     </q-card-actions>
                   </q-card>
                 </div>
-
+                <a class="poppinsRegular text-grey" v-if="userPublishings.length===0">
+                  <q-icon name="error_outline" size="sm"/>
+                  {{$t('seems_like_no_created_projects')}}
+                </a>
               </div>
             </q-scroll-area>
           </q-tab-panel>
@@ -127,11 +135,11 @@
             <p class=" text-blue poppinsRegular q-pt-md cursor-pointer"
                @click="changePassword()">
               <q-icon name="vpn_key"/>
-              Change Password
+              {{$t('change_password')}}
             </p>
 
             <p class=" text-blue poppinsRegular cursor-pointer"
-               @click="logOut()">Log Out
+               @click="logOut()">{{$t('logout')}}
             </p>
             <q-btn
               style="width:14em;font-size: 0.9em;border-radius: 0.5em;height:3.5em"
@@ -139,7 +147,7 @@
               icon="close"
               text-color="white"
               outline
-              label="Delete account"
+              :label="$t('delete_account')"
               @click="sureCloseAccount = true"/>
           </q-tab-panel>
         </q-tab-panels>
@@ -154,34 +162,35 @@
             src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Funder_constructions.svg?alt=media&token=f40f48e8-7572-4ffe-8d29-bcc8a4871309"/>
         </q-card-section>
         <q-card-section>
-          <p class="poppinsBold" v-if="selectedPublish">Remove project
+          <p class="poppinsBold" v-if="selectedPublish">{{$t('remove_project')}}
             {{selectedPublish.projectTitle}}?</p>
 
-          Are your sure you wanna delete this project?
+          {{$t('are_you_sure_delete_project')}}
 
           <p class="poppinsBold q-pt-md text-primary cursor-pointer" v-close-popup
-             @click="goToPage('/publishDetails/'+publishKey)">SEE PROJECT DETAILS
+             @click="goToPage('/publishDetails/'+publishKey)">
+            {{$t('see_project_details').toUpperCase()}}
             <q-icon name="receipt_long"/>
           </p>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="YES, DELETE IT" color="red-10" v-close-popup
+          <q-btn flat :label="$t('yes_delete_it').toUpperCase()" color="red-10" v-close-popup
                  @click="deleteProject(selectedPublish,key)"/>
-          <q-btn flat label="CANCEL" color="primary" v-close-popup/>
+          <q-btn flat :label="$t('cancel').toUpperCase()" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
     <q-dialog v-model="sureCloseAccount">
       <q-card class="q-pa-lg">
         <q-card-section>
-          Are your sure you wanna delete your account?
+          {{$t('are_you_sure_delete_account')}}
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="YES, DELETE IT" color="red-10" v-close-popup
+          <q-btn flat :label="$t('yes_delete_it_2').toUpperCase()" color="red-10" v-close-popup
                  @click="deleteAccount()"/>
-          <q-btn flat label="CANCEL" color="primary" v-close-popup/>
+          <q-btn flat :label="$t('cancel').toUpperCase()" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -239,7 +248,8 @@
         sureDeletePublish: false,
         sureCloseAccount: false,
         publishKey: '',
-        selectedPublish: null
+        selectedPublish: null,
+        userPublishings: []
       }
     },
     methods: {
@@ -251,6 +261,13 @@
             userId: this.userDetails.userId,
             updates: { description: this.description }
           });
+          this.$q.notify({
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('updated_description'),
+            position: 'top-right',
+            timeout: 1000
+          })
         }
         this.updateUserState();
       },
@@ -263,6 +280,13 @@
       deleteAccount() {
         this.firebaseDeleteMyUser(this.$route.params.otherUserId);
         this.$router.replace("/");
+        this.$q.notify({
+          color: 'dark',
+          textColor: 'white',
+          message: this.$t('deleted_account'),
+          position: 'top-right',
+          timeout: 1000
+        })
       },
       searchLang(actualLang) {
         var i = 0;
@@ -290,6 +314,13 @@
           publishId: publishId
         });
         this.goToPage('/')
+        this.$q.notify({
+          color: 'dark',
+          textColor: 'white',
+          message: this.$t('deleted_project'),
+          position: 'top-right',
+          timeout: 1000
+        })
       }
     },
     computed: {
@@ -309,7 +340,15 @@
       lang(lang) {
         this.$i18n.locale = lang.value;
         Cookies.set("language", this.$i18n.locale);
-      }
+      },
+      publishings: function (val) {
+        for (let publish of Object.keys(this.publishings)) {
+          if (this.publishings[publish].creatorId === this.$route.params.otherUserId) {
+            this.publishings[publish].key = publish
+            this.userPublishings.push(this.publishings[publish])
+          }
+        }
+      },
     },
   }
 </script>

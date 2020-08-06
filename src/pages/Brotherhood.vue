@@ -7,12 +7,16 @@
           <q-icon name="construction" style="font-size: 1.7em;"/>
           {{$t('new_help_requests').toUpperCase()}}
         </p>
+        <p class="poppinsRegular text-grey q-pt-md" v-if="orderedPublishings.length===0">
+          <q-icon name="error_outline" size="sm"/>
+          {{$t('seems_like_no_help_found')}}
+        </p>
         <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
           <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)"
                   class="cardSectionInterior q-mb-md">
             <q-item-section side>
               <q-avatar rounded size="4em"
-                        v-if="filteredPublishing.fileType.includes('image/')">
+                        v-if="filteredPublishing.fileType && filteredPublishing.fileType.includes('image/')">
                 <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
                      style="border-radius: 0.2em" alt=""/>
                 <img
@@ -30,7 +34,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label class="poppinsRegular text-white"
-                            v-if="filteredPublishing.projectTitle.length>15">
+                            v-if="filteredPublishing.projectTitle && filteredPublishing.projectTitle.length>15">
                 {{filteredPublishing.projectTitle.substring(0,15)+".."}}
               </q-item-label>
 

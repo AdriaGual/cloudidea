@@ -6,7 +6,7 @@
       </div>
       <div class="col text-center">
         <p v-if="$route.params.otherUserId===userDetails.userId" class="poppinsRegular"
-           style="font-size: 1.5em">Your Profile</p>
+           style="font-size: 1.5em">{{$t('your_profile')}}</p>
       </div>
       <div class="col-1">
         <q-btn v-if="$route.params.otherUserId===userDetails.userId" round color="primary"
@@ -42,7 +42,7 @@
         <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em"
            v-if="otherUserDetails.skills && ($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
           {{otherUserDetails.skills}} ·
-          <a class="text-accent poppinsBold" style="font-size: 0.8em;" v-if="otherUserDetails.cp">
+          <a class="text-accent poppinsBold" style="font-size: 0.8em;">
             {{otherUserDetails.cp}} CP
           </a>
         </p>
@@ -51,7 +51,8 @@
            v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
           {{otherUserDetails.email}}</p>
         <div class="text-center q-px-lg q-pt-sm">
-          <q-btn style="width:20em" color="white" text-color="black" label="Edit Profile" no-caps
+          <q-btn style="width:20em" color="white" text-color="black" :label="$t('edit_profile')"
+                 no-caps
                  v-if="$route.params.otherUserId===userDetails.userId" @click="editProfile = true"/>
           <q-btn
             v-else-if="!otherUserDetails.privateProfile"
@@ -69,7 +70,7 @@
     <q-dialog v-model="editProfile">
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6 q-px-lg">Edit Profile</div>
+          <div class="text-h6 q-px-lg">{{$t('edit_profile')}}</div>
           <q-space/>
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
@@ -79,20 +80,20 @@
             @submit="onSubmit"
             class="q-px-lg"
           >
-            <q-input outlined placeholder="Username" label="Username"
+            <q-input outlined :placeholder="$t('username')" :label="$t('username')"
                      v-model="name"
                      :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
-            <q-input outlined placeholder="Skills"
-                     v-model="skills" label="Skills"
+            <q-input outlined :placeholder="$t('skills')"
+                     v-model="skills" :label="$t('skills')"
                      :rules="[isEmptyField,val => isShortField(val,5,'skills')]"/>
-            <q-toggle v-model="privateProfile" label="Private profile"/>
-            <div class="row justify-center">
-              <q-btn class=""
-                     style="height: 4em;border-radius: 0.5em;width:24em"
-                     color="primary"
-                     icon="o_save"
-                     type="submit"
-                     label="Save Profile"/>
+            <q-toggle v-model="privateProfile" :label="$t('private_profile')"/>
+            <div class="row justify-center q-pt-lg">
+              <q-btn
+                style="height: 4em;border-radius: 0.5em;width:24em"
+                color="primary"
+                icon="o_save"
+                type="submit"
+                :label="$t('save_profile')"/>
             </div>
           </q-form>
         </q-card-section>

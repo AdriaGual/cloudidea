@@ -492,9 +492,11 @@ const actions = {
 
         firebaseDB.ref("users/" + publishDetails.creatorId).once("value", snapshot => {
           const userDetails = snapshot.val();
-          publishDetails.creatorName = userDetails.name
-          publishDetails.creatorImageUrl = userDetails.imageUrl
-          publishDetails.creatorSkills = userDetails.skills
+          if (userDetails) {
+            publishDetails.creatorName = userDetails.name
+            publishDetails.creatorImageUrl = userDetails.imageUrl
+            publishDetails.creatorSkills = userDetails.skills
+          }
           if (publishDetails.approved) {
             commit("addPublish", { publishId, publishDetails });
           }

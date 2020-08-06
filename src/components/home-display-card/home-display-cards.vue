@@ -31,7 +31,11 @@
         />
       </div>
     </div>
-
+    <p class="poppinsRegular text-grey q-pt-md" v-if="orderedPublishings.length===0">
+      <q-icon name="error_outline" size="sm"/>
+      {{$t('seems_like_no_available_project')}} <a class="text-blue cursor-pointer"
+                                                   @click="goToPage('welcome')">Welcome</a>
+    </p>
     <div class="row justify-center q-pb-xl q-pt-md" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <home-display-card :publish="publish" :categories="categories"
@@ -49,6 +53,7 @@
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       </div>
     </div>
+
     <div class="q-pb-lg"></div>
     <q-dialog v-model="openFilterDialog">
       <q-card class="q-px-lg q-pb-sm" style="width:50em">
@@ -62,7 +67,7 @@
               <q-icon name="whatshot"/>
             </q-item-section>
             <q-item-section>
-              <q-item-label>Most popular</q-item-label>
+              <q-item-label>{{$t('most_popular')}}</q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('date')">
@@ -70,7 +75,7 @@
               <q-icon name="fiber_new"/>
             </q-item-section>
             <q-item-section>
-              <q-item-label>Most recent</q-item-label>
+              <q-item-label>{{$t('most_recent')}}</q-item-label>
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('category')">
@@ -78,7 +83,7 @@
               <q-icon name="construction"/>
             </q-item-section>
             <q-item-section>
-              <q-item-label>Categories</q-item-label>
+              <q-item-label>{{$t('categories')}}</q-item-label>
             </q-item-section>
           </q-item>
         </q-card-section>

@@ -21,7 +21,7 @@
               <q-img v-if="publish.coverImage" :src="publish.coverImage"
                      style="border-radius: 0.5em;height:4em;width: 4em"/>
               <q-img
-                v-if="publish.fileUrl && publish.fileType && publish.fileType.includes('image/')"
+                v-else-if="publish.fileUrl && publish.fileType && publish.fileType.includes('image/')"
                 :src="publish.fileUrl" style="border-radius: 0.5em;height:4em;width: 4em"/>
             </q-item-section>
             <q-item-section>

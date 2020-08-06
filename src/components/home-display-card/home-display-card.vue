@@ -49,14 +49,15 @@
                 style="max-height: 9em;"
                 class="cardCoverImage q-mt-xs q-ml-md full-width"
               />
-              <div v-for="(category, key) in categories" :key="key">
-                <img
-                  :class="$q.platform.is.desktop?'q-px-xl':''"
-                  v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
-                  :style="$q.platform.is.desktop?'height:9em':''"
-                  :src="category.url" alt=""/>
+              <div v-else>
+                <div v-for="(category, key) in categories" :key="key">
+                  <img
+                    :class="$q.platform.is.desktop?'q-px-xl':''"
+                    v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
+                    :style="$q.platform.is.desktop?'height:9em':''"
+                    :src="category.url" alt=""/>
+                </div>
               </div>
-
             </div>
 
           </div>
@@ -75,9 +76,10 @@
         </div>
         <div class="col-4 q-pt-md q-pl-xs cursor-pointer"
              @click="goToPage('/profile/'+publish.creatorId)">
-          <p style="line-height: 0.1em" v-if="publish.creatorName.length>10">
+          <p style="line-height: 0.1em" v-if="publish.creatorName.length>10"
+             :class="publish.creatorSkills===''?'q-pt-sm':''">
             {{publish.creatorName.substring(0,10)+".."}}</p>
-          <p style="line-height: 0.1em" v-else>
+          <p style="line-height: 0.1em" v-else :class="publish.creatorSkills===''?'q-pt-sm':''">
             {{publish.creatorName}}</p>
           <p class="cardUserCP" v-if="publish.creatorSkills.length>10">
             {{publish.creatorSkills.substring(0,10)+".."}} </p>

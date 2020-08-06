@@ -13,12 +13,13 @@
               :src="filteredPublishing.fileUrl" style="border-radius: 0.2em"
               alt=""/>
           </q-avatar>
-
-          <div v-for="(category, key) in categories" :key="key">
-            <img
-              style="height: 3em"
-              v-if="category.categoryName ===filteredPublishing.categoryModel"
-              :src="category.url"/>
+          <div v-else>
+            <div v-for="(category, key) in categories" :key="key">
+              <img
+                style="height: 3em"
+                v-if="category.categoryName ===filteredPublishing.categoryModel"
+                :src="category.url"/>
+            </div>
           </div>
 
         </q-item-section>
@@ -116,7 +117,6 @@
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
-        console.log(Cookies.get("language"))
         var releaseFormattedDate = ''
         if (Cookies.get("language") === 'es') {
           releaseFormattedDate = "hace "
