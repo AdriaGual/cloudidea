@@ -9,7 +9,6 @@
         <a :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
            style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</a>
       </div>
-
       <div class="col" align="right">
         <q-btn
           flat
@@ -134,7 +133,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes', 'firebaseGetUserMessages', 'firebaseStopGettingMessages']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -162,7 +161,7 @@
     },
     computed: {
       ...mapState('store',
-        ['publishings', 'userDetails', 'userLikedPublishings']),
+        ['publishings', 'userDetails', 'userLikedPublishings', 'messages']),
     },
     created() {
       this.clearPublishings();
@@ -181,6 +180,26 @@
         this.orderedPublishings = this.orderedPublishings.filter((a, b) => this.orderedPublishings.indexOf(
           a) === b)
         this.orderedPublishings.sort((a, b) => b.cp - a.cp);
+        this.firebaseGetUserMessages();
+      },
+      messages: function (val) {
+        if (val.unreadMessages) {
+          this.$q.notify({
+            color: 'dark',
+            textColor: 'white',
+            icon: 'o_chat',
+            message: this.$t('unread_messages'),
+            position: 'top-right',
+            actions: [
+              {
+                label: 'Chat', color: 'white', handler: () => {
+                  this.goToPage('/myChats')
+                }
+              }
+            ],
+            timeout: 2000
+          })
+        }
       }
     }
   };

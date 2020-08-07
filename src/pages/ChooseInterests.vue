@@ -6,14 +6,12 @@
         <div class="text-center">
           <img :style="this.$q.platform.is.desktop?'max-height:20em;':'max-height:15em;'"
                src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fadventure.svg?alt=media&token=d165277c-e345-4196-a493-90c23816c957"/>
-          <p class="poppinsBold q-pt-lg" style="font-size: 1.3em;line-height: 0.1em">Hey
-            newcomer! </p>
-          <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">What are you
-            interested
-            in?</p>
-          <p class="poppinsRegular text-grey" style="font-size: 0.8em">Select at least two interests
-            you
-            may like</p>
+          <p class="poppinsBold q-pt-lg" style="font-size: 1.3em;line-height: 0.1em">
+            {{$t('hey_newcomer')}} </p>
+          <p class="poppinsBold" style="font-size: 1.3em;line-height: 0.1em">
+            {{$t('what_are_you_interested_in')}}</p>
+          <p class="poppinsRegular text-grey" style="font-size: 0.8em">
+            {{$t('select_at_least_two_interests')}}</p>
           <div class="q-gutter-xs q-px-lg q-pt-lg">
             <q-chip :color="category.Music?'blue-6':'grey-5'" text-color="white" icon="o_audiotrack"
                     :selected.sync="category.Music">
@@ -56,9 +54,9 @@
               <q-btn outline color="primary"
                      class="startAppButton text-white bg-primary q-mt-xl"
                      no-caps
-                     label="Start sharing" @click="goToPage('/')"/>
+                     :label="$t('start_sharing')" @click="goToPage('/')"/>
               <p class="text-grey poppinsRegular q-pt-sm cursor-pointer"
-                 style="font-size: 0.9em" @click="skipForNow()">Skip for now
+                 style="font-size: 0.9em" @click="skipForNow()">{{$t('skip_for_now')}}
               </p>
             </div>
             <div class="col-3" v-if="this.$q.platform.is.desktop"></div>

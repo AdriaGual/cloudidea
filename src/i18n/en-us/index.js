@@ -138,6 +138,12 @@ export default {
   correct_register: "You've been registered correctly",
   choose_one_help: "You must choose atleast one type of help",
   updated_image_correctly: "Updated image successfully",
+  hey_newcomer: "Hey newcomer!",
+  what_are_you_interested_in: "What are you interested in?",
+  select_at_least_two_interests: "Select at least two interests you may like",
+  start_sharing: "Start sharing",
+  skip_for_now: "Skip for now",
+  unread_messages: "You have unread messages",
   la: "",
   el: ""
 };

@@ -248,6 +248,21 @@ const actions = {
       const messageDetails = snapshot.val();
       const messageId = snapshot.key;
       commit("addMessage", { messageId, messageDetails });
+    });
+  },
+  firebaseGetUserMessages({ commit, dispatch, state }, otherUserId) {
+    const userId = state.userDetails.userId;
+    let userRef;
+    userRef = firebaseDB.ref("chats/" + userId);
+
+    userRef.on("child_added", snapshot => {
+      messagesRef = firebaseDB.ref("chats/" + userId + "/" + snapshot.key);
+
+      messagesRef.on("child_added", snapshot => {
+        const messageDetails = snapshot.val();
+        const messageId = snapshot.key;
+        commit("addMessage", { messageId, messageDetails });
+      });
 
     });
   },
@@ -373,6 +388,7 @@ const actions = {
       });
   },
   firebaseUpdateUserMessageNotification({}, payload) {
+    console.log(payload)
     firebaseDB
     .ref("chats/" + payload.otherUserId + "/" + payload.userId)
     .update(payload.updates);

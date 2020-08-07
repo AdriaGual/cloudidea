@@ -141,6 +141,12 @@ export default {
   correct_register: "Te has registrado correctamente",
   choose_one_help: "Debe elegir al menos un tipo de ayuda",
   updated_image_correctly: "Imagen actualizada correctamente",
+  hey_newcomer: "Hola,",
+  what_are_you_interested_in: "¿Qué áreas son de tu interés?",
+  select_at_least_two_interests: "Selecciona al menos dos intereses que te gusten",
+  start_sharing: "Entra y comparte",
+  skip_for_now: "Saltar por ahora",
+  unread_messages: "Tienes mensajes sin leer",
   la: "la",
   el: "el"
 };

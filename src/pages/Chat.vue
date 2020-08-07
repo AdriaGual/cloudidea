@@ -131,13 +131,12 @@
       ...mapActions("store", [
         "firebaseGetMessages",
         "firebaseStopGettingMessages",
-        "firebaseSendMessage", "firebaseClearMessages"
+        "firebaseSendMessage", "firebaseClearMessages", "firebaseUpdateUserMessageNotification"
       ]),
       goToAnotherChat(route) {
         this.$router.push(route)
         this.firebaseClearMessages()
         this.firebaseGetMessages(this.$route.params.otherUserId);
-
       },
       goToPage(route) {
         this.$router.push(route)
@@ -177,6 +176,11 @@
     mounted() {
       this.firebaseClearMessages()
       this.firebaseGetMessages(this.$route.params.otherUserId);
+      this.firebaseUpdateUserMessageNotification({
+        userId: this.$route.params.otherUserId,
+        otherUserId: this.userDetails.userId,
+        updates: { unreadMessages: false }
+      });
     },
     destroyed() {
       this.firebaseStopGettingMessages();
