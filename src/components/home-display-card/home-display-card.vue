@@ -29,7 +29,7 @@
         </div>
         <div class="col" align="right">
           <a style="font-size: 0.8em" class="text-grey">
-            {{publish.categoryModel}}
+            {{$t(publish.categoryModel.toLowerCase())}}
           </a>
         </div>
       </div>

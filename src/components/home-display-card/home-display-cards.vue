@@ -7,34 +7,31 @@
            style="font-size: 0.9em;line-height: 0.1em">
           {{$t('hello')}}
           {{capitalize(userDetails.name)}}</p>
-        <a :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
-           style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</a>
       </div>
-      <div class="col-3" align="right">
-        <div class="row">
-          <div class="col">
-            <q-btn
-              flat
-              no-caps
-              :icon="!listMode?'grid_on':'format_list_bulleted'"
-              color="primary"
-              :ripple="false"
-              @click="listMode=!listMode"
-            />
-          </div>
-          <div class="col">
-            <q-btn
-              flat
-              no-caps
-              icon="sort"
-              color="primary"
-              :ripple="false"
-              @click="openFilterDialog=true"
-            />
-          </div>
-        </div>
+      <div class="col" align="right">
+        <q-btn
+          flat
+          no-caps
+          :icon="!listMode?'grid_on':'format_list_bulleted'"
+          color="primary"
+          class=""
+          :ripple="false"
+          @click="listMode=!listMode"
+        />
+        <q-btn
+          flat
+          no-caps
+          align="right"
+          icon="sort"
+          color="primary"
+          :ripple="false"
+          @click="openFilterDialog=true"
+        />
       </div>
+
     </div>
+    <a :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
+       style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</a>
     <q-scroll-area
       horizontal
       visbile="false"
@@ -56,10 +53,9 @@
     </q-scroll-area>
     <p class="poppinsRegular text-grey q-pt-md" v-if="!publishingWithCategory()">
       <q-icon name="error_outline" size="sm"/>
-      {{$t('seems_like_no_available_project')}} <a class="text-blue cursor-pointer"
-                                                   @click="goToPage('welcome')">Welcome</a>
+      {{$t('seems_like_no_available_project')}}
     </p>
-    <div class="row justify-center q-pb-xl q-pt-md" v-if="!listMode">
+    <div class="row justify-center q-pb-xl" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <home-display-card :publish="publish" :categories="categories"
                            v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"
@@ -67,7 +63,7 @@
       </div>
     </div>
 
-    <div v-else class="q-px-xs q-pb-xl q-pt-md">
+    <div v-else class="q-px-xs q-pb-xl">
       <div class="row q-pt-sm">
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
         <div class="col" style="border-radius: 0.5em">

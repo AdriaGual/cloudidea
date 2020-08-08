@@ -124,7 +124,7 @@ export default {
   deleted_project: "Project deleted",
   deleted_account: "Account deleted",
   seems_like_no_created_projects: "Seems like you still haven't created a project",
-  seems_like_no_available_project: "Seems like there are no projects for your interests, maybe try switching them here",
+  seems_like_no_available_project: "Seems like there are no projects for your interests",
   seems_like_no_results_found: "Seems like there we couldn't find any results",
   seems_like_no_help_found: "Seems like there are no help requests for now",
   seems_like_no_comments_found: "Seems like there are no comments for now",

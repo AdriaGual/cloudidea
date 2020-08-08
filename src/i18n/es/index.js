@@ -127,7 +127,7 @@ export default {
   deleted_project: "Tu proyecto ha sido eliminado",
   deleted_account: "Tu cuenta ha sido eliminada",
   seems_like_no_created_projects: "Parece que todavía no has creado ni un proyecto",
-  seems_like_no_available_project: "Parece que no hay proyectos para tus intereses, puede cambiarlos aquí",
+  seems_like_no_available_project: "Parece que no hay proyectos para tus intereses",
   seems_like_no_results_found: "Parece que no pudimos encontrar ningún resultado",
   seems_like_no_help_found: "Parece que actualmente no hay solicitudes de ayuda",
   seems_like_no_comments_found: "Parece que actualmente no hay comentarios",
