@@ -148,6 +148,10 @@ export default {
   start_sharing: "Entra y comparte",
   skip_for_now: "Saltar por ahora",
   unread_messages: "Tienes mensajes sin leer",
+  send_email: "Enviar mensaje privado",
+  subject: "Título",
+  message: "Mensaje",
+  send: "Enviar",
   la: "la",
   el: "el"
 };

@@ -14,49 +14,49 @@
             {{$t('select_at_least_two_interests')}}</p>
 
           <div class="q-gutter-xs q-px-lg q-pt-lg">
-            <q-chip :color="categories[0].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[0].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[0].selected">
               <img style="height:2em;width:2em" :src="categories[0].url"
                    alt=""/><a class="poppinsBold">
               {{$t(categories[0].categoryName.toLowerCase())}}</a>
             </q-chip>
-            <q-chip :color="categories[1].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[1].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[1].selected">
               <img style="height:2em;width:2em" :src="categories[1].url"
                    alt=""/><a class="poppinsBold">
               {{$t(categories[1].categoryName.toLowerCase())}}</a>
             </q-chip>
-            <q-chip :color="categories[2].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[2].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[2].selected">
               <img style="height:2em;width:2em" :src="categories[2].url"
                    alt=""/><a class="poppinsBold">
               {{$t(categories[2].categoryName.toLowerCase())}}</a>
             </q-chip>
-            <q-chip :color="categories[3].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[3].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[3].selected">
               <img style="height:2em;width:2em" :src="categories[3].url"
                    alt=""/><a class="poppinsBold">
               {{$t(categories[3].categoryName.toLowerCase())}}</a>
             </q-chip>
-            <q-chip :color="categories[4].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[4].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[4].selected">
               <img style="height:2em;width:2em" :src="categories[4].url"
                    alt=""/><a class="poppinsBold">
               {{$t(categories[4].categoryName.toLowerCase())}}</a>
             </q-chip>
-            <q-chip :color="categories[5].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[5].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[5].selected">
               <img style="height:2em;width:2em" :src="categories[5].url"
                    alt=""/><a class="poppinsBold">
               {{$t(categories[5].categoryName.toLowerCase())}}</a>
             </q-chip>
-            <q-chip :color="categories[6].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[6].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[6].selected">
               <img style="height:2em;width:2em" :src="categories[6].url"
                    alt=""/><a class="poppinsBold">
               {{$t(categories[6].categoryName.toLowerCase())}}</a>
             </q-chip>
-            <q-chip :color="categories[7].selected?'blue-6':'grey-5'"
+            <q-chip :color="categories[7].selected?'light-blue-4':'grey-5'"
                     :selected.sync="categories[7].selected">
               <img style="height:2em;width:2em" :src="categories[7].url"
                    alt=""/><a class="poppinsBold">

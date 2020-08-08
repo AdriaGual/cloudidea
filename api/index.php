@@ -34,8 +34,17 @@ if (isset($_GET['action']) && $_GET['action'] != '') {
       $headers = "From:" . $from;
       mail($to, $subject, $message, $headers);
     }
+  } else if ($_GET['action'] == "sendEmail") {
+    if (isset($_REQUEST['param1']) && isset($_REQUEST['param2']) && isset($_REQUEST['param3']) && isset($_REQUEST['param4'])) {
+      $from = $_REQUEST['param1'];
+      $to = $_REQUEST['param2'];
+      $subject = $_REQUEST['param3'];
+      $message = $_REQUEST['param4'];
+      $headers = "From:" . $from;
+      mail($to, $subject, $message, $headers);
+    }
   }
-  
+
 }
 
 ?>

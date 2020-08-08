@@ -78,7 +78,7 @@
               disable
             />
             <p class="q-pt-md">
-              {{filteredPublishing.cp}} CP
+              {{filteredPublishing.cp}}
             </p>
           </div>
         </q-item-section>

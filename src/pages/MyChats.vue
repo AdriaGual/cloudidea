@@ -39,7 +39,7 @@
             </q-item-section>
             <q-item-section side>
               <q-item-label class="poppinsRegular text-red">
-                {{user.cp}} CP
+                {{user.cp}}
               </q-item-label>
             </q-item-section>
           </q-item>

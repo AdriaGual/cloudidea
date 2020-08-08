@@ -1,5 +1,6 @@
 <template>
   <div class="q-pa-lg">
+
     <div class="row">
       <div class="col">
         <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
@@ -42,7 +43,7 @@
     >
       <div class="row no-wrap">
         <div v-for="(category, key) in categories" :key="key">
-          <q-chip :color="categories[key].selected?'blue-6':'grey-5'"
+          <q-chip :color="categories[key].selected?'light-blue-4':'grey-5'"
                   :selected.sync="categories[key].selected" size="1em"
                   @click="toogleCategory(key)">
             <img style="height:2em;width:2em" :src="categories[key].url"
@@ -67,7 +68,7 @@
     </div>
 
     <div v-else class="q-px-xs q-pb-xl q-pt-md">
-      <div class="row q-pt-md">
+      <div class="row q-pt-sm">
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
         <div class="col" style="border-radius: 0.5em">
           <home-display-card-list :orderedPublishings="orderedPublishings" :categories="categories"

@@ -43,13 +43,19 @@
            v-if="otherUserDetails.skills && ($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
           {{otherUserDetails.skills}} ·
           <a class="text-accent poppinsBold" style="font-size: 0.8em;">
-            {{otherUserDetails.cp}} CP
+            {{otherUserDetails.cp}}
           </a>
+          <q-icon color="accent" name="favorite"/>
+
         </p>
         <p class="poppinsLight text-center text-indigo-9"
+           @click="emailDialog=true"
            style="font-size: 1em;"
            v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
-          {{otherUserDetails.email}}</p>
+          {{otherUserDetails.email}}
+          <q-icon class="text-indigo-6" name="mail"/>
+        </p>
+
         <div class="text-center q-px-lg q-pt-sm">
           <q-btn style="width:20em" color="white" text-color="black" :label="$t('edit_profile')"
                  no-caps
@@ -99,12 +105,43 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="emailDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6 q-px-lg">{{$t('send_email')}}</div>
+        </q-card-section>
+
+        <q-card-section>
+          <q-form
+            @submit="sendEmail"
+            class="q-px-lg"
+          >
+            <q-input outlined :placeholder="$t('subject')"
+                     v-model="subject"
+                     :rules="[isEmptyField]"/>
+            <q-input outlined :placeholder="$t('message')"
+                     type="textarea"
+                     v-model="message"
+                     :rules="[isEmptyField]"/>
+            <div class="row justify-center">
+              <q-btn
+                style="height: 4em;border-radius: 0.5em;width:24em"
+                color="primary"
+                icon="send"
+                type="submit"
+                :label="$t('send')"/>
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
   import { mapActions, mapState } from 'vuex'
   import mixinOtherUserDetails from "src/mixins/mixin_other_user_details";
+  import axios from 'axios'
 
   export default {
     data() {
@@ -114,7 +151,10 @@
         editProfile: false,
         name: '',
         skills: '',
-        privateProfile: false
+        privateProfile: false,
+        emailDialog: false,
+        subject: '',
+        message: ''
       }
     },
     methods: {
@@ -147,6 +187,15 @@
         });
         this.updateUserState();
         this.editProfile = false
+      },
+      sendEmail() {
+        console.log('https://cloudidea.es/api/index.php?action=sendEmail&param1=' + this.userDetails.email + '&param2=' + this.otherUserDetails.email + '&param3=' + this.subject + '&param4=' + this.message)
+        //from this.userDetails.email
+        //to this.otherUserDetails.email
+        //subject
+        //meessager
+        //axios.get('https://cloudidea.es/api/index.php?action=sendEmail&param1=' + this.userDetails.email + '&param2=' + this.otherUserDetails.email + '&param3=' + this.subject + '&param4=' + this.message)
+
       },
       uploadFile(file) {
         this.firebaseUploadProfilePic({

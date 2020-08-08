@@ -145,6 +145,10 @@ export default {
   start_sharing: "Start sharing",
   skip_for_now: "Skip for now",
   unread_messages: "You have unread messages",
+  send_email: "Send private message",
+  subject: "Title",
+  message: "Message",
+  send: "Send",
   la: "",
   el: ""
 };

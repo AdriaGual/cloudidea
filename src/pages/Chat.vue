@@ -48,7 +48,7 @@
             </q-item-section>
             <q-item-section side>
               <q-item-label class="poppinsRegular text-red">
-                {{user.cp}} CP
+                {{user.cp}}
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -174,6 +174,9 @@
     },
     mixins: [mixinOtherUserDetails],
     mounted() {
+      if (!this.userDetails.userId) {
+        this.goToPage('/')
+      }
       this.firebaseClearMessages()
       this.firebaseGetMessages(this.$route.params.otherUserId);
       this.firebaseUpdateUserMessageNotification({

@@ -20,7 +20,7 @@
       <p class="cardUserCP" v-else>{{publish.creatorSkills}} </p>
     </div>
 
-    <div class="col-2">
+    <div class="col-2 text-center">
       <q-btn
         rounded
         flat
@@ -44,10 +44,10 @@
         @click="dislike(publish,publish.key)"
       />
       <q-icon v-if="!userDetails.userId || userDetails.userId === publish.creatorId"
-              name="favorite" color="grey" size="sm" class="q-pl-sm q-pt-sm q-pb-xs"/>
+              name="favorite" color="grey" size="sm" class="q-pt-sm q-pb-xs"/>
 
-      <p class="cardUserCP q-pl-sm">
-        {{publish.cp}} CP
+      <p class="cardUserCP">
+        {{publish.cp}}
       </p>
     </div>
   </div>

@@ -15,7 +15,7 @@
       >{{user.name}}</p>
       <p class="text-center poppinsLight text-grey cursor-pointer" style="font-size: 0.9em"
          @click="goToPage('/profile/'+user.key)"
-      >{{user.cp}} CP</p>
+      >{{user.cp}} </p>
 
       <q-btn
         v-if="userDetails.userId && userDetails.userId !== user.key"

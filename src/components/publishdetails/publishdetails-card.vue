@@ -234,7 +234,7 @@
             @click="dislike(publishDetails,publishKey)"
           />
           <p class="cardUserCP q-pl-sm">
-            {{publishDetails.cp}} CP
+            {{publishDetails.cp}}
           </p>
         </div>
       </div>
