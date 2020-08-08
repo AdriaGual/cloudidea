@@ -229,7 +229,8 @@
       this.clearPublishings();
       this.firebaseGetApprovedPublishings();
       for (let category of this.categories) {
-        if (this.$q.cookies.get('categorySelection').includes(category.categoryName)) {
+        if (this.$q.cookies.has('categorySelection') && this.$q.cookies.get('categorySelection')
+        .includes(category.categoryName)) {
           category.selected = true
         }
       }

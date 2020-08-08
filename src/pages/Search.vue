@@ -21,7 +21,9 @@
                 {{$t('recent_searches')}}</p>
             </div>
           </div>
+
           <q-scroll-area
+            ref="recentSearchScrollArea"
             horizontal
             visbile="false"
             class="scrollTagsHorizontal q-pt-sm"
@@ -39,7 +41,21 @@
               />
             </div>
           </q-scroll-area>
-          <div class="row q-pt-xl q-pl-xs">
+          <div class="row">
+            <div class="col">
+              <q-btn icon="keyboard_arrow_left" color="primary"
+                     @click="animateScroll($refs.recentSearchScrollArea,false,356,'recentSearchPosition')"
+                     size="xs" flat
+              />
+            </div>
+            <div class="col" align="right">
+              <q-btn icon="keyboard_arrow_right" color="primary"
+                     @click="animateScroll($refs.recentSearchScrollArea,true,356,'recentSearchPosition')"
+                     size="xs" flat
+              />
+            </div>
+          </div>
+          <div class="row q-pt-lg q-pl-xs">
             <div class="col-10">
               <p class="poppinsBold" style="line-height: 0.1em">
                 {{$t('categories')}} <a class=" "
@@ -52,6 +68,7 @@
             visbile="false"
             style="height: 10em;width: 100%;"
             class="q-pt-sm"
+            ref="categoryScrollArea"
             :thumb-style="thumbStyle"
           >
             <div class="row no-wrap q-gutter-md q-pl-xs" style="height:5em;">
@@ -65,8 +82,21 @@
               </div>
             </div>
           </q-scroll-area>
-
-          <p class="poppinsBold q-pt-xl q-pl-xs q-pb-sm" style="line-height: 0.1em">
+          <div class="row">
+            <div class="col">
+              <q-btn icon="keyboard_arrow_left" color="primary"
+                     @click="animateScroll($refs.categoryScrollArea,false,700,'categoryPosition')"
+                     size="xs" flat
+              />
+            </div>
+            <div class="col" align="right">
+              <q-btn icon="keyboard_arrow_right" color="primary"
+                     @click="animateScroll($refs.categoryScrollArea,true,700,'categoryPosition')"
+                     size="xs" flat
+              />
+            </div>
+          </div>
+          <p class="poppinsBold q-pt-lg q-pl-xs q-pb-sm" style="line-height: 0.1em">
             {{$t('top_project_creators')}}</p>
 
           <profile-cards></profile-cards>
@@ -221,6 +251,8 @@
         thumbStyle: {
           opacity: 0
         },
+        recentSearchPosition: 0,
+        categoryPosition: 0
       }
     },
     methods: {
@@ -230,6 +262,35 @@
       goToPage(route) {
         this.$router.push(route)
       },
+      animateScroll(scrollArea, side, maxWidth, position) {
+        if (position === 'recentSearchPosition') {
+          if (scrollArea.getScrollPosition() < 0) {
+            this.recentSearchPosition = 0
+          } else if (scrollArea.getScrollPosition() > maxWidth) {
+            this.recentSearchPosition = maxWidth
+          }
+          if (!side && this.recentSearchPosition > 0) {
+            this.recentSearchPosition = this.recentSearchPosition - 100
+            scrollArea.setScrollPosition(this.recentSearchPosition, 300)
+          } else if (side) {
+            this.recentSearchPosition = this.recentSearchPosition + 100
+            scrollArea.setScrollPosition(this.recentSearchPosition, 300)
+          }
+        } else if (position === 'categoryPosition') {
+          if (scrollArea.getScrollPosition() < 0) {
+            this.categoryPosition = 0
+          } else if (scrollArea.getScrollPosition() > maxWidth) {
+            this.categoryPosition = maxWidth
+          }
+          if (!side && this.categoryPosition > 0) {
+            this.categoryPosition = this.categoryPosition - 100
+            scrollArea.setScrollPosition(this.categoryPosition, 300)
+          } else if (side) {
+            this.categoryPosition = this.categoryPosition + 100
+            scrollArea.setScrollPosition(this.categoryPosition, 300)
+          }
+        }
+      }
     },
     components: {
       ProfileCards

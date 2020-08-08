@@ -189,13 +189,7 @@
         this.editProfile = false
       },
       sendEmail() {
-        console.log('https://cloudidea.es/api/index.php?action=sendEmail&param1=' + this.userDetails.email + '&param2=' + this.otherUserDetails.email + '&param3=' + this.subject + '&param4=' + this.message)
-        //from this.userDetails.email
-        //to this.otherUserDetails.email
-        //subject
-        //meessager
-        //axios.get('https://cloudidea.es/api/index.php?action=sendEmail&param1=' + this.userDetails.email + '&param2=' + this.otherUserDetails.email + '&param3=' + this.subject + '&param4=' + this.message)
-
+        axios.get('https://cloudidea.es/api/index.php?action=sendEmail&param1=' + this.userDetails.email + '&param2=' + this.otherUserDetails.email + '&param3=' + this.subject + '&param4=' + this.message)
       },
       uploadFile(file) {
         this.firebaseUploadProfilePic({

@@ -1,26 +1,28 @@
 <template>
   <q-card
-    style=""
     class="cardProjectExterior q-mr-md"
   >
-    <q-card-section class="q-pt-md q-px-md">
+    <q-card-section class="q-pt-md q-px-md text-center">
       <q-img
         @click="goToPage('/profile/'+user.key)"
         :src="user.imageUrl"
         spinner-color="white"
         class="cardProfileImage cursor-pointer"
       />
-      <p class="q-pt-md text-center poppinsBold cursor-pointer"
+      <p class="q-pt-md poppinsBold cursor-pointer"
          @click="goToPage('/profile/'+user.key)"
       >{{user.name}}</p>
-      <p class="text-center poppinsLight text-grey cursor-pointer" style="font-size: 0.9em"
+      <a class="poppinsLight text-grey cursor-pointer" style="font-size: 0.9em"
          @click="goToPage('/profile/'+user.key)"
-      >{{user.cp}} </p>
+      >{{user.cp}}
+        <q-icon color="accent" name="favorite"/>
+      </a>
+
 
       <q-btn
         v-if="userDetails.userId && userDetails.userId !== user.key"
         no-caps
-        class="bgGrey full-width"
+        class="bgGrey full-width q-mt-sm"
         align="center"
         style="font-size: 0.9em;border-radius: 2em"
         label="Chat"

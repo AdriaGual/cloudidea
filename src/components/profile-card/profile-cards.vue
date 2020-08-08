@@ -1,14 +1,32 @@
 <template>
-  <q-scroll-area
-    horizontal
-    visbile="false"
-    class="scrollProjectCreatorsAreaHorizontal"
-    :thumb-style="thumbStyle"
-  >
-    <div class="row no-wrap q-pl-xs" style="height:3em;">
-      <ProfileCard v-for="user in orderedUsers" :user="user" :key="user.key"></ProfileCard>
+  <div>
+    <q-scroll-area
+      horizontal
+      visbile="false"
+      class="scrollProjectCreatorsAreaHorizontal"
+      :thumb-style="thumbStyle"
+      ref="profileScrollArea"
+    >
+      <div class="row no-wrap q-pl-xs" style="height:3em;">
+        <ProfileCard v-for="user in orderedUsers" :user="user" :key="user.key"></ProfileCard>
+      </div>
+    </q-scroll-area>
+    <div class="row">
+      <div class="col">
+        <q-btn icon="keyboard_arrow_left" color="primary"
+               @click="animateScroll($refs.profileScrollArea,false,700)"
+               size="xs" flat
+        />
+      </div>
+      <div class="col" align="right">
+        <q-btn icon="keyboard_arrow_right" color="primary"
+               @click="animateScroll($refs.profileScrollArea,true,700)"
+               size="xs" flat
+        />
+      </div>
     </div>
-  </q-scroll-area>
+  </div>
+
 </template>
 
 <script>
@@ -22,6 +40,7 @@
         thumbStyle: {
           opacity: 0
         },
+        position: 0
       }
     },
     components: {
@@ -31,6 +50,21 @@
       ...mapActions("store", [
         "firebaseGetUsers", "clearUsers"
       ]),
+      animateScroll(scrollArea, side, maxWidth) {
+
+        if (scrollArea.getScrollPosition() < 0) {
+          this.position = 0
+        } else if (scrollArea.getScrollPosition() > maxWidth) {
+          this.position = maxWidth
+        }
+        if (!side && this.position > 0) {
+          this.position = this.position - 100
+          scrollArea.setScrollPosition(this.position, 300)
+        } else if (side) {
+          this.position = this.position + 100
+          scrollArea.setScrollPosition(this.position, 300)
+        }
+      }
     },
     computed: {
       ...mapState("store", ["users"])
