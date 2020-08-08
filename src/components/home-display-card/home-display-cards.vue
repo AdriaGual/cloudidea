@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-lg">
     <div class="row">
-      <div class="col q-pl-sm">
+      <div class="col">
         <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
            style="font-size: 0.9em;line-height: 0.1em">
           {{$t('hello')}}
@@ -9,27 +9,50 @@
         <a :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
            style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</a>
       </div>
-      <div class="col" align="right">
-        <q-btn
-          flat
-          no-caps
-          :icon="!listMode?'grid_on':'format_list_bulleted'"
-          color="primary"
-          size="md"
-          :ripple="false"
-          @click="listMode=!listMode"
-        />
-        <q-btn
-          flat
-          no-caps
-          icon="sort"
-          color="primary"
-          size="md"
-          :ripple="false"
-          @click="openFilterDialog=true"
-        />
+      <div class="col-3" align="right">
+        <div class="row">
+          <div class="col">
+            <q-btn
+              flat
+              no-caps
+              :icon="!listMode?'grid_on':'format_list_bulleted'"
+              color="primary"
+              :ripple="false"
+              @click="listMode=!listMode"
+            />
+          </div>
+          <div class="col">
+            <q-btn
+              flat
+              no-caps
+              icon="sort"
+              color="primary"
+              :ripple="false"
+              @click="openFilterDialog=true"
+            />
+          </div>
+        </div>
       </div>
     </div>
+
+    <q-scroll-area
+      horizontal
+      visbile="false"
+      :thumb-style="thumbStyle"
+      class="scrollTagsHorizontal q-pt-md"
+    >
+      <div class="row no-wrap">
+        <div v-for="(category, key) in categories" :key="key">
+          <q-chip size="1em" square><img style="height:2em;width:2em" :src="category.url"
+                                         alt=""/><a
+            style="font-size: 0.8em"> {{$t(category.categoryName.toLowerCase())}}</a>
+          </q-chip>
+
+        </div>
+      </div>
+
+
+    </q-scroll-area>
     <p class="poppinsRegular text-grey q-pt-md" v-if="orderedPublishings.length===0">
       <q-icon name="error_outline" size="sm"/>
       {{$t('seems_like_no_available_project')}} <a class="text-blue cursor-pointer"
@@ -128,7 +151,10 @@
         }, {
           categoryName: 'Marketing',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
-        }]
+        }],
+        thumbStyle: {
+          opacity: 0
+        },
       }
     },
     methods: {

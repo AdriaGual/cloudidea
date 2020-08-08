@@ -25,6 +25,7 @@
             horizontal
             visbile="false"
             class="scrollTagsHorizontal q-pt-sm"
+            :thumb-style="thumbStyle"
           >
             <div class="row no-wrap q-pl-xs" style="height:3em;">
               <q-btn
@@ -40,8 +41,10 @@
           </q-scroll-area>
           <div class="row q-pt-xl q-pl-xs">
             <div class="col-10">
-              <p class="  poppinsBold" style="line-height: 0.1em">
-                {{$t('categories')}}</p>
+              <p class="poppinsBold" style="line-height: 0.1em">
+                {{$t('categories')}} <a class=" "
+                                        style="font-size: 0.9em">({{categories.length}})</a>
+              </p>
             </div>
           </div>
           <q-scroll-area
@@ -49,13 +52,15 @@
             visbile="false"
             style="height: 10em;width: 100%;"
             class="q-pt-sm"
+            :thumb-style="thumbStyle"
           >
-            <div class="row no-wrap q-gutter-md q-pl-xs" style="height:3em;">
+            <div class="row no-wrap q-gutter-md q-pl-xs" style="height:5em;">
               <div v-for="(category, key) in categories" :key="key">
                 <div style="height:9em;width:9em;background-color: #F6FAFF;border-radius: 0.4em"
                      class="q-pt-md shadow-1 cursor-pointer"
                      @click="searchText=category.searchText">
-                  <q-img :src="category.url"/>
+                  <q-img :src="category.url" style="height:6em"/>
+                  <p class="text-center q-pb-lg">{{$t(category.searchText.toLowerCase())}}</p>
                 </div>
               </div>
             </div>
@@ -212,7 +217,10 @@
         }, {
           searchText: 'Promotion',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
-        }]
+        }],
+        thumbStyle: {
+          opacity: 0
+        },
       }
     },
     methods: {

@@ -41,6 +41,7 @@ export default {
   video: "Vídeo",
   code: "Codigo",
   design: "Diseño",
+  idea: "Idea",
   conference: "Conferencia",
   selling: "Venta",
   promotion: "Promoción",

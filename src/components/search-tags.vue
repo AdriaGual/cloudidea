@@ -3,6 +3,7 @@
     horizontal
     visbile="false"
     class="scrollTagsHorizontal"
+    :thumb-style="thumbStyle"
   >
 
     <div class="row no-wrap" style="height:3em;">
@@ -47,7 +48,13 @@
 
 <script>
   export default {
-    name: "search-tag"
+    data() {
+      return {
+        thumbStyle: {
+          opacity: 0
+        },
+      }
+    }
   }
 </script>
 

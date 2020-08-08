@@ -3,6 +3,7 @@
     horizontal
     visbile="false"
     class="scrollProjectCreatorsAreaHorizontal"
+    :thumb-style="thumbStyle"
   >
     <div class="row no-wrap q-pl-xs" style="height:3em;">
       <ProfileCard v-for="user in orderedUsers" :user="user" :key="user.key"></ProfileCard>
@@ -17,7 +18,10 @@
   export default {
     data() {
       return {
-        orderedUsers: []
+        orderedUsers: [],
+        thumbStyle: {
+          opacity: 0
+        },
       }
     },
     components: {

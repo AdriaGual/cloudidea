@@ -55,6 +55,7 @@
               horizontal
               visbile="false"
               class="scrollProjectAreaHorizontal"
+              :thumb-style="thumbStyle"
             >
               <div class="row no-wrap q-pl-xs" style="height:17em;">
                 <div v-for="(publish, key) in userPublishings" :key="key">
@@ -249,7 +250,10 @@
         sureCloseAccount: false,
         publishKey: '',
         selectedPublish: null,
-        userPublishings: []
+        userPublishings: [],
+        thumbStyle: {
+          opacity: 0
+        },
       }
     },
     methods: {

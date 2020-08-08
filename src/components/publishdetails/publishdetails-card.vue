@@ -98,7 +98,7 @@
         v-if="!sidePublish"
         :src="publishDetails.fileUrl"
         :class="sidePublish?'full-width q-pa-lg':'full-width'"
-        style="height:40em"
+        :style="this.$q.platform.is.desktop?'height:40em':'height:20em'"
         frameborder='0'>
       </iframe>
       <div v-else>
@@ -183,7 +183,6 @@
           />
         </div>
         <div class="col-5 q-pt-md cursor-pointer"
-
              @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
           <p class="cardUserCP">{{publishDetails.categoryModel}}</p>

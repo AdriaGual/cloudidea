@@ -39,6 +39,7 @@ export default {
   code: "Code",
   design: "Design",
   selling: "Selling",
+  idea: "Idea",
   conference: "Conference",
   promotion: "Promotion",
   none_of_this: "None of this",
