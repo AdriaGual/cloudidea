@@ -1,9 +1,7 @@
 <template>
-
   <q-card
     class="cardExterior q-ma-sm"
     style="max-width: 35em;"
-    v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"
   >
     <q-card-section class="" @click="goToPublishDetails(publish, publish.key)"
                     style="cursor: pointer;  background: #393e46;">

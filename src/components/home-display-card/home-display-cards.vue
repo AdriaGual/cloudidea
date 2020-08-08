@@ -34,7 +34,6 @@
         </div>
       </div>
     </div>
-
     <q-scroll-area
       horizontal
       visbile="false"
@@ -43,17 +42,18 @@
     >
       <div class="row no-wrap">
         <div v-for="(category, key) in categories" :key="key">
-          <q-chip size="1em" square><img style="height:2em;width:2em" :src="category.url"
-                                         alt=""/><a
-            style="font-size: 0.8em"> {{$t(category.categoryName.toLowerCase())}}</a>
+          <q-chip :color="categories[key].selected?'blue-6':'grey-5'"
+                  :selected.sync="categories[key].selected" size="1em"
+                  @click="toogleCategory(key)">
+            <img style="height:2em;width:2em" :src="categories[key].url"
+                 alt=""/><a class="poppinsBold" style="font-size: 0.8em">
+            {{$t(categories[key].categoryName.toLowerCase())}}</a>
           </q-chip>
-
         </div>
       </div>
 
-
     </q-scroll-area>
-    <p class="poppinsRegular text-grey q-pt-md" v-if="orderedPublishings.length===0">
+    <p class="poppinsRegular text-grey q-pt-md" v-if="!publishingWithCategory()">
       <q-icon name="error_outline" size="sm"/>
       {{$t('seems_like_no_available_project')}} <a class="text-blue cursor-pointer"
                                                    @click="goToPage('welcome')">Welcome</a>
@@ -61,6 +61,7 @@
     <div class="row justify-center q-pb-xl q-pt-md" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <home-display-card :publish="publish" :categories="categories"
+                           v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"
                            :userDetails="userDetails"></home-display-card>
       </div>
     </div>
@@ -119,6 +120,7 @@
   import { mapActions, mapState } from 'vuex'
   import HomeDisplayCardList from './home-display-card-list';
   import HomeDisplayCard from './home-display-card';
+  import { Cookies } from 'quasar'
 
   export default {
     components: { HomeDisplayCard, HomeDisplayCardList },
@@ -129,28 +131,36 @@
         openFilterDialog: false,
         categories: [{
           categoryName: 'Writting',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f'
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f',
+          selected: false,
         }, {
           categoryName: 'Design',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdesign.svg?alt=media&token=2cc162de-294b-4250-bf2b-556d025042d8'
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdesign.svg?alt=media&token=2cc162de-294b-4250-bf2b-556d025042d8',
+          selected: false,
         }, {
           categoryName: 'Music',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmusic.svg?alt=media&token=f0dd839f-788b-4326-8e15-76b08ad17059'
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmusic.svg?alt=media&token=f0dd839f-788b-4326-8e15-76b08ad17059',
+          selected: false,
         }, {
           categoryName: 'Video',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fvideo.svg?alt=media&token=449ae459-3d2a-4cba-b431-f5059b359f09'
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fvideo.svg?alt=media&token=449ae459-3d2a-4cba-b431-f5059b359f09',
+          selected: false,
         }, {
           categoryName: 'Code',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcode.svg?alt=media&token=d81e76b9-f092-4603-84b3-761dcf2de6c1'
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcode.svg?alt=media&token=d81e76b9-f092-4603-84b3-761dcf2de6c1',
+          selected: false,
         }, {
           categoryName: 'Idea',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fidea.svg?alt=media&token=cd1bdf45-3d60-4c3a-ae6f-ea8c65e2dd14'
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fidea.svg?alt=media&token=cd1bdf45-3d60-4c3a-ae6f-ea8c65e2dd14',
+          selected: false,
         }, {
-          categoryName: 'Revenue',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmoney.svg?alt=media&token=5bb1196c-981d-4ead-8054-1fc0d42f8d32'
+          categoryName: 'Selling',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmoney.svg?alt=media&token=5bb1196c-981d-4ead-8054-1fc0d42f8d32',
+          selected: false,
         }, {
-          categoryName: 'Marketing',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
+          categoryName: 'Promotion',
+          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7',
+          selected: false,
         }],
         thumbStyle: {
           opacity: 0
@@ -183,15 +193,45 @@
             return 0;
           });
         }
+      },
+      publishingWithCategory() {
+        var found = false
+        for (let publish of this.orderedPublishings) {
+          if (this.$q.cookies.get('categorySelection').includes(publish.categoryModel)) {
+            found = true
+          }
+        }
+        return found
+      },
+      toogleCategory(key) {
+        Cookies.set('categorySelection', this.selection)
       }
     },
     computed: {
       ...mapState('store',
         ['publishings', 'userDetails', 'userLikedPublishings', 'messages']),
+      selection() {
+        var select = ''
+        for (let i of Object.keys(this.categories)) {
+          if (this.categories[i].selected === true) {
+            if (select === '') {
+              select = this.categories[i].categoryName
+            } else {
+              select = select.concat(',' + this.categories[i].categoryName)
+            }
+          }
+        }
+        return select
+      }
     },
     created() {
       this.clearPublishings();
       this.firebaseGetApprovedPublishings();
+      for (let category of this.categories) {
+        if (this.$q.cookies.get('categorySelection').includes(category.categoryName)) {
+          category.selected = true
+        }
+      }
     },
     watch: {
       publishings: function (val) {
@@ -226,7 +266,8 @@
             timeout: 2000
           })
         }
-      }
+
+      },
     }
   };
 </script>
