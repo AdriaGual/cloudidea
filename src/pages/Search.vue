@@ -174,22 +174,25 @@
           <div v-for="(filteredPublishing, key) in filteredPublishingsByCategory" :key="key"
                class="q-pt-md">
             <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)">
-              <q-item-section side>
+              <q-item-section side @click="goToPage('publishDetails/'+filteredPublishing.key)">
+
                 <q-avatar rounded size="4em"
-                          v-if="filteredPublishing.fileType.includes('image/')">
+                          v-if="filteredPublishing.coverImage || filteredPublishing.fileType.includes('image/')">
                   <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
                        style="border-radius: 0.2em" alt=""/>
                   <img
-                    v-if="filteredPublishing.fileUrl && filteredPublishing.fileType"
+                    v-if="filteredPublishing.fileUrl && filteredPublishing.fileType.includes('image/')"
                     :src="filteredPublishing.fileUrl" style="border-radius: 0.2em"
                     alt=""/>
                 </q-avatar>
 
-                <div v-for="(category, key) in categories" :key="key">
-                  <img
-                    style="height: 3em"
-                    v-if="category.categoryName ===filteredPublishing.categoryModel"
-                    :src="category.url"/>
+                <div>
+                  <div v-for="(category, key) in categories" :key="key">
+                    <img
+                      style="height: 3em"
+                      v-if="category.searchText === filteredPublishing.categoryModel"
+                      :src="category.url"/>
+                  </div>
                 </div>
               </q-item-section>
               <q-item-section>
