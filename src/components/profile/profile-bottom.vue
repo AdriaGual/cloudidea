@@ -276,7 +276,7 @@
         this.updateUserState();
       },
       changePassword() {
-        this.changeUserPassword()
+        this.changeUserPassword(this.userDetails.email)
       },
       logOut() {
         this.logoutUser();

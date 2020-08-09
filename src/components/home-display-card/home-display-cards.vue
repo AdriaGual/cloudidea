@@ -55,6 +55,7 @@
       <q-icon name="error_outline" size="sm"/>
       {{$t('seems_like_no_available_project')}}
     </p>
+    <div v-if="this.$q.platform.is.desktop" class="q-pt-sm"></div>
     <div class="row justify-center q-pb-xl" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <home-display-card :publish="publish" :categories="categories"

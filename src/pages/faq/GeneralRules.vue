@@ -5,7 +5,7 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/faq')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsBold q-pt-sm">{{$t('general_rules')}}
+        <p class="poppinsBold q-pt-sm" style="font-size: 1.3em">{{$t('general_rules')}}
           <q-icon name="rule" class="q-pl-sm" size="sm"/>
         </p>
       </div>

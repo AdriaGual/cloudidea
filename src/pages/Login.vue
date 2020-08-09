@@ -35,6 +35,7 @@
             </template>
           </q-input>
           <p class="text-grey text-center poppinsRegular cursor-pointer" style="line-height: 1em"
+             @click="openForgotPassword=true"
           >{{$t('forgot_password').toUpperCase()}}
           </p>
           <div class="row justify-center">
@@ -57,7 +58,32 @@
       </div>
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
+    <q-dialog v-model="openForgotPassword">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6 q-px-lg">{{$t('recover_password')}}</div>
+        </q-card-section>
 
+        <q-card-section>
+          <q-form
+            @submit="sendEmailPasswordRecover"
+            class="q-px-lg"
+          >
+            <q-input outlined :placeholder="$t('email_address')"
+                     v-model="userData.email"
+                     :rules="[isEmptyField,isValidEmail]"/>
+            <div class="row justify-center">
+              <q-btn
+                style="height: 4em;border-radius: 0.5em;width:24em"
+                color="primary"
+                type="submit"
+                v-close-popup
+                :label="$t('send')"/>
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-layout>
 
 </template>
@@ -72,12 +98,12 @@
         userData: {
           email: '',
           password: '',
-        }
+        },
+        openForgotPassword: false
       }
     },
-
     methods: {
-      ...mapActions('store', ['loginUser']),
+      ...mapActions('store', ['loginUser', 'changeUserPassword', 'firebaseGetUsers']),
       doPasswordsMatch(val) {
         if (!(val === this.userData.password)) {
           return 'Passwords must match'
@@ -103,6 +129,19 @@
       onSubmit() {
         this.loginUser(this.userData);
       },
+      sendEmailPasswordRecover() {
+        this.changeUserPassword(this.userData.email)
+        this.$q.notify({
+          color: 'dark',
+          textColor: 'white',
+          message: this.$t('email_recover_sended'),
+          position: 'top-right',
+          timeout: 2000
+        })
+      }
+    },
+    created() {
+      this.firebaseGetUsers()
     }
   };
 </script>

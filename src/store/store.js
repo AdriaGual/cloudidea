@@ -128,10 +128,18 @@ const actions = {
     firebaseAuth.signOut();
     this.$router.replace("/");
   },
-  changeUserPassword() {
-    firebaseAuth.sendPasswordResetEmail(state.userDetails.email).then(function () {
-    }).catch(function (error) {
-    });
+  changeUserPassword({ commit, dispatch }, payload) {
+    let found = false
+    for (var user of Object.keys(state.users)) {
+      if (payload === state.users[user].email) {
+        found = true
+      }
+    }
+    if (found) {
+      firebaseAuth.sendPasswordResetEmail(payload).then(function () {
+      }).catch(function (error) {
+      });
+    }
   },
   handleAuthStateChanged({ commit, dispatch, state }) {
     firebaseAuth.onAuthStateChanged(user => {

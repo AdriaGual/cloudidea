@@ -22,6 +22,8 @@
 </template>
 
 <script>
+  import { Cookies } from 'quasar'
+
   export default {
     props: ['projectTitle', 'projectReleaseDate'],
     methods: {
@@ -31,27 +33,30 @@
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
-
+        var releaseFormattedDate = ''
+        if (Cookies.get("language") === 'es') {
+          releaseFormattedDate = "hace "
+        }
         if (interval > 1) {
-          return interval + " " + this.$t("years_ago");
+          return releaseFormattedDate + interval + " " + this.$t("years_ago");
         }
         interval = Math.floor(seconds / 2592000);
         if (interval > 1) {
-          return interval + " " + this.$t("months_ago");
+          return releaseFormattedDate + interval + " " + this.$t("months_ago");
         }
         interval = Math.floor(seconds / 86400);
         if (interval > 1) {
-          return interval + " " + this.$t("days_ago");
+          return releaseFormattedDate + interval + " " + this.$t("days_ago");
         }
         interval = Math.floor(seconds / 3600);
         if (interval > 1) {
-          return interval + " " + this.$t("hours_ago");
+          return releaseFormattedDate + interval + " " + this.$t("hours_ago");
         }
         interval = Math.floor(seconds / 60);
         if (interval > 1) {
-          return interval + " " + this.$t("minutes_ago");
+          return releaseFormattedDate + interval + " " + this.$t("minutes_ago");
         }
-        return Math.floor(seconds) + " " + this.$t("seconds_ago");
+        return releaseFormattedDate + Math.floor(seconds) + " " + this.$t("seconds_ago");
       },
     }
   }

@@ -5,7 +5,7 @@
       dense
       active-color="black"
       class="bg-white fixed-bottom shadow-3 text-grey-5"
-      style="height:5em;border-top-left-radius: 1.5em;border-top-right-radius:1.5em;"
+      style="height:5em;border-top-left-radius: 1.5em;border-top-right-radius:1.5em;z-index:1;"
       indicator-color="transparent"
     >
       <q-tab name="home" :icon="tab==='home'?'home':'o_home'" @click="goToPage('/','home')"/>
