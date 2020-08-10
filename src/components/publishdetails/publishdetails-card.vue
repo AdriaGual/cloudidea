@@ -207,7 +207,7 @@
             label="Close project"
             @click="sureCloseProject=true"/>
         </div>
-        <div class="col-2"
+        <div class="col-2 text-center"
              v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
           <q-btn
             rounded
@@ -233,7 +233,7 @@
             color="accent"
             @click="dislike(publishDetails,publishKey)"
           />
-          <p class="cardUserCP q-pl-sm">
+          <p class="cardUserCP ">
             {{publishDetails.cp}}
           </p>
         </div>

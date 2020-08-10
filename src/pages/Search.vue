@@ -42,16 +42,16 @@
             </div>
           </q-scroll-area>
           <div class="row">
-            <div class="col">
-              <q-btn icon="keyboard_arrow_left" color="primary"
+            <div class="col" style="position: relative;top: -2.7em;right:0.8em">
+              <q-btn icon="keyboard_arrow_left" color="grey-5"
                      @click="animateScroll($refs.recentSearchScrollArea,false,356,'recentSearchPosition')"
-                     size="xs" flat
+                     size="xs" unelevated round
               />
             </div>
-            <div class="col" align="right">
-              <q-btn icon="keyboard_arrow_right" color="primary"
+            <div class="col" align="right" style="position: relative;top: -2.7em;right:-1em">
+              <q-btn icon="keyboard_arrow_right" color="grey-5"
                      @click="animateScroll($refs.recentSearchScrollArea,true,356,'recentSearchPosition')"
-                     size="xs" flat
+                     size="xs" unelevated round
               />
             </div>
           </div>
@@ -83,16 +83,16 @@
             </div>
           </q-scroll-area>
           <div class="row">
-            <div class="col">
-              <q-btn icon="keyboard_arrow_left" color="primary"
+            <div class="col" style="position: relative;top: -5.5em;right:0.8em">
+              <q-btn icon="keyboard_arrow_left" color="grey-5"
                      @click="animateScroll($refs.categoryScrollArea,false,700,'categoryPosition')"
-                     size="xs" flat
+                     size="xs" unelevated round
               />
             </div>
-            <div class="col" align="right">
-              <q-btn icon="keyboard_arrow_right" color="primary"
+            <div class="col" align="right" style="position: relative;top: -5.5em;right:-1em">
+              <q-btn icon="keyboard_arrow_right" color="grey-5"
                      @click="animateScroll($refs.categoryScrollArea,true,700,'categoryPosition')"
-                     size="xs" flat
+                     size="xs" unelevated round
               />
             </div>
           </div>
@@ -186,7 +186,7 @@
                     alt=""/>
                 </q-avatar>
 
-                <div>
+                <div v-else>
                   <div v-for="(category, key) in categories" :key="key">
                     <img
                       style="height: 3em"

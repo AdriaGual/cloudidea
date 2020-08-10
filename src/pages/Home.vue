@@ -34,8 +34,6 @@
           appId: "c1cba1e9-164d-43b7-aab2-9b34be225497",
         });
       });
-      /*axios
-      .get('https://cloudidea.es/api/index.php?action=acceptedPublish')*/
     }
   };
 </script>

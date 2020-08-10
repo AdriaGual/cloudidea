@@ -56,9 +56,8 @@
       </div>
       <div
         :class="this.$q.platform.is.desktop?'col q-pa-lg bg-white shadow-1 no-padding':'col q-pa-lg no-padding fixed-bottom'"
-        style="border-radius: 0.5em;">
-        <div class="q-pa-md column col justify-end" :class="{ 'invisible' : !showMessages }"
-             style="height: 80vh">
+        style="border-radius: 0.5em;height: 80%">
+        <div class="q-pa-md column col justify-end" :class="{ 'invisible' : !showMessages }">
           <div v-for="(message, key) in messages"
                :key="key">
             <q-chat-message
@@ -149,6 +148,43 @@
           message: { text: this.newMessage, from: "me" },
           otherUserId: this.$route.params.otherUserId
         });
+        console.log(this.newMessage)
+        console.log(this.otherUserDetails.oneSignalUserId)
+        var data = {
+          app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
+          contents: { "en": this.newMessage },
+          headings: { "en": this.userDetails.name },
+          chrome_web_icon: this.userDetails.imageUrl,
+          include_player_ids: [this.otherUserDetails.oneSignalUserId],
+        };
+
+        var headers = {
+          "Content-Type": "application/json; charset=utf-8",
+          "Authorization": "Basic ZGU0NTg2MWQtMjEyOS00Y2JkLTljMTYtMTBhNDdiNjU0YzU2"
+        };
+
+        var options = {
+          host: "onesignal.com",
+          port: 443,
+          path: "/api/v1/notifications",
+          method: "POST",
+          headers: headers
+        };
+
+        var https = require('https');
+        var req = https.request(options, function (res) {
+          res.on('data', function (data) {
+            console.log(JSON.parse(data));
+          });
+        });
+
+        req.on('error', function (e) {
+          console.log("ERROR:");
+          console.log(e);
+        });
+
+        req.write(JSON.stringify(data));
+        req.end();
         this.clearMessage();
       },
       clearMessage() {

@@ -176,6 +176,18 @@ const actions = {
             });
           });
 
+        OneSignal.push(function () {
+          OneSignal.getUserId().then(function (oneSignalUserId) {
+            if (oneSignalUserId) {
+              console.log(oneSignalUserId)
+              dispatch("firebaseUpdateUser", {
+                userId: userId,
+                updates: { oneSignalUserId: oneSignalUserId }
+              });
+            }
+          });
+        });
+
         dispatch("firebaseUpdateUser", {
           userId: userId,
           updates: { online: true }

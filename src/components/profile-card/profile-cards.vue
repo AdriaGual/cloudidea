@@ -13,15 +13,17 @@
     </q-scroll-area>
     <div class="row">
       <div class="col">
-        <q-btn icon="keyboard_arrow_left" color="primary"
+        <q-btn icon="keyboard_arrow_left" color="grey-5"
+               style="position: relative;top: -16em;right:0.8em"
                @click="animateScroll($refs.profileScrollArea,false,700)"
-               size="xs" flat
+               size="xs" unelevated round
         />
       </div>
       <div class="col" align="right">
-        <q-btn icon="keyboard_arrow_right" color="primary"
+        <q-btn icon="keyboard_arrow_right" color="grey-5"
+               style="position: relative;top: -16em;right:-1em"
                @click="animateScroll($refs.profileScrollArea,true,700)"
-               size="xs" flat
+               size="xs" unelevated round
         />
       </div>
     </div>

@@ -26,8 +26,8 @@
         </q-item-section>
         <q-item-section @click="goToPage('publishDetails/'+filteredPublishing.key)">
           <q-item-label class="poppinsRegular text-white"
-                        v-if="filteredPublishing.projectTitle.length>15">
-            {{filteredPublishing.projectTitle.substring(0,15)+".."}}
+                        v-if="filteredPublishing.projectTitle.length>30">
+            {{filteredPublishing.projectTitle.substring(0,30)+".."}}
           </q-item-label>
 
           <q-item-label v-else class="poppinsRegular text-white">
