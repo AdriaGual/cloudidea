@@ -1,5 +1,6 @@
 import { firebaseDB, firebaseAuth, firebaseStorage } from "boot/firebase";
 import Vue from "vue";
+import { Cookies } from 'quasar'
 
 let messagesRef;
 
@@ -176,17 +177,24 @@ const actions = {
             });
           });
 
-        OneSignal.push(function () {
-          OneSignal.getUserId().then(function (oneSignalUserId) {
-            if (oneSignalUserId) {
-              console.log(oneSignalUserId)
-              dispatch("firebaseUpdateUser", {
-                userId: userId,
-                updates: { oneSignalUserId: oneSignalUserId }
-              });
-            }
+        if (Cookies.has('oneSignalId')) {
+          dispatch("firebaseUpdateUser", {
+            userId: userId,
+            updates: { oneSignalUserId: Cookies.get('oneSignalId') }
           });
-        });
+        } else {
+          OneSignal.push(function () {
+            OneSignal.getUserId().then(function (oneSignalUserId) {
+              if (oneSignalUserId) {
+                console.log(oneSignalUserId)
+                dispatch("firebaseUpdateUser", {
+                  userId: userId,
+                  updates: { oneSignalUserId: oneSignalUserId }
+                });
+              }
+            });
+          });
+        }
 
         dispatch("firebaseUpdateUser", {
           userId: userId,
