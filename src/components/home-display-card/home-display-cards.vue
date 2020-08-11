@@ -208,7 +208,7 @@
       publishingWithCategory() {
         var found = false
         for (let publish of this.orderedPublishings) {
-          if (this.$q.cookies.get('categorySelection').includes(publish.categoryModel)) {
+          if (Cookies.get('categorySelection').includes(publish.categoryModel)) {
             found = true
           }
         }
@@ -218,7 +218,7 @@
         Cookies.set('categorySelection', this.selection)
       },
       openCookies() {
-        this.openCookiesNotify = true
+        this.openCookiesNotify = true;
         Cookies.set('adBlockAdvice', true)
       }
     },
@@ -243,7 +243,7 @@
       this.clearPublishings();
       this.firebaseGetApprovedPublishings();
       for (let category of this.categories) {
-        if (this.$q.cookies.has('categorySelection') && this.$q.cookies.get('categorySelection')
+        if (Cookies.has('categorySelection') && Cookies.get('categorySelection')
         .includes(category.categoryName)) {
           category.selected = true
         }
@@ -258,6 +258,8 @@
         if (testAd.offsetHeight === 0) {
           this.openAdblockDialog = true;
           adBlockEnabled = true
+        } else {
+          this.openCookiesNotify = true;
         }
         testAd.remove();
       }
@@ -297,7 +299,7 @@
         }
       },
       openCookiesNotify: function (val) {
-        if (val) {
+        if (!Cookies.has('cookieNotify') && !window.hasOwnProperty("cordova")) {
           this.$q.notify({
             message: this.$t('cookies_advice_1'),
             color: 'dark',
@@ -319,6 +321,7 @@
               }
             ]
           })
+          Cookies.set('cookieNotify', true);
         }
 
       },
