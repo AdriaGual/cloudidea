@@ -156,6 +156,12 @@ export default {
   submit: "Enviar",
   email_recover_sended: "Se ha enviado un mail para reestablecer tu contraseña",
   unsaved_fields: "Estas seguro que quieres salir? Tienes campos sin guardar",
+  accept: "Aceptar",
+  to_receive_notifications: "Para recibir notificaciones en tu ordenador sobre archivos compartidos y eventos importantes te recomendamos deshabilitar los bloqueadores de anuncios",
+  profile: "Perfil",
+  cookies_advice_1: "Tenga en cuenta que en nuestro sitio web utilizamos cookies necesarias para el funcionamiento de nuestro sitio web.",
+  cookies_advice_2: "Lea nuestra Política de cookies",
+  dismiss: "Descartar",
   la: "la",
   el: "el"
 };

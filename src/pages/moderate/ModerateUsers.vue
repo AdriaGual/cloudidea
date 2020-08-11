@@ -143,7 +143,6 @@
           a) === b)
 
         this.orderedUsers.sort((a, b) => b.cp - a.cp);
-        console.log(this.orderedUsers)
       }
     },
     created() {

@@ -153,6 +153,12 @@ export default {
   submit: "Submit",
   email_recover_sended: "An email to recover your password has been sended",
   unsaved_fields: "Do you really want to leave? you have unsaved changes",
+  accept: "Accept",
+  to_receive_notifications: "To receive notifications on your computer about shared files and important events, we recommend disabling adblockers",
+  profile: "Profile",
+  cookies_advice_1: "Please note that on our website we use cookies necessary for the functioning of our website.",
+  cookies_advice_2: "Read our Cookie Policy",
+  dismiss: "Dismiss",
   la: "",
   el: ""
 };

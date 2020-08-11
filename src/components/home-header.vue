@@ -14,25 +14,39 @@
         :label="$t('login')"
       />
       <q-btn
-        v-if="userDetails.userId" round class="float-right"
-        @click="goToPage('/profile/'+userDetails.userId)">
+        v-if="userDetails.userId" round class="float-right">
         <q-avatar size="3em">
           <img :src="userDetails.imageUrl">
         </q-avatar>
+        <q-menu auto-close>
+          <q-list style="min-width: 10em">
+            <q-item clickable @click="goToPage('/profile/'+userDetails.userId)">
+              <q-item-section>{{$t('profile')}}</q-item-section>
+            </q-item>
+            <q-item clickable @click="logOut()">
+              <q-item-section>{{$t('logout')}}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
       </q-btn>
     </div>
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     methods: {
+      ...mapActions('store',
+        ['logoutUser']),
       goToPage(route) {
         this.$router.push(route).catch(error => {
         });
-      }
+      },
+      logOut() {
+        this.logoutUser();
+      },
     },
     computed: {
       ...mapState('store', ['userDetails']),

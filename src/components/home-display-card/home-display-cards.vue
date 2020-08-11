@@ -111,6 +111,17 @@
 
       </q-card>
     </q-dialog>
+    <q-dialog v-model="openAdblockDialog" persistent position="bottom">
+      <q-card class="q-pa-sm">
+        <q-card-section>
+          <p class="poppinsRegular">{{$t('to_receive_notifications')}}</p>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn :label="$t('accept')" color="primary" v-close-popup
+                 @click="openCookies()"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -127,6 +138,8 @@
         orderedPublishings: [],
         listMode: false,
         openFilterDialog: false,
+        openAdblockDialog: false,
+        openCookiesNotify: false,
         categories: [{
           categoryName: 'Writting',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f',
@@ -203,6 +216,10 @@
       },
       toogleCategory(key) {
         Cookies.set('categorySelection', this.selection)
+      },
+      openCookies() {
+        this.openCookiesNotify = true
+        Cookies.set('adBlockAdvice', true)
       }
     },
     computed: {
@@ -230,6 +247,19 @@
         .includes(category.categoryName)) {
           category.selected = true
         }
+      }
+
+      if (!Cookies.has('adBlockAdvice')) {
+        var adBlockEnabled = false;
+        var testAd = document.createElement('div');
+        testAd.innerHTML = '&nbsp;';
+        testAd.className = 'adsbox';
+        document.body.appendChild(testAd);
+        if (testAd.offsetHeight === 0) {
+          this.openAdblockDialog = true;
+          adBlockEnabled = true
+        }
+        testAd.remove();
       }
     },
     watch: {
@@ -263,6 +293,31 @@
               }
             ],
             timeout: 2000
+          })
+        }
+      },
+      openCookiesNotify: function (val) {
+        if (val) {
+          this.$q.notify({
+            message: this.$t('cookies_advice_1'),
+            color: 'dark',
+            position: 'bottom-left',
+            timeout: 0,
+            actions: [
+              {
+                label: this.$t('cookies_advice_2'), color: 'yellow', handler: () => {
+                  this.goToPage('profile')
+                }
+              },
+              {
+                label: this.$t('accept'), color: 'yellow', handler: () => { /* ... */
+                }
+              },
+              {
+                label: this.$t('dismiss'), color: 'white', handler: () => { /* ... */
+                }
+              }
+            ]
           })
         }
 

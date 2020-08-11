@@ -139,9 +139,6 @@
               {{$t('change_password')}}
             </p>
 
-            <p class=" text-blue poppinsRegular cursor-pointer"
-               @click="logOut()">{{$t('logout')}}
-            </p>
             <q-btn
               style="width:14em;font-size: 0.9em;border-radius: 0.5em;height:3.5em"
               class="bg-red-10"
@@ -258,7 +255,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseDeleteMyUser', 'firebaseUpdateUser', 'updateUserState', 'logoutUser', 'clearPublishings', 'firebaseGetApprovedPublishings', 'clearUsers', 'firebaseGetUsers', 'changeUserPassword', 'firebaseDeletePublish']),
+        ['firebaseDeleteMyUser', 'firebaseUpdateUser', 'updateUserState', 'clearPublishings', 'firebaseGetApprovedPublishings', 'clearUsers', 'firebaseGetUsers', 'changeUserPassword', 'firebaseDeletePublish']),
       updateUser(type) {
         if (type === 'description') {
           this.firebaseUpdateUser({
@@ -277,9 +274,6 @@
       },
       changePassword() {
         this.changeUserPassword(this.userDetails.email)
-      },
-      logOut() {
-        this.logoutUser();
       },
       deleteAccount() {
         this.firebaseDeleteMyUser(this.$route.params.otherUserId);

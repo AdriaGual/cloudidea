@@ -10,7 +10,6 @@
   import HomeDisplayCards from '../components/home-display-card/home-display-cards'
   import { Cookies } from 'quasar'
 
-
   export default {
     methods: {
       goToPage(route) {
@@ -25,6 +24,7 @@
       if (!Cookies.has('categorySelection')) {
         this.goToPage('welcome')
       }
+
       let oneSignalSDK = document.createElement('script');
       oneSignalSDK.setAttribute('src', "https://cdn.onesignal.com/sdks/OneSignalSDK.js");
       document.head.appendChild(oneSignalSDK);

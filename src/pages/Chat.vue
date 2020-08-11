@@ -148,8 +148,6 @@
           message: { text: this.newMessage, from: "me" },
           otherUserId: this.$route.params.otherUserId
         });
-        console.log(this.newMessage)
-        console.log(this.otherUserDetails.oneSignalUserId)
         var data = {
           app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
           contents: { "en": this.newMessage },
@@ -174,13 +172,10 @@
         var https = require('https');
         var req = https.request(options, function (res) {
           res.on('data', function (data) {
-            console.log(JSON.parse(data));
           });
         });
 
         req.on('error', function (e) {
-          console.log("ERROR:");
-          console.log(e);
         });
 
         req.write(JSON.stringify(data));

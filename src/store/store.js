@@ -127,7 +127,6 @@ const actions = {
   },
   logoutUser() {
     firebaseAuth.signOut();
-    this.$router.replace("/");
   },
   changeUserPassword({ commit, dispatch }, payload) {
     let found = false
@@ -186,7 +185,6 @@ const actions = {
           OneSignal.push(function () {
             OneSignal.getUserId().then(function (oneSignalUserId) {
               if (oneSignalUserId) {
-                console.log(oneSignalUserId)
                 dispatch("firebaseUpdateUser", {
                   userId: userId,
                   updates: { oneSignalUserId: oneSignalUserId }
@@ -416,7 +414,6 @@ const actions = {
       });
   },
   firebaseUpdateUserMessageNotification({}, payload) {
-    console.log(payload)
     firebaseDB
     .ref("chats/" + payload.otherUserId + "/" + payload.userId)
     .update(payload.updates);
@@ -548,7 +545,6 @@ const actions = {
       });
   },
   clearPublishings({ commit }) {
-    //console.log(firebaseAuth.currentUser.emailVerified)
     commit("setPublishings", {});
   },
   clearUsers({ commit }) {
