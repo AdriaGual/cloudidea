@@ -13,7 +13,7 @@
     </div>
     <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col" style="border-radius: 0.5em">
+      <div class="col q-px-lg" style="border-radius: 0.5em">
         <div v-for="(user, key) in userChats" :key="key">
           <q-item clickable no-ripple class="cardSectionInterior q-mb-md" :to="'/chat/' + key">
             <q-item-section side>
@@ -38,9 +38,9 @@
               </q-item-label>
             </q-item-section>
             <q-item-section side>
-              <q-item-label class="poppinsRegular text-red">
-                {{user.cp}}
-              </q-item-label>
+              <!--<q-item-label v-if="user.unreadMessages" class="poppinsRegular text-red">
+                <q-icon name="priority_high" size="sm"/>
+              </q-item-label>-->
             </q-item-section>
           </q-item>
         </div>

@@ -119,7 +119,7 @@
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
         var releaseFormattedDate = ''
-        if (Cookies.get("language") === 'es') {
+        if (this.$i18n.locale === 'es') {
           releaseFormattedDate = "hace "
         }
         if (interval > 1) {

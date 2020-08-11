@@ -25,7 +25,7 @@
                   alt=""/>
               </q-avatar>
 
-              <div v-for="(category, key) in categories" :key="key">
+              <div v-else v-for="(category, key) in categories" :key="key">
                 <img
                   style="height: 3em"
                   v-if="filteredPublishing.fileType && category.categoryName ===filteredPublishing.categoryModel"
@@ -148,8 +148,10 @@
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
         var releaseFormattedDate = ''
-        if (Cookies.get("language") === 'es') {
+        console.log(this.$i18n.locale)
+        if (this.$i18n.locale === 'es') {
           releaseFormattedDate = "hace "
+
         }
         if (interval > 1) {
           return releaseFormattedDate + interval + " " + this.$t("years_ago");

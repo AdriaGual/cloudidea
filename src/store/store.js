@@ -61,6 +61,9 @@ const mutations = {
   addChatUser(state, payload) {
     Vue.set(state.userChats, payload.otherUserId, payload.otherUserDetails);
   },
+  clearUserChats(state) {
+    state.userChats = {};
+  },
   addComment(state, payload) {
     Vue.set(state.publishComments, payload.commentId, payload.commentDetails);
   },
@@ -415,10 +418,10 @@ const actions = {
         });
       });
   },
-  firebaseUpdateUserMessageNotification({}, payload) {
+  firebaseUpdateUserMessageNotification({ commit }, payload) {
     firebaseDB
     .ref("chats/" + payload.otherUserId + "/" + payload.userId)
-    .update(payload.updates);
+    .update(payload.updates)
   },
   firebaseCreatePublish({ dispatch }, payload) {
     if (payload.file.type === '') {

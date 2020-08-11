@@ -15,11 +15,11 @@
             <p class="poppinsRegular q-pt-md">{{otherUserDetails.name}}</p>
           </q-item-section>
         </q-item>
-
       </div>
       <div class="col-1"></div>
     </div>
-    <div class="row window-width q-pt-md">
+
+    <div class="row full-width">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm">
         <div v-for="(user, key) in userChats" :key="key" class="q-px-md">
           <q-item clickable no-ripple class="cardSectionInterior q-mb-md"
@@ -47,21 +47,27 @@
               </q-item-label>
             </q-item-section>
             <q-item-section side>
-              <q-item-label class="poppinsRegular text-red">
-                {{user.cp}}
-              </q-item-label>
+              <!--<q-item-label v-if="user.unreadMessages" class="poppinsRegular text-red">
+                <q-icon name="priority_high" size="sm"/>
+              </q-item-label>-->
             </q-item-section>
           </q-item>
         </div>
       </div>
       <div
-        :class="this.$q.platform.is.desktop?'col q-pa-lg bg-white shadow-1 no-padding':'col q-pa-lg no-padding fixed-bottom'"
-        style="border-radius: 0.5em;height: 80%">
-        <div class="q-pa-md column col justify-end" :class="{ 'invisible' : !showMessages }">
+        :class="this.$q.platform.is.desktop?'col q-pa-lg bg-white shadow-1 no-padding':'col q-pa-sm q-px-md bgGlobal'"
+        style="border-radius: 0.5em;">
+        <q-scroll-area
+          ref="scrollArea"
+          visbile="false"
+          :class="this.$q.platform.is.desktop?'q-pt-md q-px-lg':'q-pt-sm'"
+          style="height:80vh"
+          :thumb-style="thumbStyle"
+        >
           <div v-for="(message, key) in messages"
                :key="key">
             <q-chat-message
-              class="poppinsRegular"
+              class="poppinsRegular full-width"
               style="font-size: 0.9em"
               v-if="message.text && message.text!==''"
               text-color="white"
@@ -72,12 +78,9 @@
               :bg-color="message.from === 'me' ? 'light-blue' : 'light-green'"
             />
           </div>
-
-          <div class="q-pb-md">
-          </div>
-        </div>
+        </q-scroll-area>
         <div
-          class="vertical-bottom"
+          :class="this.$q.platform.is.desktop?'vertical-bottom':'fixed-bottom'"
           style="border-top-left-radius: 0.8em;border-top-right-radius: 0.8em;background-color: #393e46;">
           <q-toolbar style="height:4em;">
             <q-input
@@ -120,7 +123,10 @@
       return {
         newMessage: "",
         showMessages: false,
-        openChats: 0
+        openChats: 0,
+        thumbStyle: {
+          opacity: 0
+        },
       };
     },
     computed: {
@@ -150,12 +156,15 @@
         });
 
         var data = {
-          app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
-          contents: { "en": this.newMessage },
-          headings: { "en": this.userDetails.name },
-          chrome_web_icon: this.userDetails.imageUrl,
-          include_player_ids: [this.otherUserDetails.oneSignalUserId],
-        };
+            app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
+            contents: { "en": this.newMessage },
+            headings: { "en": this.userDetails.name },
+            chrome_web_icon: this.userDetails.imageUrl,
+            large_icon: this.userDetails.imageUrl,
+            include_player_ids:
+              [this.otherUserDetails.oneSignalUserId],
+          }
+        ;
 
         var headers = {
           "Content-Type": "application/json; charset=utf-8",
@@ -190,7 +199,7 @@
       scrollToBottom() {
         const pageChat = this.$refs.pageChat.$el;
         setTimeout(() => {
-          window.scrollTo(0, pageChat.scrollHeight);
+          window.scrollTo(0, this.$refs.scrollArea);
         }, 20);
       }
     },
@@ -216,6 +225,7 @@
         otherUserId: this.userDetails.userId,
         updates: { unreadMessages: false }
       });
+      this.$refs.scrollArea.setScrollPosition(99999999)
     },
     destroyed() {
       this.firebaseStopGettingMessages();

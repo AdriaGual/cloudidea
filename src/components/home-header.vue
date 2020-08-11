@@ -30,7 +30,7 @@
             <q-item clickable @click="goToPage('/myChats')">
               <q-item-section>Chats</q-item-section>
               <q-item-section side>
-                <q-icon name="send"/>
+                <q-icon name="inbox"/>
               </q-item-section>
             </q-item>
             <q-item clickable @click="logOut()">

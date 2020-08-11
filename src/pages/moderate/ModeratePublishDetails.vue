@@ -135,7 +135,7 @@
                           <img
                             :src="newPublishDetails.coverImage?newPublishDetails.coverImage:newPublishDetails.fileUrl"/>
                         </q-avatar>
-                        <div v-for="(category, key) in categories" :key="key">
+                        <div v-else v-for="(category, key) in categories" :key="key">
                           <img
                             style="height: 4em"
                             v-if="category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"

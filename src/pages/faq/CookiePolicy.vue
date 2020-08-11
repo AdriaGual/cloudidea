@@ -15,7 +15,7 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col q-mt-sm"
            style="border-radius: 0.5em">
-        <p class="poppinsRegular text-justify q-pb-md" style="white-space: pre-line">
+        <p class="poppinsRegular text-justify q-pa-md" style="white-space: pre-line">
           {{$t('cookie_policy_text_1')}}</p>
         <q-list bordered class="rounded-borders q-mb-sm q-mx-lg bg-white"
                 v-for="(cookiePolicy, key) in cookiesPolicyItems"

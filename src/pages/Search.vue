@@ -1,21 +1,23 @@
 <template>
-  <q-layout class="flex column q-pb-xl q-pl-lg">
-    <div class="row full-width q-pr-lg">
+  <q-layout
+    :class="this.$q.platform.is.desktop?'flex column q-pb-xl q-px-lg':'flex column q-pb-xl'">
+    <div class="row full-width">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       <div class="col" style="border-radius: 0.5em">
-        <q-input outlined bg-color="white" :placeholder="$t('search')" v-model="searchText">
+        <q-input outlined bg-color="white" :placeholder="$t('search')" v-model="searchText"
+                 class="q-px-lg">
           <template v-slot:append>
             <q-icon v-if="searchText === ''" name="search"/>
             <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''"/>
           </template>
         </q-input>
-        <p class="poppinsRegular text-grey q-pt-md"
+        <p class="poppinsRegular text-grey q-pt-md q-px-lg"
            v-if="searchText !== '' && filteredUsers.length===0 && filteredPublishingsByTitle.length===0 && filteredPublishingsByCategory.length===0">
           <q-icon name="error_outline" size="sm"/>
           {{$t('seems_like_no_results_found')}}
         </p>
         <div class="no-padding" v-if="searchText===''">
-          <div class="row q-pt-xl q-pl-xs">
+          <div class="row q-pt-xl q-pl-xs q-px-lg">
             <div class="col">
               <p class="poppinsBold" style="line-height: 0.1em">
                 {{$t('recent_searches')}}</p>
@@ -41,7 +43,7 @@
               />
             </div>
           </q-scroll-area>
-          <div class="row">
+          <div class="row" v-if="this.$q.platform.is.desktop">
             <div class="col" style="position: relative;top: -2.7em;right:0.8em">
               <q-btn icon="keyboard_arrow_left" color="grey-5"
                      @click="animateScroll($refs.recentSearchScrollArea,false,356,'recentSearchPosition')"
@@ -55,7 +57,7 @@
               />
             </div>
           </div>
-          <div class="row q-pt-lg q-pl-xs">
+          <div class="row q-pt-lg q-pl-xs q-px-lg">
             <div class="col-10">
               <p class="poppinsBold" style="line-height: 0.1em">
                 {{$t('categories')}} <a class=" "
@@ -66,23 +68,25 @@
           <q-scroll-area
             horizontal
             visbile="false"
-            style="height: 10em;width: 100%;"
+            style="height: 10em;"
             class="q-pt-sm"
             ref="categoryScrollArea"
             :thumb-style="thumbStyle"
           >
-            <div class="row no-wrap q-gutter-md q-pl-xs" style="height:5em;">
+            <div class="row no-wrap q-gutter-md q-pl-xs">
               <div v-for="(category, key) in categories" :key="key">
                 <div style="height:9em;width:9em;background-color: #F6FAFF;border-radius: 0.4em"
-                     class="q-pt-md shadow-1 cursor-pointer"
+                     class=" shadow-1 cursor-pointer"
                      @click="searchText=category.searchText">
-                  <q-img :src="category.url" style="height:6em"/>
-                  <p class="text-center q-pb-lg">{{$t(category.searchText.toLowerCase())}}</p>
+                  <q-img :src="category.url" style="height:6.8em"/>
+                  <p
+                    class="text-center">
+                    {{$t(category.searchText.toLowerCase())}}</p>
                 </div>
               </div>
             </div>
           </q-scroll-area>
-          <div class="row">
+          <div class="row" v-if="this.$q.platform.is.desktop">
             <div class="col" style="position: relative;top: -5.5em;right:0.8em">
               <q-btn icon="keyboard_arrow_left" color="grey-5"
                      @click="animateScroll($refs.categoryScrollArea,false,700,'categoryPosition')"
@@ -96,12 +100,12 @@
               />
             </div>
           </div>
-          <p class="poppinsBold q-pt-lg q-pl-xs q-pb-sm" style="line-height: 0.1em">
+          <p class="poppinsBold q-pt-lg q-pl-xs q-pb-sm q-px-lg" style="line-height: 0.1em">
             {{$t('top_project_creators')}}</p>
 
           <profile-cards></profile-cards>
         </div>
-        <div v-else class="q-pt-lg">
+        <div v-else class="q-pt-lg q-px-lg">
           <div v-if="filteredPublishingsByTitle.length >0" class="q-pt-md">
             <p>
               <q-icon name="receipt_long" size="md"/>
@@ -165,7 +169,7 @@
             </div>
           </div>
         </div>
-        <div v-if="filteredPublishingsByCategory.length >0" class="q-pt-md">
+        <div v-if="filteredPublishingsByCategory.length >0" class="q-pt-md q-px-lg">
           <p>
             <q-icon name="list_alt" size="md"/>
             {{$t('category')}}

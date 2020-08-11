@@ -53,7 +53,7 @@
            style="font-size: 1em;"
            v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
           {{otherUserDetails.email}}
-          <q-icon class="text-indigo-6" name="mail"/>
+          <q-btn flat round color="text-indigo-6" icon="o_mail"/>
         </p>
 
         <div class="text-center q-px-lg q-pt-sm">
