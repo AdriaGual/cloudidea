@@ -1,12 +1,14 @@
 <template>
   <div class="">
 
-    <div class="row q-pl-lg q-pt-lg q-pr-sm">
-      <div class="col">
+    <div class="row  q-pt-lg ">
+      <div class="col q-pl-lg">
         <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
            style="font-size: 0.9em;line-height: 0.1em">
           {{$t('hello')}}
           {{capitalize(userDetails.name)}}</p>
+        <p :class="userDetails.name?'poppinsBold ':'poppinsBold q-pt-lg '"
+           style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</p>
       </div>
       <div class="col" align="right">
         <q-btn
@@ -30,10 +32,10 @@
       </div>
 
     </div>
-    <a :class="userDetails.name?'poppinsBold q-px-lg':'poppinsBold q-pt-lg q-px-lg'"
-       style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</a>
+
     <q-scroll-area
       horizontal
+      class="q-pl-md"
       visbile="false"
       :thumb-style="thumbStyle"
       :class="this.$q.platform.is.desktop?'scrollTagsHorizontal q-pt-md q-pl-md':'scrollTagsHorizontal q-pt-md'"
@@ -56,7 +58,7 @@
       {{$t('seems_like_no_available_project')}}
     </p>
     <div v-if="this.$q.platform.is.desktop" class="q-pt-sm"></div>
-    <div class="row justify-center q-pb-xl" v-if="!listMode">
+    <div class="row justify-center q-pb-xl q-px-sm" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <home-display-card :publish="publish" :categories="categories"
                            v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"

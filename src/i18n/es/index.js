@@ -52,7 +52,7 @@ export default {
   need_help: "Necesito ayuda",
   need_help_with: "Necesito ayuda con",
   create: "Crear",
-  new_help_requests: "Nuevas solicitudes de ayuda",
+  new_help_requests: "Nuevas solicitudes de colaboración",
   copyright: "Copyright",
   copyleft: "Copyleft",
   creative_commons: "Creative Commons",

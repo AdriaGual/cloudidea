@@ -148,7 +148,6 @@
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
         var releaseFormattedDate = ''
-        console.log(this.$i18n.locale)
         if (this.$i18n.locale === 'es') {
           releaseFormattedDate = "hace "
 

@@ -191,6 +191,7 @@
         req.write(JSON.stringify(data));
         req.end();
         this.clearMessage();
+        this.$refs.scrollArea.setScrollPosition(99999999)
       },
       clearMessage() {
         this.newMessage = "";
@@ -199,7 +200,7 @@
       scrollToBottom() {
         const pageChat = this.$refs.pageChat.$el;
         setTimeout(() => {
-          window.scrollTo(0, this.$refs.scrollArea);
+          this.$refs.scrollArea.setScrollPosition(99999999)
         }, 20);
       }
     },
