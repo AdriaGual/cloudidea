@@ -27,6 +27,12 @@
                 <q-icon name="face"/>
               </q-item-section>
             </q-item>
+            <q-item clickable @click="goToPage('/myChats')">
+              <q-item-section>Chats</q-item-section>
+              <q-item-section side>
+                <q-icon name="send"/>
+              </q-item-section>
+            </q-item>
             <q-item clickable @click="logOut()">
               <q-item-section>{{$t('logout')}}</q-item-section>
               <q-item-section side>

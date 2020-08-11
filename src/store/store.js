@@ -108,7 +108,7 @@ const actions = {
         privateProfile: false,
         userId: userId,
         cp: 0,
-        emailVerified: firebaseAuth.currentUser.emailVerified
+        emailVerified: firebaseAuth.currentUser.emailVerified,
       });
     })
     .catch(error => {
@@ -158,7 +158,8 @@ const actions = {
             userId: userId,
             privateProfile: userDetails.privateProfile,
             cp: userDetails.cp,
-            emailVerified: firebaseAuth.currentUser.emailVerified
+            emailVerified: firebaseAuth.currentUser.emailVerified,
+            oneSignalUserId: userDetails.oneSignalUserId
           });
         });
 
@@ -232,7 +233,8 @@ const actions = {
         privateProfile: userDetails.privateProfile,
         userId: userId,
         cp: userDetails.cp,
-        emailVerified: firebaseAuth.currentUser.emailVerified
+        emailVerified: firebaseAuth.currentUser.emailVerified,
+        oneSignalUserId: userDetails.oneSignalUserId
       });
     });
   },

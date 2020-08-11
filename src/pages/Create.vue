@@ -211,7 +211,8 @@
         registerLicenseOptions: [
           'Copyright', 'Creative Commons', 'LGPL', 'Copyleft'
         ],
-        showWarning: false
+        showWarning: false,
+        submittedProject: false
       }
     },
     methods: {
@@ -254,6 +255,7 @@
             timeout: 1000
           })
         } else {
+          this.submittedProject = true;
           this.publishing.approved = false;
           this.publishing.cp = 0
           this.publishing.creatorImageUrl = this.userDetails.imageUrl;
@@ -264,8 +266,42 @@
           this.publishing.creatorCP = this.userDetails.cp;
           this.firebaseCreatePublish(this.publishing);
           axios.get('https://cloudidea.es/api/index.php?action=moderatePublish&param1=' + this.publishing.creatorEmail + '&param2=' + this.publishing.creatorName + '&param3=' + this.publishing.projectTitle)
-
           this.goToPage('/')
+          var data = {
+            app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
+            contents: {
+              "en": "Your project '" + this.publishing.projectTitle + "' has been sended to moderation",
+              "es": "Tu proyecto '" + this.publishing.projectTitle + "' se ha enviado a moderación"
+            },
+            headings: { "en": "Cloudidea" },
+            include_player_ids: [this.userDetails.oneSignalUserId],
+          };
+
+          var headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": "Basic ZGU0NTg2MWQtMjEyOS00Y2JkLTljMTYtMTBhNDdiNjU0YzU2"
+          };
+
+          var options = {
+            host: "onesignal.com",
+            port: 443,
+            path: "/api/v1/notifications",
+            method: "POST",
+            headers: headers
+          };
+
+          var https = require('https');
+          var req = https.request(options, function (res) {
+            res.on('data', function (data) {
+            });
+          });
+
+          req.on('error', function (e) {
+          });
+
+          req.write(JSON.stringify(data));
+          req.end();
+
         }
       },
       goToPage(route) {
@@ -286,16 +322,17 @@
       ...mapState('store', ['userDetails']),
     },
     beforeRouteLeave(to, from, next) {
-      if (this.projectTitle !== '' || this.projectUrl !== '' || this.desktop !== '' || this.registerLicenseModel != null || this.categoryModel !== null || this.file !== null
-      ) {
+      if ((this.projectTitle !== '' || this.projectUrl !== '' || this.desktop !== '' || this.registerLicenseModel != null || this.categoryModel !== null || this.file !== null
+      ) && !this.submittedProject) {
         const answer = window.confirm(this.$t('unsaved_fields'))
         if (answer) {
           next()
         } else {
           next(false)
         }
+      } else {
+        next()
       }
-
     }
   };
 </script>

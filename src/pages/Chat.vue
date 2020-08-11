@@ -148,6 +148,7 @@
           message: { text: this.newMessage, from: "me" },
           otherUserId: this.$route.params.otherUserId
         });
+
         var data = {
           app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
           contents: { "en": this.newMessage },
