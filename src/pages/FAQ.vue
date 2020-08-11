@@ -41,6 +41,15 @@
               {{$t('popular_questions')}}
             </q-card-section>
           </q-card>
+          <q-card class="text-center bg-white cursor-pointer poppinsRegular" style="max-width: 20em"
+                  @click="goToPage('faq/cookiePolicy')">
+            <q-card-section>
+              <q-icon name="fas fa-cookie-bite" size="lg"/>
+            </q-card-section>
+            <q-card-section>
+              {{$t('cookie_policy')}}
+            </q-card-section>
+          </q-card>
           <!--<q-card class="text-center bg-white cursor-pointer poppinsRegular" style="max-width: 20em"
                   @click="goToPage('faq/whoWeAre')">
             <q-card-section>

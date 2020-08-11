@@ -159,6 +159,14 @@ export default {
   cookies_advice_1: "Please note that on our website we use cookies necessary for the functioning of our website.",
   cookies_advice_2: "Read our Cookie Policy",
   dismiss: "Dismiss",
+  cookie_policy: "Cookies policy",
+  cookie_policy_text_1: "Last updated: 11/08/2020\n\nCloudidea uses cookies on www.cloudidea.es. By using the Service, you consent to the use of cookies.\n\nOur Cookies Policy explains what cookies are, how we use cookies, how third-parties we may partner with may use cookies on the Service, your choices regarding cookies and further information about cookies.",
+  what_are_cookies: "What are cookies",
+  what_are_cookies_text: "Cookies are small pieces of text sent by your web browser by a website you visit. A cookie file is stored in your web browser and allows the Service or a thir-party to recognize you and make your next visit easier and the Service more useful to you.\n\nCookies can be 'persistent' or 'session' cookies.",
+  how_cloudidea_uses_cookies: "How Cloudidea uses cookies",
+  how_cloudidea_uses_cookies_text: "When you use and access the Service, we may place a number of cookies files in your web browser.\n\nWe use cookies for the following purpouses: to enable certain functions of the Service, to provide analytics, to store your preferences, to enable advertisements delivery, including behavioral advertising.\n\nWe use both sessions and persistent cookies on the Service and we use different types of cookies to run the Service:\n\n-Essential cookies. We may use essential cookies to authenticate users and prevent fraudulent use of your accounts.",
+  third_party_cookies: "Third-party cookies",
+  third_party_cookies_text: "In addition to our own cookies, we may also use various third-parties cookies to report usage statistics of the Service, deliver advertisements on and through the Service, and so on.",
   la: "",
   el: ""
 };

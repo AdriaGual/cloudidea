@@ -91,6 +91,10 @@ const routes = [
     component: () => import("pages/faq/PopularQuestions.vue")
   },
   {
+    path: "/faq/cookiePolicy",
+    component: () => import("pages/faq/CookiePolicy.vue")
+  },
+  {
     path: "/faq/whoWeAre",
     component: () => import("pages/faq/WhoWeAre.vue")
   },

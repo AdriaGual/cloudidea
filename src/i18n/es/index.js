@@ -162,6 +162,14 @@ export default {
   cookies_advice_1: "Tenga en cuenta que en nuestro sitio web utilizamos cookies necesarias para el funcionamiento de nuestro sitio web.",
   cookies_advice_2: "Lea nuestra Política de cookies",
   dismiss: "Descartar",
+  cookie_policy: "Política de cookies",
+  cookie_policy_text_1: "Última actualización: 11/08/2020\n\nCloudidea usa cookies en www.cloudidea.es. Al usar este Servicio, used acepta el uso de cookies.\n\nNuestra Política de cookies explica qué son las cookies, cómo utilizar cookies, cómo los terceros con los que podemos asociarnos pueden utilizar cookies en el Servicio, sus opciones con respecto a las cookies y más información sobre las cookies.",
+  what_are_cookies: "¿Que son las cookies?",
+  what_are_cookies_text: "Las cookies son pequeños fragmentos de texto enviados por su navegador a través de la web que visita. Un archivo de cookies se almacena en su navegador web y permite que el Servicio o un tercero lo reconozca y haga su próxima visita más fácil y el Servicio más útil para usted.\n\nLas cookies pueden ser cookies 'persistentes' o de 'sesión'.",
+  how_cloudidea_uses_cookies: "Cómo Cloudidea usa las cookies",
+  how_cloudidea_uses_cookies_text: "Cuando usas el Servicio, podemos colocar una serie de archivos de cookies en su navegador web. \nUtilizamos cookies para los siguientes propósitos: habilitar ciertas funciones del Servicio, proporcionar análisis y almacenar sus preferencias. \n\nUtilizamos cookies de sesión y persistentes en el Servicio y utilizamos diferentes tipos de cookies para ejecutar el Servicio: \n-Cookies esenciales. Podemos utilizar cookies esenciales para autenticar a los usuarios y evitar el uso fraudulento de sus cuentas.",
+  third_party_cookies: "Cookies de terceros",
+  third_party_cookies_text: "Además de nuestras propias cookies, también podemos utilizar varias cookies de terceros para informar estadísticas de uso del Servicio, entregar anuncios en y a través del Servicio, etc.",
   la: "la",
   el: "el"
 };

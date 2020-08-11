@@ -1,7 +1,7 @@
 <template>
-  <div class="q-pa-lg">
+  <div class="">
 
-    <div class="row">
+    <div class="row q-pl-lg q-pt-lg q-pr-sm">
       <div class="col">
         <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
            style="font-size: 0.9em;line-height: 0.1em">
@@ -30,13 +30,13 @@
       </div>
 
     </div>
-    <a :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-lg'"
+    <a :class="userDetails.name?'poppinsBold q-px-lg':'poppinsBold q-pt-lg q-px-lg'"
        style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</a>
     <q-scroll-area
       horizontal
       visbile="false"
       :thumb-style="thumbStyle"
-      class="scrollTagsHorizontal q-pt-md"
+      :class="this.$q.platform.is.desktop?'scrollTagsHorizontal q-pt-md q-pl-md':'scrollTagsHorizontal q-pt-md'"
     >
       <div class="row no-wrap">
         <div v-for="(category, key) in categories" :key="key">
@@ -306,7 +306,7 @@
             actions: [
               {
                 label: this.$t('cookies_advice_2'), color: 'yellow', handler: () => {
-                  this.goToPage('profile')
+                  this.goToPage('faq/cookiePolicy')
                 }
               },
               {

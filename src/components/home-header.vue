@@ -21,10 +21,17 @@
         <q-menu auto-close>
           <q-list style="min-width: 10em">
             <q-item clickable @click="goToPage('/profile/'+userDetails.userId)">
+
               <q-item-section>{{$t('profile')}}</q-item-section>
+              <q-item-section side>
+                <q-icon name="face"/>
+              </q-item-section>
             </q-item>
             <q-item clickable @click="logOut()">
               <q-item-section>{{$t('logout')}}</q-item-section>
+              <q-item-section side>
+                <q-icon name="login"/>
+              </q-item-section>
             </q-item>
           </q-list>
         </q-menu>
