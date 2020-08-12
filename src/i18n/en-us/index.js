@@ -169,6 +169,8 @@ export default {
   third_party_cookies_text: "In addition to our own cookies, we may also use various third-parties cookies to report usage statistics of the Service, deliver advertisements on and through the Service, and so on.",
   your_project: "Your project '",
   your_project_2: "' has been sended to moderation",
+  accounted_already_registered: "An account already exists with the same email address but different sign-in method",
+  or_continue_with: "or continue with",
   la: "",
   el: ""
 };

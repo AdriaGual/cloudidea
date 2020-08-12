@@ -1,4 +1,10 @@
-import { firebaseDB, firebaseAuth, firebaseStorage } from "boot/firebase";
+import {
+  firebaseDB,
+  firebaseAuth,
+  firebaseStorage,
+  googleAuthProvider,
+  facebookAuthProvider
+} from "boot/firebase";
 import Vue from "vue";
 import { Cookies } from 'quasar'
 
@@ -126,6 +132,54 @@ const actions = {
     })
     .catch(error => {
       console.log(error.message);
+    });
+  },
+  loginUserWithThirdPartyService({ commit }, partyService) {
+    let provider = null;
+    if (partyService === 'Google') {
+      provider = googleAuthProvider;
+    } else if (partyService === 'Facebook') {
+      provider = facebookAuthProvider;
+    }
+    firebaseAuth.signInWithPopup(provider).then(function (result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+
+      const userId = firebaseAuth.currentUser.uid;
+      firebaseDB
+      .ref("users/" + userId)
+      .set({
+        name: user.displayName,
+        email: user.email,
+        language: 'es',
+        skills: '',
+        online: true,
+        cp: 0,
+        privateProfile: false,
+        moderator: false,
+        description: "",
+        imageUrl: user.photoURL,
+      });
+      commit("setUserDetails", {
+        name: user.displayName,
+        email: user.email,
+        language: 'es',
+        skills: '',
+        imageUrl: user.photoURL, description: '',
+        moderator: false,
+        privateProfile: false,
+        userId: userId,
+        cp: 0,
+        emailVerified: firebaseAuth.currentUser.emailVerified,
+      });
+    }).then(response => {
+      this.$router.push('/')
+    }).catch(function (error) {
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        return true
+      }
     });
   },
   logoutUser() {

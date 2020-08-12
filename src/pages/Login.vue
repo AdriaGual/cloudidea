@@ -45,23 +45,40 @@
              @click="openForgotPassword=true"
           >{{$t('forgot_password')}}
           </p>
-          <div class="row justify-center">
-            <q-btn class="q-mt-lg"
-                   type="submit"
-                   style="height: 4em;border-radius: 0.5em;width:24em"
-                   color="primary"
-                   :label="$t('login')"/>
+          <div class="row justify-center q-pt-md">
+            <q-btn
+              no-caps
+              type="submit"
+              style="height: 3.5em;border-radius: 0.8em;width:20em;font-size: 1.2em"
+              color="primary"
+              :label="$t('login')"/>
           </div>
         </q-form>
         <div class="row full-width justify-center">
           <q-btn
             no-caps
             class="bgGrey q-mt-lg"
-            style="border-radius: 0.5em;width:8em"
-            :label="$t('sign_up').toUpperCase()"
+            style="border-radius: 0.5em;width:10em"
+            :label="$t('sign_up')"
             @click="goToPage('/register')"
           />
         </div>
+        <p class="text-center q-pt-lg poppinsRegular text-grey">{{$t('or_continue_with')}}</p>
+        <div class="row justify-center text-center">
+
+          <div class="col q-gutter-lg q-pb-lg">
+            <q-img
+              src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fgoogle_login.svg?alt=media&token=f44beeaf-3d40-495c-a3d1-a403f3a0afe6"
+              style="height: 2em;width: 2em;" @click="loginWithGoogle()" class="cursor-pointer">
+            </q-img>
+
+            <q-img
+              src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffacebook_login.svg?alt=media&token=5dd20007-57d9-425f-876f-bfe14e4d006b"
+              style="height:2em;width:2em;" @click="loginWithFacebook()" class="cursor-pointer">
+            </q-img>
+          </div>
+        </div>
+
       </div>
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
@@ -114,7 +131,8 @@
       }
     },
     methods: {
-      ...mapActions('store', ['loginUser', 'changeUserPassword', 'firebaseGetUsers']),
+      ...mapActions('store',
+        ['loginUser', 'changeUserPassword', 'firebaseGetUsers', 'loginUserWithThirdPartyService']),
       doPasswordsMatch(val) {
         if (!(val === this.userData.password)) {
           return 'Passwords must match'
@@ -149,6 +167,30 @@
           position: 'top-right',
           timeout: 2000
         })
+      },
+      loginWithGoogle() {
+        var showNotif = this.loginUserWithThirdPartyService('Google')
+        if (showNotif) {
+          this.$q.notify({
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('accounted_already_registered'),
+            position: 'top-right',
+            timeout: 3000
+          })
+        }
+      },
+      loginWithFacebook() {
+        var showNotif = this.loginUserWithThirdPartyService('Facebook')
+        if (showNotif) {
+          this.$q.notify({
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('accounted_already_registered'),
+            position: 'top-right',
+            timeout: 3000
+          })
+        }
       }
     },
     created() {

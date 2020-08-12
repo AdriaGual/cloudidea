@@ -172,6 +172,8 @@ export default {
   third_party_cookies_text: "Además de nuestras propias cookies, también podemos utilizar varias cookies de terceros para informar estadísticas de uso del Servicio, entregar anuncios en y a través del Servicio, etc.",
   your_project: "Tu proyecto '",
   your_project_2: "' se ha enviado a moderación",
+  accounted_already_registered: "Ya existe una cuenta con este correo pero con otro método de inicio de sesión",
+  or_continue_with: "o continua con",
   la: "la",
   el: "el"
 };
