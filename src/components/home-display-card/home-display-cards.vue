@@ -42,15 +42,14 @@
 
     <q-scroll-area
       horizontal
-      class="q-pl-md"
       visbile="false"
       :thumb-style="thumbStyle"
-      :class="this.$q.platform.is.desktop?'scrollTagsHorizontal q-pt-md q-pl-md':'scrollTagsHorizontal q-pt-md'"
+      :class="this.$q.platform.is.desktop?'scrollTagsHorizontal q-pt-sm':'scrollTagsHorizontal q-pt-sm'"
     >
-      <div class="row no-wrap">
+      <div class="row no-wrap q-pl-md">
         <div v-for="(category, key) in categories" :key="key">
           <q-chip :color="categories[key].selected?'light-blue-4':'grey-5'"
-                  :selected.sync="categories[key].selected" size="1em"
+                  :selected.sync="categories[key].selected" size="1.1em"
                   @click="toogleCategory(key)">
             <img style="height:2em;width:2em" :src="categories[key].url"
                  alt=""/><a class="poppinsBold" style="font-size: 0.8em">
@@ -65,7 +64,7 @@
       {{$t('seems_like_no_available_project')}}
     </p>
     <div v-if="this.$q.platform.is.desktop" class="q-pt-sm"></div>
-    <div class="row justify-center q-pb-xl q-px-sm" v-if="!listMode">
+    <div class="row justify-center q-pb-xl q-px-md" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <home-display-card :publish="publish" :categories="categories"
                            v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"

@@ -5,7 +5,7 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       <div class="col" style="border-radius: 0.5em">
         <q-input outlined bg-color="white" :placeholder="$t('search')" v-model="searchText"
-                 class="q-px-lg">
+                 class="q-px-lg q-pt-md">
           <template v-slot:append>
             <q-icon v-if="searchText === ''" name="search"/>
             <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''"/>
@@ -31,14 +31,14 @@
             class="scrollTagsHorizontal q-pt-sm"
             :thumb-style="thumbStyle"
           >
-            <div class="row no-wrap q-pl-xs" style="height:3em;">
+            <div class="row no-wrap q-pl-lg" style="height:3em;">
               <q-btn
                 v-for="(recentSearch, key) in recentSearches" :key="key"
                 no-caps
-                class="bgGrey q-mr-md"
-                style="border-radius: 0.5em;width:11em"
+                class="q-mr-md"
+                style="border-radius: 0.5em;width:11em;background-color: #F6FAFF"
                 icon="launch"
-                :label="recentSearch.toUpperCase()"
+                :label="capitalize(recentSearch)"
                 @click="searchText=recentSearch"
               />
             </div>
@@ -57,7 +57,7 @@
               />
             </div>
           </div>
-          <div class="row q-pt-lg q-pl-xs q-px-lg">
+          <div class="row q-pt-xl q-pl-xs q-px-lg">
             <div class="col-10">
               <p class="poppinsBold" style="line-height: 0.1em">
                 {{$t('categories')}} <a class=" "
@@ -73,7 +73,7 @@
             ref="categoryScrollArea"
             :thumb-style="thumbStyle"
           >
-            <div class="row no-wrap q-gutter-md q-pl-xs">
+            <div class="row no-wrap q-gutter-md q-pl-lg">
               <div v-for="(category, key) in categories" :key="key">
                 <div style="height:9em;width:9em;background-color: #F6FAFF;border-radius: 0.4em"
                      class=" shadow-1 cursor-pointer"
@@ -100,7 +100,7 @@
               />
             </div>
           </div>
-          <p class="poppinsBold q-pt-lg q-pl-xs q-pb-sm q-px-lg" style="line-height: 0.1em">
+          <p class="poppinsBold q-pt-xl q-pl-xs q-pb-sm q-px-lg" style="line-height: 0.1em">
             {{$t('top_project_creators')}}</p>
 
           <profile-cards></profile-cards>
@@ -226,7 +226,7 @@
         filteredUsers: [],
         filteredPublishingsByTitle: [],
         filteredPublishingsByCategory: [],
-        recentSearches: ["webpage", "edm", "painting", "code"],
+        recentSearches: ["webpage", "movie", "clothes", "sports"],
         categories: [{
           searchText: 'Writting',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f'
@@ -264,8 +264,9 @@
     },
     methods: {
       ...mapActions("store", [
-        "firebaseGetUsers", "clearUsers", "clearPublishings", "firebaseGetApprovedPublishings"
-      ]),
+          "firebaseGetUsers", "clearUsers", "clearPublishings", "firebaseGetApprovedPublishings"
+        ],
+      ),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -297,7 +298,11 @@
             scrollArea.setScrollPosition(this.categoryPosition, 300)
           }
         }
-      }
+      },
+      capitalize(s) {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+      },
     },
     components: {
       ProfileCards

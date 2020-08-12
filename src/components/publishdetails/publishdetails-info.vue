@@ -1,5 +1,5 @@
 <template>
-  <q-card style="border-top-left-radius: 1em;border-top-right-radius: 1em">
+  <q-card>
     <q-tabs
       v-model="tab"
       dense
@@ -173,7 +173,6 @@
             userId: this.userDetails.userId
           }
         })
-        console.log(this.newPublishDetails)
         if (this.userDetails.userId !== this.newPublishDetails.creatorId) {
           var data = {
             app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
@@ -227,31 +226,6 @@
       }
     },
     mixins: [mixinPublishDetails],
-    watch: {
-      publishComments: function (val) {
-        let keys = Object.keys(val);
-        keys.forEach(key => {
-          let item = this.publishComments[key];
-          item.key = key
-          this.publishComments[key].key = key
-          this.orderedPublishComments.push(this.publishComments[key])
-        })
-        this.orderedPublishComments = this.orderedPublishComments.filter((a, b) => this.orderedPublishComments.indexOf(
-          a) === b)
-      },
-      mounted() {
-        console.log("skjagshjasdgj")
-        let keys = Object.keys(this.publishComments);
-        keys.forEach(key => {
-          let item = this.publishComments[key];
-          item.key = key
-          this.publishComments[key].key = key
-          this.orderedPublishComments.push(this.publishComments[key])
-        })
-        this.orderedPublishComments = this.orderedPublishComments.filter((a, b) => this.orderedPublishComments.indexOf(
-          a) === b)
-      }
-    },
   }
 </script>
 

@@ -3,8 +3,8 @@
     <div class="row q-px-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
-        <p class="poppinsBold" style="font-size: 0.9em">
-          <q-icon class="q-pr-md" name="fas fa-handshake" size="sm"/>
+        <p class="poppinsBold text-center" style="font-size: 0.9em">
+          <q-icon class="q-pr-md" name="far fa-handshake" size="sm"/>
           {{$t('new_help_requests').toUpperCase()}}
         </p>
         <p class="poppinsRegular text-grey q-pt-md d" v-if="orderedPublishings.length===0">

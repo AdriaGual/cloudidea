@@ -14,7 +14,7 @@
           :sidePublish="false">
         </publishdetails-card>
 
-        <publishdetails-info :style="this.$q.platform.is.desktop?'width: 50em':'width: 25em'"
+        <publishdetails-info :style="this.$q.platform.is.desktop?'width: 70em':'width: 25em'"
                              :publishDetails="newPublishDetails"
                              :publishComments="this.orderedPublishComments"
                              :userDetails="userDetails"
@@ -72,7 +72,6 @@
       this.firebaseClearComments();
       this.updatePublishComments({ key: this.$route.params.publishId });
       this.publishKey = this.$route.params.publishId
-      console.log(this.publishComments)
     },
     watch: {
       publishComments: function (val) {

@@ -7,7 +7,7 @@
       :thumb-style="thumbStyle"
       ref="profileScrollArea"
     >
-      <div class="row no-wrap q-pl-xs" style="height:3em;">
+      <div class="row no-wrap q-pl-lg" style="height:3em;">
         <ProfileCard v-for="user in orderedUsers" :user="user" :key="user.key"></ProfileCard>
       </div>
     </q-scroll-area>
