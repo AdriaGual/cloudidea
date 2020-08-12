@@ -20,7 +20,8 @@
         <p class="poppinsBold" style="line-height: 0.1em">{{$t('license_type').toUpperCase()}}</p>
         <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">{{$t('category').toUpperCase()}}</p>
-        <p class="poppinsRegular text-grey">{{newPublishDetails.categoryModel}}</p>
+        <p class="poppinsRegular text-grey">
+          {{$t(newPublishDetails.categoryModel.toLowerCase())}}</p>
         <p class="poppinsBold" style="line-height: 0.1em" v-if="newPublishDetails.projectUrl!==''">
           URL</p>
         <p class="poppinsRegular text-blue cursor-pointer" @click="openProjectURL()"
@@ -47,8 +48,8 @@
             </q-item-section>
             <q-item-section>
               <q-item-label class="poppinsBold q-pb-xs"
-                            v-if="newPublishDetails.fileName.length>15">
-                {{newPublishDetails.fileName.substring(0,15)+".."}}
+                            v-if="newPublishDetails.fileName.length>30">
+                {{newPublishDetails.fileName.substring(0,30)+".."}}
               </q-item-label>
               <q-item-label class="poppinsBold q-pb-xs" v-else>
                 {{newPublishDetails.fileName}}
@@ -73,7 +74,7 @@
             </q-item-section>
           </q-item>
         </q-card>
-        <p class="poppinsRegular text-grey q-pt-md" v-if="publishComments">
+        <p class="poppinsRegular text-grey q-pt-md" v-if="publishComments.length===0">
           <q-icon name="error_outline" size="sm"/>
           {{$t('seems_like_no_comments_found')}}
         </p>
@@ -132,7 +133,8 @@
         }, {
           categoryName: 'Marketing',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
-        }]
+        }],
+
       }
     },
     methods: {
@@ -171,6 +173,45 @@
             userId: this.userDetails.userId
           }
         })
+        console.log(this.newPublishDetails)
+        if (this.userDetails.userId !== this.newPublishDetails.creatorId) {
+          var data = {
+            app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
+            contents: {
+              "en": this.userDetails.name + " ha comentado tu proyecto '" + this.newPublishDetails.projectTitle + "'",
+              "es": this.userDetails.name + " has commented your project '" + this.newPublishDetails.projectTitle + "'",
+            },
+            headings: { "en": "Cloudidea" },
+            include_player_ids: [this.newPublishDetails.oneSignalUserId],
+            chrome_web_icon: this.userDetails.imageUrl,
+            large_icon: this.userDetails.imageUrl,
+          };
+
+          var headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": "Basic ZGU0NTg2MWQtMjEyOS00Y2JkLTljMTYtMTBhNDdiNjU0YzU2"
+          };
+
+          var options = {
+            host: "onesignal.com",
+            port: 443,
+            path: "/api/v1/notifications",
+            method: "POST",
+            headers: headers
+          };
+
+          var https = require('https');
+          var req = https.request(options, function (res) {
+            res.on('data', function (data) {
+            });
+          });
+
+          req.on('error', function (e) {
+          });
+
+          req.write(JSON.stringify(data));
+          req.end();
+        }
       }
     },
     computed: {
@@ -186,6 +227,31 @@
       }
     },
     mixins: [mixinPublishDetails],
+    watch: {
+      publishComments: function (val) {
+        let keys = Object.keys(val);
+        keys.forEach(key => {
+          let item = this.publishComments[key];
+          item.key = key
+          this.publishComments[key].key = key
+          this.orderedPublishComments.push(this.publishComments[key])
+        })
+        this.orderedPublishComments = this.orderedPublishComments.filter((a, b) => this.orderedPublishComments.indexOf(
+          a) === b)
+      },
+      mounted() {
+        console.log("skjagshjasdgj")
+        let keys = Object.keys(this.publishComments);
+        keys.forEach(key => {
+          let item = this.publishComments[key];
+          item.key = key
+          this.publishComments[key].key = key
+          this.orderedPublishComments.push(this.publishComments[key])
+        })
+        this.orderedPublishComments = this.orderedPublishComments.filter((a, b) => this.orderedPublishComments.indexOf(
+          a) === b)
+      }
+    },
   }
 </script>
 

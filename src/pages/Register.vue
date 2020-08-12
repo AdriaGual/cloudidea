@@ -24,14 +24,25 @@
         >
           <q-input outlined bg-color="white" class="q-px-lg" :placeholder="$t('username')"
                    v-model="userData.name"
-                   :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
+                   :rules="[isEmptyField,val => isShortField(val,5,'name')]">
+            <template v-slot:prepend>
+              <q-icon name="person_outline"/>
+            </template>
+          </q-input>
           <q-input outlined bg-color="white" class="q-px-lg" v-model="userData.email"
                    :placeholder="$t('email_address')"
-                   :rules="[isEmptyField,isValidEmail]"/>
+                   :rules="[isEmptyField,isValidEmail]">
+            <template v-slot:prepend>
+              <q-icon name="alternate_email"/>
+            </template>
+          </q-input>
           <q-input outlined bg-color="white" class="q-px-lg" v-model="userData.password"
                    :placeholder="$t('password')"
                    :type="isPwd ? 'password' : 'text'"
                    :rules="[isEmptyField,val => isShortField(val,7,'password')]">
+            <template v-slot:prepend>
+              <q-icon name="o_lock"/>
+            </template>
             <template v-slot:append>
               <q-icon
                 :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -44,6 +55,9 @@
                    :placeholder="$t('repeat_password')"
                    :type="isPwd ? 'password' : 'text'"
                    :rules="[isEmptyField,val => isShortField(val,7,'password'),doPasswordsMatch]">
+            <template v-slot:prepend>
+              <q-icon name="o_lock"/>
+            </template>
             <template v-slot:append>
               <q-icon
                 :name="isPwd ? 'visibility_off' : 'visibility'"

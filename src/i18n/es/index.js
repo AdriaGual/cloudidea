@@ -170,6 +170,8 @@ export default {
   how_cloudidea_uses_cookies_text: "Cuando usas el Servicio, podemos colocar una serie de archivos de cookies en su navegador web. \nUtilizamos cookies para los siguientes propósitos: habilitar ciertas funciones del Servicio, proporcionar análisis y almacenar sus preferencias. \n\nUtilizamos cookies de sesión y persistentes en el Servicio y utilizamos diferentes tipos de cookies para ejecutar el Servicio: \n-Cookies esenciales. Podemos utilizar cookies esenciales para autenticar a los usuarios y evitar el uso fraudulento de sus cuentas.",
   third_party_cookies: "Cookies de terceros",
   third_party_cookies_text: "Además de nuestras propias cookies, también podemos utilizar varias cookies de terceros para informar estadísticas de uso del Servicio, entregar anuncios en y a través del Servicio, etc.",
+  your_project: "Tu proyecto '",
+  your_project_2: "' se ha enviado a moderación",
   la: "la",
   el: "el"
 };

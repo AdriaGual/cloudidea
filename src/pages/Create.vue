@@ -186,9 +186,9 @@
     data() {
       return {
         publishing: {
-          projectTitle: 'Prova 1',
-          projectUrl: 'https://twitter.com/explore',
-          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+          projectTitle: '',
+          projectUrl: '',
+          description: '',
           registerLicenseModel: null,
           licenseNumber: '',
           categoryModel: null,
@@ -206,7 +206,9 @@
           needPromotionHelp: false,
         },
         categoryOptions: [
-          'Music', 'Video', 'Image', 'Writting', 'Code', 'DIY', 'Conference', 'None of this'
+          this.$t('Writting'.toLowerCase()), this.$t('Design'.toLowerCase()), this.$t('Music'.toLowerCase()), this.$t(
+            'Video'.toLowerCase()), this.$t('Code'.toLowerCase()), this.$t('Idea'.toLowerCase()), this.$t(
+            'Selling'.toLowerCase()), this.$t('Promotion'.toLowerCase()), this.$t('none_of_this'.toLowerCase())
         ],
         registerLicenseOptions: [
           'Copyright', 'Creative Commons', 'LGPL', 'Copyleft'
@@ -255,6 +257,23 @@
             timeout: 1000
           })
         } else {
+          if (this.publishing.categoryModel === this.$t('Writting'.toLowerCase())) {
+            this.publishing.categoryModel = 'Writting'
+          } else if (this.publishing.categoryModel === this.$t('Design'.toLowerCase())) {
+            this.publishing.categoryModel = 'Design'
+          } else if (this.publishing.categoryModel === this.$t('Music'.toLowerCase())) {
+            this.publishing.categoryModel = 'Music'
+          } else if (this.publishing.categoryModel === this.$t('Video'.toLowerCase())) {
+            this.publishing.categoryModel = 'Video'
+          } else if (this.publishing.categoryModel === this.$t('Code'.toLowerCase())) {
+            this.publishing.categoryModel = 'Code'
+          } else if (this.publishing.categoryModel === this.$t('Idea'.toLowerCase())) {
+            this.publishing.categoryModel = 'Idea'
+          } else if (this.publishing.categoryModel === this.$t('Selling'.toLowerCase())) {
+            this.publishing.categoryModel = 'Selling'
+          } else if (this.publishing.categoryModel === this.$t('Promotion'.toLowerCase())) {
+            this.publishing.categoryModel = 'Promotion'
+          }
           this.submittedProject = true;
           this.publishing.approved = false;
           this.publishing.cp = 0
@@ -265,43 +284,17 @@
           this.publishing.creatorId = this.userDetails.userId;
           this.publishing.creatorCP = this.userDetails.cp;
           this.firebaseCreatePublish(this.publishing);
-          axios.get('https://cloudidea.es/api/index.php?action=moderatePublish&param1=' + this.publishing.creatorEmail + '&param2=' + this.publishing.creatorName + '&param3=' + this.publishing.projectTitle)
+          axios.get('https://cloudidea.es/api/index.php?action=moderatePublish&param1=' + this.publishing.creatorEmail + '&param2=' + this.publishing.creatorName + '&param3=' + this.publishing.projectTitle + '&param4=' + this.$i18n.locale)
           this.goToPage('/')
-          var data = {
-            app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
-            contents: {
-              "en": "Your project '" + this.publishing.projectTitle + "' has been sended to moderation",
-              "es": "Tu proyecto '" + this.publishing.projectTitle + "' se ha enviado a moderación"
-            },
-            headings: { "en": "Cloudidea" },
-            include_player_ids: [this.userDetails.oneSignalUserId],
-          };
 
-          var headers = {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Basic ZGU0NTg2MWQtMjEyOS00Y2JkLTljMTYtMTBhNDdiNjU0YzU2"
-          };
-
-          var options = {
-            host: "onesignal.com",
-            port: 443,
-            path: "/api/v1/notifications",
-            method: "POST",
-            headers: headers
-          };
-
-          var https = require('https');
-          var req = https.request(options, function (res) {
-            res.on('data', function (data) {
-            });
-          });
-
-          req.on('error', function (e) {
-          });
-
-          req.write(JSON.stringify(data));
-          req.end();
-
+          this.$q.notify({
+            color: 'dark',
+            textColor: 'white',
+            message: this.$t('your_project') + this.publishing.projectTitle + this.$t(
+              'your_project_2'),
+            position: 'top-right',
+            timeout: 1000
+          })
         }
       },
       goToPage(route) {
@@ -322,7 +315,7 @@
       ...mapState('store', ['userDetails']),
     },
     beforeRouteLeave(to, from, next) {
-      if ((this.projectTitle !== '' || this.projectUrl !== '' || this.desktop !== '' || this.registerLicenseModel != null || this.categoryModel !== null || this.file !== null
+      if ((this.publishing.projectTitle !== '' || this.publishing.projectUrl !== '' || this.publishing.description !== '' || this.publishing.registerLicenseModel != null || this.publishing.categoryModel || this.publishing.file
       ) && !this.submittedProject) {
         const answer = window.confirm(this.$t('unsaved_fields'))
         if (answer) {

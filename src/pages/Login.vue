@@ -20,12 +20,19 @@
         >
           <q-input outlined bg-color="white" class="q-px-lg" :placeholder="$t('email_address')"
                    v-model="userData.email"
-                   :rules="[isEmptyField,isValidEmail]"/>
+                   :rules="[isEmptyField,isValidEmail]">
+            <template v-slot:prepend>
+              <q-icon name="alternate_email"/>
+            </template>
+          </q-input>
 
           <q-input outlined bg-color="white" class="q-px-lg q-pt-md" :placeholder="$t('password')"
                    :type="isPwd ? 'password' : 'text'"
                    v-model="userData.password"
                    :rules="[isEmptyField,val => isShortField(val,7,'password')]">
+            <template v-slot:prepend>
+              <q-icon name="o_lock"/>
+            </template>
             <template v-slot:append>
               <q-icon
                 :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -36,7 +43,7 @@
           </q-input>
           <p class="text-grey text-center poppinsRegular cursor-pointer" style="line-height: 1em"
              @click="openForgotPassword=true"
-          >{{$t('forgot_password').toUpperCase()}}
+          >{{$t('forgot_password')}}
           </p>
           <div class="row justify-center">
             <q-btn class="q-mt-lg"
@@ -71,7 +78,11 @@
           >
             <q-input outlined :placeholder="$t('email_address')"
                      v-model="userData.email"
-                     :rules="[isEmptyField,isValidEmail]"/>
+                     :rules="[isEmptyField,isValidEmail]">
+              <template v-slot:prepend>
+                <q-icon name="alternate_email"/>
+              </template>
+            </q-input>
             <div class="row justify-center">
               <q-btn
                 style="height: 4em;border-radius: 0.5em;width:24em"

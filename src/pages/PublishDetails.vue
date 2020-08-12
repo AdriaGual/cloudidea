@@ -16,7 +16,8 @@
 
         <publishdetails-info :style="this.$q.platform.is.desktop?'width: 50em':'width: 25em'"
                              :publishDetails="newPublishDetails"
-                             :publishComments="publishComments" :userDetails="userDetails"
+                             :publishComments="this.orderedPublishComments"
+                             :userDetails="userDetails"
                              align="left">
         </publishdetails-info>
       </div>
@@ -52,7 +53,8 @@
   export default {
     data() {
       return {
-        publishKey: ''
+        publishKey: '',
+        orderedPublishComments: []
       }
     },
     methods: {
@@ -70,6 +72,19 @@
       this.firebaseClearComments();
       this.updatePublishComments({ key: this.$route.params.publishId });
       this.publishKey = this.$route.params.publishId
+      console.log(this.publishComments)
     },
+    watch: {
+      publishComments: function (val) {
+        let keys = Object.keys(val);
+        keys.forEach(key => {
+          let item = this.publishComments[key];
+          item.key = key
+          this.publishComments[key].key = key
+          this.orderedPublishComments.push(this.publishComments[key])
+        })
+      }
+    },
+
   };
 </script>

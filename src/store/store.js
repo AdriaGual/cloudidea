@@ -542,6 +542,7 @@ const actions = {
             publishDetails.creatorName = userDetails.name
             publishDetails.creatorImageUrl = userDetails.imageUrl
             publishDetails.creatorSkills = userDetails.skills
+            publishDetails.oneSignalUserId = userDetails.oneSignalUserId
           }
           if (publishDetails.approved) {
             commit("addPublish", { publishId, publishDetails });
@@ -602,7 +603,8 @@ const actions = {
         fileSize: payload.fileSize,
         fileType: payload.fileType,
         key: payload.key,
-        cp: payload.cp
+        cp: payload.cp,
+        oneSignalUserId: userDetails.oneSignalUserId
       });
     });
   },

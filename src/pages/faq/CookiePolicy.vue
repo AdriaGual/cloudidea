@@ -6,7 +6,7 @@
       </div>
       <div class="col text-center">
         <p class="poppinsBold q-pt-sm" style="font-size: 1.3em">{{$t('cookie_policy')}}
-          <q-icon name="fas fa-cookie-bite" class="q-pl-sm" size="sm"/>
+          <q-icon name="las la-cookie-bite" class="q-pl-sm" size="md"/>
         </p>
       </div>
       <div v-if="$q.platform.is.desktop" class="col-1"></div>
@@ -48,7 +48,7 @@
       return {
         cookiesPolicyItems: [{
           titleText: this.$t('what_are_cookies'),
-          icon: 'fas fa-cookie',
+          icon: 'las la-cookie',
           generalText: this.$t('what_are_cookies_text'),
         }, {
           titleText: this.$t('how_cloudidea_uses_cookies'),

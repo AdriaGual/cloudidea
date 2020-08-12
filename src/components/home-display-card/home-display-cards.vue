@@ -1,34 +1,41 @@
 <template>
   <div class="">
 
-    <div class="row  q-pt-lg ">
-      <div class="col q-pl-lg">
+    <div class="row q-pt-lg">
+      <div
+        :class="this.$q.platform.is.desktop && $q.screen.gt.sm?'col-11 q-pl-lg':'col-8 q-pl-lg'">
         <p v-if="userDetails.name" class="poppinsRegular text-grey q-pb-sm"
            style="font-size: 0.9em;line-height: 0.1em">
           {{$t('hello')}}
           {{capitalize(userDetails.name)}}</p>
-        <p :class="userDetails.name?'poppinsBold ':'poppinsBold q-pt-lg '"
+        <p :class="userDetails.name?'poppinsBold':'poppinsBold q-pt-md'"
            style="font-size: 1.3em;line-height: 0.1em">{{$t('explore_projects')}}</p>
       </div>
-      <div class="col" align="right">
-        <q-btn
-          flat
-          no-caps
-          :icon="!listMode?'grid_on':'format_list_bulleted'"
-          color="primary"
-          class=""
-          :ripple="false"
-          @click="listMode=!listMode"
-        />
-        <q-btn
-          flat
-          no-caps
-          align="right"
-          icon="sort"
-          color="primary"
-          :ripple="false"
-          @click="openFilterDialog=true"
-        />
+      <div class="col q-pr-md" align="right">
+        <div class="row">
+          <div class="col">
+            <q-btn
+              flat
+              no-caps
+              :icon="!listMode?'grid_on':'format_list_bulleted'"
+              color="primary"
+              class=""
+              :ripple="false"
+              @click="listMode=!listMode"
+            />
+          </div>
+          <div class="col">
+            <q-btn
+              flat
+              no-caps
+              align="right"
+              icon="sort"
+              color="primary"
+              :ripple="false"
+              @click="openFilterDialog=true"
+            />
+          </div>
+        </div>
       </div>
 
     </div>

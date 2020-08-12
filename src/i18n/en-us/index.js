@@ -167,6 +167,8 @@ export default {
   how_cloudidea_uses_cookies_text: "When you use and access the Service, we may place a number of cookies files in your web browser.\n\nWe use cookies for the following purpouses: to enable certain functions of the Service, to provide analytics, to store your preferences, to enable advertisements delivery, including behavioral advertising.\n\nWe use both sessions and persistent cookies on the Service and we use different types of cookies to run the Service:\n\n-Essential cookies. We may use essential cookies to authenticate users and prevent fraudulent use of your accounts.",
   third_party_cookies: "Third-party cookies",
   third_party_cookies_text: "In addition to our own cookies, we may also use various third-parties cookies to report usage statistics of the Service, deliver advertisements on and through the Service, and so on.",
+  your_project: "Your project '",
+  your_project_2: "' has been sended to moderation",
   la: "",
   el: ""
 };

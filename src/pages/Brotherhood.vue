@@ -3,11 +3,11 @@
     <div class="row q-px-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
-        <p class="poppinsBold" style="line-height: 0.1em">
-          <q-icon name="construction" style="font-size: 1.7em;"/>
+        <p class="poppinsBold" style="font-size: 0.9em">
+          <q-icon class="q-pr-md" name="fas fa-handshake" size="sm"/>
           {{$t('new_help_requests').toUpperCase()}}
         </p>
-        <p class="poppinsRegular text-grey q-pt-md" v-if="orderedPublishings.length===0">
+        <p class="poppinsRegular text-grey q-pt-md d" v-if="orderedPublishings.length===0">
           <q-icon name="error_outline" size="sm"/>
           {{$t('seems_like_no_help_found')}}
         </p>
@@ -16,26 +16,28 @@
                   class="cardSectionInterior q-mb-md">
             <q-item-section side>
               <q-avatar rounded size="4em"
-                        v-if="filteredPublishing.fileType && filteredPublishing.fileType.includes('image/')">
+                        v-if="filteredPublishing.coverImage || filteredPublishing.fileType.includes('image/')">
                 <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
                      style="border-radius: 0.2em" alt=""/>
                 <img
-                  v-if="filteredPublishing.fileUrl && filteredPublishing.fileType"
+                  v-if="filteredPublishing.fileUrl && filteredPublishing.fileType.includes('image/')"
                   :src="filteredPublishing.fileUrl" style="border-radius: 0.2em"
                   alt=""/>
               </q-avatar>
-
-              <div v-else v-for="(category, key) in categories" :key="key">
-                <img
-                  style="height: 3em"
-                  v-if="filteredPublishing.fileType && category.categoryName ===filteredPublishing.categoryModel"
-                  :src="category.url"/>
+              <div
+                v-if="!filteredPublishing.fileType.includes('image/') && !filteredPublishing.coverImage">
+                <div v-for="(category, key) in categories" :key="key">
+                  <img
+                    style="height: 3em"
+                    v-if="category.categoryName ===filteredPublishing.categoryModel"
+                    :src="category.url"/>
+                </div>
               </div>
             </q-item-section>
             <q-item-section>
               <q-item-label class="poppinsRegular text-white"
-                            v-if="filteredPublishing.projectTitle && filteredPublishing.projectTitle.length>15">
-                {{filteredPublishing.projectTitle.substring(0,15)+".."}}
+                            v-if="filteredPublishing.projectTitle && filteredPublishing.projectTitle.length>20">
+                {{filteredPublishing.projectTitle.substring(0,20)+".."}}
               </q-item-label>
 
               <q-item-label v-else class="poppinsRegular text-white">

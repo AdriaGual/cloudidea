@@ -185,7 +185,7 @@
         <div class="col-5 q-pt-md cursor-pointer"
              @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
-          <p class="cardUserCP">{{publishDetails.categoryModel}}</p>
+          <p class="cardUserCP">{{$t(publishDetails.categoryModel.toLowerCase())}}</p>
         </div>
         <div class="col q-pt-sm q-pr-md" align="right">
           <q-btn

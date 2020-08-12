@@ -268,18 +268,88 @@
         openURL(this.publishDetails.projectUrl)
       },
       approveProject() {
-        axios.get('https://cloudidea.es/api/index.php?action=acceptedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle)
+        axios.get('https://cloudidea.es/api/index.php?action=acceptedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle + '&param4=' + this.$i18n.locale)
         this.firebaseUpdatePublish({
           publishId: this.publishDetails.key,
           updates: { approved: true, releaseDate: Date.now(), timeStamp: -Date.now() }
         });
+        var data = {
+          app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
+          contents: {
+            "en": "Your project '" + this.publishDetails.projectTitle + "' has been accepted",
+            "es": "Tu proyecto '" + this.publishDetails.projectTitle + "' se ha aceptado"
+          },
+          headings: { "en": "Cloudidea" },
+          include_player_ids: [this.publishDetails.oneSignalUserId],
+        };
+
+        var headers = {
+          "Content-Type": "application/json; charset=utf-8",
+          "Authorization": "Basic ZGU0NTg2MWQtMjEyOS00Y2JkLTljMTYtMTBhNDdiNjU0YzU2"
+        };
+
+        var options = {
+          host: "onesignal.com",
+          port: 443,
+          path: "/api/v1/notifications",
+          method: "POST",
+          headers: headers
+        };
+
+        var https = require('https');
+        var req = https.request(options, function (res) {
+          res.on('data', function (data) {
+          });
+        });
+
+        req.on('error', function (e) {
+        });
+
+        req.write(JSON.stringify(data));
+        req.end();
+
         this.goToPage('/moderate/publishings')
       },
       rejectProject() {
-        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle)
+        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle + '&param4=' + this.$i18n.locale)
         this.firebaseDeletePublish({
           publishId: this.publishDetails.key
         });
+        var data = {
+          app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
+          contents: {
+            "en": "Your project '" + this.publishDetails.projectTitle + "' has been rejected. Check your email",
+            "es": "Tu proyecto '" + this.publishDetails.projectTitle + "' no se ha aceptado. Consulta tu correo"
+          },
+          headings: { "en": "Cloudidea" },
+          include_player_ids: [this.publishDetails.oneSignalUserId],
+        };
+
+        var headers = {
+          "Content-Type": "application/json; charset=utf-8",
+          "Authorization": "Basic ZGU0NTg2MWQtMjEyOS00Y2JkLTljMTYtMTBhNDdiNjU0YzU2"
+        };
+
+        var options = {
+          host: "onesignal.com",
+          port: 443,
+          path: "/api/v1/notifications",
+          method: "POST",
+          headers: headers
+        };
+
+        var https = require('https');
+        var req = https.request(options, function (res) {
+          res.on('data', function (data) {
+          });
+        });
+
+        req.on('error', function (e) {
+        });
+
+        req.write(JSON.stringify(data));
+        req.end();
+
         this.goToPage('/moderate/publishings')
       },
     },
