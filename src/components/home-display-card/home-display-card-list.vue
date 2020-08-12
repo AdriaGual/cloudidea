@@ -33,7 +33,8 @@
           <q-item-label v-else class="poppinsRegular text-white">
             {{filteredPublishing.projectTitle}}
           </q-item-label>
-          <q-item-label caption class="text-grey">{{filteredPublishing.categoryModel}}
+          <q-item-label caption class="text-grey">
+            {{$t(filteredPublishing.categoryModel.toLowerCase())}}
           </q-item-label>
           <q-item-label caption class="text-grey">{{filteredPublishing.registerLicenseModel}}
           </q-item-label>
