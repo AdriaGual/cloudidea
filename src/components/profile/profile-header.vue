@@ -63,7 +63,7 @@
           <q-btn
             v-else-if="!otherUserDetails.privateProfile"
             no-caps
-            class="bgGrey"
+            class="bg-indigo-12 text-white"
             style="width:7em;font-size: 0.9em;border-radius: 2em"
             label="Chat"
             @click="chat()"

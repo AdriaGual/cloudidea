@@ -63,10 +63,11 @@
         </q-card>
       </q-tab-panel>
       <q-tab-panel name="comments">
-        <q-card class="q-mb-md">
+        <q-card class="q-mb-md" v-if="userDetails.name">
           <q-item>
             <q-item-section>
-              <q-input borderless dense v-model="commentText" placeholder="Add a comment">
+              <q-input borderless dense v-model="commentText"
+                       placeholder="Add a comment">
                 <template v-slot:after>
                   <q-btn round dense flat icon="send" @click="addComment()"/>
                 </template>
@@ -89,6 +90,7 @@
             <q-item-label>{{comment.message}}</q-item-label>
           </q-item-section>
           <q-item-section side>
+            <p class="text-grey" style="font-size: 0.9em">{{releaseDate(comment.timeStamp)}}</p>
           </q-item-section>
         </q-item>
       </q-tab-panel>
@@ -100,6 +102,7 @@
   import { mapActions, mapState } from 'vuex'
   import { openURL } from 'quasar'
   import mixinPublishDetails from '../../mixins/mixin_publish_details';
+  import { date } from 'quasar'
 
   export default {
     props: ['publishDetails', 'publishComments', 'userDetails'],
@@ -170,7 +173,8 @@
             message: this.commentText,
             creatorImageUrl: this.userDetails.imageUrl,
             name: this.userDetails.name,
-            userId: this.userDetails.userId
+            userId: this.userDetails.userId,
+            timeStamp: Date.now()
           }
         })
         if (this.userDetails.userId !== this.newPublishDetails.creatorId) {
@@ -211,7 +215,35 @@
           req.write(JSON.stringify(data));
           req.end();
         }
-      }
+      },
+      releaseDate: function (date) {
+        var seconds = Math.floor((new Date() - date) / 1000);
+        var interval = Math.floor(seconds / 31536000);
+        var releaseFormattedDate = ''
+        if (this.$i18n.locale === 'es') {
+          releaseFormattedDate = "hace "
+        }
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("years_ago");
+        }
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("months_ago");
+        }
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("days_ago");
+        }
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("hours_ago");
+        }
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("minutes_ago");
+        }
+        return releaseFormattedDate + Math.floor(seconds) + " " + this.$t("seconds_ago");
+      },
     },
     computed: {
       fileSize: function () {

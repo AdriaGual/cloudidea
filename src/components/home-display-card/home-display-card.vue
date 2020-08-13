@@ -5,16 +5,25 @@
   >
     <q-card-section class="" @click="goToPublishDetails(publish, publish.key)"
                     style="cursor: pointer;  background: #393e46;">
-
       <div class="row">
         <div class="col">
           <p style="font-size: 0.8em" class="text-grey">
             {{releaseDate(publish.releaseDate)}}</p>
         </div>
         <div class="col" align="right">
-          <a style="font-size: 0.8em" class="text-grey">
-            {{publish.registerLicenseModel}}
-          </a>
+          <q-btn outline round color="green-4" icon="o_lock" size="sm"
+                 v-if="publish.needHelp !== 'true'">
+            <q-tooltip>
+              Finished project
+            </q-tooltip>
+          </q-btn>
+
+          <q-btn outline round color="light-blue-4" icon="o_lock_open" size="sm"
+                 v-else>
+            <q-tooltip>
+              Unfinished project
+            </q-tooltip>
+          </q-btn>
         </div>
       </div>
 
@@ -28,6 +37,12 @@
             {{publish.projectTitle}}</p>
         </div>
         <div class="col" align="right">
+
+          <a style="font-size: 0.8em" class="text-grey full-width">
+            {{publish.registerLicenseModel}}
+          </a><br>
+
+
           <a style="font-size: 0.8em" class="text-grey">
             {{$t(publish.categoryModel.toLowerCase())}}
           </a>

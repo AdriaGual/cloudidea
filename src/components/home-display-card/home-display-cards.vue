@@ -1,6 +1,5 @@
 <template>
   <div class="">
-
     <div class="row q-pt-lg">
       <div
         :class="this.$q.platform.is.desktop && $q.screen.gt.sm?'col-11 q-pl-lg':'col-8 q-pl-lg'">
@@ -29,11 +28,65 @@
               flat
               no-caps
               align="right"
-              icon="sort"
+              icon="more_horiz"
               color="primary"
               :ripple="false"
-              @click="openFilterDialog=true"
-            />
+            >
+              <q-menu auto-close>
+                <q-list style="min-width: 20em">
+                  <div class="poppinsBold text-h7 text-center q-pt-md">{{$t('sort_by')}}</div>
+                  <q-separator inset=""></q-separator>
+                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('cp')">
+                    <q-item-section>
+                      <q-item-label>{{$t('most_popular')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="whatshot"/>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('date')">
+                    <q-item-section>
+                      <q-item-label>{{$t('most_recent')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="fiber_new"/>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('category')">
+                    <q-item-section>
+                      <q-item-label>{{$t('categories')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="construction"/>
+                    </q-item-section>
+                  </q-item>
+                  <div class="poppinsBold text-h7 text-center q-pt-md">{{$t('show')}}</div>
+                  <q-separator inset=""></q-separator>
+                  <q-item clickable v-ripple v-close-popup @click="showAllPublishings()">
+                    <q-item-section>
+                      <q-item-label>{{$t('show_all')}}</q-item-label>
+                    </q-item-section>
+
+                  </q-item>
+                  <q-item clickable v-ripple v-close-popup @click="showFinishedPublishings()">
+                    <q-item-section>
+                      <q-item-label>{{$t('show_only_finished_projects')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="o_lock"/>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple v-close-popup @click="showUnfinishedPublishings()">
+                    <q-item-section>
+                      <q-item-label>{{$t('show_only_unfinished_projects')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="o_lock_open"/>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </div>
         </div>
       </div>
@@ -84,41 +137,6 @@
     </div>
 
     <div class="q-pb-lg"></div>
-    <q-dialog v-model="openFilterDialog">
-      <q-card class="q-px-lg q-pb-sm" style="width:50em">
-        <q-card-section>
-          <div class="poppinsRegular text-h6">Sort by</div>
-        </q-card-section>
-        <q-separator></q-separator>
-        <q-card-section class="no-padding">
-          <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('cp')">
-            <q-item-section side>
-              <q-icon name="whatshot"/>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('most_popular')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('date')">
-            <q-item-section side>
-              <q-icon name="fiber_new"/>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('most_recent')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('category')">
-            <q-item-section side>
-              <q-icon name="construction"/>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('categories')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-card-section>
-
-      </q-card>
-    </q-dialog>
     <q-dialog v-model="openAdblockDialog" persistent position="bottom">
       <q-card class="q-pa-sm">
         <q-card-section>
@@ -145,7 +163,6 @@
       return {
         orderedPublishings: [],
         listMode: false,
-        openFilterDialog: false,
         openAdblockDialog: false,
         openCookiesNotify: false,
         categories: [{
@@ -228,6 +245,43 @@
       openCookies() {
         this.openCookiesNotify = true;
         Cookies.set('adBlockAdvice', true)
+      },
+      showUnfinishedPublishings() {
+        this.orderedPublishings = []
+        let keys = Object.keys(this.publishings);
+        keys.forEach(key => {
+          let item = this.publishings[key];
+          item.key = key
+          if (this.publishings[key].needHelp !== 'false') {
+            this.orderedPublishings.push(this.publishings[key])
+          }
+        })
+        this.orderedPublishings.sort((a, b) => b.cp - a.cp);
+        this.orderedPublishings.reverse()
+      },
+      showFinishedPublishings() {
+        this.orderedPublishings = []
+        let keys = Object.keys(this.publishings);
+        keys.forEach(key => {
+          let item = this.publishings[key];
+          item.key = key
+          if (this.publishings[key].needHelp === 'false') {
+            this.orderedPublishings.push(this.publishings[key])
+          }
+        })
+        this.orderedPublishings.sort((a, b) => a.cp - b.cp);
+        this.orderedPublishings.reverse()
+      },
+      showAllPublishings() {
+        this.orderedPublishings = []
+        let keys = Object.keys(this.publishings);
+        keys.forEach(key => {
+          let item = this.publishings[key];
+          item.key = key
+          this.orderedPublishings.push(this.publishings[key])
+        })
+        this.orderedPublishings.sort((a, b) => a.cp - b.cp);
+        this.orderedPublishings.reverse()
       }
     },
     computed: {
@@ -274,13 +328,12 @@
     },
     watch: {
       publishings: function (val) {
+        console.log("aaaaa")
         let keys = Object.keys(val);
         keys.forEach(key => {
           let item = this.publishings[key];
           item.key = key
-          if (this.publishings[key].needHelp !== 'true') {
-            this.orderedPublishings.push(this.publishings[key])
-          }
+          this.orderedPublishings.push(this.publishings[key])
         })
         this.orderedPublishings = this.orderedPublishings.filter((a, b) => this.orderedPublishings.indexOf(
           a) === b)

@@ -78,7 +78,7 @@ export default {
   popular_question_2: "¿Puedo utilizar el link de mi página de Cloudidea para incluir en mi portafolio personal?",
   popular_question_2_answer: "Por supuesto, no solo lo puedes utilizar sino que los que formamos el equipo de esta plataforma estaremos muy agradecidos de que lo hagas.",
   popular_question_3: "¿Debo estar registrado para ver los contenidos?",
-  popular_question_3_answer: "No, Cloudidea nace con el firme propósito de concebir la promoción y colaboración como valores creativos.",
+  popular_question_3_answer: "No, Cloudidea nace con el firme propósito de concebir la promoción y colaboración como valores creativos, por lo que los contenidos son públicos.",
   popular_question_4: "¿Puedo tener mail de Cloudidea?",
   popular_question_4_answer: "Nuestra idea es crecer peró, ahora mismo, NO facilitamos ningún tipo de email a los usuarios.",
   popular_question_5: "¿Qué tipo de contenido puedo subir?",
@@ -174,6 +174,12 @@ export default {
   your_project_2: "' se ha enviado a moderación",
   accounted_already_registered: "Ya existe una cuenta con este correo pero con otro método de inicio de sesión",
   or_continue_with: "o continua con",
+  file_size_error: "El peso del archivo supera el límite máximo",
+  sort_by: "Ordenar por",
+  show: "Mostrar",
+  show_all: "Mostrar todo",
+  show_only_finished_projects: "Solo proyectos terminados",
+  show_only_unfinished_projects: "Solo proyectos no terminados",
   la: "la",
   el: "el"
 };

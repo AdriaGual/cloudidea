@@ -22,7 +22,7 @@
       <q-btn
         v-if="userDetails.userId && userDetails.userId !== user.key"
         no-caps
-        class="bgGrey full-width q-mt-sm"
+        class="bg-indigo-12 text-white full-width q-mt-sm"
         align="center"
         style="font-size: 0.9em;border-radius: 2em"
         label="Chat"

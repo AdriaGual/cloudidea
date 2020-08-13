@@ -5,7 +5,7 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">{{$t('login')}}</p>
+        <p class="poppinsBold q-pt-sm" style="font-size: 1.5em">{{$t('login')}}</p>
       </div>
       <div class="col-1"></div>
     </div>
@@ -18,7 +18,8 @@
           class="q-pt-md"
           @submit="onSubmit"
         >
-          <q-input outlined bg-color="white" class="q-px-lg" :placeholder="$t('email_address')"
+          <q-input outlined class="q-px-lg"
+                   :placeholder="$t('email_address')"
                    v-model="userData.email"
                    :rules="[isEmptyField,isValidEmail]">
             <template v-slot:prepend>
@@ -26,7 +27,7 @@
             </template>
           </q-input>
 
-          <q-input outlined bg-color="white" class="q-px-lg q-pt-md" :placeholder="$t('password')"
+          <q-input outlined bg-color="white" class="q-px-lg" :placeholder="$t('password')"
                    :type="isPwd ? 'password' : 'text'"
                    v-model="userData.password"
                    :rules="[isEmptyField,val => isShortField(val,7,'password')]">
@@ -198,3 +199,4 @@
     }
   };
 </script>
+

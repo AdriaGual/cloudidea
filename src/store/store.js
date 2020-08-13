@@ -576,13 +576,24 @@ const actions = {
     childRef.delete()
   },
   firebaseGetNotApprovedPublishings({ commit }) {
-    firebaseDB.ref("publishings").on("child_added", snapshot => {
-      const publishDetails = snapshot.val();
-      const publishId = snapshot.key;
-      if (!publishDetails.approved) {
-        commit("addPublish", { publishId, publishDetails });
-      }
-    });
+    firebaseDB.ref("publishings").on("child_added",
+      snapshot => {
+        const publishDetails = snapshot.val();
+        const publishId = snapshot.key;
+
+        firebaseDB.ref("users/" + publishDetails.creatorId).once("value", snapshot => {
+          const userDetails = snapshot.val();
+          if (userDetails) {
+            publishDetails.creatorName = userDetails.name
+            publishDetails.creatorImageUrl = userDetails.imageUrl
+            publishDetails.creatorSkills = userDetails.skills
+            publishDetails.oneSignalUserId = userDetails.oneSignalUserId
+          }
+          if (!publishDetails.approved) {
+            commit("addPublish", { publishId, publishDetails });
+          }
+        });
+      });
   },
   firebaseGetApprovedPublishings({ commit }) {
     firebaseDB.ref("publishings").on("child_added",

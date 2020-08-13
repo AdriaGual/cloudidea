@@ -27,3 +27,9 @@
     }
   };
 </script>
+<style>
+  .q-field--outlined .q-field__control {
+    border-radius: 1em;
+    background-color: white;
+  }
+</style>

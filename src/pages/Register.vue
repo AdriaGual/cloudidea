@@ -6,7 +6,7 @@
                @click="goToPage('/login')"/>
       </div>
       <div class="col text-center">
-        <p v-if="!createProfile" class="poppinsRegular q-pt-sm" style="font-size: 1.5em">
+        <p v-if="!createProfile" class="poppinsBold q-pt-sm" style="font-size: 1.5em">
           {{$t('register')}}</p>
         <p v-else class="poppinsRegular q-pt-sm" style="font-size: 1.5em">
           {{$t('create_profile')}}</p>
@@ -51,27 +51,13 @@
               />
             </template>
           </q-input>
-          <q-input outlined bg-color="white" class="q-px-lg" v-model="repeatPassword"
-                   :placeholder="$t('repeat_password')"
-                   :type="isPwd ? 'password' : 'text'"
-                   :rules="[isEmptyField,val => isShortField(val,7,'password'),doPasswordsMatch]">
-            <template v-slot:prepend>
-              <q-icon name="o_lock"/>
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="isPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPwd = !isPwd"
-              />
-            </template>
-          </q-input>
           <q-toggle v-model="licenseTerms" :label="$t('i_accept_the_license_and_terms')"
                     class="q-px-lg"/>
 
           <div class="row justify-center">
             <q-btn class="q-mt-lg"
-                   style="height: 4em;border-radius: 0.5em;width:24em"
+                   style="height: 3.5em;border-radius: 0.8em;width:20em;font-size: 1.2em"
+                   no-caps
                    color="primary"
                    type="submit"
                    :label="$t('sign_up')"/>
@@ -165,7 +151,6 @@
         imageFile: null,
         skills: '',
         description: '',
-        repeatPassword: '',
         licenseTerms: false,
         createProfile: false,
         emails: [],

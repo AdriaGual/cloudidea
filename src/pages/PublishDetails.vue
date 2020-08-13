@@ -75,6 +75,7 @@
     },
     watch: {
       publishComments: function (val) {
+        this.orderedPublishComments = [];
         let keys = Object.keys(val);
         keys.forEach(key => {
           let item = this.publishComments[key];

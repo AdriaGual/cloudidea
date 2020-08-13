@@ -44,43 +44,61 @@
           <q-item-label caption class="text-grey">
             {{releaseDate(filteredPublishing.releaseDate)}}
           </q-item-label>
-          <div class="row">
-            <q-btn
-              rounded
-              flat
-              v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===false"
-              no-caps
-              icon="favorite_border"
-              color="accent"
-              size="md"
-              :ripple="false"
-              @click="like(filteredPublishing,filteredPublishing.key)"
-            />
-            <q-btn
-              rounded
-              v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===true"
-              no-caps
-              flat
-              :ripple="false"
-              size="md"
-              icon="favorite"
-              color="accent"
-              @click="dislike(filteredPublishing,filteredPublishing.key)"
-            />
-            <q-btn
-              rounded
-              v-if="!userDetails.userId || userDetails.userId === filteredPublishing.creatorId"
-              no-caps
-              flat
-              :ripple="false"
-              size="md"
-              icon="favorite"
-              color="grey"
-              disable
-            />
-            <p class="q-pt-md">
-              {{filteredPublishing.cp}}
-            </p>
+          <div class="row full-width" align="right">
+            <div class="col-5 q-pt-sm">
+              <q-btn outline round color="green-4" icon="o_lock" size="sm"
+                     v-if="filteredPublishing.needHelp !== 'true'">
+                <q-tooltip>
+                  Finished project
+                </q-tooltip>
+              </q-btn>
+              <q-btn outline round color="light-blue-4" icon="o_lock_open" size="sm"
+                     v-else>
+                <q-tooltip>
+                  Unfinished project
+                </q-tooltip>
+              </q-btn>
+            </div>
+            <div class="col q-pt-xs">
+              <q-btn
+                rounded
+                flat
+                v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===false"
+                no-caps
+                icon="favorite_border"
+                color="accent"
+                size="md"
+                :ripple="false"
+                @click="like(filteredPublishing,filteredPublishing.key)"
+              />
+              <q-btn
+                rounded
+                v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===true"
+                no-caps
+                flat
+                :ripple="false"
+                size="md"
+                icon="favorite"
+                color="accent"
+                @click="dislike(filteredPublishing,filteredPublishing.key)"
+              />
+              <q-btn
+                rounded
+                v-if="!userDetails.userId || userDetails.userId === filteredPublishing.creatorId"
+                no-caps
+                flat
+                :ripple="false"
+                size="md"
+                icon="favorite"
+                color="grey"
+                disable
+              />
+            </div>
+            <div class="col q-pt-sm">
+              <a>
+                {{filteredPublishing.cp}}
+              </a>
+            </div>
           </div>
         </q-item-section>
       </q-item>

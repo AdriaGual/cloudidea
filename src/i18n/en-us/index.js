@@ -171,6 +171,12 @@ export default {
   your_project_2: "' has been sended to moderation",
   accounted_already_registered: "An account already exists with the same email address but different sign-in method",
   or_continue_with: "or continue with",
+  file_size_error: "File weight exceeds maximum limit",
+  sort_by: "Sort by",
+  show: "Show",
+  show_all: "Show all",
+  show_only_finished_projects: "Only finished projects",
+  show_only_unfinished_projects: "Only unfinished projects",
   la: "",
   el: ""
 };
