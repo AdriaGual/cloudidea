@@ -2,7 +2,7 @@
   <q-layout class="flex column">
     <div class="row q-px-lg">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col" style="border-radius: 0.5em">
+      <div class="col">
         <p class="poppinsBold text-center" style="font-size: 0.9em">
           <q-icon class="q-pr-md" name="far fa-handshake" size="sm"/>
           {{$t('new_help_requests').toUpperCase()}}
@@ -13,7 +13,7 @@
         </p>
         <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
           <q-item clickable v-ripple @click="goToPage('publishDetails/'+filteredPublishing.key)"
-                  class="cardSectionInterior q-mb-md">
+                  class="cardSectionInterior q-mb-md" style="border-radius: 1em">
             <q-item-section side>
               <q-avatar rounded size="4em"
                         v-if="filteredPublishing.coverImage || filteredPublishing.fileType.includes('image/')">

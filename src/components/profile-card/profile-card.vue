@@ -1,6 +1,7 @@
 <template>
   <q-card
     class="cardProjectExterior q-mr-md"
+    v-if="!user.moderator"
   >
     <q-card-section class="q-pt-md q-px-md text-center">
       <q-img
@@ -10,14 +11,16 @@
         class="cardProfileImage cursor-pointer"
       />
       <p class="q-pt-md poppinsBold cursor-pointer"
-         @click="goToPage('/profile/'+user.key)"
+         @click="goToPage('/profile/'+user.key)" v-if="user.name.length>10"
+      >{{user.name.substring(0,10)+".."}}</p>
+      <p class="q-pt-md poppinsBold cursor-pointer"
+         @click="goToPage('/profile/'+user.key)" v-else
       >{{user.name}}</p>
       <a class="poppinsLight text-grey cursor-pointer" style="font-size: 0.9em"
          @click="goToPage('/profile/'+user.key)"
       >{{user.cp}}
         <q-icon color="accent" name="favorite"/>
       </a>
-
 
       <q-btn
         v-if="userDetails.userId && userDetails.userId !== user.key"

@@ -42,7 +42,7 @@
 
             <q-file v-if="publishing.categoryModel!=='Image'" outlined
                     v-model="publishing.coverImage" :label="$t('upload_cover_image')"
-                    bg-color="white" max-file-size="25000"
+                    bg-color="white" max-file-size="25000000"
                     @rejected="onRejected">
               <template v-slot:prepend>
                 <q-icon name="o_insert_photo"/>
@@ -52,7 +52,7 @@
             <q-file outlined style="outline:#fafafa 2px solid" v-model="publishing.file"
                     bg-color="white"
                     :label="$t('file_upload')+'*'" :rules="[noFileUploaded]" class="q-pt-md"
-                    max-file-size="100000"
+                    max-file-size="100000000"
                     @rejected="onRejected">
               <template v-slot:prepend>
                 <q-icon name="attach_file"/>

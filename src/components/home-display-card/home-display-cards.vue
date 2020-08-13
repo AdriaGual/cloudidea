@@ -32,41 +32,17 @@
               color="primary"
               :ripple="false"
             >
-              <q-menu auto-close>
-                <q-list style="min-width: 20em">
-                  <div class="poppinsBold text-h7 text-center q-pt-md">{{$t('sort_by')}}</div>
-                  <q-separator inset=""></q-separator>
-                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('cp')">
-                    <q-item-section>
-                      <q-item-label>{{$t('most_popular')}}</q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <q-icon name="whatshot"/>
-                    </q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('date')">
-                    <q-item-section>
-                      <q-item-label>{{$t('most_recent')}}</q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <q-icon name="fiber_new"/>
-                    </q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('category')">
-                    <q-item-section>
-                      <q-item-label>{{$t('categories')}}</q-item-label>
-                    </q-item-section>
-                    <q-item-section side>
-                      <q-icon name="construction"/>
-                    </q-item-section>
-                  </q-item>
-                  <div class="poppinsBold text-h7 text-center q-pt-md">{{$t('show')}}</div>
+              <q-menu auto-close content-style="border-radius: 1em;">
+                <q-list style="min-width: 20em" class="q-pa-md">
+                  <div class="poppinsBold text-h7 text-center q-pt-sm q-pb-sm">{{$t('show')}}</div>
                   <q-separator inset=""></q-separator>
                   <q-item clickable v-ripple v-close-popup @click="showAllPublishings()">
                     <q-item-section>
                       <q-item-label>{{$t('show_all')}}</q-item-label>
                     </q-item-section>
-
+                    <q-item-section side>
+                      <q-icon name="public"/>
+                    </q-item-section>
                   </q-item>
                   <q-item clickable v-ripple v-close-popup @click="showFinishedPublishings()">
                     <q-item-section>
@@ -84,6 +60,34 @@
                       <q-icon name="o_lock_open"/>
                     </q-item-section>
                   </q-item>
+                  <div class="poppinsBold text-h7 text-center q-pt-md q-pb-sm">{{$t('sort_by')}}
+                  </div>
+                  <q-separator inset=""></q-separator>
+                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('cp')">
+                    <q-item-section>
+                      <q-item-label>{{$t('most_popular')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="o_whatshot"/>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('date')">
+                    <q-item-section>
+                      <q-item-label>{{$t('most_recent')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="o_fiber_new"/>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple v-close-popup @click="orderPublishingsBy('category')">
+                    <q-item-section>
+                      <q-item-label>{{$t('categories')}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-icon name="o_construction"/>
+                    </q-item-section>
+                  </q-item>
+
                 </q-list>
               </q-menu>
             </q-btn>
@@ -328,7 +332,7 @@
     },
     watch: {
       publishings: function (val) {
-        console.log("aaaaa")
+        this.orderedPublishings = [];
         let keys = Object.keys(val);
         keys.forEach(key => {
           let item = this.publishings[key];

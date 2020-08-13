@@ -1,5 +1,5 @@
 <template>
-  <q-card class="cardExterior">
+  <q-card class="cardExterior" style="border-radius: 1em">
     <div class="cursor-pointer" v-if="publishDetails.fileType==='application/pdf'"
          @click="goToPage(publishKey)"
          :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'">
@@ -198,7 +198,7 @@
           />
 
           <q-btn
-            v-else-if="publishDetails.needHelp==='true' && !sidePublish"
+            v-else-if="publishDetails.needHelp==='true' && !sidePublish && userDetails.userId === publishDetails.creatorId"
             type="submit"
             style="width:9em;font-size: 0.9em;border-radius: 0.4em"
             class="q-mt-xs bg-red-10"

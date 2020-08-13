@@ -271,7 +271,12 @@
         axios.get('https://cloudidea.es/api/index.php?action=acceptedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle + '&param4=' + this.$i18n.locale)
         this.firebaseUpdatePublish({
           publishId: this.publishDetails.key,
-          updates: { approved: true, releaseDate: Date.now(), timeStamp: -Date.now() }
+          updates: {
+            approved: true,
+            releaseDate: Date.now(),
+            timeStamp: -Date.now(),
+            approvedBy: this.userDetails.name
+          }
         });
         var data = {
           app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",

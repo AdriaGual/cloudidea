@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card style="border-radius: 1em">
     <q-tabs
       v-model="tab"
       dense
@@ -28,7 +28,7 @@
            v-if="newPublishDetails.projectUrl!==''">
           {{newPublishDetails.projectUrl}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">{{$t('source_files').toUpperCase()}}</p>
-        <q-card>
+        <q-card style="border-radius:1em">
           <q-item :ripple="false">
             <q-item-section side>
               <q-avatar rounded size="4em"

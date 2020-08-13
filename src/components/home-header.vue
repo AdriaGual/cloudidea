@@ -9,6 +9,7 @@
       <q-btn
         v-if="!userDetails.userId"
         no-caps
+        style="border-radius: 1em"
         class="text-white bg-primary float-right button"
         @click="goToPage('/login')"
         :label="$t('login')"
@@ -18,7 +19,7 @@
         <q-avatar size="3em">
           <img :src="userDetails.imageUrl">
         </q-avatar>
-        <q-menu auto-close>
+        <q-menu auto-close content-style="border-radius: 1em;">
           <q-list style="min-width: 10em">
             <q-item clickable @click="goToPage('/profile/'+userDetails.userId)">
 

@@ -68,6 +68,7 @@
             <div class="col">
               <q-btn outline color="primary"
                      class="startAppButton text-white bg-primary q-mt-lg"
+                     style="border-radius: 1em"
                      no-caps
                      :label="$t('start_sharing')" @click="goToPage('/')"/>
               <p class="text-grey poppinsRegular q-pt-sm cursor-pointer"

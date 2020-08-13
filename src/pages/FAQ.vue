@@ -14,7 +14,8 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
         <div class="row q-gutter-md justify-center q-pt-md">
-          <q-card class="text-center bg-white cursor-pointer poppinsRegular" style="max-width: 20em"
+          <q-card class="text-center bg-white cursor-pointer poppinsRegular"
+                  style="max-width: 20em;border-radius: 1em"
                   @click="goToPage('faq/generalRules')">
             <q-card-section>
               <q-icon name="rule" size="lg"/>
@@ -32,7 +33,8 @@
               Technical issues
             </q-card-section>
           </q-card>-->
-          <q-card class="text-center bg-white cursor-pointer poppinsRegular" style="max-width: 20em"
+          <q-card class="text-center bg-white cursor-pointer poppinsRegular"
+                  style="max-width: 20em;border-radius: 1em"
                   @click="goToPage('faq/popularQuestions')">
             <q-card-section>
               <q-icon name="o_assistant" size="lg"/>
@@ -41,7 +43,8 @@
               {{$t('popular_questions')}}
             </q-card-section>
           </q-card>
-          <q-card class="text-center bg-white cursor-pointer poppinsRegular" style="max-width: 20em"
+          <q-card class="text-center bg-white cursor-pointer poppinsRegular"
+                  style="max-width: 20em;border-radius: 1em"
                   @click="goToPage('faq/cookiePolicy')">
             <q-card-section>
               <q-icon name="las la-cookie-bite" size="lg"/>

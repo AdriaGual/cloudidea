@@ -19,7 +19,7 @@
           {{$t('cookie_policy_text_1')}}</p>
         <q-list bordered class="rounded-borders q-mb-sm q-mx-lg bg-white"
                 v-for="(cookiePolicy, key) in cookiesPolicyItems"
-                :key="key">
+                :key="key" style="white-space: pre-line;border-radius: 1em;">
 
           <q-expansion-item
             expand-separator

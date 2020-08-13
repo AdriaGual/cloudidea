@@ -14,17 +14,18 @@
 
     <div class="row">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col q-mt-sm"
-           style="border-radius: 0.5em">
-        <q-list bordered class="rounded-borders q-mb-sm q-mx-lg bg-white"
+      <div class="col q-mt-sm">
+        <q-list bordered class="q-mb-sm q-mx-lg bg-white"
+                style="white-space: pre-line;border-radius: 1em;"
                 v-for="(generalRule, key) in generalRulesItems"
                 :key="key">
 
           <q-expansion-item
+            style="border-radius: 1em"
+            class="bg-white"
             expand-separator
             :icon="generalRule.icon"
             :label="generalRule.titleText"
-            style="white-space: pre-line"
           >
             <q-card>
               <q-card-section class="q-mb-lg">

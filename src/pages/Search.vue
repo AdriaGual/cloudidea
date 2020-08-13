@@ -36,7 +36,7 @@
                 v-for="(recentSearch, key) in recentSearches" :key="key"
                 no-caps
                 class="q-mr-md"
-                style="border-radius: 0.5em;width:11em;background-color: #F6FAFF"
+                style="border-radius: 1em;width:11em;background-color: #F6FAFF"
                 icon="launch"
                 :label="capitalize(recentSearch)"
                 @click="searchText=recentSearch"
@@ -75,7 +75,7 @@
           >
             <div class="row no-wrap q-gutter-md q-pl-lg">
               <div v-for="(category, key) in categories" :key="key">
-                <div style="height:9em;width:9em;background-color: #F6FAFF;border-radius: 0.4em"
+                <div style="height:9em;width:9em;background-color: #F6FAFF;border-radius: 1em"
                      class=" shadow-1 cursor-pointer"
                      @click="searchText=category.searchText">
                   <q-img :src="category.url" style="height:6.8em"/>
