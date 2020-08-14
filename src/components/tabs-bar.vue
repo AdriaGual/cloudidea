@@ -11,7 +11,7 @@
       <q-tab name="home" :icon="tab==='home'?'home':'o_home'" @click="goToPage('/','home')"/>
       <q-tab name="search" icon="search"
              @click="goToPage('/search','search')"/>
-      <q-tab name="create" :icon="tab==='create'?'note_add':'o_note_add'"
+      <q-tab v-if="userDetails.name" name="create" :icon="tab==='create'?'note_add':'o_note_add'"
              @click="goToPage('/create','create')"/>
       <q-tab name="brotherhood" :icon="tab==='brotherhood'?'fas fa-handshake':'far fa-handshake'"
              @click="goToPage('/brotherhood','brotherhood')"/>

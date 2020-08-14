@@ -1,6 +1,12 @@
 <template>
   <div class="q-px-md">
     <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
+      <vue-easy-lightbox
+        :visible="visible"
+        :imgs="filteredPublishing.coverImage?filteredPublishing.coverImage:filteredPublishing.fileUrl && filteredPublishing.fileType && filteredPublishing.fileType.includes('image/')?filteredPublishing.fileUrl:''"
+        :index="1"
+        @hide="handleHide"
+      ></vue-easy-lightbox>
       <q-card-section v-if="userDetails.moderator" class="bg-white q-pa-sm">
         <div class="row">
           <div class="col">
@@ -15,8 +21,9 @@
       </q-card-section>
       <q-item clickable no-ripple class="cardSectionInterior q-mb-md" style="border-radius: 1em"
               v-if="$q.cookies.get('categorySelection').includes(filteredPublishing.categoryModel)">
-        <q-item-section side @click="goToPage('publishDetails/'+filteredPublishing.key)">
+        <q-item-section side>
           <q-avatar rounded size="4em"
+                    @click="visible=true"
                     v-if="filteredPublishing.coverImage || filteredPublishing.fileType.includes('image/')">
             <img v-if="filteredPublishing.coverImage" :src="filteredPublishing.coverImage"
                  style="border-radius: 0.2em" alt=""/>
@@ -140,12 +147,15 @@
   import { mapActions, mapState } from 'vuex'
   import { Cookies } from "quasar";
   import axios from 'axios'
+  import VueEasyLightbox from 'vue-easy-lightbox'
 
   export default {
     props: ['orderedPublishings', 'categories', 'userDetails'],
+    components: { VueEasyLightbox },
     data() {
       return {
-        openDeleteProjectPopup: false
+        openDeleteProjectPopup: false,
+        visible: false
       }
     },
     methods: {
@@ -211,6 +221,8 @@
         req.end();
         this.clearPublishings();
         this.firebaseGetApprovedPublishings();
+      }, handleHide() {
+        this.visible = false
       },
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);

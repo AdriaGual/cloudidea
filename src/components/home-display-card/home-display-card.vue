@@ -15,9 +15,9 @@
         </div>
       </div>
     </q-card-section>
-    <q-card-section class="" @click="goToPublishDetails(publish, publish.key)"
-                    style="cursor: pointer;  background: #393e46;">
-      <div class="row">
+    <q-card-section
+      style="cursor: pointer;  background: #393e46;">
+      <div class="row" @click="goToPublishDetails(publish, publish.key)">
         <div class="col">
           <p style="font-size: 0.8em" class="text-grey">
             {{releaseDate(publish.releaseDate)}}</p>
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" @click="goToPublishDetails(publish, publish.key)">
         <div class="col-9">
           <p class="poppinsRegular text-white" style="font-size: 1.2em"
              v-if="publish.projectTitle.length>30">
@@ -62,7 +62,13 @@
       </div>
 
       <div class="row">
-        <div class="col">
+        <vue-easy-lightbox
+          :visible="visible"
+          :imgs="publish.coverImage?publish.coverImage:publish.fileUrl && publish.fileType && publish.fileType.includes('image/')?publish.fileUrl:''"
+          :index="1"
+          @hide="handleHide"
+        ></vue-easy-lightbox>
+        <div class="col" @click="goToPublishDetails(publish, publish.key)">
           <p class="poppinsLight text-justify q-pr-lg text-grey" style="font-size: 0.9em">
             {{publish.description.substring(0,100)+".."}}</p>
         </div>
@@ -73,6 +79,7 @@
             spinner-color="white"
             style="max-height: 9em;"
             class="cardCoverImage q-mt-xs q-ml-md full-width"
+            @click="visible=true"
           />
           <q-img
             v-if="publish.fileUrl && publish.fileType && publish.fileType.includes('image/') && !publish.coverImage"
@@ -80,10 +87,12 @@
             spinner-color="white"
             style="max-height: 9em;"
             class="cardCoverImage q-mt-xs q-ml-md full-width"
+            @click="visible=true"
           />
           <div v-else>
             <div v-for="(category, key) in categories" :key="key">
               <img
+                @click="goToPublishDetails(publish, publish.key)"
                 :class="$q.platform.is.desktop?'q-px-xl':''"
                 v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
                 :style="$q.platform.is.desktop?'height:9em':''"
@@ -121,13 +130,15 @@
   import { Cookies } from 'quasar'
   import PublishCardBottom from '../publish-card/publish-card-bottom';
   import axios from 'axios'
+  import VueEasyLightbox from 'vue-easy-lightbox'
 
   export default {
-    components: { PublishCardBottom },
+    components: { PublishCardBottom, VueEasyLightbox },
     props: ['publish', 'categories', 'userDetails'],
     data() {
       return {
-        openDeleteProjectPopup: false
+        openDeleteProjectPopup: false,
+        visible: false
       }
     },
     methods: {
@@ -202,6 +213,9 @@
         req.end();
         this.clearPublishings();
         this.firebaseGetApprovedPublishings();
+      },
+      handleHide() {
+        this.visible = false
       },
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);
