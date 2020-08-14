@@ -90,11 +90,29 @@
             <q-item-label>{{comment.message}}</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <p class="text-grey" style="font-size: 0.9em">{{releaseDate(comment.timeStamp)}}</p>
+            <a class="text-grey" style="font-size: 0.9em">{{releaseDate(comment.timeStamp)}}</a>
+            <q-btn v-if="comment.userId===userDetails.userId || userDetails.moderator" flat round
+                   color="red-10"
+                   icon="close" @click="openDeleteComment(comment)"/>
           </q-item-section>
         </q-item>
       </q-tab-panel>
     </q-tab-panels>
+    <q-dialog v-model="openDeleteCommentPopup">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">{{$t('alert')}}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Quieres eliminar el commentario?
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup @click="deleteComment()"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 
@@ -137,13 +155,14 @@
           categoryName: 'Marketing',
           url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
         }],
-
+        openDeleteCommentPopup: false,
+        selectedComment: null
       }
     },
     methods: {
       ...mapActions('store',
         ['updatePublishDetails', 'firebaseUpdatePublish', 'firebaseDeletePublish', "firebaseGetMessages",
-          "firebaseStopGettingMessages", "firebaseSendMessage", 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseAddComment']),
+          "firebaseStopGettingMessages", "firebaseSendMessage", 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseAddComment', "firebaseDeleteComment"]),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -215,6 +234,14 @@
           req.write(JSON.stringify(data));
           req.end();
         }
+      },
+      openDeleteComment(comment) {
+        this.selectedComment = comment
+        this.openDeleteCommentPopup = true
+      },
+      deleteComment() {
+        this.selectedComment.publishId = this.$route.params.publishId;
+        this.firebaseDeleteComment(this.selectedComment)
       },
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);

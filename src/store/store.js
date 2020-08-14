@@ -555,6 +555,11 @@ const actions = {
     commit("removePublish", { publishId: payload.publishId });
     dispatch("deleteFolderContents", { pathToDirectory: "publishings/" + payload.publishId });
   },
+  firebaseDeleteComment({ commit, dispatch }, payload) {
+    firebaseDB.ref("publishings/" + payload.publishId + "/comments/" + payload.userId + "/" + payload.key)
+    .remove();
+    commit("removeComment", { commentId: payload.key });
+  },
   deleteFolderContents({ dispatch }, path) {
     const ref = firebaseStorage.ref(path.pathToDirectory);
     ref.listAll()
