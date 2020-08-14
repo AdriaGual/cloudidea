@@ -7,10 +7,10 @@
                @click="goToPage('/moderate/publishings')"/>
       </div>
       <div class="col text-center">
-        <a class="poppinsBold" style="line-height: 0.1em;font-size: 1.2em">
+        <a class="poppinsBold q-pt-sm" style="font-size: 1.5em">
           {{newPublishDetails.projectTitle}}</a>
       </div>
-      <div class="col-4"></div>
+      <div class="col-1"></div>
     </div>
 
     <div class="row q-pt-md">
@@ -98,118 +98,142 @@
             </q-card>
           </div>
 
+        </div>
+        <div class="q-pt-lg">
+          <q-card style="border-top-left-radius: 1em;border-top-right-radius: 1em">
+            <q-tabs
+              v-model="tab"
+              dense
+              class="text-grey"
+              style="height:4em;"
+              active-color="primary"
+              indicator-color="secondary"
+              align="justify"
+            >
+              <q-tab name="info" label="Info"/>
+            </q-tabs>
 
-          <div class="q-pt-lg">
-            <q-card style="border-top-left-radius: 1em;border-top-right-radius: 1em">
-              <q-tabs
-                v-model="tab"
-                dense
-                class="text-grey"
-                style="height:4em;"
-                active-color="primary"
-                indicator-color="secondary"
-                align="justify"
-              >
-                <q-tab name="info" label="Info"/>
-              </q-tabs>
-
-              <q-tab-panels v-model="tab" animated class="bg-transparent">
-                <q-tab-panel name="info">
-                  <p class="poppinsRegular text-grey">{{newPublishDetails.description}}</p>
-                  <p class="poppinsBold" style="line-height: 0.1em">LICENSE TYPE</p>
-                  <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
-                  <p class="poppinsBold" style="line-height: 0.1em">CATEGORY</p>
-                  <p class="poppinsRegular text-grey">{{newPublishDetails.categoryModel}}</p>
-                  <p class="poppinsBold" style="line-height: 0.1em"
-                     v-if="newPublishDetails.projectUrl!==''">
-                    URL</p>
-                  <p class="poppinsRegular text-blue cursor-pointer" @click="openProjectURL()"
-                     v-if="newPublishDetails.projectUrl!==''">
-                    {{newPublishDetails.projectUrl}}</p>
-                  <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
-                  <q-card>
-                    <q-item :ripple="false">
-                      <q-item-section side>
-                        <q-avatar rounded size="4em"
-                                  v-if="newPublishDetails.coverImage || newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')">
-                          <img
-                            :src="newPublishDetails.coverImage?newPublishDetails.coverImage:newPublishDetails.fileUrl"/>
-                        </q-avatar>
-                        <div v-else v-for="(category, key) in categories" :key="key">
-                          <img
-                            style="height: 4em"
-                            v-if="category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
-                            :src="category.url"/>
-                        </div>
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label class="poppinsBold q-pb-xs"
-                                      v-if="newPublishDetails.fileName && newPublishDetails.fileName.length>15">
-                          {{newPublishDetails.fileName.substring(0,15)+".."}}
-                        </q-item-label>
-                        <q-item-label class="poppinsBold q-pb-xs" v-else>
-                          {{newPublishDetails.fileName}}
-                        </q-item-label>
-                        <q-item-label caption>{{fileSize}}</q-item-label>
-                      </q-item-section>
-                      <q-item-section side>
-                        <q-btn round color="teal" icon="get_app" @click="downloadFile()"/>
-                      </q-item-section>
-                    </q-item>
-                  </q-card>
-                  <div class="row text-center">
-                    <div class="col">
-                      <q-btn outline
-                             class="acceptModerateButton text-white bg-green-8 q-mt-lg"
-                             icon-right="check" no-caps
-                             label="Accept" @click="confirm=true"/>
-                    </div>
-                    <div class="col">
-                      <q-btn outline
-                             class="acceptModerateButton text-white bg-red-10 q-mt-lg"
-                             icon-right="close" no-caps
-                             label="Reject" @click="reject=true"/>
-                    </div>
+            <q-tab-panels v-model="tab" animated class="bg-transparent">
+              <q-tab-panel name="info">
+                <p class="poppinsRegular text-grey">{{newPublishDetails.description}}</p>
+                <p class="poppinsBold" style="line-height: 0.1em">LICENSE TYPE</p>
+                <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
+                <p class="poppinsBold" style="line-height: 0.1em">CATEGORY</p>
+                <p class="poppinsRegular text-grey">{{newPublishDetails.categoryModel}}</p>
+                <p class="poppinsBold" style="line-height: 0.1em"
+                   v-if="newPublishDetails.projectUrl!==''">
+                  URL</p>
+                <p class="poppinsRegular text-blue cursor-pointer" @click="openProjectURL()"
+                   v-if="newPublishDetails.projectUrl!==''">
+                  {{newPublishDetails.projectUrl}}</p>
+                <p class="poppinsBold" style="line-height: 0.1em">SOURCE FILES</p>
+                <q-card>
+                  <q-item :ripple="false">
+                    <q-item-section side>
+                      <q-avatar rounded size="4em"
+                                v-if="newPublishDetails.coverImage || newPublishDetails.fileType && newPublishDetails.fileType.includes('image/')">
+                        <img
+                          :src="newPublishDetails.coverImage?newPublishDetails.coverImage:newPublishDetails.fileUrl"/>
+                      </q-avatar>
+                      <div v-else v-for="(category, key) in categories" :key="key">
+                        <img
+                          style="height: 4em"
+                          v-if="category.categoryName ===newPublishDetails.categoryModel && !newPublishDetails.coverImage"
+                          :src="category.url"/>
+                      </div>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label class="poppinsBold q-pb-xs"
+                                    v-if="newPublishDetails.fileName && newPublishDetails.fileName.length>15">
+                        {{newPublishDetails.fileName.substring(0,15)+".."}}
+                      </q-item-label>
+                      <q-item-label class="poppinsBold q-pb-xs" v-else>
+                        {{newPublishDetails.fileName}}
+                      </q-item-label>
+                      <q-item-label caption>{{fileSize}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-btn round color="teal" icon="get_app" @click="downloadFile()"/>
+                    </q-item-section>
+                  </q-item>
+                </q-card>
+                <div class="row text-center">
+                  <div class="col">
+                    <q-btn outline
+                           class="acceptModerateButton text-white bg-green-6 q-mt-lg"
+                           icon-right="check" no-caps
+                           label="Accept" @click="confirm=true"/>
                   </div>
-                </q-tab-panel>
-              </q-tab-panels>
+                  <div class="col">
+                    <q-btn outline
+                           class="acceptModerateButton text-white bg-red-6 q-mt-lg"
+                           icon-right="close" no-caps
+                           label="Reject" @click="reject=true"/>
+                  </div>
+                </div>
+              </q-tab-panel>
+            </q-tab-panels>
+          </q-card>
+          <q-dialog v-model="confirm">
+            <q-card class="text-center" style="height:30em;border-radius: 1em">
+              <q-img
+                class="no-shadow q-mt-lg"
+                src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Faccept.svg?alt=media&token=ddf297af-5580-48c0-ba31-f677bfe57995"
+                style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+              <q-card-section class="row text-center q-pb-none float-right">
+                <q-btn icon="close" flat round dense v-close-popup/>
+              </q-card-section>
+              <q-card-section>
+                <p class="poppinsBold" style="font-size: 1.5em">Accept project</p>
+                <a clasS="poppinsRegular"> You're gonna accept the project <a class="poppinsBold">{{newPublishDetails.projectTitle}}</a>,
+                  are
+                  you
+                  sure about that?</a>
+              </q-card-section>
+              <q-card-actions align="center">
+                <q-btn unelevated label="Accept" color="green-6"
+                       style="border-radius: 1em;width:9em;height:3em"
+                       class="q-mt-lg"
+                       v-close-popup
+                       no-caps
+                       @click="approveProject()"/>
+              </q-card-actions>
             </q-card>
-            <q-dialog v-model="confirm">
-              <q-card>
-                <q-card-section class="row items-center">
-                  <span class="poppinsRegular q-ml-sm">Are you sure you wanna accept the project  <a
-                    class="poppinsBold">{{newPublishDetails.projectTitle}}</a> from
-                   <a class="poppinsBold">{{newPublishDetails.creatorName}}</a>?</span>
-                </q-card-section>
+          </q-dialog>
 
-                <q-card-actions align="right">
-                  <q-btn v-if="confirm" flat label="Confirm" color="green-8" v-close-popup
-                         @click="approveProject()"/>
-                  <q-btn flat label="Cancel" color="red-10" v-close-popup/>
-                </q-card-actions>
-              </q-card>
-            </q-dialog>
+          <q-dialog v-model="reject">
+            <q-card class="text-center" style="height:30em;border-radius: 1em">
+              <q-img
+                class="no-shadow q-mt-lg"
+                src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
+                style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
 
-            <q-dialog v-model="reject">
-              <q-card>
-                <q-card-section class="row items-center">
-                  <span
-                    class="poppinsRegular q-ml-sm">Are you sure you wanna reject the project
-                  <a class="poppinsBold">{{newPublishDetails.projectTitle}}</a> from
-                   <a class="poppinsBold">{{newPublishDetails.creatorName}}</a>?</span>
-                </q-card-section>
+              <q-card-section class="row text-center q-pb-none float-right">
+                <q-btn icon="close" flat round dense v-close-popup/>
+              </q-card-section>
 
-                <q-card-actions align="right">
-                  <q-btn v-if="reject" flat label="Delete" color="red-10" v-close-popup
-                         @click="rejectProject()"/>
-                  <q-btn flat label="Cancel" color="primary" v-close-popup/>
-                </q-card-actions>
-              </q-card>
-            </q-dialog>
+              <q-card-section>
+                <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
+                <a clasS="poppinsRegular"> You're gonna reject the project <a class="poppinsBold">{{newPublishDetails.projectTitle}}</a>,
+                  are
+                  you
+                  sure about that?</a>
+              </q-card-section>
+              <q-card-actions align="center">
+                <q-btn unelevated label="Reject" color="red-6"
+                       style="border-radius: 1em;width:9em;height:3em"
+                       class="q-mt-lg"
+                       v-close-popup
+                       no-caps
+                       @click="rejectProject()"/>
+              </q-card-actions>
 
-          </div>
+            </q-card>
+          </q-dialog>
+
         </div>
       </div>
+
       <div class="col-3" v-if="$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
   </q-layout>

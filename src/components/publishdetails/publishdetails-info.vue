@@ -99,17 +99,27 @@
       </q-tab-panel>
     </q-tab-panels>
     <q-dialog v-model="openDeleteCommentPopup">
-      <q-card>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmanage_comment.svg?alt=media&token=f129bc8e-0e42-4abc-a0f8-73e52d11cde2"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
+        </q-card-section>
         <q-card-section>
-          <div class="text-h6">{{$t('alert')}}</div>
+          <p class="poppinsBold" style="font-size: 1.5em">Remove comment</p>
+          <a clasS="poppinsRegular"> You're gonna remove this comment, are
+            you
+            sure about that?</a>
         </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          Quieres eliminar el commentario?
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup @click="deleteComment()"/>
+        <q-card-actions align="center">
+          <q-btn unelevated label="Remove" color="red-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
+                 @click="deleteComment()"/>
         </q-card-actions>
       </q-card>
     </q-dialog>

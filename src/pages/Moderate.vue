@@ -1,9 +1,9 @@
 <template>
   <q-page class="flex column">
-    <p class="poppinsRegular text-center" style="font-size: 1.5em">Moderate</p>
+    <p class="poppinsRegular text-center q-pt-sm" style="font-size: 1.5em">Moderate</p>
     <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col q-px-md" style="border-radius: 0.5em">
+      <div class="col q-px-md">
         <q-btn outline color="primary" icon-right="o_receipt_long"
                class="chooseModerateButton full-width text-white bg-primary"
                no-caps

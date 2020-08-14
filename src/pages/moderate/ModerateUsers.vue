@@ -53,36 +53,52 @@
     </div>
     <div class="q-pb-xl"></div>
     <q-dialog v-model="showPromoteToModerator" v-if="selectedUser">
-      <q-card>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
+        </q-card-section>
         <q-card-section>
-          <div class="text-h6">Alert</div>
+          <p class="poppinsBold" style="font-size: 1.5em">Promote user</p>
+          <a clasS="poppinsRegular"> You're gonna promote a user, are you sure about that?</a>
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          Are you sure to make {{selectedUser.name}} a <b>moderator</b>?
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="YES" color="green-6" v-close-popup
+        <q-card-actions align="center">
+          <q-btn unelevated label="Accept" color="green-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
                  @click="promoteToModerator(selectedUser.key)"/>
-          <q-btn flat label="CANCEL" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
     <q-dialog v-model="showDeleteUser" v-if="selectedUser">
-      <q-card>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
+        </q-card-section>
         <q-card-section>
-          <div class="text-h6">Alert</div>
+          <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
+          <a class="poppinsRegular"> You're gonna remove <a class="poppinsBold">{{selectedUser.name}}</a>'s
+            account, are
+            you
+            sure about that?</a>
         </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          Are you sure to remove {{selectedUser.name}}'s account?
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="YES" color="red-10" v-close-popup
+        <q-card-actions align="center">
+          <q-btn unelevated label="Remove" color="red-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
                  @click="deleteUser(selectedUser.key)"/>
-          <q-btn flat label="CANCEL" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -132,6 +148,7 @@
     },
     watch: {
       users: function (val) {
+        this.orderedUsers = []
         let keys = Object.keys(val);
         keys.forEach(key => {
           let item = this.users[key];

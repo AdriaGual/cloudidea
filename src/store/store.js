@@ -316,6 +316,16 @@ const actions = {
   firebaseDeleteUser({ commit, dispatch }, payload) {
     firebaseDB.ref("users/" + payload).remove();
     commit("removeUser", { payload });
+    firebaseDB.ref("publishings").on("child_added", snapshot => {
+      const publishDetails = snapshot.val();
+      const publishId = snapshot.key;
+      if (publishDetails.creatorId === payload) {
+        dispatch("firebaseDeletePublish", {
+          publishId: publishId,
+        });
+      }
+
+    });
   },
   firebaseDeleteMyUser({ commit, dispatch }, payload) {
     commit("removeUser", { payload });
@@ -323,7 +333,6 @@ const actions = {
     firebaseAuth.currentUser.delete()
     firebaseAuth.signOut();
     firebaseDB.ref("users/" + payload).remove();
-
   },
   firebaseGetMessages({ commit, state }, otherUserId) {
     const userId = state.userDetails.userId;
@@ -542,6 +551,7 @@ const actions = {
 
   },
   firebaseUpdatePublish({ commit }, payload) {
+    console.log(payload)
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
     var publishId = payload.publishId;
     var publishDetails = payload.updates;

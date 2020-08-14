@@ -163,21 +163,6 @@
       </div>
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
-    <q-dialog v-model="showWarning">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Alert</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          Are you sure to make a <b>moderator</b>?
-        </q-card-section>
-
-        <q-card-actions align="right">
-
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </q-layout>
 </template>
 
@@ -216,7 +201,6 @@
         registerLicenseOptions: [
           'Copyright', 'Creative Commons', 'LGPL', 'Copyleft'
         ],
-        showWarning: false,
         submittedProject: false
       }
     },

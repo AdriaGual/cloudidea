@@ -142,12 +142,24 @@
 
     <div class="q-pb-lg"></div>
     <q-dialog v-model="openAdblockDialog" persistent position="bottom">
-      <q-card class="q-pa-sm">
-        <q-card-section>
-          <p class="poppinsRegular">{{$t('to_receive_notifications')}}</p>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdata_visualization.svg?alt=media&token=0c1739a2-e139-4c3e-a0e5-098a694a3682"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
-        <q-card-actions align="right">
-          <q-btn :label="$t('accept')" color="primary" v-close-popup
+        <q-card-section>
+          <p class="poppinsBold" style="font-size: 1.5em">Receive Notifications</p>
+          <a class="poppinsRegular"> {{$t('to_receive_notifications')}}</a>
+        </q-card-section>
+        <q-card-actions align="center">
+          <q-btn unelevated :label="$t('accept')" color="green-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
                  @click="openCookies()"/>
         </q-card-actions>
       </q-card>

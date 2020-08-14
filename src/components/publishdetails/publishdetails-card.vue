@@ -172,7 +172,7 @@
     </div>
 
     <q-card-actions>
-      <div class="row full-width " style="height:4em">
+      <div class="row full-width" style="height:4em">
         <div
           :class="$q.platform.is.desktop && !sidePublish?'col-1 q-pl-sm cursor-pointer':'col-2 q-pl-sm cursor-pointer'"
           @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
@@ -187,7 +187,7 @@
           <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
           <p class="cardUserCP">{{$t(publishDetails.categoryModel.toLowerCase())}}</p>
         </div>
-        <div class="col q-pt-sm q-pr-md" align="right">
+        <div class="col q-pt-sm" align="right">
           <q-btn
             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
             no-caps
@@ -196,23 +196,30 @@
             label="Chat"
             @click="chat()"
           />
-
           <q-btn
             v-else-if="publishDetails.needHelp==='true' && !sidePublish && userDetails.userId === publishDetails.creatorId"
             type="submit"
-            style="width:9em;font-size: 0.9em;border-radius: 0.4em"
-            class="q-mt-xs bg-red-10"
+            style="font-size: 0.9em;border-radius: 1em"
+            class="q-mt-xs bg-green-6 q-px-md"
             text-color="white"
             no-caps
-            label="Close project"
+            label="Finish"
+            @click="toogleProject('false')"/>
+          <q-btn
+            v-else-if="publishDetails.needHelp==='false' && !sidePublish && userDetails.userId === publishDetails.creatorId"
+            type="submit"
+            style="font-size: 0.9em;border-radius: 1em"
+            class="q-mt-xs bg-red-10 q-px-md"
+            text-color="white"
+            no-caps
+            label="Reopen"
             @click="sureCloseProject=true"/>
         </div>
-        <div class="col-2 text-center"
-             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId">
+        <div :class="$q.platform.is.desktop?'col-2 text-center':'col-2 text-center q-pl-md'">
           <q-btn
             rounded
             flat
-            v-if="alreadyLikesPublish(publishDetails,publishKey)===false"
+            v-if="alreadyLikesPublish(publishDetails,publishKey)===false && userDetails.userId !== publishDetails.creatorId"
             no-caps
             class=""
             icon="favorite_border"
@@ -222,7 +229,7 @@
             @click="like(publishDetails,publishKey)"
           />
           <q-btn
-            v-if="alreadyLikesPublish(publishDetails,publishKey)===true"
+            v-if="alreadyLikesPublish(publishDetails,publishKey)===true && userDetails.userId !== publishDetails.creatorId"
             no-caps
             rounded
             flat
@@ -233,6 +240,8 @@
             color="accent"
             @click="dislike(publishDetails,publishKey)"
           />
+          <q-icon v-if="!userDetails.userId || userDetails.userId === publishDetails.creatorId"
+                  name="favorite" color="grey" size="sm" class="q-pt-sm q-pb-xs"/>
           <p class="cardUserCP ">
             {{publishDetails.cp}}
           </p>
@@ -241,21 +250,27 @@
     </q-card-actions>
 
     <q-dialog v-model="sureCloseProject">
-      <q-card class="q-pa-lg">
-        <q-card-section>
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fteam_work.svg?alt=media&token=c68fab03-61e0-4d20-bcb6-166faa2724ef"/>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fscrum_board.svg?alt=media&token=6b057ff1-cdea-4743-8157-d79bc7bab0c3"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
-
         <q-card-section>
-          You've found help from other people and finished your project?<br> That's great, now it's
-          time
-          to close this help request and send your finished project to moderation!
+          <p class="poppinsBold" style="font-size: 1.5em"> Reopen project</p>
+          <a clasS="poppinsRegular"> This project was finished but now you
+            wanna reopen it, are you
+            sure about that?</a>
         </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup @click="closeHelpRequest"/>
-          <q-btn flat label="CANCEL" color="primary" v-close-popup/>
+        <q-card-actions align="center">
+          <q-btn unelevated label="Accept" color="green-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
+                 @click="closeHelpRequest"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -300,7 +315,8 @@
       }
     },
     methods: {
-      ...mapActions('store', ['firebaseAddLike', 'firebaseRemoveLike', 'firebaseDeletePublish']),
+      ...mapActions('store',
+        ['firebaseAddLike', 'firebaseRemoveLike', 'firebaseDeletePublish', 'firebaseUpdatePublish']),
       goToPage(route) {
         if (this.publishKey !== this.$route.params.publishId) {
           this.$router.push(route)
@@ -332,12 +348,16 @@
         return found
       },
       closeHelpRequest() {
-        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle)
-        this.firebaseDeletePublish({
-          publishId: this.$route.params.publishId
-        });
-        this.goToMainPage('/')
+        this.toogleProject('true')
       },
+      toogleProject(state) {
+        this.firebaseUpdatePublish({
+          publishId: this.$route.params.publishId,
+          updates: {
+            needHelp: state
+          }
+        });
+      }
     },
     computed: {
       ...mapState('store', ['userLikedPublishings']),

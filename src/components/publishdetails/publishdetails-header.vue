@@ -28,7 +28,7 @@
     props: ['projectTitle', 'projectReleaseDate'],
     methods: {
       goToPage(route) {
-        this.$router.push(route)
+        this.$router.go(-1)
       },
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);

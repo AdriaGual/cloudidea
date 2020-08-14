@@ -119,19 +119,26 @@
               </a>
             </div>
             <q-dialog v-model="openDeleteProjectPopup">
-              <q-card>
+              <q-card class="text-center" style="height:30em;border-radius: 1em">
+                <q-img
+                  class="no-shadow q-mt-lg"
+                  src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
+                  style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+                <q-card-section class="row text-center q-pb-none float-right">
+                  <q-btn icon="close" flat round dense v-close-popup/>
+                </q-card-section>
                 <q-card-section>
-                  <div class="text-h6">{{$t('alert')}}</div>
+                  <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
+                  <a class="poppinsRegular"> You're gonna delete <a class="poppinsBold">{{filteredPublishing.projectTitle}}</a>,
+                    are you sure about that?</a>
                 </q-card-section>
-
-                <q-card-section class="q-pt-none">
-                  Quieres eliminar el proyecto?
-                </q-card-section>
-
-                <q-card-actions align="right">
-                  <q-btn flat :label="$t('delete')" color="red-10" v-close-popup
-                         @click="deleteProject"/>
-                  <q-btn flat :label="$t('cancel')" color="primary" v-close-popup/>
+                <q-card-actions align="center">
+                  <q-btn unelevated :label="$t('delete')" color="red-6"
+                         style="border-radius: 1em;width:9em;height:3em"
+                         class="q-mt-lg"
+                         v-close-popup
+                         no-caps
+                         @click="deleteProject()"/>
                 </q-card-actions>
               </q-card>
             </q-dialog>

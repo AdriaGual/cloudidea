@@ -8,11 +8,13 @@
         <p v-if="$route.params.otherUserId===userDetails.userId" class="poppinsRegular q-pt-sm"
            style="font-size: 1.5em">{{$t('your_profile')}}</p>
       </div>
+
       <div class="col-1">
         <q-btn v-if="$route.params.otherUserId===userDetails.userId" round color="primary"
                icon="send" flat class="float-right"
                @click="goToPage('/myChats')"/>
       </div>
+
     </div>
     <div class="row">
       <div class="col q-pb-md" style="border-radius: 0.5em">
@@ -69,21 +71,25 @@
             @click="chat()"
           />
         </div>
-
       </div>
+
+    </div>
+    <div align="center" class="q-pb-md" v-if="userDetails.moderator">
+      <q-btn icon="delete" unelevated color="red-6"
+             :label="$t('delete_account')" style="border-radius: 1em" no-caps
+             @click="sureCloseAccount = true"/>
     </div>
     <q-dialog v-model="editProfile">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6 q-px-lg">{{$t('edit_profile')}}</div>
-          <q-space/>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-card-section class="row text-center q-pb-none float-right">
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
-
         <q-card-section>
+          <p class="poppinsBold" style="font-size: 1.5em">{{$t('edit_profile')}}</p>
+          <p class="poppinsRegular q-mb-md text-grey">Edit you username or put your new skills</p>
           <q-form
             @submit="onSubmit"
-            class="q-px-lg"
+            class=""
           >
             <q-input outlined :placeholder="$t('username')" :label="$t('username')"
                      v-model="name"
@@ -99,14 +105,15 @@
                 <q-icon name="construction"/>
               </template>
             </q-input>
-            <q-toggle v-model="privateProfile" :label="$t('private_profile')"
+            <q-toggle class="poppinsRegular" v-model="privateProfile" :label="$t('private_profile')"
                       checked-icon="o_lock" unchecked-icon="o_lock_open"/>
             <div class="row justify-center q-pt-lg">
               <q-btn
-                style="height: 4em;border-radius: 0.5em;width:24em"
+                style="height: 4em;border-radius: 1em;width:24em"
                 color="primary"
                 icon="o_save"
                 type="submit"
+                no-caps
                 :label="$t('save_profile')"/>
             </div>
           </q-form>
@@ -114,15 +121,16 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="emailDialog">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6 q-px-lg">{{$t('send_email')}}</div>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
-
         <q-card-section>
+          <p class="poppinsBold" style="font-size: 1.5em"> {{$t('send_email')}}</p>
+          <p class="poppinsRegular q-mb-md text-grey">An email will be send to
+            {{otherUserDetails.name}}</p>
           <q-form
             @submit="sendEmail"
-            class="q-px-lg"
           >
             <q-input outlined :placeholder="$t('subject')"
                      v-model="subject"
@@ -133,7 +141,7 @@
                      :rules="[isEmptyField]"/>
             <div class="row justify-center">
               <q-btn
-                style="height: 4em;border-radius: 0.5em;width:24em"
+                style="height: 4em;border-radius: 1em;width:24em"
                 color="primary"
                 icon="send"
                 type="submit"
@@ -141,6 +149,33 @@
             </div>
           </q-form>
         </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="sureCloseAccount">
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
+        </q-card-section>
+        <q-card-section>
+          <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
+          <a clasS="poppinsRegular"> You're gonna remove <a class="poppinsBold">{{otherUserDetails.name}}</a>'s
+            account, are
+            you
+            sure about that?</a>
+        </q-card-section>
+        <q-card-actions align="center">
+          <q-btn unelevated label="Remove" color="red-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
+                 @click="deleteAccount()"/>
+        </q-card-actions>
+
       </q-card>
     </q-dialog>
   </div>
@@ -162,11 +197,13 @@
         privateProfile: false,
         emailDialog: false,
         subject: '',
-        message: ''
+        message: '',
+        sureCloseAccount: false
       }
     },
     methods: {
-      ...mapActions('store', ['firebaseUpdateUser', 'updateUserState', 'firebaseUploadProfilePic']),
+      ...mapActions('store',
+        ['firebaseUpdateUser', 'updateUserState', 'firebaseUploadProfilePic', 'firebaseDeleteUser']),
       isShortField(val, n, item) {
         if (!(val && val.length >= n)) {
           return 'Short ' + item + ',' + n + ' characters required'
@@ -215,7 +252,17 @@
 
           this.imageUrl = this.otherUserDetails.imageUrl;
         });
-
+      },
+      deleteAccount() {
+        this.firebaseDeleteUser(this.$route.params.otherUserId);
+        this.$router.replace("/");
+        this.$q.notify({
+          color: 'dark',
+          textColor: 'white',
+          message: this.$t('deleted_account'),
+          position: 'top-right',
+          timeout: 1000
+        })
       },
       checkFileType(files) {
         return files.filter(file => file.type.includes('image/'))

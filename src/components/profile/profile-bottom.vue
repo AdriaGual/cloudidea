@@ -61,40 +61,32 @@
                     style="line-height: 0.1em;height:17em"
                     class="cardProjectExterior q-mr-md cursor-pointer"
                     v-if="publish.creatorId === $route.params.otherUserId"
-                    @click="$route.params.otherUserId===userDetails.userId?openDialog(publish,publish.key):goToPage('/publishDetails/'+publish.key)"
                   >
                     <q-img v-if="publish.coverImage" :src="publish.coverImage"
-                           style="border-radius: 0.2em;height:12em" alt="">
-                      <q-icon v-if="publish.needHelp==='true'" name="construction" size="md"
-                              class="absolute-right text-grey"/>
-                      <q-icon v-else name="check_circle_outline" size="md"
-                              class="absolute-right text-green-6"/>
-
+                           style="border-radius: 0.2em;height:12em" alt=""
+                           @click="goToPage('/publishDetails/'+publish.key)">
                     </q-img>
                     <q-img
                       v-if="!publish.coverImage && publish.fileUrl && publish.fileType && publish.fileType.includes('image/')"
                       :src="publish.fileUrl" style="border-radius: 0.2em;height:12em"
+                      @click="goToPage('/publishDetails/'+publish.key)"
                       alt="">
-                      <q-icon v-if="publish.needHelp==='true'" name="construction" size="md"
-                              class="absolute-right text-grey"/>
-                      <q-icon v-else name="check_circle_outline" size="md"
-                              class="absolute-right text-green-6"/>
                     </q-img>
                     <div v-else>
                       <div v-for="(category, key) in categories" :key="key">
                         <q-img
-                          class=""
+                          @click="goToPage('/publishDetails/'+publish.key)"
                           style="height: 12em;width:10em"
                           v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
                           :src="category.url">
-                          <q-icon v-if="publish.needHelp==='true'" name="construction" size="md"
-                                  class="absolute-right text-grey"/>
-                          <q-icon v-else name="check_circle_outline" size="md"
-                                  class="absolute-right text-green-6"/>
                         </q-img>
                       </div>
                     </div>
-
+                    <q-btn unelevated round color="red-6" icon="delete" class="float-right"
+                           size="sm"
+                           style="position: relative;top: -16em;right:0.8em"
+                           v-if="$route.params.otherUserId===userDetails.userId"
+                           @click="openDialog(publish,publish.key)"/>
                     <q-separator></q-separator>
                     <q-card-actions>
                       <div class="col q-pt-md">
@@ -139,7 +131,7 @@
 
             <q-btn
               style="width:14em;font-size: 0.9em;border-radius: 1em;height:3.5em"
-              class="bg-red-10 fixed-bottom q-mb-md q-ml-md"
+              class="bg-red-6"
               icon="close"
               text-color="white"
               outline
@@ -151,43 +143,54 @@
     </div>
     <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     <q-dialog v-model="sureDeletePublish">
-      <q-card class="q-pa-lg">
-
-        <q-card-section>
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Funder_constructions.svg?alt=media&token=f40f48e8-7572-4ffe-8d29-bcc8a4871309"/>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
         <q-card-section>
-          <p class="poppinsBold" v-if="selectedPublish">{{$t('remove_project')}}
-            {{selectedPublish.projectTitle}}?</p>
-
-          {{$t('are_you_sure_delete_project')}}
-
-          <p class="poppinsBold q-pt-md text-primary cursor-pointer" v-close-popup
-             @click="goToPage('/publishDetails/'+publishKey)">
-            {{$t('see_project_details').toUpperCase()}}
-            <q-icon name="receipt_long"/>
-          </p>
+          <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
+          <a class="poppinsRegular"> You're gonna delete <a class="poppinsBold"
+                                                            v-if="selectedPublish">{{selectedPublish.projectTitle}}</a>,
+            are you sure about that?</a>
         </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat :label="$t('yes_delete_it').toUpperCase()" color="red-10" v-close-popup
+        <q-card-actions align="center">
+          <q-btn unelevated :label="$t('delete')" color="red-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
                  @click="deleteProject(selectedPublish,key)"/>
-          <q-btn flat :label="$t('cancel').toUpperCase()" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
     <q-dialog v-model="sureCloseAccount">
-      <q-card class="q-pa-lg">
-        <q-card-section>
-          {{$t('are_you_sure_delete_account')}}
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-img
+          class="no-shadow q-mt-lg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
+          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat :label="$t('yes_delete_it_2').toUpperCase()" color="red-10" v-close-popup
+        <q-card-section>
+          <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
+          <a clasS="poppinsRegular"> You're gonna remove your account, are
+            you
+            sure about that?</a>
+        </q-card-section>
+        <q-card-actions align="center">
+          <q-btn unelevated label="Remove" color="red-6"
+                 style="border-radius: 1em;width:9em;height:3em"
+                 class="q-mt-lg"
+                 v-close-popup
+                 no-caps
                  @click="deleteAccount()"/>
-          <q-btn flat :label="$t('cancel').toUpperCase()" color="primary" v-close-popup/>
         </q-card-actions>
+
       </q-card>
     </q-dialog>
   </div>

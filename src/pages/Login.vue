@@ -84,11 +84,14 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
     <q-dialog v-model="openForgotPassword">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6 q-px-lg">{{$t('recover_password')}}</div>
+      <q-card class="text-center" style="height:30em;border-radius: 1em">
+        <q-card-section class="row text-center q-pb-none float-right">
+          <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
-
+        <q-card-section>
+          <p class="poppinsBold" style="font-size: 1.5em">{{$t('recover_password')}}</p>
+          <p class="poppinsRegular q-mb-md text-grey">Enter your email</p>
+        </q-card-section>
         <q-card-section>
           <q-form
             @submit="sendEmailPasswordRecover"
@@ -103,7 +106,8 @@
             </q-input>
             <div class="row justify-center">
               <q-btn
-                style="height: 4em;border-radius: 0.5em;width:24em"
+                style="height: 4em;border-radius: 1em;width:24em"
+                no-caps
                 color="primary"
                 type="submit"
                 v-close-popup
