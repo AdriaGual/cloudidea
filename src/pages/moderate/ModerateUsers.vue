@@ -55,9 +55,8 @@
     <q-dialog v-model="showPromoteToModerator" v-if="selectedUser">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
         <q-img
-          class="no-shadow q-mt-lg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
-          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+          class="no-shadow q-mt-lg modalImg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"/>
         <q-card-section class="row text-center q-pb-none float-right">
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
@@ -79,9 +78,9 @@
     <q-dialog v-model="showDeleteUser" v-if="selectedUser">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
         <q-img
-          class="no-shadow q-mt-lg"
+          class="no-shadow q-mt-lg modalImg"
           src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
-          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        />
         <q-card-section class="row text-center q-pb-none float-right">
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>

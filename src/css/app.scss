@@ -166,11 +166,18 @@
   border-radius: 0.5em;
 }
 
-
 .publishCardDetailsBottom {
   background-color: #F7F7F7;
   border: 0.1em solid #A3CAF6;
   height: 5em;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
+}
+
+.modalImg {
+  height: 11em;
+  width: 15em;
+  position: relative;
+  right: -3em;
+  z-index: 1;
 }

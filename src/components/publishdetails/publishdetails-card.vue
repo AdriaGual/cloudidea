@@ -219,7 +219,7 @@
           <q-btn
             rounded
             flat
-            v-if="alreadyLikesPublish(publishDetails,publishKey)===false && userDetails.userId !== publishDetails.creatorId"
+            v-if="userDetails.userId && alreadyLikesPublish(publishDetails,publishKey)===false && userDetails.userId !== publishDetails.creatorId"
             no-caps
             class=""
             icon="favorite_border"
@@ -252,9 +252,9 @@
     <q-dialog v-model="sureCloseProject">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
         <q-img
-          class="no-shadow q-mt-lg"
+          class="no-shadow q-mt-lg modalImg"
           src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fscrum_board.svg?alt=media&token=6b057ff1-cdea-4743-8157-d79bc7bab0c3"
-          style="border-radius: 0.5em;height:11em;width: 11em;position: relative;top:0em;right:-3em;z-index: 1"/>
+        />
         <q-card-section class="row text-center q-pb-none float-right">
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
