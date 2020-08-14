@@ -5,8 +5,7 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/moderate')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Moderate
-          Users</p>
+        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">{{$t('moderate_users')}}</p>
       </div>
       <div class="col-1"></div>
     </div>
@@ -61,8 +60,9 @@
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
         <q-card-section>
-          <p class="poppinsBold" style="font-size: 1.5em">Promote user</p>
-          <a clasS="poppinsRegular"> You're gonna promote a user, are you sure about that?</a>
+          <p class="poppinsBold" style="font-size: 1.5em">{{$t('promote_user')}}</p>
+          <a clasS="poppinsRegular">
+            {{$t('you_are_gonna_promote_a_user')}}</a>
         </q-card-section>
 
         <q-card-actions align="center">
@@ -86,10 +86,8 @@
         </q-card-section>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
-          <a class="poppinsRegular"> You're gonna remove <a class="poppinsBold">{{selectedUser.name}}</a>'s
-            account, are
-            you
-            sure about that?</a>
+          <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold">{{selectedUser.name}}</a>,
+            {{$t('are_you_sure_about_that')}}</a>
         </q-card-section>
         <q-card-actions align="center">
           <q-btn unelevated label="Remove" color="red-6"

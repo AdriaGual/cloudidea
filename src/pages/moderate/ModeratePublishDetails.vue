@@ -38,14 +38,14 @@
                      class="q-mt-md"
                      v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('audio/')">
                 <source :src="newPublishDetails.fileUrl" type="audio/mpeg">
-                Your browser does not support the audio element.
+                {{$t('your_browser_does_not_support_the_audio_element')}}
               </audio>
 
               <video class="full-width"
                      v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('video/')"
                      controls>
                 <source :src="newPublishDetails.fileUrl" type="video/mp4">
-                Your browser does not support the video tag.
+                {{$t('your_browser_does_not_support_the_video_element')}}
               </video>
 
               <iframe
@@ -162,13 +162,13 @@
                     <q-btn outline
                            class="acceptModerateButton text-white bg-green-6 q-mt-lg"
                            icon-right="check" no-caps
-                           label="Accept" @click="confirm=true"/>
+                           :label="$t('accept')" @click="confirm=true"/>
                   </div>
                   <div class="col">
                     <q-btn outline
                            class="acceptModerateButton text-white bg-red-6 q-mt-lg"
                            icon-right="close" no-caps
-                           label="Reject" @click="reject=true"/>
+                           :label="$t('reject')" @click="reject=true"/>
                   </div>
                 </div>
               </q-tab-panel>
@@ -184,14 +184,13 @@
                 <q-btn icon="close" flat round dense v-close-popup/>
               </q-card-section>
               <q-card-section>
-                <p class="poppinsBold" style="font-size: 1.5em">Accept project</p>
-                <a clasS="poppinsRegular"> You're gonna accept the project <a class="poppinsBold">{{newPublishDetails.projectTitle}}</a>,
-                  are
-                  you
-                  sure about that?</a>
+                <p class="poppinsBold" style="font-size: 1.5em">{{$t('accept_project')}}</p>
+                <a clasS="poppinsRegular"> {{$t('you_are_gonna_accept')}} {{$t('the_project')}} <a
+                  class="poppinsBold">{{newPublishDetails.projectTitle}}</a>,
+                  {{$t('are_you_sure_about_that')}}</a>
               </q-card-section>
               <q-card-actions align="center">
-                <q-btn unelevated label="Accept" color="green-6"
+                <q-btn unelevated :label="$t('accept')" color="green-6"
                        style="border-radius: 1em;width:9em;height:3em"
                        class="q-mt-lg"
                        v-close-popup
@@ -207,20 +206,18 @@
                 class="no-shadow q-mt-lg modalImg"
                 src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
               />
-
               <q-card-section class="row text-center q-pb-none float-right">
                 <q-btn icon="close" flat round dense v-close-popup/>
               </q-card-section>
 
               <q-card-section>
                 <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
-                <a clasS="poppinsRegular"> You're gonna reject the project <a class="poppinsBold">{{newPublishDetails.projectTitle}}</a>,
-                  are
-                  you
-                  sure about that?</a>
+                <a clasS="poppinsRegular"> {{$t('you_are_gonna_reject')}} {{$t('the_project')}} <a
+                  class="poppinsBold">{{newPublishDetails.projectTitle}}</a>,
+                  {{$t('are_you_sure_about_that')}} </a>
               </q-card-section>
               <q-card-actions align="center">
-                <q-btn unelevated label="Reject" color="red-6"
+                <q-btn unelevated :label="$t('reject')" color="red-6"
                        style="border-radius: 1em;width:9em;height:3em"
                        class="q-mt-lg"
                        v-close-popup

@@ -143,7 +143,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F1.png?alt=media&token=25955cd6-6e91-4604-b294-1d9d46557a0e">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      1.- Go to your profile
+                      1.- {{$t("go_to_your_profile")}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="tv" class="column no-wrap flex-center">
@@ -152,7 +152,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F2.png?alt=media&token=98513e39-12b5-4bd4-8fed-1bbbb8c62ec6">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      2.- Go to your projects
+                      2.- {{$t('go_to_your_projects')}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="layers" class="column no-wrap flex-center">
@@ -161,7 +161,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F3.png?alt=media&token=05a6c769-f655-4c05-bd12-04360f0bd2aa">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      3.- Choose the project you want to delete
+                      3.- {{$t('choose_the_project_you_want_to_delete')}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="map" class="column no-wrap flex-center">
@@ -170,7 +170,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F4.png?alt=media&token=c0a71632-7784-4730-b7a9-7cbccdbd1fb2">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      4.- Delete the project
+                      4.- {{$t('delete_the_project')}}
                     </div>
                   </q-carousel-slide>
                 </q-carousel>
@@ -229,7 +229,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F1.png?alt=media&token=25955cd6-6e91-4604-b294-1d9d46557a0e">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      1.- Go to your profile
+                      1.- {{$t('go_to_your_profile')}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="tv" class="column no-wrap flex-center">
@@ -238,7 +238,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_2%2F1.png?alt=media&token=d6e6a5a1-689f-4142-be51-1d8d47bd2491">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      2.- Go to your settings
+                      2.- {{$t('go_to_your_settings')}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="layers" class="column no-wrap flex-center">
@@ -247,7 +247,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_2%2F2.png?alt=media&token=21e71042-bff6-4dc0-94a0-8650bcfb2c8a">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      3.- Press the "Delete Account" button
+                      3.- {{$t('press_the_delete_account_button')}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="map" class="column no-wrap flex-center">
@@ -256,7 +256,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_2%2F3.png?alt=media&token=3d6742a3-ab7c-4f74-89e0-f7edecfdadb7">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      4.- Delete your account
+                      4.- {{$t('delete_your_account')}}
                     </div>
                   </q-carousel-slide>
                 </q-carousel>
@@ -298,7 +298,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_3%2F1.png?alt=media&token=538a8cfb-59a8-448f-a886-04f6ab75edcf">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      1.- Go to the login page
+                      1.- {{$t('go_to_the_login_page')}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="tv" class="column no-wrap flex-center">
@@ -307,7 +307,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_3%2F2.png?alt=media&token=9289cd9f-82d8-4ffc-a89e-5f51a5fc8dbd">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      2.- Choose the "Forgot password" option
+                      2.- {{$t('choose_the_forgot_password_option')}}
                     </div>
                   </q-carousel-slide>
                   <q-carousel-slide name="layers" class="column no-wrap flex-center">
@@ -316,8 +316,7 @@
                       src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_3%2F3.png?alt=media&token=6d9fc356-14f1-415b-8ae7-2396e23c57cb">
                     </q-img>
                     <div class="q-mt-md text-center">
-                      3.- Enter your email and press the "Send" button, check your email to create a
-                      new password
+                      3.- {{$t('enter_email_and_press_send_button')}}
                     </div>
                   </q-carousel-slide>
                 </q-carousel>
@@ -345,7 +344,7 @@
                   src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F1.png?alt=media&token=25955cd6-6e91-4604-b294-1d9d46557a0e">
                 </q-img>
                 <div class="q-mt-md text-center">
-                  1.- Go to your profile page
+                  1.- {{'go_to_your_profile'}}
                 </div>
 
               </q-card-section>

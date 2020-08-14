@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column">
-    <p class="poppinsRegular text-center q-pt-sm" style="font-size: 1.5em">Moderate</p>
+    <p class="poppinsRegular text-center q-pt-sm" style="font-size: 1.5em">{{$t('moderate')}}</p>
     <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col q-px-md">

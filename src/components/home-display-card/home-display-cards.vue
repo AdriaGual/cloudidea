@@ -150,7 +150,7 @@
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
         <q-card-section>
-          <p class="poppinsBold" style="font-size: 1.5em">Receive Notifications</p>
+          <p class="poppinsBold" style="font-size: 1.5em">{{$t('receive_notifications')}}</p>
           <a class="poppinsRegular"> {{$t('to_receive_notifications')}}</a>
         </q-card-section>
         <q-card-actions align="center">

@@ -86,7 +86,8 @@
         </q-card-section>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('edit_profile')}}</p>
-          <p class="poppinsRegular q-mb-md text-grey">Edit you username or put your new skills</p>
+          <p class="poppinsRegular q-mb-md text-grey">
+            {{$t('edit_your_username_or_put_your_new_skills')}}</p>
           <q-form
             @submit="onSubmit"
             class=""
@@ -127,7 +128,7 @@
         </q-card-section>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em"> {{$t('send_email')}}</p>
-          <p class="poppinsRegular q-mb-md text-grey">An email will be send to
+          <p class="poppinsRegular q-mb-md text-grey">{{$t('an_email_will_be_send_to')}}
             {{otherUserDetails.name}}</p>
           <q-form
             @submit="sendEmail"
@@ -161,11 +162,10 @@
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
         <q-card-section>
-          <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
-          <a clasS="poppinsRegular"> You're gonna remove <a class="poppinsBold">{{otherUserDetails.name}}</a>'s
-            account, are
-            you
-            sure about that?</a>
+          <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_user')}}</p>
+          <a clasS="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold">{{otherUserDetails.name}}</a>,
+            {{$t('are_you_sure_about_that')}}
+          </a>
         </q-card-section>
         <q-card-actions align="center">
           <q-btn unelevated label="Remove" color="red-6"

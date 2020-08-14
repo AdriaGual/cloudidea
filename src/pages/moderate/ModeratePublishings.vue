@@ -5,8 +5,8 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/moderate')"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Moderate
-          Publishings</p>
+        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">
+          {{$t('moderate_publishings')}}</p>
       </div>
       <div class="col-1"></div>
     </div>

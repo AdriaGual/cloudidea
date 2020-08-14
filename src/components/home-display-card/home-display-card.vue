@@ -26,14 +26,14 @@
           <q-btn outline round color="light-blue-4" icon="o_lock" size="sm"
                  v-if="publish.needHelp !== 'true'">
             <q-tooltip>
-              Finished project
+              {{$t('finished_project')}}
             </q-tooltip>
           </q-btn>
 
           <q-btn outline round color="green-4" icon="o_lock_open" size="sm"
                  v-else>
             <q-tooltip>
-              Unfinished project
+              {{$t('unfinished_project')}}
             </q-tooltip>
           </q-btn>
         </div>
@@ -49,12 +49,9 @@
             {{publish.projectTitle}}</p>
         </div>
         <div class="col" align="right">
-
           <a style="font-size: 0.8em" class="text-grey full-width">
             {{publish.registerLicenseModel}}
           </a><br>
-
-
           <a style="font-size: 0.8em" class="text-grey">
             {{$t(publish.categoryModel.toLowerCase())}}
           </a>
@@ -116,8 +113,8 @@
         </q-card-section>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
-          <a class="poppinsRegular"> You're gonna delete <a class="poppinsBold">{{publish.projectTitle}}</a>,
-            are you sure about that?</a>
+          <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold">{{publish.projectTitle}}</a>,
+            {{$t('are_you_sure_about_that')}}</a>
         </q-card-section>
         <q-card-actions align="center">
           <q-btn unelevated :label="$t('delete')" color="red-6"

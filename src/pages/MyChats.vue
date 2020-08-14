@@ -6,7 +6,7 @@
                @click="goToPage()"/>
       </div>
       <div class="col text-center">
-        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">Chats</p>
+        <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">{{$t('chats')}}</p>
       </div>
       <div class="col-1">
       </div>

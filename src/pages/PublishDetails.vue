@@ -24,7 +24,7 @@
 
       <div class="col-3 q-pr-xl bgGlobal q-pb-xl"
            v-if="this.$q.platform.is.desktop && $q.screen.gt.md">
-        <p class="poppinsBold" style="font-size: 1.2em">Other projects from
+        <p class="poppinsBold" style="font-size: 1.2em">{{$t('other_projects_from')}}
           {{newPublishDetails.creatorName}}</p>
         <div v-for="(publish, key) in publishings" :key="key">
           <publishdetails-card

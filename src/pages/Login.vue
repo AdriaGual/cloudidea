@@ -90,7 +90,7 @@
         </q-card-section>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('recover_password')}}</p>
-          <p class="poppinsRegular q-mb-md text-grey">Enter your email</p>
+          <p class="poppinsRegular q-mb-md text-grey">{{$t('enter_your_email')}}</p>
         </q-card-section>
         <q-card-section>
           <q-form

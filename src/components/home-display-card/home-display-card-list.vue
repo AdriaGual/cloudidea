@@ -48,7 +48,6 @@
                         v-if="filteredPublishing.projectTitle.length>30">
             {{filteredPublishing.projectTitle.substring(0,30)+".."}}
           </q-item-label>
-
           <q-item-label v-else class="poppinsRegular text-white">
             {{filteredPublishing.projectTitle}}
           </q-item-label>
@@ -57,7 +56,6 @@
           </q-item-label>
           <q-item-label caption class="text-grey">{{filteredPublishing.registerLicenseModel}}
           </q-item-label>
-
         </q-item-section>
         <q-item-section side>
           <q-item-label caption class="text-grey">
@@ -65,16 +63,16 @@
           </q-item-label>
           <div class="row full-width" align="right">
             <div class="col-5 q-pt-sm">
-              <q-btn outline round color="green-4" icon="o_lock" size="sm"
+              <q-btn outline round color="light-blue-4" icon="o_lock" size="sm"
                      v-if="filteredPublishing.needHelp !== 'true'">
                 <q-tooltip>
-                  Finished project
+                  {{$t('finished_project')}}
                 </q-tooltip>
               </q-btn>
-              <q-btn outline round color="light-blue-4" icon="o_lock_open" size="sm"
+              <q-btn outline round color="green-4" icon="o_lock_open" size="sm"
                      v-else>
                 <q-tooltip>
-                  Unfinished project
+                  {{$t('unfinished_project')}}
                 </q-tooltip>
               </q-btn>
             </div>
@@ -129,8 +127,8 @@
                 </q-card-section>
                 <q-card-section>
                   <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
-                  <a class="poppinsRegular"> You're gonna delete <a class="poppinsBold">{{filteredPublishing.projectTitle}}</a>,
-                    are you sure about that?</a>
+                  <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold">{{filteredPublishing.projectTitle}}</a>,
+                    {{$t('are_you_sure_about_that')}} </a>
                 </q-card-section>
                 <q-card-actions align="center">
                   <q-btn unelevated :label="$t('delete')" color="red-6"

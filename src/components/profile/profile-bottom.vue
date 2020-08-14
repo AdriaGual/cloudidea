@@ -42,7 +42,6 @@
                      :outlined="editDescription" v-model="description" type="textarea" clearable
                      rows="15"
             />
-
           </q-tab-panel>
 
           <q-tab-panel name="projects">
@@ -153,9 +152,9 @@
         </q-card-section>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
-          <a class="poppinsRegular"> You're gonna delete <a class="poppinsBold"
-                                                            v-if="selectedPublish">{{selectedPublish.projectTitle}}</a>,
-            are you sure about that?</a>
+          <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold"
+                                                                       v-if="selectedPublish">{{selectedPublish.projectTitle}}</a>,
+            {{$t('are_you_sure_about_that')}} </a>
         </q-card-section>
         <q-card-actions align="center">
           <q-btn unelevated :label="$t('delete')" color="red-6"
@@ -178,12 +177,10 @@
         </q-card-section>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
-          <a clasS="poppinsRegular"> You're gonna remove your account, are
-            you
-            sure about that?</a>
+          <a clasS="poppinsRegular"> {{$t('you_are_gonna_remove_your_account')}}</a>
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn unelevated label="Remove" color="red-6"
+          <q-btn unelevated :label="$t('delete')" color="red-6"
                  style="border-radius: 1em;width:9em;height:3em"
                  class="q-mt-lg"
                  v-close-popup
