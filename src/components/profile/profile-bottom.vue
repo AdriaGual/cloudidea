@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-
     <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-    <div class="col" style="border-radius: 0.5em">
-      <q-card class="bg-white shadow-1"
+    <div class="col" style="border-radius: 1em">
+      <q-card class="shadow-1"
+              style="min-height:30em;border-radius: 1em"
               v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
         <q-tabs
           v-model="tab"
@@ -17,9 +17,7 @@
           <q-tab v-if="$route.params.otherUserId===userDetails.userId" name="settings"
                  :label="$t('settings')"/>
         </q-tabs>
-
         <q-separator/>
-
         <q-tab-panels v-model="tab" animated class="bg-transparent q-pt-md">
           <q-tab-panel name="about">
             <div class="row">
@@ -40,10 +38,10 @@
                 </p>
               </div>
             </div>
-
             <q-input dense :borderless="!editDescription" :disable="!editDescription"
                      :outlined="editDescription" v-model="description" type="textarea" clearable
-                     autogrow/>
+                     rows="15"
+            />
 
           </q-tab-panel>
 
@@ -140,8 +138,8 @@
             </p>
 
             <q-btn
-              style="width:14em;font-size: 0.9em;border-radius: 0.5em;height:3.5em"
-              class="bg-red-10"
+              style="width:14em;font-size: 0.9em;border-radius: 1em;height:3.5em"
+              class="bg-red-10 fixed-bottom q-mb-md q-ml-md"
               icon="close"
               text-color="white"
               outline

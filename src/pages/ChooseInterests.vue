@@ -1,6 +1,6 @@
 <template>
-  <q-layout class="flex column bgGlobal q-pt-lg">
-    <div class="row">
+  <q-layout class="flex column bgGlobal ">
+    <div class="row items-center  window-height">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
         <div class="text-center">

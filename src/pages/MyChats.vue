@@ -13,9 +13,10 @@
     </div>
     <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col q-px-lg" style="border-radius: 0.5em">
+      <div class="col q-px-lg">
         <div v-for="(user, key) in userChats" :key="key">
-          <q-item clickable no-ripple class="cardSectionInterior q-mb-md" :to="'/chat/' + key">
+          <q-item clickable no-ripple class="cardSectionInterior q-mb-md" :to="'/chat/' + key"
+                  style="border-radius: 1em">
             <q-item-section side>
               <q-avatar rounded size="4em">
                 <img :src="user.imageUrl" style="border-radius: 0.2em"/>

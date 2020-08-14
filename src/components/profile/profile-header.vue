@@ -5,7 +5,7 @@
         <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
       </div>
       <div class="col text-center">
-        <p v-if="$route.params.otherUserId===userDetails.userId" class="poppinsRegular"
+        <p v-if="$route.params.otherUserId===userDetails.userId" class="poppinsRegular q-pt-sm"
            style="font-size: 1.5em">{{$t('your_profile')}}</p>
       </div>
       <div class="col-1">
@@ -15,7 +15,6 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col q-pb-md" style="border-radius: 0.5em">
         <div class="text-center justify-center q-pt-md">
           <q-avatar round size="11em">
@@ -41,7 +40,7 @@
         </p>
         <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em"
            v-if="otherUserDetails.skills && ($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
-          {{otherUserDetails.skills}} ·
+          {{otherUserDetails.skills}} <a v-if="otherUserDetails.skills!==''">·</a>
           <a class="text-accent poppinsBold" style="font-size: 0.8em;">
             {{otherUserDetails.cp}}
           </a>
@@ -57,7 +56,8 @@
         </p>
 
         <div class="text-center q-px-lg q-pt-sm">
-          <q-btn style="width:20em" color="white" text-color="black" :label="$t('edit_profile')"
+          <q-btn style="width:20em;border-radius: 1em" color="white" text-color="black"
+                 :label="$t('edit_profile')"
                  no-caps
                  v-if="$route.params.otherUserId===userDetails.userId" @click="editProfile = true"/>
           <q-btn
@@ -71,7 +71,6 @@
         </div>
 
       </div>
-      <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
     <q-dialog v-model="editProfile">
       <q-card>
@@ -88,11 +87,20 @@
           >
             <q-input outlined :placeholder="$t('username')" :label="$t('username')"
                      v-model="name"
-                     :rules="[isEmptyField,val => isShortField(val,5,'name')]"/>
+                     :rules="[isEmptyField,val => isShortField(val,5,'name')]">
+              <template v-slot:prepend>
+                <q-icon name="o_person"/>
+              </template>
+            </q-input>
             <q-input outlined :placeholder="$t('skills')"
                      v-model="skills" :label="$t('skills')"
-                     :rules="[isEmptyField,val => isShortField(val,5,'skills')]"/>
-            <q-toggle v-model="privateProfile" :label="$t('private_profile')"/>
+                     :rules="[isEmptyField,val => isShortField(val,5,'skills')]">
+              <template v-slot:prepend>
+                <q-icon name="construction"/>
+              </template>
+            </q-input>
+            <q-toggle v-model="privateProfile" :label="$t('private_profile')"
+                      checked-icon="o_lock" unchecked-icon="o_lock_open"/>
             <div class="row justify-center q-pt-lg">
               <q-btn
                 style="height: 4em;border-radius: 0.5em;width:24em"

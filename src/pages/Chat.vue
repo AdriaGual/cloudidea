@@ -24,6 +24,7 @@
         <div v-for="(user, key) in userChats" :key="key" class="q-px-md">
           <q-item clickable no-ripple class="cardSectionInterior q-mb-md"
                   @click="goToAnotherChat('/chat/' + key)"
+                  style="border-radius: 1em"
                   v-if="key!==$route.params.otherUserId">
             <q-item-section side>
               <q-avatar rounded size="4em">
@@ -56,7 +57,7 @@
       </div>
       <div
         :class="this.$q.platform.is.desktop?'col q-pa-lg bg-white shadow-1 no-padding':'col q-pa-sm q-px-md bgGlobal'"
-        style="border-radius: 0.5em;">
+        style="border-radius: 1em;">
         <q-scroll-area
           ref="scrollArea"
           visbile="false"
