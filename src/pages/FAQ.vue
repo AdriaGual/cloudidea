@@ -12,8 +12,8 @@
     </div>
     <div class="row">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
-      <div class="col" style="border-radius: 0.5em">
-        <div class="row q-gutter-md justify-center q-pt-md">
+      <div class="col">
+        <div class="row q-gutter-md justify-center q-pa-md">
           <q-card class="text-center bg-white cursor-pointer poppinsRegular"
                   style="max-width: 20em;border-radius: 1em"
                   @click="goToPage('faq/generalRules')">
@@ -71,6 +71,11 @@
               class="text-blue">noreply@cloudidea.es</a>
           </a>
         </div>
+        <div class="full-width text-center q-pt-md">
+          <q-img style="height:3em;width:10em" class="justify-center cursor-pointer"
+                 @click="downloadFile"
+                 src="../assets/icons/google_play_download.svg"></q-img>
+        </div>
         <div class="row absolute-bottom q-pl-lg q-pb-lg">
           <div class="col">
             <a class="text-grey poppinsRegular"> {{ $t("language") }}</a>
@@ -83,11 +88,6 @@
               :options="selectLang"
               style="width:12em"
             />
-          </div>
-          <div class="col-10 q-pt-lg">
-            <q-img style="height:3em;width:10em" class="justify-center cursor-pointer"
-                   @click="downloadFile"
-                   src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fgoogle_play_download.svg?alt=media&token=4382487f-a1f1-4bae-acb6-3d87950f3d36"></q-img>
           </div>
         </div>
         <a class="text-grey poppinsRegular fixed-bottom q-pb-lg q-pr-lg" align="right">
