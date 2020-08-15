@@ -236,6 +236,10 @@ export default {
   moderate: "Moderate",
   chats: "Mensajes",
   other_projects_from: "Other projects from ",
+  finish: "Finish",
+  reopen: "Reopen",
+  reopen_project: "Reopen project",
+  this_project_was_finished_but_you_are_gonna_reopen_it: "This project was finished but you are gonna reopen it, are you sure about that?",
   la: "",
   el: ""
 };

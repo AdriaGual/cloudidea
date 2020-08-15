@@ -239,6 +239,10 @@ export default {
   moderate: "Moderar",
   chats: "Chats",
   other_projects_from: "Otros proyectos de ",
+  finish: "Terminar",
+  reopen: "Reabrir",
+  reopen_project: "Reabrir proyecto",
+  this_project_was_finished_but_you_are_gonna_reopen_it: "Este proyecto esta terminado pero lo vas a volver a abrir, estás seguro?",
   la: "la",
   el: "el"
 }

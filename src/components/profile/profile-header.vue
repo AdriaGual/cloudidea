@@ -33,29 +33,31 @@
             </q-badge>
           </q-avatar>
         </div>
-
-        <p class="poppinsRegular text-center q-pt-md" style="font-size: 2em;"
-           v-if="otherUserDetails.name">
-          {{otherUserDetails.name}}
-          <q-icon v-if="otherUserDetails.privateProfile" name="o_lock"/>
-          <q-icon v-else name="lock_open"/>
-        </p>
-        <p class="poppinsLight text-center text-grey" style="font-size: 1.3em;line-height: 0.1em"
-           v-if="otherUserDetails.skills && ($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
-          {{otherUserDetails.skills}} <a v-if="otherUserDetails.skills!==''">·</a>
-          <a class="text-accent poppinsBold" style="font-size: 0.8em;">
-            {{otherUserDetails.cp}}
+        <div class="full-width text-center q-pt-sm">
+          <a class="poppinsRegular text-center" style="font-size: 1.5em;"
+             v-if="otherUserDetails.name">
+            {{otherUserDetails.name}}
+            <q-icon v-if="otherUserDetails.privateProfile" name="o_lock"/>
+            <q-icon v-else name="lock_open"/>
           </a>
-          <q-icon color="accent" name="favorite"/>
+          <br/>
+          <a class="poppinsLight text-center text-grey" style="font-size: 1em;line-height: 0.1em"
+             v-if="otherUserDetails.skills && ($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
+            {{otherUserDetails.skills}} <a v-if="otherUserDetails.skills!==''">·</a>
+            <a class="text-accent poppinsBold" style="font-size: 0.9em;">
+              {{otherUserDetails.cp}}
+            </a>
+            <q-icon color="accent" name="favorite"/>
+          </a><br/>
+          <a class="poppinsLight text-center text-indigo-9"
+             @click="emailDialog=true"
+             style="font-size: 1em;"
+             v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
+            {{otherUserDetails.email}}
+            <q-btn flat round color="text-indigo-6" icon="o_mail"/>
+          </a>
+        </div>
 
-        </p>
-        <p class="poppinsLight text-center text-indigo-9"
-           @click="emailDialog=true"
-           style="font-size: 1em;"
-           v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
-          {{otherUserDetails.email}}
-          <q-btn flat round color="text-indigo-6" icon="o_mail"/>
-        </p>
 
         <div class="text-center q-px-lg q-pt-sm">
           <q-btn style="width:20em;border-radius: 1em" color="white" text-color="black"
@@ -81,11 +83,13 @@
     </div>
     <q-dialog v-model="editProfile">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
-        <q-card-section class="row text-center q-pb-none float-right">
+        <q-card-section class="row items-center">
+          <div class="absolute-center"><a class="poppinsBold" style="font-size: 1.5em">{{$t('edit_profile')}}</a>
+          </div>
+          <q-space/>
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
         <q-card-section>
-          <p class="poppinsBold" style="font-size: 1.5em">{{$t('edit_profile')}}</p>
           <p class="poppinsRegular q-mb-md text-grey">
             {{$t('edit_your_username_or_put_your_new_skills')}}</p>
           <q-form
@@ -122,12 +126,16 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="emailDialog">
-      <q-card class="text-center" style="height:30em;border-radius: 1em">
-        <q-card-section class="row text-center q-pb-none float-right">
+      <q-card class="text-center" style="height:31em;border-radius: 1em">
+        <q-card-section class="row items-center">
+          <div class="absolute-center q-pt-md"><a class="poppinsBold" style="font-size: 1.5em">
+            {{$t('send_email')}}</a>
+          </div>
+          <q-space/>
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
         <q-card-section>
-          <p class="poppinsBold" style="font-size: 1.5em"> {{$t('send_email')}}</p>
+
           <p class="poppinsRegular q-mb-md text-grey">{{$t('an_email_will_be_send_to')}}
             {{otherUserDetails.name}}</p>
           <q-form
@@ -154,13 +162,13 @@
     </q-dialog>
     <q-dialog v-model="sureCloseAccount">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
-        <q-img
-          class="no-shadow q-mt-lg modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
-        />
-        <q-card-section class="row text-center q-pb-none float-right">
+        <q-card-section align="right">
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
+        <q-img
+          class="no-shadow modalImg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
+        />
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_user')}}</p>
           <a clasS="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold">{{otherUserDetails.name}}</a>,

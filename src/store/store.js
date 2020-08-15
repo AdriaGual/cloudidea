@@ -131,7 +131,7 @@ const actions = {
       this.$router.push('/')
     })
     .catch(error => {
-      console.log(error.message);
+      alert("Your email or password is incorrect");
     });
   },
   loginUserWithThirdPartyService({ commit }, partyService) {
@@ -178,7 +178,7 @@ const actions = {
       this.$router.push('/')
     }).catch(function (error) {
       if (error.code === 'auth/account-exists-with-different-credential') {
-        return true
+        alert("Account already exists")
       }
     });
   },

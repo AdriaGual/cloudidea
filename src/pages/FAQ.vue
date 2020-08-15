@@ -63,12 +63,15 @@
             </q-card-section>
           </q-card>-->
         </div>
-        <p class="poppinsBold q-pt-lg text-center">{{$t('cant_find_an_answer')}}</p>
+        <div class="text-center">
+          <a class="poppinsBold q-pt-lg text-center">{{$t('cant_find_an_answer')}}</a>
+        </div>
+
         <div class="text-center">
           <a class="poppinsRegular"
              style="line-height: 0.1em">{{$t('email_us_at')}}
             <a
-              class="text-blue">noreply@cloudidea.es</a>
+              class="text-blue">support@cloudidea.es</a>
           </a>
         </div>
         <div class="full-width text-center q-pt-md">
@@ -76,9 +79,9 @@
                  @click="downloadFile"
                  src="../assets/icons/google_play_download.svg"></q-img>
         </div>
-        <div class="row absolute-bottom q-pl-lg q-pb-lg">
+        <div class="row q-pl-lg q-pb-lg q-pt-xl">
           <div class="col">
-            <a class="text-grey poppinsRegular"> {{ $t("language") }}</a>
+            <a class="text-grey poppinsRegular q-pl-xs"> {{ $t("language") }}</a>
             <q-select
               dense
               map-options
@@ -89,9 +92,12 @@
               style="width:12em"
             />
           </div>
+          <div class="col q-pr-md q-pt-lg" align="right">
+            <a class="text-grey poppinsRegular">
+              @Cloudidea2020 </a>
+          </div>
         </div>
-        <a class="text-grey poppinsRegular fixed-bottom q-pb-lg q-pr-lg" align="right">
-          @Cloudidea2020 </a>
+
       </div>
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
@@ -125,7 +131,7 @@
       },
       downloadFile() {
         openURL(
-          "https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/apk%2Fapp-debug.apk?alt=media&token=952c9094-6ef3-4079-994b-ba4f3dbba91c")
+          "https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/apk%2Fcloudidea_v0.1.apk?alt=media&token=43a1b28d-5977-4cb1-92f7-e414992eff65")
       },
     },
     watch: {

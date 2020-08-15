@@ -220,7 +220,7 @@
             class="q-mt-xs bg-green-6 q-px-md"
             text-color="white"
             no-caps
-            label="Finish"
+            :label="$t('finish')"
             @click="toogleProject('false')"/>
           <q-btn
             v-else-if="publishDetails.needHelp==='false' && !sidePublish && userDetails.userId === publishDetails.creatorId"
@@ -229,7 +229,7 @@
             class="q-mt-xs bg-red-10 q-px-md"
             text-color="white"
             no-caps
-            label="Reopen"
+            :label="$t('reopen')"
             @click="sureCloseProject=true"/>
         </div>
         <div :class="$q.platform.is.desktop?'col-2 text-center':'col-2 text-center q-pl-md'">
@@ -268,18 +268,17 @@
 
     <q-dialog v-model="sureCloseProject">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
-        <q-img
-          class="no-shadow q-mt-lg modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fscrum_board.svg?alt=media&token=6b057ff1-cdea-4743-8157-d79bc7bab0c3"
-        />
-        <q-card-section class="row text-center q-pb-none float-right">
+        <q-card-section align="right">
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
+        <q-img
+          class="no-shadow modalImg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fscrum_board.svg?alt=media&token=6b057ff1-cdea-4743-8157-d79bc7bab0c3"
+        />
         <q-card-section>
-          <p class="poppinsBold" style="font-size: 1.5em"> Reopen project</p>
-          <a clasS="poppinsRegular"> This project was finished but now you
-            wanna reopen it, are you
-            sure about that?</a>
+          <p class="poppinsBold" style="font-size: 1.5em"> {{$t('reopen_project')}}</p>
+          <a clasS="poppinsRegular">
+            {{$t('this_project_was_finished_but_you_are_gonna_reopen_it')}}</a>
         </q-card-section>
         <q-card-actions align="center">
           <q-btn unelevated label="Accept" color="green-6"

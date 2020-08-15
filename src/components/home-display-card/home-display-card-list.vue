@@ -118,13 +118,13 @@
             </div>
             <q-dialog v-model="openDeleteProjectPopup">
               <q-card class="text-center" style="height:30em;border-radius: 1em">
-                <q-img
-                  class="no-shadow q-mt-lg modalImg"
-                  src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
-                />
-                <q-card-section class="row text-center q-pb-none float-right">
+                <q-card-section align="right">
                   <q-btn icon="close" flat round dense v-close-popup/>
                 </q-card-section>
+                <q-img
+                  class="no-shadow modalImg"
+                  src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
+                />
                 <q-card-section>
                   <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
                   <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold">{{filteredPublishing.projectTitle}}</a>,

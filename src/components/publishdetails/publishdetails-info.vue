@@ -100,13 +100,13 @@
     </q-tab-panels>
     <q-dialog v-model="openDeleteCommentPopup">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
-        <q-img
-          class="no-shadow q-mt-lg modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmanage_comment.svg?alt=media&token=f129bc8e-0e42-4abc-a0f8-73e52d11cde2"
-        />
-        <q-card-section class="row text-center q-pb-none float-right">
+        <q-card-section align="right">
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
+        <q-img
+          class="no-shadow modalImg"
+          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmanage_comment.svg?alt=media&token=f129bc8e-0e42-4abc-a0f8-73e52d11cde2"
+        />
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">Remove comment</p>
           <a clasS="poppinsRegular"> You're gonna remove this comment, are
@@ -204,7 +204,8 @@
             userId: this.userDetails.userId,
             timeStamp: Date.now()
           }
-        })
+        });
+        this.commentText = '';
         if (this.userDetails.userId !== this.newPublishDetails.creatorId) {
           var data = {
             app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",

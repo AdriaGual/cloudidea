@@ -128,14 +128,6 @@
     methods: {
       goToPage(route) {
         if (this.selection.includes(',')) {
-          this.$q.notify({
-            color: 'dark',
-            textColor: 'white',
-            message: this.$t('welcome'),
-            icon: 'priority_high',
-            position: 'top-right',
-            timeout: 1000
-          })
           Cookies.set('categorySelection', this.selection)
           this.$router.push(route)
         } else {

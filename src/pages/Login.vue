@@ -84,18 +84,18 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     </div>
     <q-dialog v-model="openForgotPassword">
-      <q-card class="text-center" style="height:30em;border-radius: 1em">
-        <q-card-section class="row text-center q-pb-none float-right">
-          <q-btn icon="close" flat round dense v-close-popup/>
+      <q-card class="text-center" style="border-radius: 1em">
+        <q-card-section class="row items-center">
+          <div class="col-11"><a class="poppinsBold" style="font-size: 1.5em">{{$t('recover_password')}}</a>
+          </div>
+          <div class="col">
+            <q-btn icon="close" flat round dense v-close-popup/>
+          </div>
         </q-card-section>
-        <q-card-section>
-          <p class="poppinsBold" style="font-size: 1.5em">{{$t('recover_password')}}</p>
-          <p class="poppinsRegular q-mb-md text-grey">{{$t('enter_your_email')}}</p>
-        </q-card-section>
+        <p class="poppinsRegular q-mb-md text-grey">{{$t('enter_your_email')}}</p>
         <q-card-section>
           <q-form
             @submit="sendEmailPasswordRecover"
-            class="q-px-lg"
           >
             <q-input outlined :placeholder="$t('email_address')"
                      v-model="userData.email"
@@ -161,7 +161,11 @@
         this.$router.push(route);
       },
       onSubmit() {
-        this.loginUser(this.userData);
+        var response = this.loginUser(this.userData);
+        console.log(response)
+        if (response) {
+
+        }
       },
       sendEmailPasswordRecover() {
         this.changeUserPassword(this.userData.email)
@@ -174,28 +178,11 @@
         })
       },
       loginWithGoogle() {
-        var showNotif = this.loginUserWithThirdPartyService('Google')
-        if (showNotif) {
-          this.$q.notify({
-            color: 'dark',
-            textColor: 'white',
-            message: this.$t('accounted_already_registered'),
-            position: 'top-right',
-            timeout: 3000
-          })
-        }
+        this.loginUserWithThirdPartyService('Google')
       },
       loginWithFacebook() {
-        var showNotif = this.loginUserWithThirdPartyService('Facebook')
-        if (showNotif) {
-          this.$q.notify({
-            color: 'dark',
-            textColor: 'white',
-            message: this.$t('accounted_already_registered'),
-            position: 'top-right',
-            timeout: 3000
-          })
-        }
+        this.loginUserWithThirdPartyService('Facebook')
+
       }
     },
     created() {
