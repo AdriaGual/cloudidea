@@ -1,7 +1,7 @@
 <template>
   <q-card
-    class="q-ma-sm"
-    :style="$q.platform.is.desktop?'width: 35em;border-radius: 1em;background-color: #FCFCFC;':'width: 26em;border-radius: 1em;background-color: #FCFCFC;'"
+    :class="$q.platform.is.desktop?'q-ma-sm':'q-my-sm'"
+    :style="$q.platform.is.desktop?'width: 25vw;border-radius: 1em;background-color: #FCFCFC;':'width: 90vw;border-radius: 1em;background-color: #FCFCFC;'"
   >
     <q-card-section v-if="this.userDetails.moderator">
       <div class="row">

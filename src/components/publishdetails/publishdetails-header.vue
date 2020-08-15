@@ -3,27 +3,17 @@
     <div class="col-1">
       <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
     </div>
-    <div class="col q-pl-md">
+    <div class="col-10 q-pl-md" v-if="!$q.platform.is.desktop">
       <p class="poppinsRegular text-grey">{{releaseDate(projectReleaseDate)}}</p>
-      <p v-if="!$q.platform.is.desktop && projectTitle && projectTitle.length<22"
-         class="poppinsBold"
+      <a class="poppinsBold"
          style="line-height: 0.1em;font-size: 1.2em">
-        {{projectTitle}}</p>
-      <p v-else-if="!$q.platform.is.desktop" class="poppinsBold"
-         style="line-height: 0.1em;font-size: 1.2em">
-        {{projectTitle.substring(0,22)+".."}}</p>
-      <p v-else class="poppinsBold"
-         style="line-height: 0.1em;font-size: 1.2em">
-        {{projectTitle}}</p>
+        {{projectTitle}}</a>
     </div>
-    <div v-if="$q.platform.is.desktop" class="col-4"></div>
-    <div v-else class="col-1"></div>
+    <div class="col"></div>
   </div>
 </template>
 
 <script>
-  import { Cookies } from 'quasar'
-
   export default {
     props: ['projectTitle', 'projectReleaseDate'],
     methods: {

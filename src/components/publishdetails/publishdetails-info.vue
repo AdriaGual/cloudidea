@@ -20,7 +20,7 @@
         <p class="poppinsBold" style="line-height: 0.1em">{{$t('license_type').toUpperCase()}}</p>
         <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">{{$t('category').toUpperCase()}}</p>
-        <p class="poppinsRegular text-grey">
+        <p class="poppinsRegular text-grey" v-if="newPublishDetails.categoryModel">
           {{$t(newPublishDetails.categoryModel.toLowerCase())}}</p>
         <p class="poppinsBold" style="line-height: 0.1em" v-if="newPublishDetails.projectUrl!==''">
           URL</p>
@@ -48,7 +48,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label class="poppinsBold q-pb-xs"
-                            v-if="newPublishDetails.fileName.length>30">
+                            v-if="newPublishDetails.fileName && newPublishDetails.fileName.length>30">
                 {{newPublishDetails.fileName.substring(0,30)+".."}}
               </q-item-label>
               <q-item-label class="poppinsBold q-pb-xs" v-else>
@@ -130,7 +130,6 @@
   import { mapActions, mapState } from 'vuex'
   import { openURL } from 'quasar'
   import mixinPublishDetails from '../../mixins/mixin_publish_details';
-  import { date } from 'quasar'
 
   export default {
     props: ['publishDetails', 'publishComments', 'userDetails'],

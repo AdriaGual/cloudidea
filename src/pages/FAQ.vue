@@ -71,18 +71,24 @@
               class="text-blue">noreply@cloudidea.es</a>
           </a>
         </div>
-
-        <div class="absolute-bottom q-pl-lg q-pb-lg">
-          <a class="text-grey poppinsRegular"> {{ $t("language") }}</a>
-          <q-select
-            dense
-            map-options
-            outlined
-            bg-color="white"
-            v-model="lang"
-            :options="selectLang"
-            style="width:12em"
-          />
+        <div class="row absolute-bottom q-pl-lg q-pb-lg">
+          <div class="col">
+            <a class="text-grey poppinsRegular"> {{ $t("language") }}</a>
+            <q-select
+              dense
+              map-options
+              outlined
+              bg-color="white"
+              v-model="lang"
+              :options="selectLang"
+              style="width:12em"
+            />
+          </div>
+          <div class="col-10 q-pt-lg">
+            <q-img style="height:3em;width:10em" class="justify-center cursor-pointer"
+                   @click="downloadFile"
+                   src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fgoogle_play_download.svg?alt=media&token=4382487f-a1f1-4bae-acb6-3d87950f3d36"></q-img>
+          </div>
         </div>
         <a class="text-grey poppinsRegular fixed-bottom q-pb-lg q-pr-lg" align="right">
           @Cloudidea2020 </a>
@@ -95,6 +101,7 @@
 
 <script>
   import { Cookies } from "quasar";
+  import { openURL } from 'quasar'
 
   export default {
     data() {
@@ -115,6 +122,10 @@
     methods: {
       goToPage(route) {
         this.$router.push(route)
+      },
+      downloadFile() {
+        openURL(
+          "https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/apk%2Fapp-debug.apk?alt=media&token=952c9094-6ef3-4079-994b-ba4f3dbba91c")
       },
     },
     watch: {

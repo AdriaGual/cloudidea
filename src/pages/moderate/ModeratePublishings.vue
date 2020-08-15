@@ -108,6 +108,6 @@
     created() {
       this.clearPublishings()
       this.firebaseGetNotApprovedPublishings()
-    }
+    },
   };
 </script>

@@ -1,176 +1,192 @@
 <template>
   <q-card class="cardExterior" style="border-radius: 1em">
-    <div class="cursor-pointer" v-if="publishDetails.fileType==='application/pdf'"
-         @click="goToPage(publishKey)"
-         :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'">
-      <q-pdfviewer
-        v-if="!sidePublish"
-        v-model="showPDF"
-        :src="publishDetails.fileUrl"
-        type="html5"
-        content-class="fit container"
-        inner-content-class="fit container"
-        :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''">
-      </q-pdfviewer>
-      <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
-        <q-img v-if="sidePublish" :src="publishDetails.coverImage" style="max-height:18em">
-          <div class="text-subtitle2 absolute-top text-center">
+    <q-card-section>
+      <div v-if="$q.platform.is.desktop && !sidePublish">
+        <p class="poppinsRegular text-grey">
+          {{releaseDate(publishDetails.releaseDate)}}</p>
+        <p
+          v-if="!$q.platform.is.desktop && publishDetails.projectTitle && publishDetails.projectTitle.length<22"
+          class="poppinsBold"
+          style="line-height: 0.1em;font-size: 1.2em">
+          {{publishDetails.projectTitle}}</p>
+        <p v-else-if="!$q.platform.is.desktop" class="poppinsBold"
+           style="line-height: 0.1em;font-size: 1.2em">
+          {{publishDetails.projectTitle.substring(0,22)+".."}}</p>
+        <p v-else class="poppinsBold"
+           style="line-height: 0.1em;font-size: 1.2em">
+          {{publishDetails.projectTitle}}</p>
+      </div>
+      <div class="cursor-pointer" v-if="publishDetails.fileType==='application/pdf'"
+           @click="goToPage(publishKey)"
+           :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'">
+        <q-pdfviewer
+          v-if="!sidePublish"
+          v-model="showPDF"
+          :src="publishDetails.fileUrl"
+          type="html5"
+          content-class="fit container"
+          inner-content-class="fit container"
+          :style="!this.$q.platform.is.desktop?'max-width: 24.5em;':''">
+        </q-pdfviewer>
+        <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
+          <q-img v-if="sidePublish" :src="publishDetails.coverImage" style="max-height:18em">
+            <div class="text-subtitle2 absolute-top text-center">
+              {{publishDetails.projectTitle}}
+            </div>
+          </q-img>
+        </div>
+        <div v-for="(category, key) in categories" :key="key">
+          <div :class="sidePublish?'q-pa-lg':''"
+               v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+            <q-img v-if="sidePublish" :src="category.url">
+              <div class="text-subtitle2 absolute-top text-center">
+                {{publishDetails.projectTitle}}
+              </div>
+            </q-img>
+          </div>
+        </div>
+      </div>
+
+      <div class="cursor-pointer text-center"
+           v-if="publishDetails.fileType==='audio/mpeg'"
+           @click="goToPage(publishKey)">
+        <q-img
+          v-if="publishDetails.coverImage && !sidePublish"
+          :src="publishDetails.coverImage" spinner-color="white"
+          :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
+          @click="goToPage(publishKey)"
+          :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
+        />
+        <audio controls
+               class="q-mt-md"
+               v-if="!sidePublish">
+          <source :src="publishDetails.fileUrl" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
+          <q-img v-if="sidePublish" :src="publishDetails.coverImage">
+            <div class="text-subtitle2 absolute-top text-center">
+              {{publishDetails.projectTitle}}
+            </div>
+          </q-img>
+        </div>
+        <div v-for="(category, key) in categories" :key="key">
+          <div :class="sidePublish?'q-pa-lg':''"
+               v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+            <q-img v-if="sidePublish" :src="category.url">
+              <div class="text-subtitle2 absolute-top text-center">
+                {{publishDetails.projectTitle}}
+              </div>
+            </q-img>
+          </div>
+        </div>
+      </div>
+      <div v-if="publishDetails.fileType && publishDetails.fileType.includes('video/')">
+        <video class="full-width"
+               v-if="!sidePublish"
+               controls>
+          <source :src="publishDetails.fileUrl" type="video/mp4">
+
+          Your browser does not support the video tag.
+        </video>
+        <div v-else @click="goToPage(publishKey)" class="cursor-pointer">
+          <div v-if="publishDetails.coverImage" class="q-pa-lg">
+            <q-img :src="publishDetails.coverImage">
+              <div class="text-subtitle2 absolute-top text-center">
+                {{publishDetails.projectTitle}}
+              </div>
+            </q-img>
+          </div>
+          <div v-for="(category, key) in categories" :key="key">
+            <div :class="sidePublish?'q-pa-lg':''"
+                 v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+              <q-img :src="category.url">
+                <div class="text-subtitle2 absolute-top text-center">
+                  {{publishDetails.projectTitle}}
+                </div>
+              </q-img>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="publishDetails.fileType && publishDetails.fileType.includes('text/')">
+        <iframe
+          v-if="!sidePublish"
+          :src="publishDetails.fileUrl"
+          :class="sidePublish?'full-width q-pa-lg':'full-width'"
+          :style="this.$q.platform.is.desktop?'height:40em':'height:20em'"
+          frameborder='0'>
+        </iframe>
+        <div v-else>
+          <div v-if="publishDetails.coverImage" class="q-pa-lg">
+            <q-img :src="publishDetails.coverImage">
+              <div class="text-subtitle2 absolute-top text-center">
+                {{publishDetails.projectTitle}}
+              </div>
+            </q-img>
+          </div>
+          <div v-for="(category, key) in categories" :key="key">
+            <div :class="sidePublish?'q-pa-lg':''"
+                 v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+              <q-img :src="category.url" class="cursor-pointer"
+                     @click="goToPage(publishKey)">
+                <div class="text-subtitle2 absolute-top text-center">
+                  {{publishDetails.projectTitle}}
+                </div>
+              </q-img>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="!publishDetails.fileType"
+           :style="$q.platform.is.desktop && !sidePublish?'height: 50em;':''">
+
+        <iframe
+          v-if="!sidePublish"
+          :src="'https://view.officeapps.live.com/op/embed.aspx?src='+publishDetails.fileUrl"
+          :class="sidePublish?'full-width q-pa-lg':'full-width full-height'"
+
+          frameborder='0'>This is an embedded <a
+          target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by
+          <a target='_blank' href='http://office.com/webapps'>Office Online</a>.
+        </iframe>
+        <div v-else>
+          <div v-if="publishDetails.coverImage" class="q-pa-lg">
+            <q-img :src="publishDetails.coverImage">
+              <div class="text-subtitle2 absolute-top text-center">
+                {{publishDetails.projectTitle}}
+              </div>
+            </q-img>
+          </div>
+          <div v-for="(category, key) in categories" :key="key">
+            <div :class="sidePublish?'q-pa-lg':''"
+                 v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
+              <q-img :src="category.url" class="cursor-pointer"
+                     @click="goToPage(publishKey)">
+                <div class="text-subtitle2 absolute-top text-center">
+                  {{publishDetails.projectTitle}}
+                </div>
+              </q-img>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div v-if="publishDetails.fileType && publishDetails.fileType.includes('image/')"
+           :class="sidePublish?'q-pa-lg':''">
+        <q-img
+          :src="publishDetails.fileUrl" spinner-color="white"
+          :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
+          @click="goToPage(publishKey)"
+          :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
+        >
+          <div v-if="sidePublish" class="text-subtitle2 absolute-top text-center q-pa-lg">
             {{publishDetails.projectTitle}}
           </div>
         </q-img>
       </div>
-      <div v-for="(category, key) in categories" :key="key">
-        <div :class="sidePublish?'q-pa-lg':''"
-             v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
-          <q-img v-if="sidePublish" :src="category.url">
-            <div class="text-subtitle2 absolute-top text-center">
-              {{publishDetails.projectTitle}}
-            </div>
-          </q-img>
-        </div>
-      </div>
-    </div>
-
-    <div class="cursor-pointer text-center"
-         v-if="publishDetails.fileType==='audio/mpeg'"
-         @click="goToPage(publishKey)">
-      <q-img
-        v-if="publishDetails.coverImage && !sidePublish"
-        :src="publishDetails.coverImage" spinner-color="white"
-        :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
-        @click="goToPage(publishKey)"
-        :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
-      />
-      <audio controls
-             class="q-mt-md"
-             v-if="!sidePublish">
-        <source :src="publishDetails.fileUrl" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-      <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
-        <q-img v-if="sidePublish" :src="publishDetails.coverImage">
-          <div class="text-subtitle2 absolute-top text-center">
-            {{publishDetails.projectTitle}}
-          </div>
-        </q-img>
-      </div>
-      <div v-for="(category, key) in categories" :key="key">
-        <div :class="sidePublish?'q-pa-lg':''"
-             v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
-          <q-img v-if="sidePublish" :src="category.url">
-            <div class="text-subtitle2 absolute-top text-center">
-              {{publishDetails.projectTitle}}
-            </div>
-          </q-img>
-        </div>
-      </div>
-    </div>
-    <div v-if="publishDetails.fileType && publishDetails.fileType.includes('video/')">
-      <video class="full-width"
-             v-if="!sidePublish"
-             controls>
-        <source :src="publishDetails.fileUrl" type="video/mp4">
-
-        Your browser does not support the video tag.
-      </video>
-      <div v-else @click="goToPage(publishKey)" class="cursor-pointer">
-        <div v-if="publishDetails.coverImage" class="q-pa-lg">
-          <q-img :src="publishDetails.coverImage">
-            <div class="text-subtitle2 absolute-top text-center">
-              {{publishDetails.projectTitle}}
-            </div>
-          </q-img>
-        </div>
-        <div v-for="(category, key) in categories" :key="key">
-          <div :class="sidePublish?'q-pa-lg':''"
-               v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
-            <q-img :src="category.url">
-              <div class="text-subtitle2 absolute-top text-center">
-                {{publishDetails.projectTitle}}
-              </div>
-            </q-img>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="publishDetails.fileType && publishDetails.fileType.includes('text/')">
-      <iframe
-        v-if="!sidePublish"
-        :src="publishDetails.fileUrl"
-        :class="sidePublish?'full-width q-pa-lg':'full-width'"
-        :style="this.$q.platform.is.desktop?'height:40em':'height:20em'"
-        frameborder='0'>
-      </iframe>
-      <div v-else>
-        <div v-if="publishDetails.coverImage" class="q-pa-lg">
-          <q-img :src="publishDetails.coverImage">
-            <div class="text-subtitle2 absolute-top text-center">
-              {{publishDetails.projectTitle}}
-            </div>
-          </q-img>
-        </div>
-        <div v-for="(category, key) in categories" :key="key">
-          <div :class="sidePublish?'q-pa-lg':''"
-               v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
-            <q-img :src="category.url" class="cursor-pointer"
-                   @click="goToPage(publishKey)">
-              <div class="text-subtitle2 absolute-top text-center">
-                {{publishDetails.projectTitle}}
-              </div>
-            </q-img>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div v-if="!publishDetails.fileType"
-         :style="$q.platform.is.desktop && !sidePublish?'height: 50em;':''">
-
-      <iframe
-        v-if="!sidePublish"
-        :src="'https://view.officeapps.live.com/op/embed.aspx?src='+publishDetails.fileUrl"
-        :class="sidePublish?'full-width q-pa-lg':'full-width full-height'"
-
-        frameborder='0'>This is an embedded <a
-        target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by
-        <a target='_blank' href='http://office.com/webapps'>Office Online</a>.
-      </iframe>
-      <div v-else>
-        <div v-if="publishDetails.coverImage" class="q-pa-lg">
-          <q-img :src="publishDetails.coverImage">
-            <div class="text-subtitle2 absolute-top text-center">
-              {{publishDetails.projectTitle}}
-            </div>
-          </q-img>
-        </div>
-        <div v-for="(category, key) in categories" :key="key">
-          <div :class="sidePublish?'q-pa-lg':''"
-               v-if="category.categoryName ===publishDetails.categoryModel && !publishDetails.coverImage">
-            <q-img :src="category.url" class="cursor-pointer"
-                   @click="goToPage(publishKey)">
-              <div class="text-subtitle2 absolute-top text-center">
-                {{publishDetails.projectTitle}}
-              </div>
-            </q-img>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div v-if="publishDetails.fileType && publishDetails.fileType.includes('image/')"
-         :class="sidePublish?'q-pa-lg':''">
-      <q-img
-        :src="publishDetails.fileUrl" spinner-color="white"
-        :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
-        @click="goToPage(publishKey)"
-        :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
-      >
-        <div v-if="sidePublish" class="text-subtitle2 absolute-top text-center q-pa-lg">
-          {{publishDetails.projectTitle}}
-        </div>
-      </q-img>
-    </div>
-
+    </q-card-section>
     <q-card-actions>
       <div class="row full-width" style="height:4em">
         <div
@@ -185,7 +201,8 @@
         <div class="col-5 q-pt-md cursor-pointer"
              @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
-          <p class="cardUserCP">{{$t(publishDetails.categoryModel.toLowerCase())}}</p>
+          <p class="cardUserCP" v-if="publishDetails.categoryModel">
+            {{$t(publishDetails.categoryModel.toLowerCase())}}</p>
         </div>
         <div class="col q-pt-sm" align="right">
           <q-btn
@@ -279,7 +296,6 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import axios from 'axios'
 
   export default {
     props: ['userDetails', 'publishDetails', 'publishKey', 'sidePublish'],
@@ -316,14 +332,13 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseAddLike', 'firebaseRemoveLike', 'firebaseDeletePublish', 'firebaseUpdatePublish']),
+        ['firebaseAddLike', 'firebaseRemoveLike', 'firebaseDeletePublish', 'firebaseUpdatePublish', 'clearPublishings', 'firebaseGetApprovedPublishings']),
       goToPage(route) {
         if (this.publishKey !== this.$route.params.publishId) {
+          this.clearPublishings();
+          this.firebaseGetApprovedPublishings();
           this.$router.push(route)
         }
-      },
-      goToMainPage(route) {
-        this.$router.push(route)
       },
       goToProfilePage(route) {
         this.$router.push(route)
@@ -357,11 +372,39 @@
             needHelp: state
           }
         });
-      }
+      },
+      releaseDate: function (date) {
+        var seconds = Math.floor((new Date() - date) / 1000);
+        var interval = Math.floor(seconds / 31536000);
+        var releaseFormattedDate = ''
+        if (this.$i18n.locale === 'es') {
+          releaseFormattedDate = "hace "
+        }
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("years_ago");
+        }
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("months_ago");
+        }
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("days_ago");
+        }
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("hours_ago");
+        }
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) {
+          return releaseFormattedDate + interval + " " + this.$t("minutes_ago");
+        }
+        return releaseFormattedDate + Math.floor(seconds) + " " + this.$t("seconds_ago");
+      },
     },
     computed: {
       ...mapState('store', ['userLikedPublishings']),
-    }
+    },
   }
 </script>
 

@@ -4,6 +4,9 @@
                            :projectReleaseDate="newPublishDetails.releaseDate"></publishdetails-header>
 
     <div class="row q-pt-md">
+      <div
+        :class="orderedPublishings.length<=0?'col-3 bgGlobal q-pb-xl':'col-2 bgGlobal q-pb-xl'"
+        v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       <div class="col q-gutter-y-md bgGlobal" align="center">
         <publishdetails-card
           :style="this.$q.platform.is.desktop?'width: 70em':'width: 25em'"
@@ -24,18 +27,20 @@
 
       <div class="col-3 q-pr-xl bgGlobal q-pb-xl"
            v-if="this.$q.platform.is.desktop && $q.screen.gt.md">
-        <p class="poppinsBold" style="font-size: 1.2em">{{$t('other_projects_from')}}
-          {{newPublishDetails.creatorName}}</p>
-        <div v-for="(publish, key) in publishings" :key="key">
-          <publishdetails-card
-            v-if="publish.creatorId === newPublishDetails.creatorId && key !== $route.params.publishId"
-            :userDetails="userDetails"
-            class="q-mt-lg"
-            :publishDetails="publish"
-            :publishKey="key"
-            :sidePublish="true">
-          </publishdetails-card>
+        <div v-if="orderedPublishings.length>0">
+          <p class="poppinsBold" style="font-size: 1.2em">{{$t('other_projects_from')}}
+            {{newPublishDetails.creatorName}}</p>
+          <div v-for="(publish, key) in orderedPublishings" :key="key">
+            <publishdetails-card
+              :userDetails="userDetails"
+              class="q-mt-lg"
+              :publishDetails="publish"
+              :publishKey="publish.key"
+              :sidePublish="true">
+            </publishdetails-card>
+          </div>
         </div>
+
         <div class="q-pb-xl"></div>
       </div>
     </div>
@@ -54,7 +59,8 @@
     data() {
       return {
         publishKey: '',
-        orderedPublishComments: []
+        orderedPublishComments: [],
+        orderedPublishings: []
       }
     },
     methods: {
@@ -67,6 +73,7 @@
     },
     mixins: [mixinPublishDetails],
     created() {
+      console.log("-----------")
       this.clearPublishings();
       this.firebaseGetApprovedPublishings();
       this.firebaseClearComments();
@@ -83,8 +90,19 @@
           this.publishComments[key].key = key
           this.orderedPublishComments.push(this.publishComments[key])
         })
-      }
+      },
+      publishings: function (val) {
+        this.orderedPublishings = [];
+        console.log("aaaaa")
+        let keys = Object.keys(val);
+        keys.forEach(key => {
+          let item = this.publishings[key];
+          item.key = key
+          if (item.creatorId === this.newPublishDetails.creatorId && key !== this.$route.params.publishId) {
+            this.orderedPublishings.push(item)
+          }
+        })
+      },
     },
-
   };
 </script>
