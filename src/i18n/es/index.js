@@ -237,7 +237,7 @@ export default {
   promote_user: "Promover usuario",
   enter_your_email: "Entra tu correo electrónico",
   moderate: "Moderar",
-  chats: "Chats",
+  chats: "Mensajes",
   other_projects_from: "Otros proyectos de ",
   finish: "Terminar",
   reopen: "Reabrir",

@@ -46,8 +46,10 @@
 
           <q-tab-panel name="projects">
             <p class="text-grey poppinsRegular q-pl-xs"
-               v-if="$route.params.otherUserId===userDetails.userId">{{$t('your_projects')}}</p>
-            <p class="text-grey poppinsRegular q-pl-xs" v-else>{{$t('projects')}}</p>
+               v-if="$route.params.otherUserId===userDetails.userId">{{$t('your_projects')}}
+              ({{userPublishings.length}})</p>
+            <p class="text-grey poppinsRegular q-pl-xs" v-else>{{$t('projects')}}
+              ({{userPublishings.length}})</p>
             <q-scroll-area
               horizontal
               visbile="false"
@@ -55,19 +57,19 @@
               :thumb-style="thumbStyle"
             >
               <div class="row no-wrap q-pl-xs" style="height:17em;">
-                <div v-for="(publish, key) in userPublishings" :key="key">
+                <div v-for="(publish, key) in userPublishings" :key="key"
+                >
                   <q-card
-                    style="line-height: 0.1em;height:17em"
+                    style="line-height: 0.1em;height:17em;"
                     class="cardProjectExterior q-mr-md cursor-pointer"
-                    v-if="publish.creatorId === $route.params.otherUserId"
                   >
                     <q-img v-if="publish.coverImage" :src="publish.coverImage"
-                           style="border-radius: 0.2em;height:12em" alt=""
+                           style="border-radius: 1em;height:12em" alt=""
                            @click="goToPage('/publishDetails/'+publish.key)">
                     </q-img>
                     <q-img
                       v-if="!publish.coverImage && publish.fileUrl && publish.fileType && publish.fileType.includes('image/')"
-                      :src="publish.fileUrl" style="border-radius: 0.2em;height:12em"
+                      :src="publish.fileUrl" style="height:12em"
                       @click="goToPage('/publishDetails/'+publish.key)"
                       alt="">
                     </q-img>

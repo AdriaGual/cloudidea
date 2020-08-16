@@ -29,9 +29,15 @@
               </q-item-section>
             </q-item>
             <q-item clickable @click="goToPage('/myChats')">
-              <q-item-section>Chats</q-item-section>
+              <q-item-section>{{$t('chats')}}</q-item-section>
               <q-item-section side>
                 <q-icon name="inbox"/>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="goToPage('/create')">
+              <q-item-section>{{$t('create_project')}}</q-item-section>
+              <q-item-section side>
+                <q-icon name="add"/>
               </q-item-section>
             </q-item>
             <q-item clickable @click="logOut()">

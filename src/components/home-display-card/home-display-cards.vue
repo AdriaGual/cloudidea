@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="row q-pt-lg">
       <div
         :class="this.$q.platform.is.desktop && $q.screen.gt.sm?'col-11 q-pl-lg':'col-8 q-pl-lg'">
@@ -94,14 +94,14 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <q-scroll-area
       horizontal
       visbile="false"
       :thumb-style="thumbStyle"
-      :class="this.$q.platform.is.desktop?'scrollTagsHorizontal q-pt-sm':'scrollTagsHorizontal q-pt-sm'"
+      class="scrollTagsHorizontal q-pt-sm"
+      :style="this.$q.platform.is.desktop && $q.screen.gt.md?'position: relative;left:22vw;width:75vw':''"
     >
       <div class="row no-wrap q-pl-md">
         <div v-for="(category, key) in categories" :key="key">
@@ -114,14 +114,14 @@
           </q-chip>
         </div>
       </div>
-
     </q-scroll-area>
+
     <p class="poppinsRegular text-grey q-pt-md" v-if="!publishingWithCategory()">
       <q-icon name="error_outline" size="sm"/>
       {{$t('seems_like_no_available_project')}}
     </p>
-    <div v-if="this.$q.platform.is.desktop" class="q-pt-sm"></div>
-    <div class="row justify-center q-pb-xl q-px-md" v-if="!listMode">
+
+    <div class="row justify-center q-px-md" v-if="!listMode">
       <div v-for="(publish, key) in orderedPublishings" :key="key">
         <home-display-card :publish="publish" :categories="categories"
                            v-if="$q.cookies.get('categorySelection').includes(publish.categoryModel)"
@@ -129,7 +129,7 @@
       </div>
     </div>
 
-    <div v-else class="q-px-xs q-pb-xl">
+    <div v-else class="q-px-xs">
       <div class="row q-pt-sm">
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
         <div class="col" style="border-radius: 0.5em">
@@ -140,7 +140,6 @@
       </div>
     </div>
 
-    <div class="q-pb-lg"></div>
     <q-dialog v-model="openAdblockDialog" persistent position="bottom">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
         <q-card-section align="right">

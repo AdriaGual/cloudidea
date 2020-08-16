@@ -1,7 +1,7 @@
 <template>
   <q-layout class="flex column q-pb-xl">
     <p class="poppinsBold text-center" style="font-size: 1.5em">{{$t('create_project')}}</p>
-    <div class="row q-pt-md">
+    <div class="row">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col">
         <q-form

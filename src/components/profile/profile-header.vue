@@ -41,14 +41,14 @@
             <q-icon v-else name="lock_open"/>
           </a>
           <br/>
-          <a class="poppinsLight text-center text-grey" style="font-size: 1em;line-height: 0.1em"
-             v-if="otherUserDetails.skills && ($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
+          <a class="poppinsLight text-center text-grey" style="font-size: 1em;line-height: 0.1em">
             {{otherUserDetails.skills}} <a v-if="otherUserDetails.skills!==''">·</a>
             <a class="text-accent poppinsBold" style="font-size: 0.9em;">
               {{otherUserDetails.cp}}
             </a>
             <q-icon color="accent" name="favorite"/>
-          </a><br/>
+          </a>
+          <br/>
           <a class="poppinsLight text-center text-indigo-9"
              @click="emailDialog=true"
              style="font-size: 1em;"
