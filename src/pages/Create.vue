@@ -43,7 +43,8 @@
             <q-file v-if="publishing.categoryModel!=='Image'" outlined
                     v-model="publishing.coverImage" :label="$t('upload_cover_image')"
                     bg-color="white" max-file-size="25000000"
-                    @rejected="onRejected">
+                    @rejected="onRejected"
+                    accept=".jpg, .jpeg, .png">
               <template v-slot:prepend>
                 <q-icon name="o_insert_photo"/>
               </template>
@@ -53,7 +54,8 @@
                     bg-color="white"
                     :label="$t('file_upload')+'*'" :rules="[noFileUploaded]" class="q-pt-md"
                     max-file-size="100000000"
-                    @rejected="onRejected">
+                    @rejected="onRejected"
+                    accept=".jpg,.png, .jpeg, .svg, .avi, .mov, .mp4, .ogg, .doc, .docx, .txt, .pdf, .wav, .mp3">
               <template v-slot:prepend>
                 <q-icon name="attach_file"/>
               </template>
@@ -196,7 +198,7 @@
         categoryOptions: [
           this.$t('Writting'.toLowerCase()), this.$t('Design'.toLowerCase()), this.$t('Music'.toLowerCase()), this.$t(
             'Video'.toLowerCase()), this.$t('Code'.toLowerCase()), this.$t('Idea'.toLowerCase()), this.$t(
-            'Selling'.toLowerCase()), this.$t('Promotion'.toLowerCase()), this.$t('none_of_this'.toLowerCase())
+            'Selling'.toLowerCase()), this.$t('Promotion'.toLowerCase())
         ],
         registerLicenseOptions: [
           'Copyright', 'Creative Commons', 'LGPL', 'Copyleft'

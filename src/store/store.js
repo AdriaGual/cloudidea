@@ -630,6 +630,26 @@ const actions = {
         });
       });
   },
+  firebaseGetAllPublishings({ commit }) {
+    firebaseDB.ref("publishings").on("child_added",
+      snapshot => {
+        const publishDetails = snapshot.val();
+        const publishId = snapshot.key;
+
+        firebaseDB.ref("users/" + publishDetails.creatorId).once("value", snapshot => {
+          const userDetails = snapshot.val();
+          if (userDetails) {
+            publishDetails.creatorName = userDetails.name
+            publishDetails.creatorImageUrl = userDetails.imageUrl
+            publishDetails.creatorSkills = userDetails.skills
+            publishDetails.oneSignalUserId = userDetails.oneSignalUserId
+          }
+
+          commit("addPublish", { publishId, publishDetails });
+
+        });
+      });
+  },
   clearPublishings({ commit }) {
     commit("setPublishings", {});
   },

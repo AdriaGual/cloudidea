@@ -140,7 +140,7 @@
                   <q-carousel-slide name="first" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F1.png?alt=media&token=25955cd6-6e91-4604-b294-1d9d46557a0e">
+                      src="../../assets/tutorials/tutorial_1/1_1.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       1.- {{$t("go_to_your_profile")}}
@@ -149,7 +149,7 @@
                   <q-carousel-slide name="tv" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F2.png?alt=media&token=98513e39-12b5-4bd4-8fed-1bbbb8c62ec6">
+                      src="../../assets/tutorials/tutorial_1/1_2.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       2.- {{$t('go_to_your_projects')}}
@@ -158,7 +158,7 @@
                   <q-carousel-slide name="layers" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F3.png?alt=media&token=05a6c769-f655-4c05-bd12-04360f0bd2aa">
+                      src="../../assets/tutorials/tutorial_1/1_3.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       3.- {{$t('choose_the_project_you_want_to_delete')}}
@@ -167,7 +167,7 @@
                   <q-carousel-slide name="map" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F4.png?alt=media&token=c0a71632-7784-4730-b7a9-7cbccdbd1fb2">
+                      src="../../assets/tutorials/tutorial_1/1_4.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       4.- {{$t('delete_the_project')}}
@@ -226,7 +226,7 @@
                   <q-carousel-slide name="first" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F1.png?alt=media&token=25955cd6-6e91-4604-b294-1d9d46557a0e">
+                      src="../../assets/tutorials/tutorial_1/1_1.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       1.- {{$t('go_to_your_profile')}}
@@ -235,7 +235,7 @@
                   <q-carousel-slide name="tv" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_2%2F1.png?alt=media&token=d6e6a5a1-689f-4142-be51-1d8d47bd2491">
+                      src="../../assets/tutorials/tutorial_2/2_1.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       2.- {{$t('go_to_your_settings')}}
@@ -244,7 +244,7 @@
                   <q-carousel-slide name="layers" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_2%2F2.png?alt=media&token=21e71042-bff6-4dc0-94a0-8650bcfb2c8a">
+                      src="../../assets/tutorials/tutorial_2/2_2.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       3.- {{$t('press_the_delete_account_button')}}
@@ -253,7 +253,7 @@
                   <q-carousel-slide name="map" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_2%2F3.png?alt=media&token=3d6742a3-ab7c-4f74-89e0-f7edecfdadb7">
+                      src="../../assets/tutorials/tutorial_2/2_3.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       4.- {{$t('delete_your_account')}}
@@ -295,7 +295,7 @@
                   <q-carousel-slide name="first" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_3%2F1.png?alt=media&token=538a8cfb-59a8-448f-a886-04f6ab75edcf">
+                      src="../../assets/tutorials/tutorial_3/3_1.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       1.- {{$t('go_to_the_login_page')}}
@@ -304,7 +304,7 @@
                   <q-carousel-slide name="tv" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_3%2F2.png?alt=media&token=9289cd9f-82d8-4ffc-a89e-5f51a5fc8dbd">
+                      src="../../assets/tutorials/tutorial_3/3_2.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       2.- {{$t('choose_the_forgot_password_option')}}
@@ -313,7 +313,7 @@
                   <q-carousel-slide name="layers" class="column no-wrap flex-center">
                     <q-img
                       style="border-radius: 1em"
-                      src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_3%2F3.png?alt=media&token=6d9fc356-14f1-415b-8ae7-2396e23c57cb">
+                      src="../../assets/tutorials/tutorial_3/3_3.png">
                     </q-img>
                     <div class="q-mt-md text-center">
                       3.- {{$t('enter_email_and_press_send_button')}}
@@ -341,7 +341,7 @@
 
                 <q-img
                   style="border-radius: 1em"
-                  src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/tutorials%2Ftutorial_1%2F1.png?alt=media&token=25955cd6-6e91-4604-b294-1d9d46557a0e">
+                  src="../../assets/tutorials/tutorial_1/1_1.png">
                 </q-img>
                 <div class="q-mt-md text-center">
                   1.- {{'go_to_your_profile'}}

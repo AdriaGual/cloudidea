@@ -54,7 +54,9 @@
              style="font-size: 1em;"
              v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
             {{otherUserDetails.email}}
-            <q-btn flat round color="text-indigo-6" icon="o_mail"/>
+            <q-btn flat round color="text-indigo-6" icon="o_mail"
+                   v-if="$route.params.otherUserId!==userDetails.userId"
+            />
           </a>
         </div>
 
@@ -167,7 +169,7 @@
         </q-card-section>
         <q-img
           class="no-shadow modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
+          src="../../assets/icons/seo.svg"
         />
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_user')}}</p>
@@ -243,6 +245,7 @@
       },
       sendEmail() {
         axios.get('https://cloudidea.es/api/index.php?action=sendEmail&param1=' + this.userDetails.email + '&param2=' + this.otherUserDetails.email + '&param3=' + this.subject + '&param4=' + this.message)
+        this.emailDialog = false;
       },
       uploadFile(file) {
         this.firebaseUploadProfilePic({

@@ -20,8 +20,8 @@ export default ({ app, Vue }) => {
       });
     } else {
       app.i18n = new VueI18n({
-        locale: "en",
-        fallbackLocale: "en",
+        locale: "en-us",
+        fallbackLocale: "en-us",
         messages
       });
     }

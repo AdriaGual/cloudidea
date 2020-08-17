@@ -13,7 +13,7 @@
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col" style="border-radius: 0.5em">
         <img style="max-height:13em;"
-             src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpassword.svg?alt=media&token=f1f330fa-2735-41c5-aa6f-7d21db963655"/>
+             src="../assets/icons/password.svg"/>
         <q-form
           class="q-pt-md"
           @submit="onSubmit"
@@ -69,12 +69,12 @@
 
           <div class="col q-gutter-lg q-pb-lg">
             <q-img
-              src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fgoogle_login.svg?alt=media&token=f44beeaf-3d40-495c-a3d1-a403f3a0afe6"
+              src="../assets/icons/google_login.svg"
               style="height: 2em;width: 2em;" @click="loginWithGoogle()" class="cursor-pointer">
             </q-img>
 
             <q-img
-              src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffacebook_login.svg?alt=media&token=5dd20007-57d9-425f-876f-bfe14e4d006b"
+              src="../assets/icons/facebook_login.svg"
               style="height:2em;width:2em;" @click="loginWithFacebook()" class="cursor-pointer">
             </q-img>
           </div>

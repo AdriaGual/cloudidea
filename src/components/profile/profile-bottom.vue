@@ -91,15 +91,16 @@
                     <q-separator></q-separator>
                     <q-card-actions>
                       <div class="col q-pt-md">
-                        <p style="line-height: 0.1em" class="poppinsBold"
-                           v-if="publish.projectTitle.length>12">
-                          {{publish.projectTitle.substring(0,12)+".."}}
-                        </p>
-                        <p style="line-height: 0.1em" class="poppinsBold"
+                        <a style="line-height: 0.1em" class="poppinsBold"
+                           v-if="publish.projectTitle.length>10">
+                          {{publish.projectTitle.substring(0,10)+".."}}
+                        </a>
+                        <a style="line-height: 0.1em" class="poppinsBold"
                            v-else>
                           {{publish.projectTitle}}
-                        </p>
-                        <p class="cardProjectNumber">{{$t(publish.categoryModel.toLowerCase())}}</p>
+                        </a>
+                        <p class="cardProjectNumber q-pt-md">
+                          {{$t(publish.categoryModel.toLowerCase())}}</p>
                       </div>
                     </q-card-actions>
                   </q-card>
@@ -124,7 +125,8 @@
               :options="selectLang"
               style="width:12em"
             />
-            <p class=" text-blue poppinsRegular q-pt-md cursor-pointer"
+
+            <p class="text-blue poppinsRegular q-pt-md cursor-pointer"
                @click="changePassword()">
               <q-icon name="vpn_key"/>
               {{$t('change_password')}}
@@ -150,7 +152,7 @@
         </q-card-section>
         <q-img
           class="no-shadow modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
+          src="../../assets/icons/files_and_folder.svg"
         />
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
@@ -164,7 +166,7 @@
                  class="q-mt-lg"
                  v-close-popup
                  no-caps
-                 @click="deleteProject(selectedPublish,key)"/>
+                 @click="deleteProject(selectedPublish,selectedPublish.key)"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -175,7 +177,7 @@
         </q-card-section>
         <q-img
           class="no-shadow modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
+          src="../../assets/icons/seo.svg"
         />
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
@@ -220,28 +222,36 @@
         lang: this.$i18n.locale,
         categories: [{
           categoryName: 'Writting',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f'
+          url: require('../../assets/icons/writting.svg'),
+          selected: false,
         }, {
           categoryName: 'Design',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdesign.svg?alt=media&token=2cc162de-294b-4250-bf2b-556d025042d8'
+          url: require('../../assets/icons/design.svg'),
+          selected: false,
         }, {
           categoryName: 'Music',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmusic.svg?alt=media&token=f0dd839f-788b-4326-8e15-76b08ad17059'
+          url: require('../../assets/icons/music.svg'),
+          selected: false,
         }, {
           categoryName: 'Video',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fvideo.svg?alt=media&token=449ae459-3d2a-4cba-b431-f5059b359f09'
+          url: require('../../assets/icons/video.svg'),
+          selected: false,
         }, {
           categoryName: 'Code',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcode.svg?alt=media&token=d81e76b9-f092-4603-84b3-761dcf2de6c1'
+          url: require('../../assets/icons/code.svg'),
+          selected: false,
         }, {
           categoryName: 'Idea',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fidea.svg?alt=media&token=cd1bdf45-3d60-4c3a-ae6f-ea8c65e2dd14'
+          url: require('../../assets/icons/idea.svg'),
+          selected: false,
         }, {
-          categoryName: 'Revenue',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmoney.svg?alt=media&token=5bb1196c-981d-4ead-8054-1fc0d42f8d32'
+          categoryName: 'Selling',
+          url: require('../../assets/icons/money.svg'),
+          selected: false,
         }, {
-          categoryName: 'Marketing',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
+          categoryName: 'Promotion',
+          url: require('../../assets/icons/money.svg'),
+          selected: false,
         }],
         sureDeletePublish: false,
         sureCloseAccount: false,
@@ -255,7 +265,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseDeleteMyUser', 'firebaseUpdateUser', 'updateUserState', 'clearPublishings', 'firebaseGetApprovedPublishings', 'clearUsers', 'firebaseGetUsers', 'changeUserPassword', 'firebaseDeletePublish']),
+        ['firebaseDeleteMyUser', 'firebaseUpdateUser', 'updateUserState', 'clearPublishings', 'firebaseGetAllPublishings', 'clearUsers', 'firebaseGetUsers', 'changeUserPassword', 'firebaseDeletePublish']),
       updateUser(type) {
         if (type === 'description') {
           this.firebaseUpdateUser({
@@ -329,7 +339,7 @@
       this.clearUsers();
       this.firebaseGetUsers();
       this.clearPublishings();
-      this.firebaseGetApprovedPublishings();
+      this.firebaseGetAllPublishings();
     },
     watch: {
       otherUserDetails: function (val) {

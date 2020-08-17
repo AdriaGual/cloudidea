@@ -123,7 +123,7 @@
                 </q-card-section>
                 <q-img
                   class="no-shadow modalImg"
-                  src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Ffiles_and_folder.svg?alt=media&token=b84c71db-2b12-46ef-9663-609718b962d4"
+                  src="../../assets/icons/files_and_folder.svg"
                 />
                 <q-card-section>
                   <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>

@@ -73,7 +73,6 @@
     },
     mixins: [mixinPublishDetails],
     created() {
-      console.log("-----------")
       this.clearPublishings();
       this.firebaseGetApprovedPublishings();
       this.firebaseClearComments();

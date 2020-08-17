@@ -2,7 +2,7 @@
   <div class="row q-px-lg">
     <div class="col">
       <img @click="goToPage('/faq')"
-           src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcloudidea_logo_gradient.svg?alt=media&token=04f36b57-de53-4d7c-9b74-b838db8fc3c3"
+           src="../assets/icons/cloudidea_logo_gradient.svg"
            class="cursor-pointer" style="height: 3em"/>
     </div>
     <div class="col">

@@ -58,7 +58,7 @@
         </q-card-section>
         <q-img
           class="no-shadow modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"/>
+          src="../../assets/icons/seo.svg"/>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">{{$t('promote_user')}}</p>
           <a clasS="poppinsRegular">
@@ -82,8 +82,7 @@
         </q-card-section>
         <q-img
           class="no-shadow modalImg"
-          src="https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fseo.svg?alt=media&token=fb38de06-0ad8-406a-a30c-7a7c9870ed8e"
-        />
+          src="../../assets/icons/seo.svg"/>
         <q-card-section>
           <p class="poppinsBold" style="font-size: 1.5em">Remove user</p>
           <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a class="poppinsBold">{{selectedUser.name}}</a>,

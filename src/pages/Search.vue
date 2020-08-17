@@ -152,7 +152,7 @@
             </p>
             <q-separator></q-separator>
             <div v-for="(filteredUser, key) in filteredUsers" :key="key" class="q-pt-md">
-              <q-item clickable v-ripple>
+              <q-item clickable v-ripple v-if="!filteredUser.moderator">
                 <q-item-section side>
                   <q-avatar rounded size="4em">
                     <img :src="filteredUser.imageUrl" style="border-radius: 0.2em"/>
@@ -229,31 +229,28 @@
         recentSearches: ["webpage", "movie", "clothes", "sports"],
         categories: [{
           searchText: 'Writting',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fwritting.svg?alt=media&token=d7983047-deb2-45f4-890c-2f7c38d8ea1f'
+          url: require('../assets/icons/writting.svg'),
         }, {
           searchText: 'Design',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fdesign.svg?alt=media&token=2cc162de-294b-4250-bf2b-556d025042d8'
+          url: require('../assets/icons/design.svg'),
         }, {
           searchText: 'Music',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmusic.svg?alt=media&token=f0dd839f-788b-4326-8e15-76b08ad17059'
-        }, {
-          searchText: 'Image',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcamera.svg?alt=media&token=468fcd6c-7e0d-4979-a074-0ca3fb42c0a2'
+          url: require('../assets/icons/music.svg'),
         }, {
           searchText: 'Video',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fvideo.svg?alt=media&token=449ae459-3d2a-4cba-b431-f5059b359f09'
+          url: require('../assets/icons/video.svg'),
         }, {
           searchText: 'Code',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fcode.svg?alt=media&token=d81e76b9-f092-4603-84b3-761dcf2de6c1'
+          url: require('../assets/icons/code.svg'),
         }, {
           searchText: 'Idea',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fidea.svg?alt=media&token=cd1bdf45-3d60-4c3a-ae6f-ea8c65e2dd14'
+          url: require('../assets/icons/idea.svg'),
         }, {
           searchText: 'Selling',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fmoney.svg?alt=media&token=5bb1196c-981d-4ead-8054-1fc0d42f8d32'
+          url: require('../assets/icons/money.svg'),
         }, {
           searchText: 'Promotion',
-          url: 'https://firebasestorage.googleapis.com/v0/b/cloudidea-77e8d.appspot.com/o/icons%2Fpromotion.svg?alt=media&token=00f3306b-8d51-407f-b0a9-399d2f0b84c7'
+          url: require('../assets/icons/money.svg'),
         }],
         thumbStyle: {
           opacity: 0
