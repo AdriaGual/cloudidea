@@ -50,7 +50,7 @@
             <q-btn
               no-caps
               type="submit"
-              style="height: 3.5em;border-radius: 0.8em;width:20em;font-size: 1.2em"
+              style="height: 3.5em;border-radius: 0.8em;width:21.5em;font-size: 1.2em"
               color="primary"
               :label="$t('login')"/>
           </div>

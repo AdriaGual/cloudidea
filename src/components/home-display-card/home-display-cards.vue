@@ -139,7 +139,8 @@
         <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.md"></div>
       </div>
     </div>
-
+    <div class="q-pb-xl"></div>
+    <div class="q-pb-xl"></div>
     <q-dialog v-model="openAdblockDialog" persistent position="bottom">
       <q-card class="text-center" style="height:30em;border-radius: 1em">
         <q-card-section align="right">

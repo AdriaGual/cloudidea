@@ -67,7 +67,7 @@
           <q-item>
             <q-item-section>
               <q-input borderless dense v-model="commentText"
-                       placeholder="Add a comment">
+                       :placeholder="$t('add_a_comment')">
                 <template v-slot:after>
                   <q-btn round dense flat icon="send" @click="addComment()"/>
                 </template>

@@ -3,7 +3,7 @@
     <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
     <div class="col" style="border-radius: 1em">
       <q-card class="shadow-1"
-              style="min-height:30em;border-radius: 1em"
+              style="min-height:32em;border-radius: 1em"
               v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
         <q-tabs
           v-model="tab"
@@ -64,7 +64,7 @@
                     class="cardProjectExterior q-mr-md cursor-pointer"
                   >
                     <q-img v-if="publish.coverImage" :src="publish.coverImage"
-                           style="border-radius: 1em;height:12em" alt=""
+                           style="height:12em" alt=""
                            @click="goToPage('/publishDetails/'+publish.key)">
                     </q-img>
                     <q-img
@@ -99,7 +99,7 @@
                            v-else>
                           {{publish.projectTitle}}
                         </p>
-                        <p class="cardProjectNumber">{{publish.categoryModel}}</p>
+                        <p class="cardProjectNumber">{{$t(publish.categoryModel.toLowerCase())}}</p>
                       </div>
                     </q-card-actions>
                   </q-card>

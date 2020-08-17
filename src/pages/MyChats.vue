@@ -14,8 +14,15 @@
     <div class="row q-pt-md">
       <div class="col-3" v-if="this.$q.platform.is.desktop && $q.screen.gt.sm"></div>
       <div class="col q-px-lg">
-        <div v-for="(user, key) in userChats" :key="key">
-          <q-item clickable no-ripple class="cardSectionInterior q-mb-md" :to="'/chat/' + key"
+        <q-input outlined bg-color="white" :placeholder="$t('search')" v-model="searchText"
+                 class="q-pb-md">
+          <template v-slot:append>
+            <q-icon v-if="searchText === ''" name="search"/>
+            <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''"/>
+          </template>
+        </q-input>
+        <div v-for="(user, key) in orderedUserChats" :key="key" class="q-pt-md">
+          <q-item clickable no-ripple class="cardSectionInterior" :to="'/chat/' + user.key"
                   style="border-radius: 1em">
             <q-item-section side>
               <q-avatar rounded size="4em">
@@ -56,6 +63,12 @@
   import { mapState } from "vuex";
 
   export default {
+    data() {
+      return {
+        orderedUserChats: [],
+        searchText: '',
+      }
+    },
     methods: {
       goToPage(route) {
         this.$router.go(-1);
@@ -64,5 +77,57 @@
     computed: {
       ...mapState("store", ["userChats", "userDetails"])
     },
+    watch: {
+      userChats: function (val) {
+        this.orderedUserChats = []
+        let keys = Object.keys(val);
+        keys.forEach(key => {
+          let item = this.userChats[key];
+          item.key = key
+          this.userChats[key].key = key
+          this.orderedUserChats.push(this.userChats[key])
+        })
+        this.orderedUserChats = this.orderedUserChats.filter((a, b) => this.orderedUserChats.indexOf(
+          a) === b)
+
+        this.orderedUserChats.sort((a, b) => b.cp - a.cp);
+      },
+      searchText: function (val) {
+        if (val !== '') {
+          this.orderedUserChats = []
+          for (let key of Object.keys(this.userChats)) {
+            if (this.userChats[key].name.toLowerCase().includes(val.toLowerCase())) {
+              this.orderedUserChats.push(this.userChats[key])
+            }
+          }
+        } else {
+          let keys = Object.keys(val);
+          keys.forEach(key => {
+            let item = this.userChats[key];
+            item.key = key
+            this.userChats[key].key = key
+            this.orderedUserChats.push(this.userChats[key])
+          })
+          this.orderedUserChats = this.orderedUserChats.filter((a, b) => this.orderedUserChats.indexOf(
+            a) === b)
+
+          this.orderedUserChats.sort((a, b) => b.cp - a.cp);
+        }
+      }
+    },
+    created() {
+      this.orderedUserChats = []
+      let keys = Object.keys(this.userChats);
+      keys.forEach(key => {
+        let item = this.userChats[key];
+        item.key = key
+        this.userChats[key].key = key
+        this.orderedUserChats.push(this.userChats[key])
+      })
+      this.orderedUserChats = this.orderedUserChats.filter((a, b) => this.orderedUserChats.indexOf(
+        a) === b)
+
+      this.orderedUserChats.sort((a, b) => b.cp - a.cp);
+    }
   };
 </script>

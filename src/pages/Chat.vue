@@ -61,15 +61,15 @@
         <q-scroll-area
           ref="scrollArea"
           visbile="false"
-          :class="this.$q.platform.is.desktop?'q-pt-md q-px-lg':'q-pt-sm'"
+          :class="this.$q.platform.is.desktop?'q-pt-lg q-px-lg':'q-pt-lg q-px-md'"
           style="height:80vh"
           :thumb-style="thumbStyle"
         >
           <div v-for="(message, key) in messages"
                :key="key">
             <q-chat-message
-              class="poppinsRegular full-width"
-              style="font-size: 0.9em"
+              class="poppinsRegular full-width q-pb-sm"
+              style="font-size: 0.9em;"
               v-if="message.text && message.text!==''"
               text-color="white"
               :avatar="message.from === 'me' ? userDetails.imageUrl : otherUserDetails.imageUrl"
@@ -88,7 +88,7 @@
               outlined
               class="full-width"
               v-model="newMessage"
-              placeholder="Message"
+              :placeholder="$t('send')"
               @keydown.enter.prevent="sendMessage"
               dense
               bg-color="white"
