@@ -17,6 +17,9 @@
              @click="goToPage('/brotherhood','brotherhood')"/>
       <q-tab v-if="userDetails.moderator" name="moderate" icon="o_gavel"
              @click="goToPage('/moderate','moderate')"/>
+      <q-tab v-if="userDetails.name" name="favorites"
+             :icon="tab==='favorites'?'star':'star_border'"
+             @click="goToPage('/favorites','favorites')"/>
 
     </q-tabs>
   </div>
@@ -42,6 +45,40 @@
     computed: {
       ...mapState('store', ['userDetails']),
     },
+    watch: {
+      $route(to, from) {
+        if (to.path === '/') {
+          this.tab = "home";
+        } else if (to.path === '/search') {
+          this.tab = "search";
+        } else if (to.path === '/create') {
+          this.tab = "create";
+        } else if (to.path === '/brotherhood') {
+          this.tab = "brotherhood";
+        } else if (to.path === '/moderate') {
+          this.tab = "moderate";
+        } else if (to.path === '/favorites') {
+          this.tab = "favorites";
+        }
+
+      }
+    },
+    created() {
+      if (this.$route.path === '/') {
+        this.tab = "home";
+      } else if (this.$route.path === '/search') {
+        this.tab = "search";
+      } else if (this.$route.path === '/create') {
+        this.tab = "create";
+      } else if (this.$route.path === '/brotherhood') {
+        this.tab = "brotherhood";
+      } else if (this.$route.path === '/moderate') {
+        this.tab = "moderate";
+      } else if (this.$route.path === '/favorites') {
+        this.tab = "favorites";
+      }
+
+    }
   }
 </script>
 

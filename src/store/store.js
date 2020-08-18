@@ -13,6 +13,7 @@ let messagesRef;
 const state = {
   userDetails: {},
   userLikedPublishings: {},
+  userFavoritedPublishings: {},
   userChats: {},
   users: {},
   messages: {},
@@ -63,6 +64,15 @@ const mutations = {
   },
   removeLike(state, payload) {
     Vue.delete(state.userLikedPublishings, payload.otherPublishingId);
+  },
+  addFavorite(state, payload) {
+    Vue.set(state.userFavoritedPublishings, payload.otherPublishingId, payload.otherUserId);
+  },
+  removeFavorite(state, payload) {
+    Vue.delete(state.userFavoritedPublishings, payload.otherPublishingId);
+  },
+  setFavorites(state, payload) {
+    state.userFavoritedPublishings = payload;
   },
   addChatUser(state, payload) {
     Vue.set(state.userChats, payload.otherUserId, payload.otherUserDetails);
@@ -470,12 +480,42 @@ const actions = {
         });
       });
   },
+  firebaseAddFavorite({ commit, dispatch }, payload) {
+    firebaseDB
+    .ref("users/" + state.userDetails.userId + "/favoritedPublishings/" + payload.otherPublishingId)
+    .set(payload.otherUserId);
+    firebaseDB.ref("users/" + state.userDetails.userId + '/favoritedPublishings/').on("child_added",
+      snapshot => {
+        const otherPublishingId = snapshot.key;
+        const otherUserId = payload.otherUserId
+        commit("addFavorite", {
+          otherPublishingId,
+          otherUserId: { otherUserId }
+        });
+      });
+  },
+  firebaseRemoveFavorite({ commit, dispatch }, payload) {
+    firebaseDB.ref("users/" + state.userDetails.userId + "/favoritedPublishings/" + payload.otherPublishingId)
+    .remove();
+    commit("removeFavorite", { otherPublishingId: payload.otherPublishingId });
+  },
   firebaseGetLikes({ commit }) {
     firebaseDB.ref("users/" + state.userDetails.userId + '/likedPublishings').on("child_added",
       snapshot => {
         const otherPublishingId = snapshot.key;
         const otherUserId = snapshot.val();
         commit("addLike", {
+          otherPublishingId,
+          otherUserId: { otherUserId }
+        });
+      });
+  },
+  firebaseGetFavorites({ commit }) {
+    firebaseDB.ref("users/" + state.userDetails.userId + '/favoritedPublishings').on("child_added",
+      snapshot => {
+        const otherPublishingId = snapshot.key;
+        const otherUserId = snapshot.val();
+        commit("addFavorite", {
           otherPublishingId,
           otherUserId: { otherUserId }
         });
@@ -547,11 +587,8 @@ const actions = {
 
       });
     }
-
-
   },
   firebaseUpdatePublish({ commit }, payload) {
-    console.log(payload)
     firebaseDB.ref("publishings/" + payload.publishId).update(payload.updates);
     var publishId = payload.publishId;
     var publishDetails = payload.updates;
@@ -655,6 +692,9 @@ const actions = {
   },
   clearUsers({ commit }) {
     commit("setUsers", {});
+  },
+  clearFavorites({ commit }) {
+    commit("setFavorites", {});
   },
   updatePublishComments({ commit }, payload) {
     firebaseDB

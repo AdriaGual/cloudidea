@@ -21,6 +21,13 @@ const routes = [
     ],
   },
   {
+    path: '/favorites',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Favorites.vue') },
+    ],
+  },
+  {
     path: '/create',
     component: () => import('layouts/MainLayout.vue'),
     children: [

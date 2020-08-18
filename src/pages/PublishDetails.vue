@@ -92,7 +92,6 @@
       },
       publishings: function (val) {
         this.orderedPublishings = [];
-        console.log("aaaaa")
         let keys = Object.keys(val);
         keys.forEach(key => {
           let item = this.publishings[key];

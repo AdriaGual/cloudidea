@@ -246,7 +246,7 @@
             @click="like(publishDetails,publishKey)"
           />
           <q-btn
-            v-if="alreadyLikesPublish(publishDetails,publishKey)===true && userDetails.userId !== publishDetails.creatorId"
+            v-if="alreadyLikesPublish(publishDetails,publishKey)===true && userDetails.userId !== publishDetails.creatorId && userDetails.userId"
             no-caps
             rounded
             flat

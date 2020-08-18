@@ -17,25 +17,51 @@
     </q-card-section>
     <q-card-section
       style="cursor: pointer;  background: #393e46;">
-      <div class="row" @click="goToPublishDetails(publish, publish.key)">
-        <div class="col">
+      <div class="row">
+        <div class="col" @click="goToPublishDetails(publish, publish.key)">
           <p style="font-size: 0.8em" class="text-grey">
             {{releaseDate(publish.releaseDate)}}</p>
         </div>
-        <div class="col" align="right">
+        <div class="col-1">
           <q-btn outline round color="light-blue-4" icon="o_lock" size="sm"
                  v-if="publish.needHelp !== 'true'">
             <q-tooltip>
               {{$t('finished_project')}}
             </q-tooltip>
           </q-btn>
-
           <q-btn outline round color="green-4" icon="o_lock_open" size="sm"
                  v-else>
             <q-tooltip>
               {{$t('unfinished_project')}}
             </q-tooltip>
           </q-btn>
+        </div>
+        <div class="col-1" style="z-index: 1;position: relative;top: -0.5em;right:0em">
+          <q-btn
+            round
+            flat
+            v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyFavoritesPublish(publish,publish.key)===false"
+            no-caps
+            icon="star_border"
+            color="amber"
+            size="md"
+            :ripple="false"
+            @click="favorite(publish,publish.key)"
+          />
+          <q-btn
+            round
+            v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyFavoritesPublish(publish,publish.key)===true"
+            no-caps
+            flat
+            :ripple="false"
+            size="md"
+            icon="star"
+            color="amber"
+            @click="unfavorite(publish,publish.key)"
+          />
+          <q-icon v-if="!userDetails.userId || userDetails.userId === publish.creatorId"
+                  name="star" color="grey" size="sm"
+                  style="z-index: 99;position: relative;top:0.2em;right:-0.7em"/>
         </div>
       </div>
 
@@ -148,7 +174,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes', 'firebaseDeletePublish']),
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes', 'firebaseDeletePublish', 'firebaseAddFavorite', 'firebaseRemoveFavorite', 'firebaseGetFavorites']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -222,6 +248,22 @@
       handleHide() {
         this.visible = false
       },
+      favorite(publish, key) {
+        this.firebaseAddFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      unfavorite(publish, key) {
+        this.firebaseRemoveFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      alreadyFavoritesPublish(publish, key) {
+        var found = false;
+
+        for (let favoritedId in this.userFavoritedPublishings) {
+          if (favoritedId === key) {
+            found = true;
+          }
+        }
+        return found
+      },
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
@@ -253,10 +295,11 @@
     },
     computed: {
       ...mapState('store',
-        ['userLikedPublishings']),
+        ['userLikedPublishings', 'userFavoritedPublishings']),
     },
     created() {
       this.firebaseGetLikes();
+      this.firebaseGetFavorites();
     }
 
   }

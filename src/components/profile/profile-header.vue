@@ -50,7 +50,7 @@
           </a>
           <br/>
           <a class="poppinsLight text-center text-indigo-9"
-             @click="emailDialog=true"
+             @click="$route.params.otherUserId!==userDetails.userId?'emailDialog=true':''"
              style="font-size: 1em;"
              v-if="($route.params.otherUserId!==userDetails.userId && !otherUserDetails.privateProfile) || $route.params.otherUserId===userDetails.userId">
             {{otherUserDetails.email}}

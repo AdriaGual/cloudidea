@@ -53,49 +53,51 @@
               <q-item-label caption class="text-grey">
                 {{releaseDate(filteredPublishing.releaseDate)}}
               </q-item-label>
-              <div class="row">
-                <q-icon v-if="filteredPublishing.needWrittingHelp" name="history_edu" size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('la')}} {{$t('writting').toLowerCase()}}
-                  </q-tooltip>
-                </q-icon>
-                <q-icon v-if="filteredPublishing.needVideoHelp" name="o_videocam" size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('el')}} {{$t('video').toLowerCase()}}
-                  </q-tooltip>
-                </q-icon>
-                <q-icon v-if="filteredPublishing.needAudioHelp" name="o_audiotrack" size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('el')}} {{$t('audio').toLowerCase()}}
-                  </q-tooltip>
-                </q-icon>
-                <q-icon v-if="filteredPublishing.needCodeHelp" name="code" size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('el')}} {{$t('code').toLowerCase()}}
-                  </q-tooltip>
-                </q-icon>
-                <q-icon v-if="filteredPublishing.needDesignHelp" name="o_palette" size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('el')}} {{$t('design').toLowerCase()}}
-                  </q-tooltip>
-                </q-icon>
-                <q-icon v-if="filteredPublishing.needIdeaHelp" name="o_emoji_objects" size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('la')}} idea
-                  </q-tooltip>
-                </q-icon>
-                <q-icon v-if="filteredPublishing.needSellHelp" name="attach_money" size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('la')}} {{$t('selling').toLowerCase()}}
-                  </q-tooltip>
-                </q-icon>
-                <q-icon v-if="filteredPublishing.needPromotionHelp" name="favorite_border"
-                        size="sm">
-                  <q-tooltip>
-                    {{$t('need_help_with')}} {{$t('la')}} {{$t('promotion').toLowerCase()}}
-                  </q-tooltip>
-                </q-icon>
-              </div>
+              <q-item-label>
+                <div class="row">
+                  <q-icon v-if="filteredPublishing.needWrittingHelp" name="history_edu" size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('la')}} {{$t('writting').toLowerCase()}}
+                    </q-tooltip>
+                  </q-icon>
+                  <q-icon v-if="filteredPublishing.needVideoHelp" name="o_videocam" size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('video').toLowerCase()}}
+                    </q-tooltip>
+                  </q-icon>
+                  <q-icon v-if="filteredPublishing.needAudioHelp" name="o_audiotrack" size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('music').toLowerCase()}}
+                    </q-tooltip>
+                  </q-icon>
+                  <q-icon v-if="filteredPublishing.needCodeHelp" name="code" size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('code').toLowerCase()}}
+                    </q-tooltip>
+                  </q-icon>
+                  <q-icon v-if="filteredPublishing.needDesignHelp" name="o_palette" size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('el')}} {{$t('design').toLowerCase()}}
+                    </q-tooltip>
+                  </q-icon>
+                  <q-icon v-if="filteredPublishing.needIdeaHelp" name="o_emoji_objects" size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('la')}} idea
+                    </q-tooltip>
+                  </q-icon>
+                  <q-icon v-if="filteredPublishing.needSellHelp" name="attach_money" size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('la')}} {{$t('selling').toLowerCase()}}
+                    </q-tooltip>
+                  </q-icon>
+                  <q-icon v-if="filteredPublishing.needPromotionHelp" name="favorite_border"
+                          size="sm">
+                    <q-tooltip>
+                      {{$t('need_help_with')}} {{$t('la')}} {{$t('promotion').toLowerCase()}}
+                    </q-tooltip>
+                  </q-icon>
+                </div>
+              </q-item-label>
             </q-item-section>
           </q-item>
         </div>

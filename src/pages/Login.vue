@@ -161,11 +161,7 @@
         this.$router.push(route);
       },
       onSubmit() {
-        var response = this.loginUser(this.userData);
-        console.log(response)
-        if (response) {
-
-        }
+        this.loginUser(this.userData);
       },
       sendEmailPasswordRecover() {
         this.changeUserPassword(this.userData.email)

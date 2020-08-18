@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-1 q-pl-md">
         <q-btn flat round color="primary" icon="arrow_back"
-               @click="goToPage()"/>
+               @click="goToPage('/')"/>
       </div>
       <div class="col text-center">
         <p class="poppinsRegular q-pt-sm" style="font-size: 1.5em">{{$t('chats')}}</p>
@@ -71,7 +71,7 @@
     },
     methods: {
       goToPage(route) {
-        this.$router.go(-1);
+        this.$router.push(route);
       },
     },
     computed: {

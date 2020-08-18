@@ -2,7 +2,7 @@
   <q-layout class="flex column q-pt-md bgGlobal" ref="pageChat">
     <div class="row">
       <div class="col-1 q-pl-md">
-        <q-btn flat round color="primary" icon="arrow_back" @click="goToLastPage('')"/>
+        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/myChats')"/>
       </div>
       <div class="col absolute-right q-pt-sm">
         <q-item clickable v-ripple @click="goToPage('/profile/'+$route.params.otherUserId)">
