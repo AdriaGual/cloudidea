@@ -22,7 +22,8 @@
           <p style="font-size: 0.8em" class="text-grey">
             {{releaseDate(publish.releaseDate)}}</p>
         </div>
-        <div class="col-1">
+        <div
+          :class="!(!userDetails.userId || userDetails.userId === publish.creatorId)?'col-2 text-center':'col-1 text-center'">
           <q-btn outline round color="light-blue-4" icon="o_lock" size="sm"
                  v-if="publish.needHelp !== 'true'">
             <q-tooltip>
@@ -35,6 +36,31 @@
               {{$t('unfinished_project')}}
             </q-tooltip>
           </q-btn>
+        </div>
+        <div class="col-1"
+             v-if="!(!userDetails.userId || userDetails.userId === publish.creatorId)">
+          <q-btn
+            round
+            unelevated
+            v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyFavoritesPublish(publish,publish.key)===false"
+            no-caps
+            icon="star_border"
+            color="grey"
+            size="sm"
+            :ripple="false"
+            @click="favorite(publish,publish.key)"
+          />
+          <q-btn
+            round
+            v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyFavoritesPublish(publish,publish.key)===true"
+            no-caps
+            unelevated
+            :ripple="false"
+            size="sm"
+            icon="star"
+            color="amber"
+            @click="unfavorite(publish,publish.key)"
+          />
         </div>
       </div>
 
@@ -57,24 +83,63 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row full-width">
         <vue-easy-lightbox
           :visible="visible"
           :imgs="publish.coverImage?publish.coverImage:publish.fileUrl && publish.fileType && publish.fileType.includes('image/')?publish.fileUrl:''"
           :index="1"
           @hide="handleHide"
         ></vue-easy-lightbox>
-        <div class="col" @click="goToPublishDetails(publish, publish.key)">
-          <p class="poppinsLight text-justify q-pr-lg text-grey" style="font-size: 0.9em">
-            {{publish.description.substring(0,100)+".."}}</p>
+
+        <div :class="publish.fileType.includes('audio')?'col-4 q-pr-md':'col q-pr-md'"
+             @click="goToPublishDetails(publish, publish.key)">
+
+          <div v-if="!publish.fileType.includes('audio')"
+          >
+            <a class="poppinsLight text-justify text-grey"
+               style="word-wrap: break-word;font-size: 0.9em">
+
+              {{publish.description.substring(0,140)+".."}}
+            </a>
+
+          </div>
+
+          <div v-else>
+            <q-img
+              v-if="publish.coverImage"
+              :src="publish.coverImage"
+              spinner-color="white"
+              style="max-height: 9em;"
+              class="cardCoverImage"
+              @click="visible=true"
+            />
+            <q-img
+              v-if="publish.fileUrl && publish.fileType && publish.fileType.includes('image/') && !publish.coverImage"
+              :src="publish.fileUrl"
+              spinner-color="white"
+              style="max-height: 9em;"
+              class="cardCoverImage"
+              @click="visible=true"
+            />
+            <div v-else>
+              <div v-for="(category, key) in categories" :key="key">
+                <img
+                  @click="goToPublishDetails(publish, publish.key)"
+                  :class="$q.platform.is.desktop?'q-px-xl':''"
+                  v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
+                  :style="$q.platform.is.desktop?'height:9em':''"
+                  :src="category.url" alt=""/>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col" align="right">
+        <div class="col" align="right" v-if="!publish.fileType.includes('audio')">
           <q-img
             v-if="publish.coverImage"
             :src="publish.coverImage"
             spinner-color="white"
             style="max-height: 9em;"
-            class="cardCoverImage q-mt-xs q-ml-md full-width"
+            class="cardCoverImage"
             @click="visible=true"
           />
           <q-img
@@ -82,7 +147,7 @@
             :src="publish.fileUrl"
             spinner-color="white"
             style="max-height: 9em;"
-            class="cardCoverImage q-mt-xs q-ml-md full-width"
+            class="cardCoverImage"
             @click="visible=true"
           />
           <div v-else>
@@ -95,6 +160,13 @@
                 :src="category.url" alt=""/>
             </div>
           </div>
+        </div>
+        <div v-else
+             class="col">
+          <audio controls class="full-width q-pl-md" style="position: relative;top:25%">
+            <source :src="publish.fileUrl" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
         </div>
       </div>
     </q-card-section>
@@ -147,7 +219,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes', 'firebaseDeletePublish']),
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes', 'firebaseDeletePublish', 'firebaseAddFavorite', 'firebaseRemoveFavorite', 'firebaseGetFavorites']),
       goToPage(route) {
         this.$router.push(route)
       },
@@ -221,6 +293,22 @@
       handleHide() {
         this.visible = false
       },
+      favorite(publish, key) {
+        this.firebaseAddFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      unfavorite(publish, key) {
+        this.firebaseRemoveFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      alreadyFavoritesPublish(publish, key) {
+        var found = false;
+
+        for (let favoritedId in this.userFavoritedPublishings) {
+          if (favoritedId === key) {
+            found = true;
+          }
+        }
+        return found
+      },
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);
         var interval = Math.floor(seconds / 31536000);
@@ -252,15 +340,15 @@
     },
     computed: {
       ...mapState('store',
-        ['userLikedPublishings']),
+        ['userLikedPublishings', 'userFavoritedPublishings']),
     },
     created() {
       this.firebaseGetLikes();
+      this.firebaseGetFavorites();
     }
 
   }
 </script>
 
 <style scoped>
-
 </style>

@@ -74,11 +74,11 @@
               class="text-blue">support@cloudidea.es</a>
           </a>
         </div>
-        <div class="full-width text-center q-pt-md">
+        <!--<div class="full-width text-center q-pt-md">
           <q-img style="height:3em;width:10em" class="justify-center cursor-pointer"
                  @click="downloadFile"
                  src="../assets/icons/google_play_download.svg"></q-img>
-        </div>
+        </div>-->
         <div class="row q-pl-lg q-pb-lg q-pt-xl">
           <div class="col">
             <a class="text-grey poppinsRegular q-pl-xs"> {{ $t("language") }}</a>

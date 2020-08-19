@@ -1,12 +1,7 @@
 <template>
   <div class="q-px-md">
     <div v-for="(filteredPublishing, key) in orderedPublishings" :key="key">
-      <vue-easy-lightbox
-        :visible="visible"
-        :imgs="filteredPublishing.coverImage?filteredPublishing.coverImage:filteredPublishing.fileUrl && filteredPublishing.fileType && filteredPublishing.fileType.includes('image/')?filteredPublishing.fileUrl:''"
-        :index="1"
-        @hide="handleHide"
-      ></vue-easy-lightbox>
+
       <q-card-section
         v-if="userDetails.moderator && $q.cookies.get('categorySelection').includes(filteredPublishing.categoryModel)"
         class="bg-white q-pa-sm">
@@ -46,11 +41,7 @@
 
         </q-item-section>
         <q-item-section @click="goToPage('publishDetails/'+filteredPublishing.key)">
-          <q-item-label class="poppinsRegular text-white"
-                        v-if="filteredPublishing.projectTitle.length>20">
-            {{filteredPublishing.projectTitle.substring(0,20)+".."}}
-          </q-item-label>
-          <q-item-label v-else class="poppinsRegular text-white">
+          <q-item-label class="poppinsRegular text-white">
             {{filteredPublishing.projectTitle}}
           </q-item-label>
           <q-item-label caption class="text-grey">
@@ -64,115 +55,121 @@
           <q-item-label caption class="text-grey">
             {{releaseDate(filteredPublishing.releaseDate)}}
           </q-item-label>
-          <div class="row full-width text-center" align="right">
-            <div class="col-4 q-pt-sm">
-              <q-btn outline round color="light-blue-4" icon="o_lock" size="sm"
-                     v-if="filteredPublishing.needHelp !== 'true'">
-                <q-tooltip>
-                  {{$t('finished_project')}}
-                </q-tooltip>
-              </q-btn>
-              <q-btn outline round color="green-4" icon="o_lock_open" size="sm"
-                     v-else>
-                <q-tooltip>
-                  {{$t('unfinished_project')}}
-                </q-tooltip>
-              </q-btn>
-            </div>
-            <div class="col-4 q-pt-sm" style="z-index: 1;position: relative;top:-0.4em">
-              <q-btn
-                round
-                flat
-                v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyFavoritesPublish(filteredPublishing,filteredPublishing.key)===false"
-                no-caps
-                icon="star_border"
-                color="amber"
-                size="md"
-                :ripple="false"
-                @click="favorite(filteredPublishing,filteredPublishing.key)"
-              />
-              <q-btn
-                round
-                v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyFavoritesPublish(filteredPublishing,filteredPublishing.key)===true"
-                no-caps
-                flat
-                :ripple="false"
-                size="md"
-                icon="star"
-                color="amber"
-                @click="unfavorite(filteredPublishing,filteredPublishing.key)"
-              />
-              <q-icon
-                v-if="!userDetails.userId || userDetails.userId === filteredPublishing.creatorId"
-                name="star" color="grey" size="sm"
-                style="z-index: 99;position: relative;top:0.2em;right:-0.7em"/>
-            </div>
-            <div class="col q-pt-xs" style="z-index: 1;position: relative;right:1em">
-              <q-btn
-                rounded
-                flat
-                v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===false"
-                no-caps
-                icon="favorite_border"
-                color="accent"
-                size="md"
-                :ripple="false"
-                @click="like(filteredPublishing,filteredPublishing.key)"
-              />
-              <q-btn
-                rounded
-                v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===true"
-                no-caps
-                flat
-                :ripple="false"
-                size="md"
-                icon="favorite"
-                color="accent"
-                @click="dislike(filteredPublishing,filteredPublishing.key)"
-              />
-              <q-btn
-                rounded
-                v-if="!userDetails.userId || userDetails.userId === filteredPublishing.creatorId"
-                no-caps
-                flat
-                :ripple="false"
-                size="md"
-                icon="favorite"
-                color="grey"
-                disable
-              />
-            </div>
-            <div class="col q-pt-sm" style="z-index: 1;position: relative;right:-0.3em;top:0.3em">
-              <a>
-                {{filteredPublishing.cp}}
-              </a>
-            </div>
-            <q-dialog v-model="openDeleteProjectPopup">
-              <q-card class="text-center" style="height:30em;border-radius: 1em">
-                <q-card-section align="right">
-                  <q-btn icon="close" flat round dense v-close-popup/>
-                </q-card-section>
-                <q-img
-                  class="no-shadow modalImg"
-                  src="../../assets/icons/files_and_folder.svg"
+          <q-item-label>
+            <div class="row q-gutter-sm">
+              <div class="col">
+                <q-btn outline round color="light-blue-4" icon="o_lock" size="sm"
+                       v-if="filteredPublishing.needHelp !== 'true'">
+                  <q-tooltip>
+                    {{$t('finished_project')}}
+                  </q-tooltip>
+                </q-btn>
+                <q-btn outline round color="green-4" icon="o_lock_open" size="sm"
+                       v-else>
+                  <q-tooltip>
+                    {{$t('unfinished_project')}}
+                  </q-tooltip>
+                </q-btn>
+              </div>
+              <div class="col"
+                   v-if="!(!userDetails.userId || userDetails.userId === filteredPublishing.creatorId)">
+                <q-btn
+                  round
+                  unelevated
+                  v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyFavoritesPublish(filteredPublishing,filteredPublishing.key)===false"
+                  no-caps
+                  icon="star_border"
+                  color="grey"
+                  size="sm"
+                  :ripple="false"
+                  @click="favorite(filteredPublishing,filteredPublishing.key)"
                 />
-                <q-card-section>
-                  <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
-                  <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a
-                    class="poppinsBold">{{filteredPublishing.projectTitle}}</a>,
-                    {{$t('are_you_sure_about_that')}} </a>
-                </q-card-section>
-                <q-card-actions align="center">
-                  <q-btn unelevated :label="$t('delete')" color="red-6"
-                         style="border-radius: 1em;width:9em;height:3em"
-                         class="q-mt-lg"
-                         v-close-popup
-                         no-caps
-                         @click="deleteProject()"/>
-                </q-card-actions>
-              </q-card>
-            </q-dialog>
-          </div>
+                <q-btn
+                  round
+                  v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyFavoritesPublish(filteredPublishing,filteredPublishing.key)===true"
+                  no-caps
+                  unelevated
+                  :ripple="false"
+                  size="sm"
+                  icon="star"
+                  color="amber"
+                  @click="unfavorite(filteredPublishing,filteredPublishing.key)"
+                />
+              </div>
+            </div>
+          </q-item-label>
+
+
+          <q-item-label>
+            <div class="row q-gutter-sm full-width">
+              <div class="col" style="position: relative;top:-0.2em">
+                <q-btn
+                  rounded
+                  flat
+                  v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===false"
+                  no-caps
+                  icon="favorite_border"
+                  color="accent"
+                  size="md"
+                  :ripple="false"
+                  @click="like(filteredPublishing,filteredPublishing.key)"
+                />
+                <q-btn
+                  rounded
+                  v-if="userDetails.userId && userDetails.userId !== filteredPublishing.creatorId && alreadyLikesPublish(filteredPublishing,filteredPublishing.key)===true"
+                  no-caps
+                  flat
+                  :ripple="false"
+                  size="md"
+                  icon="favorite"
+                  color="accent"
+                  @click="dislike(filteredPublishing,filteredPublishing.key)"
+                />
+                <q-btn
+                  rounded
+                  v-if="!userDetails.userId || userDetails.userId === filteredPublishing.creatorId"
+                  no-caps
+                  flat
+                  :ripple="false"
+                  size="md"
+                  icon="favorite"
+                  color="grey"
+                  disable
+                />
+              </div>
+              <div class="col text-center" style="position: relative;top:0.5em">
+                <p>
+                  {{filteredPublishing.cp}}
+                </p>
+              </div>
+              <q-dialog v-model="openDeleteProjectPopup">
+                <q-card class="text-center" style="height:30em;border-radius: 1em">
+                  <q-card-section align="right">
+                    <q-btn icon="close" flat round dense v-close-popup/>
+                  </q-card-section>
+                  <q-img
+                    class="no-shadow modalImg"
+                    src="../../assets/icons/files_and_folder.svg"
+                  />
+                  <q-card-section>
+                    <p class="poppinsBold" style="font-size: 1.5em">{{$t('remove_project')}}</p>
+                    <a class="poppinsRegular"> {{$t('you_are_gonna_delete')}} <a
+                      class="poppinsBold">{{filteredPublishing.projectTitle}}</a>,
+                      {{$t('are_you_sure_about_that')}} </a>
+                  </q-card-section>
+                  <q-card-actions align="center">
+                    <q-btn unelevated :label="$t('delete')" color="red-6"
+                           style="border-radius: 1em;width:9em;height:3em"
+                           class="q-mt-lg"
+                           v-close-popup
+                           no-caps
+                           @click="deleteProject()"/>
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+            </div>
+          </q-item-label>
+
         </q-item-section>
       </q-item>
     </div>
@@ -188,7 +185,6 @@
 
   export default {
     props: ['orderedPublishings', 'categories', 'userDetails'],
-    components: { VueEasyLightbox },
     data() {
       return {
         openDeleteProjectPopup: false,

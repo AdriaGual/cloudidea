@@ -1,20 +1,48 @@
 <template>
   <q-card class="cardExterior" style="border-radius: 1em">
     <q-card-section>
-      <div v-if="$q.platform.is.desktop && !sidePublish">
-        <p class="poppinsRegular text-grey">
-          {{releaseDate(publishDetails.releaseDate)}}</p>
-        <p
-          v-if="!$q.platform.is.desktop && publishDetails.projectTitle && publishDetails.projectTitle.length<22"
-          class="poppinsBold"
-          style="line-height: 0.1em;font-size: 1.2em">
-          {{publishDetails.projectTitle}}</p>
-        <p v-else-if="!$q.platform.is.desktop" class="poppinsBold"
-           style="line-height: 0.1em;font-size: 1.2em">
-          {{publishDetails.projectTitle.substring(0,22)+".."}}</p>
-        <p v-else class="poppinsBold"
-           style="line-height: 0.1em;font-size: 1.2em">
-          {{publishDetails.projectTitle}}</p>
+      <div v-if="$q.platform.is.desktop && !sidePublish" class="row">
+        <div class="col">
+          <p class="poppinsRegular text-grey">
+            {{releaseDate(publishDetails.releaseDate)}}</p>
+          <p
+            v-if="!$q.platform.is.desktop && publishDetails.projectTitle && publishDetails.projectTitle.length<22"
+            class="poppinsBold"
+            style="line-height: 0.1em;font-size: 1.2em">
+            {{publishDetails.projectTitle}}</p>
+          <p v-else-if="!$q.platform.is.desktop" class="poppinsBold"
+             style="line-height: 0.1em;font-size: 1.2em">
+            {{publishDetails.projectTitle.substring(0,22)+".."}}</p>
+          <p v-else class="poppinsBold"
+             style="line-height: 0.1em;font-size: 1.2em">
+            {{publishDetails.projectTitle}}</p>
+        </div>
+
+        <div class="col-1" align="right"
+             v-if="!sidePublish">
+          <q-btn
+            round
+            unelevated
+            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFavoritesPublish(publishDetails,publishKey)===false"
+            no-caps
+            icon="star_border"
+            color="grey"
+            size="sm"
+            :ripple="false"
+            @click="favorite(publishDetails,publishKey)"
+          />
+          <q-btn
+            round
+            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFavoritesPublish(publishDetails,publishKey)===true"
+            no-caps
+            unelevated
+            :ripple="false"
+            size="sm"
+            icon="star"
+            color="amber"
+            @click="unfavorite(publishDetails,publishKey)"
+          />
+        </div>
       </div>
       <div class="cursor-pointer" v-if="publishDetails.fileType==='application/pdf'"
            @click="goToPage(publishKey)"
@@ -209,7 +237,7 @@
         <div class="col-5 q-pt-md cursor-pointer"
              @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
           <p style="line-height: 0.1em"
-             v-if="publishDetails.creatorName.length>20 && !$q.platform.is.desktop">
+             v-if="publishDetails.creatorName.length>20">
             {{publishDetails.creatorName.substring(0,20)+".."}}</p>
           <p style="line-height: 0.1em" v-else>
             {{publishDetails.creatorName}}</p>
@@ -275,34 +303,6 @@
           <p class="cardUserCP ">
             {{publishDetails.cp}}
           </p>
-        </div>
-        <div class="col-1" style="z-index: 1;position: relative;top: -0.2em;right:0.5em"
-             v-if="!sidePublish">
-          <q-btn
-            round
-            flat
-            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFavoritesPublish(publishDetails,publishKey)===false"
-            no-caps
-            icon="star_border"
-            color="grey"
-            size="md"
-            :ripple="false"
-            @click="favorite(publishDetails,publishKey)"
-          />
-          <q-btn
-            round
-            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFavoritesPublish(publishDetails,publishKey)===true"
-            no-caps
-            flat
-            :ripple="false"
-            size="md"
-            icon="star"
-            color="amber"
-            @click="unfavorite(publishDetails,publishKey)"
-          />
-          <q-icon v-if="!userDetails.userId || userDetails.userId === publishDetails.creatorId"
-                  name="star" color="grey" size="sm"
-                  style="z-index: 99;position: relative;top:0.5em;right:-0.4em"/>
         </div>
       </div>
     </q-card-actions>

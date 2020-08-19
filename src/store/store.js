@@ -163,7 +163,7 @@ const actions = {
       const userId = firebaseAuth.currentUser.uid;
       firebaseDB
       .ref("users/" + userId)
-      .set({
+      .update({
         name: user.displayName,
         email: user.email,
         language: 'es',

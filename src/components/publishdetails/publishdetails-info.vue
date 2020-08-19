@@ -16,7 +16,8 @@
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="info">
-        <p class="poppinsRegular text-grey">{{newPublishDetails.description}}</p>
+        <p class="poppinsRegular text-grey" style="word-wrap: break-word;">
+          {{newPublishDetails.description}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">{{$t('license_type').toUpperCase()}}</p>
         <p class="poppinsRegular text-grey">{{newPublishDetails.registerLicenseModel}}</p>
         <p class="poppinsBold" style="line-height: 0.1em">{{$t('category').toUpperCase()}}</p>

@@ -40,7 +40,6 @@
                 <source :src="newPublishDetails.fileUrl" type="audio/mpeg">
                 {{$t('your_browser_does_not_support_the_audio_element')}}
               </audio>
-
               <video class="full-width"
                      v-if="newPublishDetails.fileType && newPublishDetails.fileType.includes('video/')"
                      controls>
@@ -293,12 +292,12 @@
         openURL(this.newPublishDetails.fileUrl)
       },
       openProjectURL() {
-        openURL(this.publishDetails.projectUrl)
+        openURL(this.newPublishDetails.projectUrl)
       },
       approveProject() {
-        axios.get('https://cloudidea.es/api/index.php?action=acceptedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle + '&param4=' + this.$i18n.locale)
+        axios.get('https://cloudidea.es/api/index.php?action=acceptedPublish&param1=' + this.newPublishDetails.creatorEmail + '&param2=' + this.newPublishDetails.creatorName + '&param3=' + this.newPublishDetails.projectTitle + '&param4=' + this.$i18n.locale)
         this.firebaseUpdatePublish({
-          publishId: this.publishDetails.key,
+          publishId: this.$route.params.publishId,
           updates: {
             approved: true,
             releaseDate: Date.now(),
@@ -309,11 +308,11 @@
         var data = {
           app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
           contents: {
-            "en": "Your project '" + this.publishDetails.projectTitle + "' has been accepted",
-            "es": "Tu proyecto '" + this.publishDetails.projectTitle + "' se ha aceptado"
+            "en": "Your project '" + this.newPublishDetails.projectTitle + "' has been accepted",
+            "es": "Tu proyecto '" + this.newPublishDetails.projectTitle + "' se ha aceptado"
           },
           headings: { "en": "Cloudidea" },
-          include_player_ids: [this.publishDetails.oneSignalUserId],
+          include_player_ids: [this.newPublishDetails.oneSignalUserId],
         };
 
         var headers = {
@@ -344,18 +343,18 @@
         this.goToPage('/moderate/publishings')
       },
       rejectProject() {
-        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.publishDetails.creatorEmail + '&param2=' + this.publishDetails.creatorName + '&param3=' + this.publishDetails.projectTitle + '&param4=' + this.$i18n.locale)
+        axios.get('https://cloudidea.es/api/index.php?action=rejectedPublish&param1=' + this.newPublishDetails.creatorEmail + '&param2=' + this.newPublishDetails.creatorName + '&param3=' + this.newPublishDetails.projectTitle + '&param4=' + this.$i18n.locale)
         this.firebaseDeletePublish({
-          publishId: this.publishDetails.key
+          publishId: this.newPublishDetails.key
         });
         var data = {
           app_id: "c1cba1e9-164d-43b7-aab2-9b34be225497",
           contents: {
-            "en": "Your project '" + this.publishDetails.projectTitle + "' has been rejected. Check your email",
-            "es": "Tu proyecto '" + this.publishDetails.projectTitle + "' no se ha aceptado. Consulta tu correo"
+            "en": "Your project '" + this.newPublishDetails.projectTitle + "' has been rejected. Check your email",
+            "es": "Tu proyecto '" + this.newPublishDetails.projectTitle + "' no se ha aceptado. Consulta tu correo"
           },
           headings: { "en": "Cloudidea" },
-          include_player_ids: [this.publishDetails.oneSignalUserId],
+          include_player_ids: [this.newPublishDetails.oneSignalUserId],
         };
 
         var headers = {
