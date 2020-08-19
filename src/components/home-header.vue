@@ -19,8 +19,8 @@
         <q-avatar size="3em">
           <img :src="userDetails.imageUrl">
         </q-avatar>
-        <q-menu auto-close content-style="border-radius: 1em;">
-          <q-list style="min-width: 10em">
+        <q-menu auto-close content-style="border-radius: 1em;min-width: 12em">
+          <q-list style="min-width: 12em">
             <q-item clickable @click="goToPage('/profile/'+userDetails.userId)">
 
               <q-item-section>{{$t('profile')}}</q-item-section>
@@ -38,6 +38,18 @@
               <q-item-section>{{$t('create_project')}}</q-item-section>
               <q-item-section side>
                 <q-icon name="add"/>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="goToPage('/likes')">
+              <q-item-section>{{$t('like')}}</q-item-section>
+              <q-item-section side>
+                <q-icon name="favorite_border"/>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="goToPage('/favorites')">
+              <q-item-section>{{$t('favorites')}}</q-item-section>
+              <q-item-section side>
+                <q-icon name="star_border"/>
               </q-item-section>
             </q-item>
             <q-item clickable @click="logOut()">

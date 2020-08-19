@@ -11,7 +11,7 @@
         <ProfileCard v-for="user in orderedUsers" :user="user" :key="user.key"></ProfileCard>
       </div>
     </q-scroll-area>
-    <div class="row" v-if="this.$q.platform.is.desktop">
+    <div class="row" v-if="this.$q.platform.is.desktop && orderedUsers && orderedUsers.length>6">
       <div class="col">
         <q-btn icon="keyboard_arrow_left" color="grey-5"
                style="position: relative;top: -16em;right:0.8em"
@@ -73,6 +73,7 @@
     },
     watch: {
       users: function (val) {
+        this.orderedUsers = []
         let keys = Object.keys(val);
         keys.forEach(key => {
           let item = this.users[key];

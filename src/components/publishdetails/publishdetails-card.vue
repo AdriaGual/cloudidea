@@ -46,23 +46,30 @@
           </div>
         </div>
       </div>
-
       <div class="cursor-pointer text-center"
-           v-if="publishDetails.fileType==='audio/mpeg'"
+           v-if="publishDetails.fileType.includes('audio')"
            @click="goToPage(publishKey)">
-        <q-img
-          v-if="publishDetails.coverImage && !sidePublish"
-          :src="publishDetails.coverImage" spinner-color="white"
-          :style="this.$q.platform.is.desktop && !sidePublish?'height: 50em;':!sidePublish?'height:30em':'height:20em'"
-          @click="goToPage(publishKey)"
-          :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
-        />
-        <audio controls
-               class="q-mt-md"
-               v-if="!sidePublish">
-          <source :src="publishDetails.fileUrl" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
+        <q-item clickable v-ripple v-if="!sidePublish">
+          <q-item-section side>
+            <img
+              v-if="publishDetails.coverImage && !sidePublish"
+              :src="publishDetails.coverImage" spinner-color="white"
+              :style="this.$q.platform.is.desktop && !sidePublish?'height: 5em;border-radius:1em':''"
+              @click="goToPage(publishKey)"
+              :class="publishKey!==$route.params.publishId?'cursor-pointer':''"
+            />
+          </q-item-section>
+          <q-item-section>
+            <audio controls
+                   class="full-width"
+                   v-if="!sidePublish">
+              <source :src="publishDetails.fileUrl" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </q-item-section>
+        </q-item>
+
+
         <div v-if="publishDetails.coverImage && sidePublish" class="q-pa-lg">
           <q-img v-if="sidePublish" :src="publishDetails.coverImage">
             <div class="text-subtitle2 absolute-top text-center">
@@ -187,6 +194,7 @@
         </q-img>
       </div>
     </q-card-section>
+    <q-separator></q-separator>
     <q-card-actions>
       <div class="row full-width" style="height:4em">
         <div
@@ -200,16 +208,20 @@
         </div>
         <div class="col-5 q-pt-md cursor-pointer"
              @click="goToProfilePage('/profile/'+publishDetails.creatorId)">
-          <p style="line-height: 0.1em">{{publishDetails.creatorName}}</p>
+          <p style="line-height: 0.1em"
+             v-if="publishDetails.creatorName.length>20 && !$q.platform.is.desktop">
+            {{publishDetails.creatorName.substring(0,20)+".."}}</p>
+          <p style="line-height: 0.1em" v-else>
+            {{publishDetails.creatorName}}</p>
           <p class="cardUserCP" v-if="publishDetails.categoryModel">
             {{$t(publishDetails.categoryModel.toLowerCase())}}</p>
         </div>
-        <div class="col q-pt-sm" align="right">
+        <div class="col q-pt-sm" align="right" v-if="!sidePublish">
           <q-btn
             v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId"
             no-caps
             class="bg-indigo-12 text-white"
-            style="width:7em;font-size: 0.9em;border-radius: 2em"
+            style="width:6em;font-size: 0.9em;border-radius: 2em"
             label="Chat"
             @click="chat()"
           />
@@ -232,7 +244,8 @@
             :label="$t('reopen')"
             @click="sureCloseProject=true"/>
         </div>
-        <div :class="$q.platform.is.desktop?'col-2 text-center':'col-2 text-center q-pl-md'">
+        <div :class="$q.platform.is.desktop?'col-1 text-center':'col-2 text-center q-pl-md'"
+             v-if="!sidePublish">
           <q-btn
             rounded
             flat
@@ -240,7 +253,7 @@
             no-caps
             class=""
             icon="favorite_border"
-            color="accent"
+            color="grey"
             size="md"
             :ripple="false"
             @click="like(publishDetails,publishKey)"
@@ -262,6 +275,34 @@
           <p class="cardUserCP ">
             {{publishDetails.cp}}
           </p>
+        </div>
+        <div class="col-1" style="z-index: 1;position: relative;top: -0.2em;right:0.5em"
+             v-if="!sidePublish">
+          <q-btn
+            round
+            flat
+            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFavoritesPublish(publishDetails,publishKey)===false"
+            no-caps
+            icon="star_border"
+            color="grey"
+            size="md"
+            :ripple="false"
+            @click="favorite(publishDetails,publishKey)"
+          />
+          <q-btn
+            round
+            v-if="userDetails.userId && userDetails.userId !== publishDetails.creatorId && alreadyFavoritesPublish(publishDetails,publishKey)===true"
+            no-caps
+            flat
+            :ripple="false"
+            size="md"
+            icon="star"
+            color="amber"
+            @click="unfavorite(publishDetails,publishKey)"
+          />
+          <q-icon v-if="!userDetails.userId || userDetails.userId === publishDetails.creatorId"
+                  name="star" color="grey" size="sm"
+                  style="z-index: 99;position: relative;top:0.5em;right:-0.4em"/>
         </div>
       </div>
     </q-card-actions>
@@ -331,7 +372,7 @@
           selected: false,
         }, {
           categoryName: 'Promotion',
-          url: require('../../assets/icons/money.svg'),
+          url: require('../../assets/icons/promotion.svg'),
           selected: false,
         }],
         sureCloseProject: false,
@@ -339,7 +380,7 @@
     },
     methods: {
       ...mapActions('store',
-        ['firebaseAddLike', 'firebaseRemoveLike', 'firebaseDeletePublish', 'firebaseUpdatePublish', 'clearPublishings', 'firebaseGetApprovedPublishings']),
+        ['firebaseAddLike', 'firebaseRemoveLike', 'firebaseDeletePublish', 'firebaseUpdatePublish', 'clearPublishings', 'firebaseGetApprovedPublishings', 'firebaseAddFavorite', 'firebaseRemoveFavorite', 'firebaseGetFavorites']),
       goToPage(route) {
         if (this.publishKey !== this.$route.params.publishId) {
           this.clearPublishings();
@@ -364,6 +405,21 @@
 
         for (let likedId in this.userLikedPublishings) {
           if (likedId === key) {
+            found = true;
+          }
+        }
+        return found
+      }, favorite(publish, key) {
+        this.firebaseAddFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      unfavorite(publish, key) {
+        this.firebaseRemoveFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      alreadyFavoritesPublish(publish, key) {
+        var found = false;
+
+        for (let favoritedId in this.userFavoritedPublishings) {
+          if (favoritedId === key) {
             found = true;
           }
         }
@@ -410,7 +466,7 @@
       },
     },
     computed: {
-      ...mapState('store', ['userLikedPublishings']),
+      ...mapState('store', ['userLikedPublishings', 'userFavoritedPublishings']),
     },
   }
 </script>

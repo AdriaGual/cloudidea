@@ -1,16 +1,22 @@
 <template>
-  <div class="row q-pl-md">
-    <div class="col-1">
-      <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
+  <div>
+    <div class="row q-pl-md">
+      <div class="col-1">
+        <q-btn flat round color="primary" icon="arrow_back" @click="goToPage('/')"/>
+      </div>
+      <div class="col q-pl-md" v-if="!$q.platform.is.desktop">
+        <p class="poppinsRegular text-grey">{{releaseDate(projectReleaseDate)}}</p>
+      </div>
+      <div class="col"></div>
     </div>
-    <div class="col-10 q-pl-md" v-if="!$q.platform.is.desktop">
-      <p class="poppinsRegular text-grey">{{releaseDate(projectReleaseDate)}}</p>
+    <div class="text-center" v-if="!$q.platform.is.desktop">
       <a class="poppinsBold"
-         style="line-height: 0.1em;font-size: 1.2em">
-        {{projectTitle}}</a>
+         style="line-height: 0.1em;font-size: 1.2em;">
+        {{projectTitle.substring(0,30)}}</a>
     </div>
-    <div class="col"></div>
+
   </div>
+
 </template>
 
 <script>
@@ -18,7 +24,7 @@
     props: ['projectTitle', 'projectReleaseDate'],
     methods: {
       goToPage(route) {
-        this.$router.go(-1)
+        this.$router.push(route)
       },
       releaseDate: function (date) {
         var seconds = Math.floor((new Date() - date) / 1000);

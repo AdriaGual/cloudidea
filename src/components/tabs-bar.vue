@@ -17,9 +17,9 @@
              @click="goToPage('/brotherhood','brotherhood')"/>
       <q-tab v-if="userDetails.moderator" name="moderate" icon="o_gavel"
              @click="goToPage('/moderate','moderate')"/>
-      <q-tab v-if="userDetails.name" name="favorites"
-             :icon="tab==='favorites'?'star':'star_border'"
-             @click="goToPage('/favorites','favorites')"/>
+      <!-- <q-tab v-if="userDetails.name" name="favorites"
+              :icon="tab==='favorites'?'star':'star_border'"
+              @click="goToPage('/favorites','favorites')"/>-->
 
     </q-tabs>
   </div>

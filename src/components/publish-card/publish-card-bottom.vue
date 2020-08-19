@@ -27,7 +27,7 @@
         v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyLikesPublish(publish,publish.key)===false"
         no-caps
         icon="favorite_border"
-        color="accent"
+        color="grey"
         size="md"
         :ripple="false"
         @click="like(publish,publish.key)"
@@ -50,6 +50,33 @@
         {{publish.cp}}
       </p>
     </div>
+    <div class="col-1" style="z-index: 1;position: relative;top: -0.2em;right:0.5em">
+      <q-btn
+        round
+        flat
+        v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyFavoritesPublish(publish,publish.key)===false"
+        no-caps
+        icon="star_border"
+        color="grey"
+        size="md"
+        :ripple="false"
+        @click="favorite(publish,publish.key)"
+      />
+      <q-btn
+        round
+        v-if="userDetails.userId && userDetails.userId !== publish.creatorId && alreadyFavoritesPublish(publish,publish.key)===true"
+        no-caps
+        flat
+        :ripple="false"
+        size="md"
+        icon="star"
+        color="amber"
+        @click="unfavorite(publish,publish.key)"
+      />
+      <q-icon v-if="!userDetails.userId || userDetails.userId === publish.creatorId"
+              name="star" color="grey" size="sm"
+              style="z-index: 99;position: relative;top:0.5em;right:-0.4em"/>
+    </div>
   </div>
 </template>
 
@@ -60,7 +87,7 @@
     props: ["publish"],
     methods: {
       ...mapActions('store',
-        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes']),
+        ['firebaseGetApprovedPublishings', 'updatePublishDetails', 'updatePublishComments', 'clearPublishings', 'firebaseAddLike', 'firebaseRemoveLike', 'firebaseGetLikes', 'firebaseAddFavorite', 'firebaseRemoveFavorite', 'firebaseGetFavorites']),
 
       goToPage(route) {
         this.$router.push(route).catch(error => {
@@ -82,12 +109,29 @@
         }
         return found
       },
+      favorite(publish, key) {
+        this.firebaseAddFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      unfavorite(publish, key) {
+        this.firebaseRemoveFavorite({ otherUserId: publish.creatorId, otherPublishingId: key })
+      },
+      alreadyFavoritesPublish(publish, key) {
+        var found = false;
+
+        for (let favoritedId in this.userFavoritedPublishings) {
+          if (favoritedId === key) {
+            found = true;
+          }
+        }
+        return found
+      },
     },
     computed: {
-      ...mapState('store', ['userDetails', 'userLikedPublishings']),
+      ...mapState('store', ['userDetails', 'userLikedPublishings', 'userFavoritedPublishings']),
     },
     created() {
       this.firebaseGetLikes();
+      this.firebaseGetFavorites();
     }
   }
 </script>

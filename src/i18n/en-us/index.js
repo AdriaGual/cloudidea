@@ -161,6 +161,7 @@ export default {
   seems_like_no_results_found: "Seems like there we couldn't find any results",
   seems_like_no_help_found: "Seems like there are no help requests for now",
   seems_like_no_favorites_found: "Seems like you have no favorites",
+  seems_like_no_likes_found: "Seems like you have no likes",
   seems_like_no_comments_found: "Seems like there are no comments for now",
   people: "People",
   most_popular: "Most popular",
@@ -244,6 +245,7 @@ export default {
   this_project_was_finished_but_you_are_gonna_reopen_it: "This project was finished but you are gonna reopen it, are you sure about that?",
   add_a_comment: "Add a comment",
   favorites: "Favorites",
+  like: "Likes",
   la: "",
   el: ""
 };

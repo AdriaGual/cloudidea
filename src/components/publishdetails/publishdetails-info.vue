@@ -168,7 +168,7 @@
           selected: false,
         }, {
           categoryName: 'Promotion',
-          url: require('../../assets/icons/money.svg'),
+          url: require('../../assets/icons/promotion.svg'),
           selected: false,
         }],
         openDeleteCommentPopup: false,

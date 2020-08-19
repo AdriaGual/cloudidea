@@ -43,7 +43,7 @@
               />
             </div>
           </q-scroll-area>
-          <div class="row" v-if="this.$q.platform.is.desktop">
+          <div class="row" v-if="this.$q.platform.is.desktop && recentSearches.length>5">
             <div class="col" style="position: relative;top: -2.7em;right:0.8em">
               <q-btn icon="keyboard_arrow_left" color="grey-5"
                      @click="animateScroll($refs.recentSearchScrollArea,false,356,'recentSearchPosition')"
@@ -250,7 +250,7 @@
           url: require('../assets/icons/money.svg'),
         }, {
           searchText: 'Promotion',
-          url: require('../assets/icons/money.svg'),
+          url: require('../assets/icons/promotion.svg'),
         }],
         thumbStyle: {
           opacity: 0

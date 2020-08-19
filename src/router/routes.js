@@ -28,6 +28,13 @@ const routes = [
     ],
   },
   {
+    path: '/likes',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Likes.vue') },
+    ],
+  },
+  {
     path: '/create',
     component: () => import('layouts/MainLayout.vue'),
     children: [

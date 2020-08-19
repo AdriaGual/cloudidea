@@ -65,6 +65,9 @@ const mutations = {
   removeLike(state, payload) {
     Vue.delete(state.userLikedPublishings, payload.otherPublishingId);
   },
+  setLikes(state, payload) {
+    state.userLikedPublishings = payload;
+  },
   addFavorite(state, payload) {
     Vue.set(state.userFavoritedPublishings, payload.otherPublishingId, payload.otherUserId);
   },
@@ -692,6 +695,9 @@ const actions = {
   },
   clearUsers({ commit }) {
     commit("setUsers", {});
+  },
+  clearLikes({ commit }) {
+    commit("setLikes", {});
   },
   clearFavorites({ commit }) {
     commit("setFavorites", {});

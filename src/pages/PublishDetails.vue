@@ -91,6 +91,8 @@
         })
       },
       publishings: function (val) {
+        this.firebaseClearComments();
+        this.updatePublishComments({ key: this.$route.params.publishId });
         this.orderedPublishings = [];
         let keys = Object.keys(val);
         keys.forEach(key => {

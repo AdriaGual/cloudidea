@@ -7,7 +7,9 @@
         :index="1"
         @hide="handleHide"
       ></vue-easy-lightbox>
-      <q-card-section v-if="userDetails.moderator" class="bg-white q-pa-sm">
+      <q-card-section
+        v-if="userDetails.moderator && $q.cookies.get('categorySelection').includes(filteredPublishing.categoryModel)"
+        class="bg-white q-pa-sm">
         <div class="row">
           <div class="col">
             <a>{{$t('approvedBy')}} </a>

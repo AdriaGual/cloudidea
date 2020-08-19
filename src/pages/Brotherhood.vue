@@ -7,7 +7,8 @@
           <q-icon class="q-pr-md" name="far fa-handshake" size="sm"/>
           {{$t('new_help_requests').toUpperCase()}}
         </p>
-        <p class="poppinsRegular text-grey q-pt-md d" v-if="orderedPublishings.length===0">
+        <p class="poppinsRegular text-grey q-pt-md text-center"
+           v-if="orderedPublishings.length===0">
           <q-icon name="error_outline" size="sm"/>
           {{$t('seems_like_no_help_found')}}
         </p>
@@ -146,7 +147,7 @@
           selected: false,
         }, {
           categoryName: 'Promotion',
-          url: require('../assets/icons/money.svg'),
+          url: require('../assets/icons/promotion.svg'),
           selected: false,
         }],
       }
