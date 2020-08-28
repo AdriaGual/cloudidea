@@ -116,7 +116,7 @@
       </div>
     </q-scroll-area>
 
-    <p class="poppinsRegular text-grey q-pt-md" v-if="!publishingWithCategory()">
+    <p class="poppinsRegular text-grey q-pt-md text-center" v-if="!publishingWithCategory()">
       <q-icon name="error_outline" size="sm"/>
       {{$t('seems_like_no_available_project')}}
     </p>

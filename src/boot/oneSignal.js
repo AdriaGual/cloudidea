@@ -1,7 +1,6 @@
 import { Cookies } from 'quasar'
 
 if (window.hasOwnProperty("cordova")) {
-
   var notificationOpenedCallback = function (jsonData) {
   };
 
@@ -9,7 +8,6 @@ if (window.hasOwnProperty("cordova")) {
   var iosSettings = {};
   iosSettings["kOSSettingsKeyAutoPrompt"] = false;
   iosSettings["kOSSettingsKeyInAppLaunchURL"] = false;
-
   window.plugins.OneSignal
   .startInit("c1cba1e9-164d-43b7-aab2-9b34be225497")
   .handleNotificationOpened(notificationOpenedCallback)

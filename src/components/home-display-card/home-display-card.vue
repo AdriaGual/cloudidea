@@ -125,7 +125,7 @@
               <div v-for="(category, key) in categories" :key="key">
                 <img
                   @click="goToPublishDetails(publish, publish.key)"
-                  :class="$q.platform.is.desktop?'q-px-xl':''"
+                  :class="$q.platform.is.desktop?'':''"
                   v-if="!publish.coverImage && category.categoryName ===publish.categoryModel"
                   :style="$q.platform.is.desktop?'height:9em':''"
                   :src="category.url" alt=""/>

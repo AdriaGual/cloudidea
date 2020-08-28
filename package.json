@@ -1,9 +1,9 @@
 {
   "name": "cloudidea",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "An app to share projects.",
   "productName": "Cloudidea",
-  "author": "u1933571@campus.udg.edu <luagairda1>",
+  "author": "u1933571@campus.udg.edu",
   "private": true,
   "scripts": {
     "dev": "quasar dev",

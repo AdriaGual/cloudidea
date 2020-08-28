@@ -1,0 +1,6 @@
+cd C:\Program Files\Java\jdk1.8.0_251\bin
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore C:\Users\djwal\Desktop\cloudidea\dist\cordova\android\apk\release\app-release-unsigned.apk alias_name
+HOiIXHhoM4MGZ4keXe6J
+cd C:\Users\djwal\AppData\Local\Android\Sdk\build-tools\30.0.1
+zipalign -v 4 C:\Users\djwal\Desktop\cloudidea\dist\cordova\android\apk\release\app-release-unsigned.apk Cloudidea.apk

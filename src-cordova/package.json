@@ -1,5 +1,5 @@
 {
-  "name": "org.cordova.quasar.app",
+  "name": "org.cloudidea.app",
   "displayName": "Cloudidea",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
@@ -27,5 +27,7 @@
       "android"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "onesignal-cordova-plugin": "2.11.0"
+  }
 }

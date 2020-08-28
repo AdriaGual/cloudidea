@@ -95,7 +95,7 @@
                 <q-checkbox v-model="publishing.needAudioHelp" val="true" color="teal">
                   <q-icon name="o_audiotrack" size="sm">
                     <q-tooltip>
-                      {{$t('need_help_with')}} {{$t('el')}} {{$t('music').toLowerCase()}}
+                      {{$t('need_help_with')}} {{$t('la')}} {{$t('music').toLowerCase()}}
                     </q-tooltip>
                   </q-icon>
                 </q-checkbox>

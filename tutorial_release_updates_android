@@ -1,0 +1,7 @@
+Tutorial per fer releases de updates de cloudidea
+
+Anar al quasar.conf.js -> modificar la versió
+
+Engegar el android studio
+
+Anar a Build -> Generate Signed Bundle
